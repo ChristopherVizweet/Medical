@@ -1,0 +1,1 @@
+<img src="http://127.0.0.1:8000/img/logo_medical_logo.png"   alt="Mi Logo" width="200" height="300">
