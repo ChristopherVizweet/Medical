@@ -4,10 +4,10 @@
             {{ __('Panel') }}
 
 
-            <div class="block buttom-mode justify-self-end ">
+
 <!--Boton para cambiar el modo oscuro/claro-->
-<x-mode-button id="theme-toggle" class="self-end " >
-    Modo escuro/claro
+<x-mode-button id="theme-toggle" class="float-right flex " >
+Modo Oscuro/Claro
 </x-mode-button>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -32,16 +32,16 @@
         });
     });
 </script>
-            </div>
+            
         </h2>
        
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-black overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-700 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100 text-center">
-                    {{ __("Hola. Bienvenido a Medical Gas!") }}
+                    Bienvenido a Medical Gas 
                 </div>
                 <div class="mx-10 text-black dark:text-white">
                     Aqui algunas recomendaciones

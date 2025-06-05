@@ -15,12 +15,36 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         Panel
                     </x-nav-link>
+                    @hasanyrole('superadmin|admin|ventas')
                     <x-nav-link :href="route('index_Supplier')" :active="request()->routeIs('index_Supplier')">
                         Proveedores
                     </x-nav-link>
+                    @endhasanyrole
+                    @hasanyrole('superadmin|admin|ventas')
                     <x-nav-link :href="route('index-client')" :active="request()->routeIs('index-client')">
                         Clientes
                     </x-nav-link>
+                    @endhasanyrole
+                   @hasanyrole('superadmin|ventas')
+                    <x-nav-link :href="route('index-client')" :active="request()->routeIs('index-client')">
+                        Ventas
+                    </x-nav-link>
+                    @endhasanyrole
+                    @hasanyrole('superadmin|almacen')
+                    <x-nav-link :href="route('index-managmentp')" :active="request()->routeIs('index-managmentp')">
+                        Gestión de productos
+                    </x-nav-link> 
+                    @endhasanyrole
+                    @hasanyrole('superadmin|admin|almacen')
+                    <x-nav-link :href="route('index-entrance')" :active="request()->routeIs('index-entrance')">
+                        Gestión de existencias
+                    </x-nav-link>
+                    @endhasanyrole
+                    @role('superadmin')
+                    <x-nav-link :href="route('index-user')" :active="request()->routeIs('index-user')">
+                        Gestión de usuarios
+                    </x-nav-link>
+                    @endrole
                 </div>
             </div>
 

@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->ipAddress('RFC')->unique();
-            $table->string('name_Client',50);
-            $table->string('email_Client',20);
-            $table->string('address_Client',50);
-            $table->ipAddress('phoneNumber_Client');
+            $table->string('name_categories');
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('categories');
     }
 };

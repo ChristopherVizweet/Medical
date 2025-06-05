@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name_supplier');
             $table->string('email_supplier')->unique();
-            $table->integer('phoneNumber_supplier');
+            $table->ipAddress('phoneNumber_supplier');
             $table->timestamps();
         });
     }
