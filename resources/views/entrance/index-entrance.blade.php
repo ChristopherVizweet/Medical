@@ -57,19 +57,19 @@
                 </div>-->
                 <tr>
                     <th class="px-4 py-2 border">ID</th>
-                    <th class="px-4 py-2 border">Id producto</th>
+                    <th class="px-4 py-2 border">Categoria</th>
+                    <th class="px-4 py-2 border">Nombre del producto</th>
                     <th class="px-4 py-2 border">Existencia actual</th>
-                    <th class="px-4 py-2 border">Id usuario</th>
                     <th class="px-4 py-2 border">Fecha</th>
-                    <th class="px-4 py-2 border">Actions</th>
+                    <th class="px-4 py-2 border">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($entrances as $entrance)
                     <tr>
                         <td class="border px-4 py-2">{{ $entrance->id }}</td>
+                        <td class="border px-4 py-2">{{ $entrance->id_categories}}</td>
                         <td class="border px-4 py-2">{{ $entrance->product_id_entrance}}</td>
-                        <td class="border px-4 py-2">{{ $entrance->user_id_entrance }}</td>
                         <td class="border px-4 py-2">{{ $entrance->existence_entrance }}</td>
                         <td class="border px-4 py-2">{{ $entrance->date_entrance }}</td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-black dark:text-dark-100 text-center">

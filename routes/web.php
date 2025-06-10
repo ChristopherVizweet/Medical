@@ -6,9 +6,14 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\EmpleadosController;
 use App\Http\Controllers\EntranceController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProjectController;
+use App\Models\Empleados;
+use App\Models\Entrance;
 use Spatie\Permission\Middleware\RoleMiddleware;
 
 
@@ -70,7 +75,17 @@ Route::get('/edit-user/{id}', [UserController::class, 'edit'])->name('edit-user'
 Route::put('/edit-user/{id}', [UserController::class, 'update'])->name('edit-user');
 Route::delete('/delete-user/{id}',[UserController::class, 'delete'])->name('delete-user');
 
+#Parte para los empleados
+Route::get('/index-employees',[EmpleadosController::class,'index'])->name('index-employees');
+Route::get('/create-employees',[EmpleadosController::class,'create'])->name('create-employees');
+Route::post('/create-employees', [EmpleadosController::class, 'store'])->name('store-employees');
+#Route::get('/viewEmployees/{curp}',[EmpleadosController::class, 'view'/*Esto es como editar*/])->name('viewEmployees');
+Route::get('/edit-employees/{id}',[EmpleadosController::class, 'edit'])->name('edit-employees');
+Route::put('/edit-employees/{id}',[EmpleadosController::class, 'update'])->name('edit-employees');
+Route::delete('/delete-employees/{id}',[EmpleadosController::class, 'delete'])->name('delete-employees');
 
+#Parte para el proyecto
+Route::get('/index-project',[ProjectController::class,'index'])->name('index-project');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

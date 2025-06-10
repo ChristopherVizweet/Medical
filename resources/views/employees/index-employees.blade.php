@@ -28,7 +28,7 @@
     });
    </script>  
         <h2 class="font-semibold text-xl text-gray-800 dark:text-white">
-            Usuarios
+            Empleados
         </h2>      
     </x-slot>
     <div class="container mx-auto mt-4">
@@ -40,32 +40,39 @@
                 </div>
             @endif
     
-            <h1 class="text-2xl font-bold mb-4 text-black dark:text-white">Lista de usuarios</h1>
+            <h1 class="text-2xl font-bold mb-4 text-black dark:text-white">Lista de empleados</h1>
     
             <table class="table-auto w-full text-left bg-white shadow-md rounded-lg">
                 <thead>
                     <tr class="bg-gray-200">
                         <th class="px-4 py-2">{{ __('ID') }}</th>
                         <th class="px-4 py-2">{{ __('Nombre') }}</th>
-                        <th class="px-4 py-2">{{ __('Apellido Paterno') }}</th>
-                        <th class="px-4 py-2">{{ __('Apellido Materno') }}</th>
-                        <th class="px-4 py-2">{{ __('Email') }}</th>
-                        <th class="px-4 py-2">{{ __('Departamento') }}</th>
-                        <th class="px-4 py-2">{{ __('Actions') }}</th>
+                        <th class="px-4 py-2">{{ __('Apellidos') }}</th>
+                        <th class="px-4 py-2">{{ __('Organizacion') }}</th>
+                        <th class="px-4 py-2">{{ __('Cargo') }}</th>
+                        <th class="px-4 py-2">{{ __('Telefono de trabajo') }}</th>
+                        <th class="px-4 py-2">{{ __('Tipo de sangre') }}</th>
+                        <th class="pc-4 py-2">{{('Foto de empleado')}}</th>
+                        <th class=" px-4 py-2">{{ __('Ver') }}</th>
+                        <th class="px-4 py-2">{{ __('Acciones') }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($users as $user)
+                    @forelse ($empleados as $empleado)
                         <tr class="border-t">
-                            <td class="px-4 py-2">{{ $user->id }}</td>
-                            <td class="px-4 py-2">{{ $user->name }}</td>
-                            <td class="px-4 py-2">{{ $user->ap_user }}</td>
-                            <td class="px-4 py-2">{{ $user->am_user }}</td>
-                            <td class="px-4 py-2">{{ $user->email }}</td>
-                            <td class="px-4 py-2">{{ $user->getRoleNames()->first() }}</td>
+                            <td class="px-4 py-2">{{ $empleado->id}}</td>
+                            <td class="px-4 py-2">{{ $empleado->Nombre}}</td>
+                            <td class="px-4 py-2">{{ $empleado->apellidos}}</td>
+                            <td class="px-4 py-2">{{ $empleado->organizacion }}</td>
+                            <td class="px-4 py-2">{{ $empleado->cargo }}</td>
+                            <td class="px-4 py-2">{{ $empleado->numeroTelefonoTrabajo}}</td>
+                            <td class="px-4 py-2">{{ $empleado->tipoSangre}}</td>
+                            <td class="px-4 py-2"><img class="items-center" src="{{ asset('storage/' . $empleado->foto) }}" alt="Imagen de empleado" width="150">
+                            </td>
+                            <td class="px-4 py-2"> <a href="{{ route('edit-employees', $empleado->id) }}" class="text-blue-600 hover:underline">Ver más</a></td>
                             <td class="px-4 py-2">
-                                <a href="{{route('edit-user', $user->id) }}" class="text-blue-600 hover:underline">Editar</a> |
-                                <form action="{{ route('delete-user', $user->id) }}" method="POST" style="display:inline-block;"> 
+                                <!--<a href="{route('edit-user', $empleado->id) }" class="text-blue-600 hover:underline">Editar</a> |-->
+                                <form action="{{ route('delete-employees', $empleado->id) }}" method="POST" style="display:inline-block;"> 
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Estas seguro de eliminar este usuario?')">Eliminar</button>
@@ -74,13 +81,13 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-4 py-2 text-center">{{ __('Usuarios no encontrados') }}</td>
+                            <td colspan="5" class="px-4 py-2 text-center">{{ __('Empleado no encontrados') }}</td>
                         </tr>
                     @endforelse
                 </tbody>
                 <x-primary-button class="mt-4">
-                    <a href="{{ route('create-user') }}" class="text-dark"> 
-                         {{ __('Crear usuario') }}
+                    <a href="{{ route('create-employees') }}" class="text-dark"> 
+                         {{ __('Crear empleado') }}
                      </a> 
                 </x-primary-button>
             </table>

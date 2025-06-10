@@ -19,11 +19,6 @@ class ProductController extends Controller
         return view('managment_product.products.index-product', compact('products','categories')); 
     }
     
-        /*public function index(){
-            $products = Product::all(); 
-            $categories=Categories::all();
-            return view('managment_product.products.index-product', compact('products','categories')); 
-        }*/
     public function create(){
         $categories = Categories::all(); // Obtener todas las categorías
         $suppliers = Supplier::all(); // Si también necesitas los proveedores

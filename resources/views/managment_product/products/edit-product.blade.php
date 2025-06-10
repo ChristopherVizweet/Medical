@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('edit-product', $products->id) }}" enctype="multipart/form-data">>
+    <form method="POST" action="{{ route('edit-product', $products->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 

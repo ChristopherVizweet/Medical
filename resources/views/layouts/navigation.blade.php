@@ -26,8 +26,8 @@
                     </x-nav-link>
                     @endhasanyrole
                    @hasanyrole('superadmin|ventas')
-                    <x-nav-link :href="route('index-client')" :active="request()->routeIs('index-client')">
-                        Ventas
+                    <x-nav-link :href="route('index-sale')" :active="request()->routeIs('index-sale')">
+                        Proyectos
                     </x-nav-link>
                     @endhasanyrole
                     @hasanyrole('superadmin|almacen')
@@ -40,6 +40,11 @@
                         Gestión de existencias
                     </x-nav-link>
                     @endhasanyrole
+                     @role('superadmin')
+                    <x-nav-link :href="route('index-employees')" :active="request()->routeIs('index-employees')">
+                        Gestión de empleados
+                    </x-nav-link>
+                    @endrole
                     @role('superadmin')
                     <x-nav-link :href="route('index-user')" :active="request()->routeIs('index-user')">
                         Gestión de usuarios
