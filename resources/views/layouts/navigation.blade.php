@@ -26,7 +26,7 @@
                     </x-nav-link>
                     @endhasanyrole
                    @hasanyrole('superadmin|ventas')
-                    <x-nav-link :href="route('index-sale')" :active="request()->routeIs('index-sale')">
+                    <x-nav-link :href="route('index-project')" :active="request()->routeIs('index-project')">
                         Proyectos
                     </x-nav-link>
                     @endhasanyrole

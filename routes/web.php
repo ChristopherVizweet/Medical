@@ -5,15 +5,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmpleadosController;
 use App\Http\Controllers\EntranceController;
+use App\Http\Controllers\PriorityController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\SaleController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\StatusController;
 use App\Models\Empleados;
 use App\Models\Entrance;
+use App\Models\InstalationService;
 use Spatie\Permission\Middleware\RoleMiddleware;
 
 
@@ -86,6 +90,45 @@ Route::delete('/delete-employees/{id}',[EmpleadosController::class, 'delete'])->
 
 #Parte para el proyecto
 Route::get('/index-project',[ProjectController::class,'index'])->name('index-project');
+Route::get('/create-project',[ProjectController::class,'create'])->name('create-project');
+Route::post('/create-project',[ProjectController::class,'store'])->name('store-project');
+
+
+#Parte de los servicios de instalación
+Route::get('/index-service',[ServiceController::class,'index'])->name('index-service');
+Route::get('/create-service',[ServiceController::class,'create'])->name('create-service');
+Route::post('/create-service',[ServiceController::class,'store'])->name('store-service');
+Route::get('/edit-service/{id}',[ServiceController::class, 'edit'])->name('edit-service');
+Route::put('/edit-service/{id}',[ServiceController::class, 'update'])->name('edit-service');
+Route::delete('/delete-service/{id}',[ServiceController::class, 'delete'])->name('delete-service');
+
+
+#Parte de las prioridades
+Route::get('/index-priority',[PriorityController::class,'index'])->name('index-priority');
+Route::get('/create-priority',[PriorityController::class,'create'])->name('create-priority');
+Route::post('/create-priority',[PriorityController::class,'store'])->name('store-priority');
+Route::get('/edit-priority/{id}',[PriorityController::class, 'edit'])->name('edit-priority');
+Route::put('/edit-priority/{id}',[PriorityController::class, 'update'])->name('edit-priority');
+Route::delete('/delete-priority/{id}',[PriorityController::class, 'delete'])->name('delete-priority');
+
+
+#Parte de status
+Route::get('/index-status',[StatusController::class,'index'])->name('index-status');
+Route::get('/create-status',[StatusController::class,'create'])->name('create-status');
+Route::post('/create-status',[StatusController::class,'store'])->name('store-status');
+Route::get('/edit-status/{id}',[StatusController::class, 'edit'])->name('edit-status');
+Route::put('/edit-status/{id}',[StatusController::class, 'update'])->name('edit-status');
+Route::delete('/delete-status/{id}',[StatusController::class, 'delete'])->name('delete-status');
+
+#Parte de la empresa
+Route::get('/index-company',[CompanyController::class,'index'])->name('index-company');
+Route::get('/create-company',[CompanyController::class,'create'])->name('create-company');
+Route::post('/create-company',[CompanyController::class,'store'])->name('store-company');
+Route::get('/edit-company/{id}',[CompanyController::class, 'edit'])->name('edit-company');
+Route::put('/edit-company/{id}',[CompanyController::class, 'update'])->name('edit-company');
+Route::delete('/delete-company/{id}',[CompanyController::class, 'delete'])->name('delete-company');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
