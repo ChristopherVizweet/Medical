@@ -23,7 +23,8 @@ class ServiceController extends Controller
         InstalationService::create([
             'nameInstalation' => $request->nameInstalation,
         ]);
-        return redirect()->route('index-service')->with('success', 'Servicio creado exitosamente');
+          return redirect($request->redirect_to ?? route('index-service'))
+        ->with('success', 'Servicio agregado correctamente.');
 }
     public function edit($id){
         $services = InstalationService::findOrFail($id); // Busca el proveedor por ID

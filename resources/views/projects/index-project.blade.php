@@ -109,15 +109,28 @@
                          {{ __('Nueva prioridad') }}
                      </a> 
                 </x-primary-button>
-                <!--Boton para agregar nueva prioridad-->
+                <!--Boton para agregar nuevo status-->
                 <x-primary-button class="mt-4 ml-2">
                     <a href="{{ route('index-status') }}" class="text-dark"> 
                          {{ __('Nuevo status') }}
                      </a> 
                 </x-primary-button>
+                 <!--Boton para agregar nueva empresa-->
                  <x-primary-button class="mt-4 ml-2">
                     <a href="{{ route('index-company') }}" class="text-dark"> 
                          {{ __('Nueva empresa encargada') }}
+                     </a> 
+                </x-primary-button>
+                <!--Boton para agregar nuevo recurso-->
+                <x-primary-button class="mt-4 ml-2">
+                    <a href="{{ route('index-recursos') }}" class="text-dark"> 
+                         {{ __('Nuevo recurso') }}
+                     </a> 
+                </x-primary-button>
+                <!--Boton para agregar nueva cuenta bancaria-->
+                <x-primary-button class="mt-4 ml-2">
+                    <a href="{{ route('index-bank') }}" class="text-dark"> 
+                         {{ __('Nueva cuenta bancaria') }}
                      </a> 
                 </x-primary-button>
             </table>

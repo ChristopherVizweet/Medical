@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BankController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ClientController;
@@ -15,8 +16,10 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\RecursosController;
 use App\Models\Empleados;
 use App\Models\Entrance;
+use App\Models\Recursos;
 use App\Models\InstalationService;
 use Spatie\Permission\Middleware\RoleMiddleware;
 
@@ -120,6 +123,8 @@ Route::get('/edit-status/{id}',[StatusController::class, 'edit'])->name('edit-st
 Route::put('/edit-status/{id}',[StatusController::class, 'update'])->name('edit-status');
 Route::delete('/delete-status/{id}',[StatusController::class, 'delete'])->name('delete-status');
 
+
+
 #Parte de la empresa
 Route::get('/index-company',[CompanyController::class,'index'])->name('index-company');
 Route::get('/create-company',[CompanyController::class,'create'])->name('create-company');
@@ -128,6 +133,21 @@ Route::get('/edit-company/{id}',[CompanyController::class, 'edit'])->name('edit-
 Route::put('/edit-company/{id}',[CompanyController::class, 'update'])->name('edit-company');
 Route::delete('/delete-company/{id}',[CompanyController::class, 'delete'])->name('delete-company');
 
+#Parte de recursos
+Route::get('/index-recursos',[RecursosController::class,'index'])->name('index-recursos');
+Route::get('/create-recursos',[RecursosController::class,'create'])->name('create-recursos');
+Route::post('/create-recursos',[RecursosController::class,'store'])->name('store-recursos');
+Route::get('/edit-recursos/{id}',[RecursosController::class, 'edit'])->name('edit-recursos');
+Route::put('/edit-recursos/{id}',[RecursosController::class, 'update'])->name('edit-recursos');
+Route::delete('/delete-recursos/{id}',[RecursosController::class, 'delete'])->name('delete-recursos');
+
+#Parte de cuenta bancaria
+Route::get('/index-bank',[BankController::class,'index'])->name('index-bank');
+Route::get('/create-bank',[BankController::class,'create'])->name('create-bank');
+Route::post('/create-bank',[BankController::class,'store'])->name('store-bank');
+Route::get('/edit-bank/{id}',[BankController::class, 'edit'])->name('edit-bank');
+Route::put('/edit-bank/{id}',[BankController::class, 'update'])->name('edit-bank');
+Route::delete('/delete-bank/{id}',[BankController::class, 'delete'])->name('delete-bank');
 
 
 Route::middleware('auth')->group(function () {

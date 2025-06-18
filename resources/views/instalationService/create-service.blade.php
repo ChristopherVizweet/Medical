@@ -12,6 +12,7 @@
             <x-text-input id="nameInstalation" class="block mt-1 w-full is-invalid " autocomplete="off" type="text" name="nameInstalation" :value="old('nameInstalation')" required />
             <x-input-error :messages="$errors->get('nameInstalation')" class="mt-2 is-invalid" />
         </div>
+        <input type="hidden" name="redirect_to" value="{{ url()->previous() }}">
         <div style="text-align: center;" class="mt-4">
            <x-primary-button class="ms-4 ">
                 Registrar

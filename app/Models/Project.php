@@ -11,5 +11,5 @@ class Project extends Model
 'budget','accountBank','id_priority','id_instalationService',
 'id_status','requestDate','estimateDate','authorizedDate',
 'finishDate','id_empleado','jornadas','salario','totalSalario',
-'totalManoObra'];
+'totalManoObra','id_product','id_supplier','costo','totalProductos','recursosObtenidos','ejecutionDate'];
 }
