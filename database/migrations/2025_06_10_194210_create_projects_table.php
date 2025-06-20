@@ -23,18 +23,18 @@ return new class extends Migration
             $table->date('dateEnd');
             $table->decimal('budget');
             $table->string('accountBank',100);
-            $table->integer('id_priority');
-            $table->integer('id_instalationService');
-            $table->integer('id_status');
+            $table->varchar('id_priority',100);
+            $table->varchar('id_instalationService',100);
+            $table->varchar('id_status',100);
             $table->date('requestDate');
             $table->date('estimateDate');
             $table->date('authorizedDate');
             $table->date('finishDate');
-            $table->integer('id_empleado');
+            $table->varchar('id_empleado');
             $table->integer('jornadas');
             $table->decimal('salario');
             $table->decimal('totalSalario');
-             $table->decimal('totalManoObra');
+            $table->decimal('totalManoObra');
             $table->timestamps();
         });
     }

@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-guest-layout>
     <form method="POST" action="{{ route('store-project') }}" enctype="multipart/form-data">
         @csrf
 
@@ -28,7 +28,7 @@
 
                     <div>
                          <x-input-label for="id_client" :value="__('Cliente')" />
-                       <select class="mt-1 block w-full" name="id" id="id" required>
+                       <select class="mt-1 block w-full" name="id_client" id="id_client" required>
                 <option value="">-Seleccionar-</option> 
                 @foreach ($clients as $client)
                     <option value="{{ $client->id }}">{{ $client->name_Client }}</option><br>
@@ -38,7 +38,7 @@
 
                     <div>
                         <x-input-label for="company" :value="__('Empresa encargada')" />
-                       <select class="mt-1 block w-full" name="id" id="id" required>
+                       <select class="mt-1 block w-full" name="company" id="company" required>
                 <option value="">-Seleccionar-</option> 
                 @foreach ($companies as $company)
                     <option value="{{ $company->id }}">{{ $company->nameCompany }}</option><br>
@@ -48,8 +48,8 @@
 
                     
                          <div>
-                            <x-input-label for="id_Client" :value="__('Vendedor')" />
-                       <select class="mt-1 block w-full" name="id" id="id" required>
+                            <x-input-label for="seller_id_usuario" :value="__('Vendedor')" />
+                       <select class="mt-1 block w-full" name="seller_id_usuario" id="seller_id_usuario" required>
                 <option value="">-Seleccionar-</option> 
                 @foreach ($users as $user)
                     <option value="{{ $user->id }}">{{ $user->name }}</option><br>
@@ -60,7 +60,7 @@
 
                     <div>
                          <x-input-label for="inCharge_id_usuario" :value="__('Encargado')" />
-                       <select class="mt-1 block w-full" name="id" id="id" required>
+                       <select class="mt-1 block w-full" name="inCharge_id_usuario" id="inCharge_id_usuario" required>
                 <option value="">-Seleccionar-</option> 
                 @foreach ($users as $user)
                     <option value="{{ $user->id }}">{{ $user->name }}</option><br>
@@ -69,8 +69,8 @@
                     </div>
 
                     <div>
-                        <x-input-label for="company" :value="__('Prioridad')" />
-                       <select class="mt-1 block w-full" name="id" id="id" required>
+                        <x-input-label for="id_priority" :value="__('Prioridad')" />
+                       <select class="mt-1 block w-full" name="id_priority" id="id_priority" required>
                 <option value="">-Seleccionar-</option> 
                 @foreach ($priorities as $priority)
                     <option value="{{ $priority->id }}">{{ $priority->namePriority }}</option><br>
@@ -79,8 +79,8 @@
                     </div>
 
                     <div>
-                        <x-input-label for="nameStatus" :value="__('Status')" />
-                       <select class="mt-1 block w-full" name="id" id="id" required>
+                        <x-input-label for="id_status" :value="__('Status')" />
+                       <select class="mt-1 block w-full" name="id_status" id="id_status" required>
                 <option value="">-Seleccionar-</option> 
                 @foreach ($statues as $status)
                     <option value="{{ $status->id }}">{{ $status->nameStatus }}</option><br>
@@ -90,12 +90,12 @@
 
                     <div>
                     <x-input-label for="budget" :value="__('Presupuesto')" />
-                    <x-text-input id="budget" class="mt-1 block w-full" type="text" name="budget" placeholder="Ingrese el monto" value="$" :value="old('budget')" required />
+                    <x-text-input id="budget" class="mt-1 block w-full" type="number" step="0.01" name="budget" placeholder="Ingrese el monto" :value="old('budget')" required />
                     <x-input-error :messages="$errors->get('budget')" class="mt-2" />
                     </div>
                  <div>
                         <x-input-label for="recursosObtenidos" :value="__('Recursos obtenidos por:')" />
-                       <select class="mt-1 block w-full" name="id" id="id" required>
+                       <select class="mt-1 block w-full" name="recursosObtenidos" id="recursosObtenidos" required>
                 <option value="">-Seleccionar-</option> 
                 @foreach ($recursos as $recurso)
                     <option value="{{ $recurso->id }}">{{ $recurso->recursosObtenidos }}</option><br>
@@ -105,7 +105,7 @@
 
                     <div>
                         <x-input-label for="accountBank" :value="__('Cuenta bancaria')" />
-                       <select class="mt-1 block w-full" name="id" id="id" required>
+                       <select class="mt-1 block w-full" name="accountBank" id="accountBank" required>
                 <option value="">-Seleccionar-</option> 
                 @foreach ($banks as $bank)
                     <option value="{{ $bank->id }}">{{ $bank->accountBank }}</option><br>
@@ -116,6 +116,8 @@
 
                 </div>
             </div>
+
+
 
             {{-- Fechas --}}
       <div class="border p-4 rounded-lg">
@@ -205,7 +207,7 @@
               <div class="grid grid-cols-2 gap-2 dark:text-white">
     @foreach ($services as $service)
         <label class="flex items-center space-x-2">
-            <input type="checkbox" name="nameInstalation[]" value="{{ $service->nameInstalation }}" class="rounded">
+            <input type="checkbox" for="id_instalationService" id="id_instalationService" name="nameInstalation[]" value="{{ $service->nameInstalation }}" class="rounded">
             <span>{{ $service->nameInstalation }}</span>
         </label>
     @endforeach
@@ -218,7 +220,7 @@
     <h2 class="text-lg font-semibold mb-4 dark:text-white">Mano de Obra</h2>
 
     <div class="grid grid-cols-1 gap-4">
-        <table class="w-full text-left" id="tabla-trabajadores">
+        <table class="w-full text-center text-black dark:text-white"  id="tabla-trabajadores">
             <thead>
                 <tr>
                     <th>Trabajador</th>
@@ -231,7 +233,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <select name="id[]" class="w-full border p-1" required>
+                        <select name="id_empleado[]" for="id_empleado" class="w-full border p-1" required>
                             <option value="">-Seleccionar-</option> 
                             @foreach ($users as $user)
                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -239,14 +241,15 @@
                         </select>
                     </td>
                     <td>
-                        <input type="number" name="jornadas[]" class="w-full border p-1 jornadas" oninput="calcularTotal(this)">
-                    </td>
-                    <td>
-                        <input type="number" name="salario[]" class="w-full border p-1 salario" oninput="calcularTotal(this)">
-                    </td>
-                    <td>
-                        <input type="text" name="TotalSalario[]" class="total-salario w-full border p-1 bg-gray-100 total" readonly>
-                    </td>
+    <input type="number" for="jornadas" id="jornadas" name="jornadas[]" class="w-full border p-1 jornadas" step="1" oninput="calcularTotal(this)">
+</td>
+<td>
+    <input type="number" for="salario" id="salario" name="salario[]" class="w-full border p-1 salario" step="0.01" oninput="calcularTotal(this)">
+</td>
+<td>
+    <input type="number" for="totalSalario" id="totalSalario" name="TotalSalario[]" class="total-salario w-full border p-1 bg-gray-100 total" step="0.01" readonly>
+</td>
+
                     <td class="text-center">
                         <button type="button" onclick="eliminarFila(this)" class="text-red-600 hover:underline">Eliminar</button>
                     </td>
@@ -254,8 +257,8 @@
             </tbody>
         </table>
         <tr>
-    <td colspan="3" class="text-right font-semibold">Total Mano de Obra:</td>
-    <td><input type="text" id="sumaTotalSalario" class="w-full border p-1 bg-gray-200" readonly></td>
+    <td colspan="3" class="text-black dark:text-white text-center font-semibold">Total Mano de Obra:</td>
+    <td><input type="number" name="totalManoObra" step="0.01" id="totalManoObra" class="w-full border p-1 bg-gray-200" readonly></td>
 </tr>
 
 
@@ -275,7 +278,7 @@ agregar y eliminar campos--}}
         total += valor;
     });
 
-    document.getElementById('sumaTotalSalario').value = total.toFixed(2);
+    document.getElementById('totalManoObra').value = total.toFixed(2);
     actualizarTextoPresupuesto();
 }
 
@@ -325,13 +328,18 @@ function calcularTotalSalario() {
 
     }
 </script>
+<script>
+console.log('Total:', total);
+console.log('Suma mano de obra:', total.toFixed(2));
+</script>
+
 
            {{-- Costo de productos --}}
 <div class="border p-4 rounded-lg">
     <h2 class="text-lg font-semibold mb-4 dark:text-white">Costo de productos</h2>
 
     <div class="grid grid-cols-1 gap-4">
-        <table class="w-full text-left" id="tabla-productos">
+        <table class="w-full text-left text-black dark:text-white" id="tabla-productos">
             <thead>
                 <tr>
                     <th>Producto</th>
@@ -343,7 +351,7 @@ function calcularTotalSalario() {
             <tbody>
                 <tr>
                     <td>
-                        <select name="producto_id[]" class="w-full border p-1" required>
+                        <select name="id_product[]" class="w-full border p-1" required>
                             <option value="">-Seleccionar-</option> 
                             @foreach ($products as $product)
                                 <option value="{{ $product->id }}">{{ $product->name_product }}</option>
@@ -351,7 +359,7 @@ function calcularTotalSalario() {
                         </select>
                     </td>
                     <td>
-                        <select name="proveedor_id[]" class="w-full border p-1" required>
+                        <select name="id_supplier[]" id="id_supplier" class="w-full border p-1" required>
                             <option value="">-Seleccionar-</option> 
                             @foreach ($suppliers as $supplier)
                                 <option value="{{ $supplier->id }}">{{ $supplier->name_supplier }}</option>
@@ -359,7 +367,7 @@ function calcularTotalSalario() {
                         </select>
                     </td>
                     <td>
-                        <input type="number" name="costo[]" class="costo-producto w-full border p-1" step="0.01" required oninput="actualizarSumaCostos()">
+                        <input type="number" for="costo" id="costo" name="costo[]" class="costo-producto w-full border p-1" step="0.01" required oninput="actualizarSumaCostos()">
                     </td>
                     <td class="text-center">
                         <button type="button" onclick="eliminarFilaProducto(this)" class="text-red-600 hover:underline">Eliminar</button>
@@ -369,8 +377,8 @@ function calcularTotalSalario() {
         </table>
 
         <tr>
-            <td colspan="2" class="text-right font-semibold">Total Costo Productos:</td>
-            <td><input type="text" id="sumaTotalCosto" class="w-full border p-1 bg-gray-200" readonly></td>
+            <td colspan="2" class=" text-black dark:text-white text-right font-semibold">Total Costo Productos:</td>
+            <td><input type="text" for="totalProductos" name="totalProductos" id="totalProductos" class="w-full border p-1 bg-gray-200" readonly></td>
             <td></td>
         </tr>
 
@@ -389,7 +397,7 @@ function calcularTotalSalario() {
         total += parseFloat(input.value) || 0;
     });
 
-    document.getElementById('sumaTotalCosto').value = total.toFixed(2);
+    document.getElementById('totalProductos').value = total.toFixed(2);
     actualizarTextoPresupuesto();
 }
 function actualizarTextoPresupuesto() {
@@ -472,6 +480,19 @@ function actualizarTextoPresupuesto() {
             </div>
         </div>
     </form>
+    {{---Aqui es para mostrar los errores del sistema---}}
+
+    @if ($errors->any())
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <strong>¡Error!</strong> Revisa los campos marcados. <br>
+        <ul class="mt-2 list-disc list-inside">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
     {{--CALCULO DE DIAS PARA LAS PRIMERAS FECHAS--}}
     <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -596,4 +617,4 @@ function actualizarTextoPresupuesto() {
     });
 </script>
 
-</x-app-layout>
+</x-guest-layout>

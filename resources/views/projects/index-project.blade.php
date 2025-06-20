@@ -75,20 +75,21 @@
                             <td class="px-4 py-2">{{ $project->dateEnd }}</td>
                             <td class="px-4 py-2">{{ $project->budget }}</td>
                             <td class="px-4 py-2">{{ $project->id_priority }}</td>
-                            <td class="px-4 py-2">{{ $project->id_status }}</td>
-                            <td class="px-4 py-2"> <a href="{ route('edit-employees', $empleado->id) }}" class="text-blue-600 hover:underline">Ver más</a></td>
+                            <td class="px-4 py-2">{{ $project->id_status}}</td>
+                            <td class="px-4 py-2"> <a href="{{ route('edit-project', $project->id) }}" class="text-blue-600 hover:underline">Editar</a></td>
                             <td class="px-4 py-2">
-                                <a href="{route('edit-user', $empleado->id) }" class="text-blue-600 hover:underline">Editar</a> 
-                                <form action="{{ route('delete-employees', $empleado->id) }}" method="POST" style="display:inline-block;"> 
+                                <a href="{{route('edit-project', $project->id) }}" class="text-red-600 hover:underline">PDF</a> | 
+                                 <a href="{{route('edit-project', $project->id) }}" class="text-green-800 hover:underline">Excel</a>
+                                <form action="{{ route('delete-project', $project->id) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Estas seguro de eliminar este usuario?')">Eliminar</button>
+                                    <button type="submit" class="text-red-400 hover:underline" onclick="return confirm('Estas seguro de eliminar este proyecto?')">X Eliminar</button>
                                 </form>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-4 py-2 text-center">{{ __('Empleado no encontrados') }}</td>
+                            <td colspan="5" class="px-4 py-2 text-center">{{ __('Proyectos no encontrados') }}</td>
                         </tr>
                     @endforelse
                 </tbody>

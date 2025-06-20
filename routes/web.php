@@ -95,6 +95,9 @@ Route::delete('/delete-employees/{id}',[EmpleadosController::class, 'delete'])->
 Route::get('/index-project',[ProjectController::class,'index'])->name('index-project');
 Route::get('/create-project',[ProjectController::class,'create'])->name('create-project');
 Route::post('/create-project',[ProjectController::class,'store'])->name('store-project');
+Route::get('/edit-project/{id}',[ProjectController::class, 'edit'])->name('edit-project');
+Route::put('/edit-project/{id}',[ProjectController::class, 'update'])->name('edit-project');
+Route::delete('/delete-project/{id}',[ProjectController::class, 'delete'])->name('delete-project');
 
 
 #Parte de los servicios de instalación
