@@ -7,10 +7,19 @@
             <div class="text-center text-gray-800 dark:text-white">
                 EMPLEADO
             </div>
-        <div class="mt-2 flex justify-center items-center h-full">
-            <img class="flex justify-center items-center h-full w-150" src="{{ asset('storage/' . $empleados->foto) }}" alt="Imagen de empleado" width="150">
-                            </td>
-        </div>
+       <div class="mt-4 justify-center justify-items-center text-center">
+    <x-input-label for="foto" value="('Foto del empleado')"/>
+    <x-text-input id="foto"  class="block mt-1 w-full justify-center justify-items-center text-center" type="file" name="foto" value/>
+    <input type="hidden" name="foto_actual" value="{{ $empleados->foto }}">
+</div> 
+
+<!-- Mostrar imagen actual -->
+@if ($empleados->foto)
+    <div class="mt-2 justify-center justify-items-center text-center">
+        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">Imagen actual:</p>
+        <img src="{{ asset('storage/' . $empleados->foto) }}" alt="Foto actual" class="w-40 h-40 object-cover rounded justify-items-center">
+    </div>
+@endif
         <div>
             <x-input-label for="Nombre" :value="__('Nombre de empleado')" />
             <x-text-input id="Nombre" class="block mt-1 w-full" type="text" name="Nombre"  value="{{ $empleados->Nombre }}" required />
@@ -71,10 +80,7 @@
            <x-input-label for="tipoSangre" :value="__('Tipo de sangre')" />
             <x-text-input id="tipoSangre" class="block mt-1 w-full" type="text" name="tipoSangre"  value="{{ $empleados->tipoSangre }}" required />
         </div>
-        <div class="mt-4">
-        <x-input-label for="foto" :value="('Foto del empleado')"/>
-            <x-text-input id="foto" class="block mt-1 w-full" type="file" name="foto" value="{{$empleados->foto}}" required/>
-        </div>
+        
          <div style="text-align: center;" class="mt-4">
             <x-primary-button class="ms-4">
                 {{ __('Actualizar') }}

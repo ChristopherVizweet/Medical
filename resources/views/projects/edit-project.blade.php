@@ -262,7 +262,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+               
                    <!-- <td>
                         <select name="id_empleado[]" for="id_empleado" class="w-full border p-1" required>
                             <option value="">-Seleccionar-</option> 
@@ -317,11 +317,7 @@
     </td>
 </tr>
 @endforeach
-
-                    <td class="text-center">
-                        <button type="button" onclick="eliminarFila(this)" class="text-red-600 hover:underline">Eliminar</button>
-                    </td>
-                </tr>
+                
             </tbody>
         </table>
         <tr>
@@ -390,7 +386,7 @@ function calcularTotalSalario() {
         if (tabla.rows.length > 1) {
             fila.remove();
         } else {
-            alert('Debe haber al menos una fila.');
+            alert('Debe haber al menos una fila de trabajadores.');
         }
         actualizarSumaTotalSalario();
 

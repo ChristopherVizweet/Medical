@@ -229,7 +229,7 @@ public function update(Request $request,$id){
         'budget' => $request->budget,
         'accountBank' => $request->accountBank,
         'id_priority' => $request->id_priority,
-        'id_instalationService' => implode(', ', $request->nameInstalation),
+        #'id_instalationService' => implode(', ', $request->nameInstalation),
         'id_status' => $request->id_status,
         'requestDate' => $request->requestDate,
         'estimateDate' => $request->estimateDate,
@@ -240,18 +240,18 @@ public function update(Request $request,$id){
         'recursosObtenidos' => $request->recursosObtenidos,
         'ejecutionDate' => $request->ejecutionDate,
     ]);
-
+    $projects->empleados()->delete();
     foreach ($request->id_empleado as $index => $empleadoId) {
-        $projects->empleados()->update([
+        $projects->empleados()->create([
             'id_empleado' => $empleadoId,
             'jornadas' => $request->jornadas[$index],
             'salario' => $request->salario[$index],
             'total_salario' => $request->TotalSalario[$index],
         ]);
     }
-
+    $projects->productos()->delete();
     foreach ($request->id_product as $index => $productId) {
-        $projects->productos()->update([
+        $projects->productos()->create([
             'product_id' => $productId,
             'supplier_id' => $request->id_supplier[$index],
             'costo' => $request->costo[$index],

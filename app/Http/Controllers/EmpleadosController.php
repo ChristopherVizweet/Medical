@@ -93,9 +93,9 @@ public function update(Request $request, $id)
         'tipoSangre'=>'required|string|max:20',
     ]);
 
-    $imagePath = $request->hasFile('foto') 
+    $imagePath1 = $request->hasFile('foto') 
             ? $request->file('foto')->store('images', 'public') 
-            : null;
+            : $request -> input('foto_actual');
 
     $empleados = Empleados::findOrFail($id);
     $empleados->update([
@@ -113,7 +113,7 @@ public function update(Request $request, $id)
             'estadoProv'=>$request->estadoProv,
             'codigoPostal'=>$request->codigoPostal,
             'pais'=>$request->pais,
-            'foto' => $imagePath, // Guardamos la ruta de la imagen
+            'foto' => $imagePath1, // Guardamos la ruta de la imagen
             'tipoSangre' => $request->tipoSangre,
     ]);
 
