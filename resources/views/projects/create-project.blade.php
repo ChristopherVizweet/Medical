@@ -207,7 +207,8 @@
               <div class="grid grid-cols-2 gap-2 dark:text-white">
     @foreach ($services as $service)
         <label class="flex items-center space-x-2">
-            <input type="checkbox" for="id_instalationService" id="id_instalationService" name="nameInstalation[]" value="{{ $service->nameInstalation }}" class="rounded">
+            <input type="checkbox" name="nameInstalation[]" value="{{ $service->id }}" {{ in_array($service->id, old('nameInstalation', [])) ? 'checked' : '' }}
+             class="rounded">
             <span>{{ $service->nameInstalation }}</span>
         </label>
     @endforeach
@@ -235,8 +236,8 @@
                     <td>
                         <select name="id_empleado[]" for="id_empleado" class="w-full border p-1" required>
                             <option value="">-Seleccionar-</option> 
-                            @foreach ($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @foreach ($empleados as $empleado)
+                                <option value="{{ $empleado->id }}">{{ $empleado->Nombre }}</option>
                             @endforeach
                         </select>
                     </td>
@@ -378,7 +379,7 @@ console.log('Suma mano de obra:', total.toFixed(2));
 
         <tr>
             <td colspan="2" class=" text-black dark:text-white text-right font-semibold">Total Costo Productos:</td>
-            <td><input type="text" for="totalProductos" name="totalProductos" id="totalProductos" class="w-full border p-1 bg-gray-200" readonly></td>
+            <td><input type="number" for="totalProductos" name="totalProductos" id="totalProductos" class="w-full border p-1 bg-gray-200" readonly></td>
             <td></td>
         </tr>
 

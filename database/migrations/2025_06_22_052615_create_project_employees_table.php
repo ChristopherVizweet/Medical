@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('instalation_services', function (Blueprint $table) {
+        Schema::create('project_employees', function (Blueprint $table) {
             $table->id();
-            $table->string('nameInstalation',255);
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');
+            $table->foreignId('id_empleado')->constrained('empleados');
+            $table->integer('jornadas');
+            $table->decimal('salario', 10, 2);
+            $table->decimal('total_salario', 10, 2);
             $table->timestamps();
         });
     }
@@ -23,6 +27,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('instalation_services');
+        Schema::dropIfExists('project_employees');
     }
 };
+

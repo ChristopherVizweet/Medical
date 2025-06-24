@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('instalation_services', function (Blueprint $table) {
-            $table->id();
-            $table->string('nameInstalation',255);
-            $table->timestamps();
+        Schema::table('projects', function (Blueprint $table) {
+             $table->dropColumn('id_instalationService');
         });
     }
 
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('instalation_services');
+        Schema::table('projects', function (Blueprint $table) {
+            $table->string('id_instalationService')->nullable();
+        });
     }
 };

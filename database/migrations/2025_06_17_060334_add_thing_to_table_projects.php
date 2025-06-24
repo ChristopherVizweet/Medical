@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->string('id_product');
-            $table->string('id_supplier');
+            #$table->string('id_product');
+            #$table->string('id_supplier');
             $table->decimal('costo');
             $table->decimal('totalProductos');
             $table->string('recursosObtenidos');
@@ -27,9 +27,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->dropColumn('id_client');
-            $table->dropColumn('id_supplier');
-            $table->dropColumn('costo');
+            #$table->dropColumn('id_client');
+            #$table->dropColumn('id_supplier');
+            #$table->dropColumn('costo');
             $table->dropColumn('totalProductos');
             $table->dropColumn('recursosObtenidos');
             $table->dropColumn('ejecutionDate');

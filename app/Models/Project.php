@@ -8,10 +8,9 @@ class Project extends Model
 {
     protected $fillable = ['folioProject','id_client','nameProject','seller_id_usuario',
 'company','inCharge_id_usuario','dateBegin','dateEnd',
-'budget','accountBank','id_priority','id_instalationService',
+'budget','accountBank','id_priority',
 'id_status','requestDate','estimateDate','authorizedDate',
-'finishDate','id_empleado','jornadas','salario','totalSalario',
-'totalManoObra','id_product','id_supplier','costo','totalProductos','recursosObtenidos','ejecutionDate'];
+'finishDate','totalManoObra','recursosObtenidos','ejecutionDate','totalProductos'];
 
 public function client()
 {
@@ -28,7 +27,7 @@ public function encargado()
     return $this->belongsTo(User::class, 'inCharge_id_usuario');
 }
 
-public function company()
+public function compani()
 {
     return $this->belongsTo(Company::class, 'company');
 }
@@ -40,8 +39,25 @@ public function priority()
 
 public function status()
 {
-    return $this->belongsTo(Status::class, 'id_status');
+    return $this->belongsTo(Status::class, 'id_status'); 
 }
+
+public function empleados()
+{
+    return $this->hasMany(ProjectEmployee::class); //Es una funcion para que jale los valores o columnas de la tabla ProjectEmployee llamandola empleados
+}
+
+
+public function productos()
+{
+    return $this->hasMany(ProjectProduct::class); //Es una funcion para que jale los valores o columnas de la tabla ProjectProduct llamandola productos
+}
+
+public function services()
+{
+    return $this->belongsToMany(InstalationService::class, 'project_service', 'project_id', 'instalation_service_id'); //Es una funcion para que jale los valores o columnas de la tabla instalationServices llamando a sus valores
+}
+
 
 }
 

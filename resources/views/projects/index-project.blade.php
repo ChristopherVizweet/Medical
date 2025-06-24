@@ -67,15 +67,14 @@
                             <td class="px-4 py-2">{{ $project->id}}</td>
                             <td class="px-4 py-2">{{ $project->folioProject}}</td>
                             <td class="px-4 py-2">{{ $project->nameProject}}</td>
-                            <td class="px-4 py-2">{{ $project->id_client}}</td>
-                            <td class="px-4 py-2">{{ $project->seller_id_usuario }}</td>
-                            <td class="px-4 py-2">{{ $project->company }}</td>
-                            <td class="px-4 py-2">{{ $project->inCharge_id_usuario}}</td>
-                            <td class="px-4 py-2">{{ $project->dateBegin}}</td>
+                            <td class="px-4 py-2">{{ $project->client->name_Client ?? 'Sin cliente' }}</td>
+                            <td class="px-4 py-2">{{ $project->vendedor->name ?? 'Sin vendedor' }}</td>
+                            <td class="px-4 py-2">{{ $project->compani->nameCompany ?? 'Sin empresa' }}</td>
+                            <td class="px-4 py-2">{{ $project->encargado->name ?? 'Sin encargado' }}</td>                            <td class="px-4 py-2">{{ $project->dateBegin}}</td>
                             <td class="px-4 py-2">{{ $project->dateEnd }}</td>
                             <td class="px-4 py-2">{{ $project->budget }}</td>
-                            <td class="px-4 py-2">{{ $project->id_priority }}</td>
-                            <td class="px-4 py-2">{{ $project->id_status}}</td>
+                            <td class="px-4 py-2">{{ $project->priority->namePriority ?? 'Sin prioridad' }}</td>
+                            <td class="px-4 py-2">{{ $project->status->nameStatus ?? 'Sin estado' }}</td>
                             <td class="px-4 py-2"> <a href="{{ route('edit-project', $project->id) }}" class="text-blue-600 hover:underline">Editar</a></td>
                             <td class="px-4 py-2">
                                 <a href="{{route('edit-project', $project->id) }}" class="text-red-600 hover:underline">PDF</a> | 

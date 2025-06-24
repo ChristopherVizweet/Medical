@@ -18,21 +18,21 @@ class EmpleadosController extends Controller
       // Validar y guardar datos
     $request->validate([
         'curp' => 'required|string|max:20',
-        'Nombre' => 'required|string|max:10',
+        'Nombre' => 'required|string|max:30',
         'apellidos' => 'required|string|max:22',
         'organizacion' => 'required|string|max:20',
         'cargo' => 'required|string|max:30',
-        'correoElectronico' => 'required|email',
+        'correoElectronico' => 'nullable|email',
         'numeroTelefonoTrabajo' => 'required|string|max:15',
-        'numeroTelParti' => 'required|string|max:15',
+        'numeroTelParti' => 'nullable|string|max:15',
         'sueldo' => 'required|numeric|min:0',
-        'calle' => 'required|string|max:50',
+        'calle' => 'required|string|max:255',
         'ciudad' => 'required|string|max:10',
         'estadoProv' => 'required|string|max:20',
         'codigoPostal' => 'required|integer',
         'pais' => 'required|string|max:15',
         'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
-        'tipoSangre'=>'required|string|max:20',
+        'tipoSangre'=>'nullable|string|max:20',
     ]);
 
     $imagePath = $request->hasFile('foto') 
