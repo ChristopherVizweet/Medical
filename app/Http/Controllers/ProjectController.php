@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Bank;
 use App\Models\Empleados;
 use App\Models\Priority;
@@ -272,5 +272,32 @@ public function delete($id){
     
     return redirect()->route('index-project')->with('success','Proyecto eliminado correctamente');
     }
+
+   public function print($id) //Imprime dependiendo del ID
+{
+     $projects = Project::all();
+        $priorities=Priority::all();
+        $clients=Client::all();
+        $companies=Company::all();
+        $users=User::all();
+        $empleados=Empleados::all();
+        $services=InstalationService::all();
+        $statues=Status::all();
+        $recursos=Recursos::all();
+        $banks=Bank::all();
+        $suppliers=Supplier::all();
+        $products=Product::all();
+        
+    
+    $project = Project::with(['empleados.empleado', 'productos.productoc','productos.supplier',
+    'services','client','compani','vendedor','encargado','priority','status','recursos',
+    'empleados','cuenta']) // si tienes relaciones
+                     ->findOrFail($id);
+
+    $pdf = Pdf::loadView('projects.pdf-project', compact('project','services','services','empleados','priorities','users','clients','companies','services','statues','recursos','banks','suppliers','products'));
+
+    return $pdf->stream('reporte_proyecto_'.$project->id.'.pdf');
+    // También puedes usar ->download() para forzar la descarga
+}
 }
 

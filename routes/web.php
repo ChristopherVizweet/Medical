@@ -153,6 +153,10 @@ Route::put('/edit-bank/{id}',[BankController::class, 'update'])->name('edit-bank
 Route::delete('/delete-bank/{id}',[BankController::class, 'delete'])->name('delete-bank');
 
 
+#Parte para la creacion de PDF
+Route::get('/pdf-project/{id}',[ProjectController::class, 'print'])->name('pdf-project');
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

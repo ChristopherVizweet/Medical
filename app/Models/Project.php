@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Project extends Model
 {
@@ -58,6 +59,13 @@ public function services()
     return $this->belongsToMany(InstalationService::class, 'project_service', 'project_id', 'instalation_service_id'); //Es una funcion para que jale los valores o columnas de la tabla instalationServices llamando a sus valores
 }
 
+public function recursos(){
+    return $this->belongsTo(Recursos::class,'recursosObtenidos');
+}
+
+public function cuenta(){
+    return $this->belongsTo(Bank::class,'accountBank');
+}
 
 }
 

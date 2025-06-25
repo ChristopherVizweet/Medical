@@ -72,12 +72,12 @@
                             <td class="px-4 py-2">{{ $project->compani->nameCompany ?? 'Sin empresa' }}</td>
                             <td class="px-4 py-2">{{ $project->encargado->name ?? 'Sin encargado' }}</td>                            <td class="px-4 py-2">{{ $project->dateBegin}}</td>
                             <td class="px-4 py-2">{{ $project->dateEnd }}</td>
-                            <td class="px-4 py-2">{{ $project->budget }}</td>
+                            <td class="px-4 py-2">${{ $project->budget }}</td>
                             <td class="px-4 py-2">{{ $project->priority->namePriority ?? 'Sin prioridad' }}</td>
                             <td class="px-4 py-2">{{ $project->status->nameStatus ?? 'Sin estado' }}</td>
                             <td class="px-4 py-2"> <a href="{{ route('edit-project', $project->id) }}" class="text-blue-600 hover:underline">Editar</a></td>
                             <td class="px-4 py-2">
-                                <a href="{{route('edit-project', $project->id) }}" class="text-red-600 hover:underline">PDF</a> | 
+                                <a href="{{route('pdf-project', $project->id) }}" class="text-red-600 hover:underline" target=_blank>PDF</a> | 
                                  <a href="{{route('edit-project', $project->id) }}" class="text-green-800 hover:underline">Excel</a>
                                 <form action="{{ route('delete-project', $project->id) }}" method="POST" style="display:inline-block;">
                                     @csrf

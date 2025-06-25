@@ -14,4 +14,9 @@ public function project()
     return $this->belongsTo(Project::class);
 }
 
+ public function empleado()
+    {
+        return $this->belongsTo(Empleados::class, 'id_empleado');
+    }
+
 }
