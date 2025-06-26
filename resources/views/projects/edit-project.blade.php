@@ -169,7 +169,7 @@
 
         {{-- Duración en días --}}
         <div class="text-xl text-center">
-            Duración en días entre solicitud y cotización: <span id="dias_duracion1">0</span> días
+            Duración en días entre solicitud y cotización: <span id="dias_duracion1">0</span > días
         </div>
 
         {{-- Fecha autorizada --}}

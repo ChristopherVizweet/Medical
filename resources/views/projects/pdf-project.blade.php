@@ -4,27 +4,73 @@
 <head>
     <title>Reporte de Proyecto</title>
     <style>
-        body { font-family: DejaVu Sans, sans-serif; font-size: 10px; }
+        body { margin: 0; margin-bottom: 40px; font-family: DejaVu Sans, sans-serif; font-size: 10px; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { border: 1px solid #000; padding: 5px; text-align: left; }
         #fechas { text-align: center; }
         #cuentass { border: 2px solid blue; display: flex; padding: 5px; width: 100%; height: 20%; }
         #general { border: 2px solid blue; display: flex; padding: 5px; width: 100%; height: 18%; justify-content: space-between;}
         h1 { text-align: center; font-size: 11px; }
+        h3 { text-align: center; font-size: 9px; }
         #folio { color: red; }
         #servi { border-collapse: collapse; border: none;}
         .columna1 { float: left;  width: 48%;}
         .columna2 { float: right; width: 48%;}
+        .terminos { text-align: center; }
+        #tema { text-align: center; font-size: 15px; }
+        #header img {
+        width: 100px;   /*Este es el diseño de la imagen del logo1*/
+        }
+        #header #logo2 {
+        width: 40px; 
+        float: right;  /*Este es el diseño de la imagen del logo1*/
+    }
+        #header h1 {
+            font-size: 14px;
+            margin: 0;
+        }
+        #footer_QR {
+    text-align: center; /* Centra horizontalmente el contenido */
+    margin-top: 10px;
+}
 
+#footer_QR img {
+    width: 200px;
+    display: inline-block;
+}
+.footer {
+        margin-top: 50px;
+    text-align: center;
+    font-size: 10px;
+    border-top: 1px solid #000;
+    padding-top: 10px;
+}
+.footer img{
+     width: 200px;
+}
+.texto_footer {color: blue}
+#marca-agua {
+    position: fixed;
+    top: 35%;
+    left: 20%;
+    width: 400px;
+    opacity: 0.5;
+    z-index: -1;
+}
     </style>
-
+    
 </head>
 
 <body>
+    
     <h5>Reporte del Proyecto #{{ $project->id }}</h5>
     {{--Aqui comienza el diseño del reporte de PDF--}}
     <div id="general">
-        <h1>MEDICAL GAS SYSTEMS INTERNATIONAL SA DE CV</h1>
+        <div id="header">
+    <img src="{{ public_path('img/logo1.png') }}" alt="Logo Empresa" width="50">
+    <img id="logo2" src="{{ public_path('img/logo2.jpg') }}" alt="Logo Empresa2" width="30px">
+    <h1>MEDICAL GAS SYSTEMS INTERNATIONAL SA DE CV</h1>
+</div>
     <div class="columna1">
         <p><strong>Nombre del proyecto:</strong> {{ $project->nameProject }}</p>
         <p id="folio"><strong>Folio del proyecto:</strong> {{ $project->folioProject }}</p>
@@ -116,5 +162,30 @@
         <p><strong>Total de productos:</strong> ${{ number_format($project->totalProductos, 2) }}</p>
 <p><strong>Cuenta bancaria: </strong>{{$project->cuenta->accountBank}}</p>
 </div>
+<img id="marca-agua" src="{{ public_path('img/marca_agua.png') }}" alt="Marca de Agua">
+
 </body>
+<!--<footer>
+    <div id="terminos">
+        <p id="tema">TERMINOS Y CONDICIONES</p>
+        <h3>REQUERIMIENTOS DE PAGO</h3>
+        <p class="terminos">Se requiere orden de compra.</p>
+        <p class="terminos">Se requiere de anticipo del 70% y 30% aviso de embarque</p>
+        <h3>TIMEPO DE ENTREGA</h3>
+        <p class="terminos">El tiempo de entrega 4-6 semanas</p>
+        <p class="terminos">Garantia 12 meses en defectos de fabricacion</p>
+        <h3>ACEPTACIÓN DE TRABAJO</h3>
+        <p class="terminos">Al ser aceptado nuestro presupuesto, mandar la cotizacion de regreso via email con nombre y firma de quien autoriza</p>
+        </div>
+        <div id="footer_QR">
+    <img src="{ public_path('img/frame.png') }}" alt="QR terminos" width="100">
+    </div>
+</footer>-->
+<div class="footer">
+    <p>Medical Gas Systems International © {{ date('Y') }}</p>
+    <p>TERMINOS Y CONDICIONES</p>
+    <img src="{{ public_path('img/frame.png') }}" alt="QR terminos" width="80">
+    <p class="texto_footer">Somos Fabricantes y Distribuidores</p>
+    <p class="texto_footer"> www.medicalgas.com.mx , contactomedicalgas@gmail.com , ventas@medicalgas.com.mx , asesor2@medicalgas.com.mx, Tel Oficina: 55 2594 2008, 55 25942396, 55 72581417, Movil: </p>
+</div>
 </html>
