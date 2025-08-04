@@ -27,7 +27,7 @@ class SupplierController extends Controller
         
         return view('supplier.index_Supplier', compact('suppliers')); 
         
-        #$suppliers = Supplier::all(); 
+        #$suppliers   = Supplier::all(); 
         #return view('supplier.index_Supplier', compact('suppliers')); }
     }
 public function create(){
@@ -71,8 +71,12 @@ public function update(Request $request, $id)
 
     return redirect()->route('index_Supplier')->with('success', 'Proveedor actualizado correctamente');
 }
+
 public function delete($id){
     $supplier=Supplier::findOrFail($id);
+    if($supplier->projectProduct()->exists()){
+      return redirect()->back()->with('error', 'No se puede eliminar el proveedor porque está asociado a productos en proyectos.');   
+    }
     $supplier->delete();
     return redirect()->route('index_Supplier')->with('success','Proveedor eliminado correctamente');
 

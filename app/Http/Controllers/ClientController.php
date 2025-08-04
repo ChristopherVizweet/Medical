@@ -7,12 +7,31 @@ use App\Models\Client;
 class ClientController extends Controller
 {
   public function index(Request $request){
-    $select=Client::select();
-    if($request->has('id')&& !empty($request->id)){
-      $select->where('id',$request->id);
+    /*$select=Client::select();
+    if($request->has('RFC')&& !empty($request->RFC)){
+      $select->where('RFC',$request->RFC);
+    }
+    $select2=Client::select();
+    if($request->has('name_Client')&& !empty($request->name_Client)){
+      $select2->where('name_Client',$request->name_Client);
     }
 
     $clients = $select->get(); // Cambié de $supplier a $suppliers para que coincida con la vista
+    $clients = $select2->get();
+    return view('client.index-client', compact('clients'));*/
+
+    $clientsQuery = Client::query();
+
+    if ($request->filled('RFC')) {
+        $clientsQuery->where('RFC', $request->RFC);
+    }
+
+    if ($request->filled('name_Client')) {
+        $clientsQuery->where('name_Client', $request->name_Client);
+    }
+
+    $clients = $clientsQuery->get();
+
     return view('client.index-client', compact('clients'));
   }
   public function create(){

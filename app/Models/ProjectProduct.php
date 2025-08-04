@@ -23,5 +23,5 @@ public function project()
     {
         return $this->belongsTo(Supplier::class, 'supplier_id');
     }
-
+  
 }

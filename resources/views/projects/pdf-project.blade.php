@@ -30,8 +30,8 @@
             margin: 0;
         }
         #footer_QR {
-    text-align: center; /* Centra horizontalmente el contenido */
-    margin-top: 10px;
+        text-align: center; /* Centra horizontalmente el contenido */
+        margin-top: 10px;
 }
 
 #footer_QR img {

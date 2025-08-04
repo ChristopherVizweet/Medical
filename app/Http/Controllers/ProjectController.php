@@ -19,11 +19,37 @@ use PhpOffice\PhpSpreadsheet\Calculation\Token\Stack;
 
 class ProjectController extends Controller
 {
-    public function index(){
-        
-        $projects = Project::with(['client', 'vendedor', 'encargado', 'compani', 'priority', 'status'])->get();
-        return view('projects.index-project', compact('projects'));
+    public function index(Request $request)
+{
+    $projectsQuery = Project::with(['client', 'vendedor', 'encargado', 'compani', 'priority', 'status']);
+
+    if ($request->filled('folioProject')) {
+        $projectsQuery->where('folioProject', $request->folioProject);
     }
+    if ($request->filled('id_client')) {
+        $projectsQuery->where('id_client', $request->id_client);
+    }
+    if ($request->filled('seller_id_usuario')) {
+        $projectsQuery->where('seller_id_usuario', $request->seller_id_usuario);
+    }
+    if ($request->filled('id_priority')) {
+        $projectsQuery->where('id_priority', $request->id_priority);
+    }
+    if ($request->filled('id_status')) {
+        $projectsQuery->where('id_status', $request->id_status);
+    }
+
+    $projects = $projectsQuery->get();
+
+    // Traemos todos los elementos para llenar los selects
+    $clients = Client::all();
+    $users = User::all(); // vendedores
+    $priorities = Priority::all();
+    $statuses = Status::all();
+    
+
+    return view('projects.index-project', compact('projects', 'clients', 'users', 'priorities', 'statuses'));
+}
     public function create(){
         $projects = Project::all();
         $priorities=Priority::all();

@@ -36,7 +36,11 @@
                   {{ session('success') }}
               </div>
           @endif
-         
+         @if (session('error'))
+    <div id="flash-message" class="fade-out bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-2">
+        {{ session('error') }}
+    </div>
+@endif
               <h1 class="text-2xl dark:text-white font-bold mb-4">Lista de proveedores</h1>
           </div>
           <table class="table-auto w-full text-left bg-white shadow-md rounded-lg">
@@ -52,8 +56,9 @@
                             </option><br>
                             @endforeach
                         </select>
-                       </form>
+                    
                 </div>
+                </form>
                 <tr class="bg-gray-200">
                     <th class="px-4 py-2">{{ __('ID') }}</th>
                     <th class="px-4 py-2">{{ __('Nombre') }}</th>

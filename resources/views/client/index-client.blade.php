@@ -42,19 +42,46 @@
             
             <table class="table-auto w-full border-collapse bg-white shadow-md">
                 <thead class="bg-gray-100">
-                    <div class="float-right text-dark dark:text-white">
-                        <form action="{{ route('index-client') }}" method="GET">
-                            <label class=" text-black dark:text-white text-base font-sans">Buscar por Nombre</label>
-                            <select class="text-black dark:text-black" name="id" id="id" required onchange="this.form.submit()">
+                    <form action="{{ route('index-client') }}" method="GET">
+                        <div class="float-right text-dark dark:text-white">
+                            <label class=" text-black dark:text-white text-base font-sans">Buscar por RFC</label>
+                            <select class="text-black dark:text-black" name="RFC" id="RFC" required onchange="this.form.submit()">
                                 <option class="text-center text-black dark:text-black" value="">--Todos--</option> 
                                 @foreach ($clients as $client)
-                                <option class="text black dark:text-black" value="{{ $client->id }}" {{ request('id') == $client->id ? 'selected' : '' }}>
-                                    {{ $client->name_Client }}
+                                <option class="text black dark:text-black" value="{{ $client->RFC }}" {{ request('RFC') == $client->RFC ? 'selected' : '' }}>
+                                    {{ $client->RFC }}
                                 </option><br>
                                 @endforeach
                             </select>
-                           </form>
+                           
+                        </div>
+
+
+                    <div class="float-right text-dark dark:text-white">
+                            <label class=" text-black dark:text-white text-base font-sans">Buscar por Nombre</label>
+                            <input class="text-black dark:text-black" placeholder="Escriba el nombre" name="name_Client" id="name_Client" required onchange="this.form.submit()">
                     </div>
+                    </form>
+                    <script>
+    document.getElementById('RFC').addEventListener('change', function () {
+        const rfcValue = this.value;
+        const nameInput = document.getElementById('name_Client');
+
+        // Si selecciona "Todos", borrar campo de nombre
+        if (rfcValue === '') {
+            nameInput.value = '';
+        }
+        if (nameInput=== ''){
+            nameInput.value= '';
+        }
+
+        document.getElementById('filterForm').submit();
+    });
+
+    document.getElementById('name_Client').addEventListener('change', function () {
+        document.getElementById('filterForm').submit();
+    });
+</script>
                     <tr>
                         <th class="px-4 py-2 border">ID</th>
                         <th class="px-4 py-2 border">Nombre</th>

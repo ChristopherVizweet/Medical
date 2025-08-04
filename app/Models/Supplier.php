@@ -12,4 +12,9 @@ class Supplier extends Model
     use HasRoles;
     
     protected $fillable = ['name_supplier', 'email_supplier', 'phoneNumber_supplier'];
+
+ public function projectProduct()
+{
+    return $this->hasMany(projectProduct::class, 'supplier_id');
+}
 }

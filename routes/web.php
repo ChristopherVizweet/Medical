@@ -62,8 +62,9 @@ Route::put('/edit-categories/{id}', [CategoriesController::class, 'update'])->na
 Route::delete('/delete-categories/{id}',[CategoriesController::class, 'delete'])->name('delete-categories');
 #PRODUCTOS
 Route::get('/index-product',[ProductController::class,'index'])->name('index-product');
-Route::get('/create-product',[ProductController::class, 'create'])->name('create-product');
-Route::post('/create-product', [ProductController::class, 'store'])->name('store_product');
+Route::get('/import-product',[ProductController::class, 'create'])->name('import-product');
+Route::post('/import-product', [ProductController::class, 'store'])->name('import-product');
+Route::post('/import-product',[ProductController::class, 'store'])->name('import-product');
 Route::get('/edit-product/{id}', [ProductController::class, 'edit'])->name('edit-product');
 Route::put('/edit-product/{id}', [ProductController::class, 'update'])->name('edit-product');
 Route::delete('/delete-product/{id}',[ProductController::class, 'delete'])->name('delete-product');
