@@ -8,4 +8,8 @@ class Categories extends Model
 {
     protected $fillable = ['name_categories'];
 
+    public function products()
+{
+    return $this->hasMany(Product::class, 'id_categories');
+}
 }

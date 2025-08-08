@@ -105,6 +105,31 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('index_Supplier')" :active="request()->routeIs('index_Supplier')">
+                {{ __('Proveedores') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('index-client')" :active="request()->routeIs('index-client')">
+                {{ __('Clientes') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('index-project')" :active="request()->routeIs('index-project')">
+                {{ __('Proyectos') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('index-managmentp')" :active="request()->routeIs('index-managmentp')">
+                {{ __('Gestión de productos') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('index-employees')" :active="request()->routeIs('index-employees')">
+                {{ __('Gestión de empleados') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('index-user')" :active="request()->routeIs('index-user')">
+                {{ __('Gestión de usuarios') }}
+            </x-responsive-nav-link>
+            
         </div>
 
         <!-- Responsive Settings Options -->

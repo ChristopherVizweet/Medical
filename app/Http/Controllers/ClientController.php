@@ -44,7 +44,7 @@ class ClientController extends Controller
     $request->validate([
         'name_Client' => 'required|string|max:255',
         'address_Client' => 'required|string|max:255',
-        'email_Client' => 'required|email|unique:suppliers,email_supplier',
+        'email_Client' => 'required|email|unique:clients,email_Client',
         'phoneNumber_Client' => 'required|string|regex:/^[0-9]{10,15}$/',
         'RFC' => 'required|string',
     ]);
@@ -71,7 +71,7 @@ public function update(Request $request, $id)
     $request->validate([
      'name_Client' => 'required|string|max:255',
         'address_Client' => 'required|string|max:255',
-        'email_Client' => 'required|email|unique:suppliers,email_supplier',
+        'email_Client' => 'required|email|unique:clients,email_Client',
         'phoneNumber_Client' => 'required|string|regex:/^[0-9]{10,15}$/',
         'RFC' => 'required|string',
     ]);

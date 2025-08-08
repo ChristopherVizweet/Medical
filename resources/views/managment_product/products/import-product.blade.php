@@ -45,11 +45,32 @@
         {{ session('error') }}
     </div>
 @endif
-            <h1 class="text-2xl dark:text-white font-bold mb-4">Importe de datos</h1>
-        <input type="file" name="import_file"/>
-        <x-primary-button>
-            Importar
-        </x-primary-button>
+<div class="max-w-xl mx-auto p-6 bg-white dark:bg-gray-400 rounded-xl shadow-md">
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Importe de datos</h1>
+
+    <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">Para importar de manera exitosa, siga estos pasos:</h2>
+
+    <ul class="list-disc list-inside text-gray-700 dark:text-white space-y-2 mb-6">
+        <li>Dar clic en el botón <strong>"Seleccionar archivo"</strong>.</li>
+        <li>Seleccionar el archivo Excel a importar.</li>
+        <li>Dar clic al botón <strong>"Importar"</strong>.</li>
+    </ul>
+
+    <div class="mb-4">
+        <input 
+            type="file" 
+            name="import_file" 
+            class="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4
+                   file:rounded-md file:border-0 file:text-sm file:font-semibold
+                   file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 
+                   dark:file:bg-gray-700 dark:file:text-white dark:hover:file:bg-gray-600"
+        />
+    </div>
+
+    <x-primary-button>
+        Importar
+    </x-primary-button>
+</div>
     </form>
 </x-app-layout>
  

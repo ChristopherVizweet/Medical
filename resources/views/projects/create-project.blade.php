@@ -12,9 +12,9 @@
             <div class="border p-4 rounded-lg">
                 <h2 class="text-lg font-semibold mb-4 dark:text-white">Información del Proyecto</h2>
 
-                  <div class="">
+                    <div >
                         <x-input-label for="folioProject" :value="__('Folio del proyecto')" />
-                        <x-text-input  id="folioProject" class="mt-1 block w-full" type="text" name="folioProject" :value="old('folioProject')" required />
+                        <x-text-input id="folioProject" class="mt-1 block w-full " type="text" name="folioProject" :value="old('folioProject')" required />
                         <x-input-error :messages="$errors->get('folioProject')" class="mt-2" />
                     </div>
 
@@ -217,7 +217,7 @@
             </div>
 
          {{-- Mano de Obra --}}
-<div class="border p-4 rounded-lg">
+<div class="border p-4 rounded-lg text-black dark:text-white">
     <h2 class="text-lg font-semibold mb-4 dark:text-white">Mano de Obra</h2>
 
     <div class="grid grid-cols-1 gap-4">
@@ -234,21 +234,21 @@
             <tbody>
                 <tr>
                     <td>
-                        <select name="id_empleado[]" for="id_empleado" class="w-full border p-1" required>
-                            <option value="">-Seleccionar-</option> 
+                        <select name="id_empleado[]" for="id_empleado" class="text-black dark:text-black w-full border p-1" required>
+                            <option class="text-black dark:text-black">-Seleccionar-</option> 
                             @foreach ($empleados as $empleado)
                                 <option value="{{ $empleado->id }}">{{ $empleado->Nombre }}</option>
                             @endforeach
                         </select>
                     </td>
                     <td>
-    <input type="number" for="jornadas" id="jornadas" name="jornadas[]" class="w-full border p-1 jornadas" step="1" oninput="calcularTotal(this)">
+    <input type="number" for="jornadas" id="jornadas" name="jornadas[]" class="text-black dark:text-black w-full border p-1 jornadas" step="1" oninput="calcularTotal(this)">
 </td>
 <td>
-    <input type="number" for="salario" id="salario" name="salario[]" class="w-full border p-1 salario" step="0.01" oninput="calcularTotal(this)">
+    <input type="number" for="salario" id="salario" name="salario[]" class="text-black dark:text-black w-full border p-1 salario" step="0.01" oninput="calcularTotal(this)">
 </td>
 <td>
-    <input type="number" for="totalSalario" id="totalSalario" name="TotalSalario[]" class="total-salario w-full border p-1 bg-gray-100 total" step="0.01" readonly>
+    <input type="number" for="totalSalario" id="totalSalario" name="TotalSalario[]" class="text-black dark:text-black total-salario w-full border p-1 bg-gray-100 total" step="0.01" readonly>
 </td>
 
                     <td class="text-center">
@@ -257,9 +257,9 @@
                 </tr>
             </tbody>
         </table>
-        <tr>
-    <td colspan="3" class="text-black dark:text-white text-center font-semibold">Total Mano de Obra:</td>
-    <td><input type="number" name="totalManoObra" step="0.01" id="totalManoObra" class="w-full border p-1 bg-gray-200" readonly></td>
+        <tr class="text-black dark:text-white">
+    <td colspan="3" class="text-black dark:text-white text-center font-semibold">Total mano de obra:</td>
+    <td><input type="number" name="totalManoObra" step="0.01" id="totalManoObra" class="text-black dark:text-black w-full border p-1 bg-gray-200" readonly></td>
 </tr>
 
 
@@ -336,7 +336,7 @@ console.log('Suma mano de obra:', total.toFixed(2));
 
 
            {{-- Costo de productos --}}
-<div class="border p-4 rounded-lg">
+<div class="border p-4 rounded-lg text-black dark:text-white">
     <h2 class="text-lg font-semibold mb-4 dark:text-white">Costo de productos</h2>
 
     <div class="grid grid-cols-1 gap-4">
@@ -352,7 +352,7 @@ console.log('Suma mano de obra:', total.toFixed(2));
             <tbody>
                 <tr>
                     <td>
-                        <select name="id_product[]" class="w-full border p-1" required>
+                        <select name="id_product[]" class="w-full border p-1 text-black dark:text-black" required>
                             <option value="">-Seleccionar-</option> 
                             @foreach ($products as $product)
                                 <option value="{{ $product->id }}">{{ $product->name_product }}</option>
@@ -360,7 +360,7 @@ console.log('Suma mano de obra:', total.toFixed(2));
                         </select>
                     </td>
                     <td>
-                        <select name="id_supplier[]" id="id_supplier" class="w-full border p-1" required>
+                        <select name="id_supplier[]" id="id_supplier" class="w-full border p-1 text-black dark:text-black" required>
                             <option value="">-Seleccionar-</option> 
                             @foreach ($suppliers as $supplier)
                                 <option value="{{ $supplier->id }}">{{ $supplier->name_supplier }}</option>
@@ -368,7 +368,7 @@ console.log('Suma mano de obra:', total.toFixed(2));
                         </select>
                     </td>
                     <td>
-                        <input type="number" for="costo" id="costo" name="costo[]" class="costo-producto w-full border p-1" step="0.01" required oninput="actualizarSumaCostos()">
+                        <input type="number" for="costo" id="costo" name="costo[]" class="text-black dark:text-black costo-producto w-full border p-1" step="0.01" required oninput="actualizarSumaCostos()">
                     </td>
                     <td class="text-center">
                         <button type="button" onclick="eliminarFilaProducto(this)" class="text-red-600 hover:underline">Eliminar</button>
@@ -377,9 +377,9 @@ console.log('Suma mano de obra:', total.toFixed(2));
             </tbody>
         </table>
 
-        <tr>
-            <td colspan="2" class=" text-black dark:text-white text-right font-semibold">Total Costo Productos:</td>
-            <td><input type="number" for="totalProductos" name="totalProductos" id="totalProductos" class="w-full border p-1 bg-gray-200" readonly></td>
+        <tr class="text-black dark:text-white">
+            <td colspan="2" class="dark:text-white">Total Costo Productos:</td>
+            <td><input type="number" for="totalProductos" name="totalProductos" id="totalProductos" class="text-black dark:text-black w-full border p-1 bg-gray-200" readonly></td>
             <td></td>
         </tr>
 
@@ -402,8 +402,8 @@ console.log('Suma mano de obra:', total.toFixed(2));
     actualizarTextoPresupuesto();
 }
 function actualizarTextoPresupuesto() {
-    const totalCosto = parseFloat(document.getElementById('sumaTotalCosto').value) || 0;
-    const totalSalario = parseFloat(document.getElementById('sumaTotalSalario').value) || 0;
+    const totalCosto = parseFloat(document.getElementById('totalProductos').value) || 0;
+    const totalSalario = parseFloat(document.getElementById('totalManoObra').value) || 0;
     const totalGeneral = totalCosto + totalSalario;
 
     document.getElementById('textoCosto').textContent = totalCosto.toFixed(2);
@@ -438,8 +438,7 @@ function actualizarTextoPresupuesto() {
     }
 </script>
 
- {{-- Cuentas --}}
-<div class="border p-4 rounded-lg">
+ <div class="border p-4 rounded-lg">
     <h2 class="text-lg font-semibold mb-4 dark:text-white">Cuentas</h2>
     <div class="flex flex-col space-y-4 text-left text-gray-800 dark:text-white">
         <p><strong>Presupuesto:</strong> <span id="mostrarPresupuesto">$0.00</span></p>
@@ -451,23 +450,23 @@ function actualizarTextoPresupuesto() {
 
 <script>
     function actualizarResumen() {
-        const presupuesto = parseFloat(document.getElementById('budget').value) || 0;
-        const totalSalarios = parseFloat(document.getElementById('sumaTotalSalario').value) || 0;
-        const totalCostos = parseFloat(document.getElementById('sumaTotalCosto').value) || 0;
+        const presupuesto = parseFloat(document.getElementById('budget')?.value) || 0;
+        const totalSalarios = parseFloat(document.getElementById('totalManoObra')?.value) || 0;
+        const totalCostos = parseFloat(document.getElementById('totalProductos')?.value) || 0;
         const total = totalSalarios + totalCostos;
 
         document.getElementById('mostrarPresupuesto').textContent = `$${presupuesto.toFixed(2)}`;
-        document.getElementById('mostrarManoObra').textContent = `$${totalSalarios.toFixed(2)}`;
-        document.getElementById('mostrarCostoProductos').textContent = `$${totalCostos.toFixed(2)}`;
-        document.getElementById('totalGeneral').textContent = `$${total.toFixed(2)}`;
+        document.getElementById('textoSalario').textContent = `${totalSalarios.toFixed(2)}`;
+        document.getElementById('textoCosto').textContent = `${totalCostos.toFixed(2)}`;
+        document.getElementById('textoTotal').textContent = `${total.toFixed(2)}`;
     }
 
     // Detectar cambios
-    document.getElementById('budget').addEventListener('input', actualizarResumen);
-    document.getElementById('sumaTotalSalario').addEventListener('input', actualizarResumen);
-    document.getElementById('sumaTotalCosto').addEventListener('input', actualizarResumen);
+    document.getElementById('budget')?.addEventListener('input', actualizarResumen);
+    document.getElementById('totalManoObra')?.addEventListener('input', actualizarResumen);
+    document.getElementById('totalProductos')?.addEventListener('input', actualizarResumen);
 
-    // Ejecutar una vez al cargar la página
+    // Ejecutar al cargar la página
     window.addEventListener('DOMContentLoaded', actualizarResumen);
 </script>
 

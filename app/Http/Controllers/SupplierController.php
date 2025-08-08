@@ -22,7 +22,7 @@ class SupplierController extends Controller
         if($request->has('id') && !empty($request->id)){
             $select->where('id',$request->id);
         }
-        $suppliers=Supplier::all();
+       
         $suppliers = $select->get();
         
         return view('supplier.index_Supplier', compact('suppliers')); 

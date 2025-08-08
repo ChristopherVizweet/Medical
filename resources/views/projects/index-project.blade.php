@@ -39,12 +39,52 @@
                     {{ session('success') }}
                 </div>
             @endif
-    
-            <h1 class="text-2xl font-bold mb-4 text-black dark:text-white">Lista de proyectos</h1>
-    
-            <table class="table-auto w-full text-left bg-white shadow-md rounded-lg">
-                <thead>
-            <div class="justify-items-center">
+            
+       <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold text-black dark:text-white">Lista de proyectos</h1>
+
+        <!-- Botones de acción -->
+        <div class="flex items-center space-x-2" x-data="{ open: false }">
+            <!-- Botón Nuevo Proyecto -->
+            <x-primary-button class="font-semibold">
+                <a href="{{ route('create-project') }}" class="text-dark">
+                    {{ __('Nuevo proyecto') }}
+                </a>
+            </x-primary-button>
+
+            <!-- Botón Ver más -->
+            <x-primary-button @click="open = !open" class="font-semibold">
+                {{ __('Ver más') }}
+            </x-primary-button>
+
+            <!-- Menú desplegable -->
+            <div
+                x-show="open"
+                @click.away="open = false"
+                class="absolute right-0 mt-2 w-64 bg-white border rounded-lg shadow-lg z-50 p-3 space-y-2"
+            >
+                <x-primary-button class="w-full text-left">
+                    <a href="{{ route('index-service') }}" class="text-dark">Nuevo servicio</a>
+                </x-primary-button>
+                <x-primary-button class="w-full text-left">
+                    <a href="{{ route('index-priority') }}" class="text-dark">Nueva prioridad</a>
+                </x-primary-button>
+                <x-primary-button class="w-full text-left">
+                    <a href="{{ route('index-status') }}" class="text-dark">Nuevo status</a>
+                </x-primary-button>
+                <x-primary-button class="w-full text-left">
+                    <a href="{{ route('index-company') }}" class="text-dark">Nueva empresa</a>
+                </x-primary-button>
+                <x-primary-button class="w-full text-left">
+                    <a href="{{ route('index-recursos') }}" class="text-dark">Nuevo recurso</a>
+                </x-primary-button>
+                <x-primary-button class="w-full text-left">
+                    <a href="{{ route('index-bank') }}" class="text-dark">Nueva cuenta bancaria</a>
+                </x-primary-button>
+            </div>
+        </div>
+    </div>
+<div class="justify-items-center">
                    <!-- COMIENZAN LOS FILTROS DE BUSQUEDA -->
 <form action="{{ route('index-project') }}" method="GET" class="mb-4">
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 text-black dark:text-white">
@@ -117,7 +157,11 @@
 </form>
 
             </div>
-                    <tr class="bg-gray-200 table-auto w-full text-left shadow-md rounded-lg">
+<div class="overflow-x-auto">
+   <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
+                <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
+            
+                    <tr class="">
                         <th class="px-4 py-2">{{('ID') }}</th>
                         <th class="px-4 py-2">{{('Folio del proyecto') }}</th>
                         <th class="px-4 py-2">{{('Nombre del proyecto')}}</th>
@@ -148,14 +192,14 @@
                             <td class="px-4 py-2">${{ $project->budget }}</td>
                             <td class="px-4 py-2">{{ $project->priority->namePriority ?? 'Sin prioridad' }}</td>
                             <td class="px-4 py-2">{{ $project->status->nameStatus ?? 'Sin estado' }}</td>
-                            <td class="px-4 py-2"> <a href="{{ route('edit-project', $project->id) }}" class="text-blue-600 hover:underline">Editar</a></td>
+                            <td class="px-4 py-2"> <a href="{{ route('edit-project', $project->id) }}" class="text-blue-600 dark:text-blue-900 hover:underline">Editar</a></td>
                             <td class="px-4 py-2">
                                 <a href="{{route('pdf-project', $project->id) }}" class="text-red-600 hover:underline" target=_blank>PDF</a> | 
                                  <a href="{{route('edit-project', $project->id) }}" class="text-green-800 hover:underline">Excel</a>
                                 <form action="{{ route('delete-project', $project->id) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-400 hover:underline" onclick="return confirm('Estas seguro de eliminar este proyecto?')">X Eliminar</button>
+                                    <button type="submit" class="text-red-400 dark:text-900 hover:underline" onclick="return confirm('Estas seguro de eliminar este proyecto?')">X Eliminar</button>
                                 </form>
                             </td>
                         </tr>
@@ -168,45 +212,8 @@
                 <!---AQUI ESTA INICIANDO EL SCRIPT DE ALPINE--->
                 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
-                <div class="relative float-left mt-4 text-sm" x-data="{ open: false }">
-    <!-- Botón fijo -->
-    <x-primary-button class="mr-2 font-semibold">
-        <a href="{{ route('create-project') }}" class="text-dark"> 
-            {{ __('Nuevo proyecto') }}
-        </a> 
-    </x-primary-button>
-
-    <!-- Botón "Ver más" -->
-    <x-primary-button @click="open = !open" class="font-semibold">
-        {{ __('Ver más') }}
-    </x-primary-button>
-
-    <!-- Menú desplegable -->
-    <div 
-        x-show="open" 
-        @click.away="open = false" 
-        class="absolute right-0 mt-2 w-64 bg-white border rounded-lg shadow-lg z-50 p-3 space-y-2"
-    >
-        <x-primary-button class="w-full text-left">
-            <a href="{{ route('index-service') }}" class="text-dark">Nuevo servicio</a>
-        </x-primary-button>
-        <x-primary-button class="w-full text-left">
-            <a href="{{ route('index-priority') }}" class="text-dark">Nueva prioridad</a>
-        </x-primary-button>
-        <x-primary-button class="w-full text-left">
-            <a href="{{ route('index-status') }}" class="text-dark">Nuevo status</a>
-        </x-primary-button>
-        <x-primary-button class="w-full text-left">
-            <a href="{{ route('index-company') }}" class="text-dark">Nueva empresa</a>
-        </x-primary-button>
-        <x-primary-button class="w-full text-left">
-            <a href="{{ route('index-recursos') }}" class="text-dark">Nuevo recurso</a>
-        </x-primary-button>
-        <x-primary-button class="w-full text-left">
-            <a href="{{ route('index-bank') }}" class="text-dark">Nueva cuenta bancaria</a>
-        </x-primary-button>
-    </div>
+               
 </div>
             </table>
-        </div>
+</div>
     </x-app-layout>

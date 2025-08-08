@@ -45,7 +45,8 @@
 @endif
             <h1 class="text-2xl dark:text-white font-bold mb-4">Lista de productos</h1>
         </div>
-        <div class="float-right mr-4">
+          <!--Comienzan los filtros de busqueda-->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">            
        <form action="{{ route('index-product') }}" method="GET">
         <label class="text-black dark:text-white text-base font-sans">Buscar por categoria</label>
         <select class="" name="id_categories" id="id_categories" required onchange="this.form.submit()">
@@ -57,10 +58,26 @@
             @endforeach
         </select>
        </form>
-    </div>
-        <table class="table-auto w-full text-center bg-white shadow-md rounded-lg">
-          <thead>
-              <tr class="bg-gray-200">
+        </div>
+    
+    <!--Boton para crear un nuevo producto-->
+    <div class="flex items-center space-x-2">
+    <x-primary-button class="mt-4">
+          <a href="{{ route('create-product') }}" class="text-dark">
+              Agregar un nuevo producto
+          </a>
+      </x-primary-button>
+      <!--Boton para importar datos de Excel-->
+      <x-primary-button class="mt-4">
+          <a href="{{ route('import-product') }}" class="text-dark">
+            Importar datos de Excel
+          </a>
+      </x-primary-button>
+      </div>
+        <div class="overflow-x-auto rounded-lg shadow">
+            <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
+                <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
+              <tr class="">
                   <th class="px-4 py-2">{{ __('ID') }}</th>
                   <th class="px-4 py-2">{{ __('Categoria') }}</th>
                   <th class="px-4 py-2">{{ __('Tipo') }}</th>
@@ -80,7 +97,7 @@
           <tbody>
              @forelse ($products as $product)
              
-                 <tr class="border-t">
+                 <tr class="">
                      <td class="px-4 py-2">{{ $product->id }}</td>
                      <td class="px-4 py-2">{{ $product->categories->name_categories }}</td>
                      <td class="px-4 py-2">{{ $product->name_product }}</td>
@@ -110,17 +127,8 @@
                  </tr>
              @endforelse
          </tbody>
-         <x-primary-button class="mt-4">
-          <a href="{{ route('import-product') }}" class="text-dark">
-              {{ __('Agregar un nuevo producto') }}
-          </a>
-      </x-primary-button>
-      <!--Boton para importar datos de Excel-->
-      <x-primary-button class="mt-4 ml-3">
-          <a href="{{ route('import-product') }}" class="text-dark">
-              {{ __('Importar datos de Excel') }}
-          </a>
-      </x-primary-button>
+         
+    </div>
      </table>
  </div>
 

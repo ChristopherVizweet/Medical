@@ -42,9 +42,10 @@
     
             <h1 class="text-2xl font-bold mb-4 text-black dark:text-white">Lista de empleados</h1>
     
-            <table class="table-auto w-full text-left bg-white shadow-md rounded-lg">
-                <thead>
-                    <tr class="bg-gray-200">
+           <div class="overflow-x-auto">
+     <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
+                <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
+                    <tr>
                         <th class="px-4 py-2">{{ __('ID') }}</th>
                         <th class="px-4 py-2">{{ __('Nombre') }}</th>
                         <th class="px-4 py-2">{{ __('Apellidos') }}</th>
@@ -69,13 +70,13 @@
                             <td class="px-4 py-2">{{ $empleado->tipoSangre}}</td>
                             <td class="px-4 py-2"><img class="items-center" src="{{ asset('storage/' . $empleado->foto) }}" alt="Imagen de empleado" width="150">
                             </td>
-                            <td class="px-4 py-2"> <a href="{{ route('edit-employees', $empleado->id) }}" class="text-blue-600 hover:underline">Ver más</a></td>
+                            <td class="px-4 py-2"> <a href="{{ route('edit-employees', $empleado->id) }}" class="text-blue-600 dark:text-blue-900 hover:underline">Ver más</a></td>
                             <td class="px-4 py-2">
                                 <!--<a href="{route('edit-user', $empleado->id) }" class="text-blue-600 hover:underline">Editar</a> |-->
                                 <form action="{{ route('delete-employees', $empleado->id) }}" method="POST" style="display:inline-block;"> 
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Estas seguro de eliminar este usuario?')">Eliminar</button>
+                                    <button type="submit" class="text-red-600 dark:text-red-900 hover:underline" onclick="return confirm('Estas seguro de eliminar este usuario?')">Eliminar</button>
                                 </form>
                             </td>
                         </tr>
@@ -91,5 +92,6 @@
                      </a> 
                 </x-primary-button>
             </table>
+           </div>
         </div>
     </x-app-layout>
