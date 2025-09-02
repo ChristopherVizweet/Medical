@@ -78,6 +78,12 @@
                     {{ __('Crear cliente') }}
                 </a>
             </x-primary-button>
+            <!--Boton para importar datos de Excel-->
+                <x-primary-button class="mt-4">
+          <a href="{{ route('import-client') }}" class="text-dark">
+            Importar datos de Excel
+          </a>
+      </x-primary-button>
         </div>
 
         {{-- Tabla responsive --}}

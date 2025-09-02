@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Imports\SuppliersImport;
 use App\Models\Client;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\Auth;
@@ -30,9 +31,21 @@ class SupplierController extends Controller
         #$suppliers   = Supplier::all(); 
         #return view('supplier.index_Supplier', compact('suppliers')); }
     }
+
+public function create1(){
+    return view('supplier.import-supplier');
+}
+
 public function create(){
     return view('supplier.create_supplier');
 }
+
+public function store1(Request $request){
+        $file=$request->file('import_file');
+        Excel::import(new SuppliersImport, $file);
+        return redirect()->route('index_Supplier')->with('success', 'Proveedores importados exitosamente');
+}
+
 public function store(Request $request) {
     // Validar y guardar datos
     $request->validate([

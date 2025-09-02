@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->ipAddress('RFC')->unique();
             $table->string('name_Client',50);
-            $table->string('email_Client',20);
+            $table->string('email_Client',50);
             $table->string('address_Client',50);
             $table->ipAddress('phoneNumber_Client');
             $table->timestamps();

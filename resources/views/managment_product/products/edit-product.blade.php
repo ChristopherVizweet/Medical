@@ -11,19 +11,22 @@
             <x-text-input id="name_product" class="block mt-1 w-full" type="text" name="name_product" value="{{ $products->name_product }}" required />
 
             <x-input-label for="codeExt_product" :value="__('Codigo exterior del producto')" />
-            <x-text-input id="codeExt_product" class="block mt-1 w-full" type="text" name="codeExt_product" value="{{ $products->codeExt_product }}" required />
+            <x-text-input id="codeExt_product" class="block mt-1 w-full" type="text" name="codeExt_product" value="{{ $products->codeExt_product }}"  />
 
             <x-input-label for="codeInt_product" :value="__('Codigo interior del producto')" />
-            <x-text-input id="codeInt_product" class="block mt-1 w-full" type="text" name="codeInt_product" value="{{ $products->codeInt_product }}" required />
+            <x-text-input id="codeInt_product" class="block mt-1 w-full" type="text" name="codeInt_product" value="{{ $products->codeInt_product }}"  />
 
             <x-input-label for="diameterMM_product" :value="__('Diametro(mm)')" />
-            <x-text-input id="diameterMM_product" class="block mt-1 w-full" type="text" name="diameterMM_product" value="{{ $products->diameterMM_product }}" required />
+            <x-text-input id="diameterMM_product" class="block mt-1 w-full" type="text" name="diameterMM_product" value="{{ $products->diameterMM_product }}"  />
 
             <x-input-label for="diameterIN_product" :value="__('Diametro(in)')" />
-            <x-text-input id="diameterIN_product" class="block mt-1 w-full" type="text" name="diameterIN_product" value="{{ $products->diameterIN_product }}" required />
+            <x-text-input id="diameterIN_product" class="block mt-1 w-full" type="text" name="diameterIN_product" value="{{ $products->diameterIN_product }}" />
 
             <x-input-label for="manufact_product" :value="__('Fabricante')" />
-            <x-text-input id="manufact_product" class="block mt-1 w-full" type="text" name="manufact_product" value="{{ $products->manufact_product }}" required />
+            <x-text-input id="manufact_product" class="block mt-1 w-full" type="text" name="manufact_product" value="{{ $products->manufact_product }}"  />
+            
+             <x-input-label for="stock" :value="__('stock')" />
+            <x-text-input id="stock" class="block mt-1 w-full" type="number" name="stock" value="{{ $products->stock }}"  />
 
             <x-input-label for="valueArt_product" :value="__('Valor por articulo')" />
             <x-text-input id="valueArt_product" class="block mt-1 w-full" type="text" name="valueArt_product" value="{{ $products->valueArt_product }}" required />

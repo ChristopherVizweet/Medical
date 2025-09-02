@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Imports\ClientsImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Models\Client;
+
 class ClientController extends Controller
 {
   public function index(Request $request){
@@ -38,13 +40,21 @@ class ClientController extends Controller
     return view('client.create-client');
   }
  
-  
+  public function create1(){
+    return view('client.import-client');
+}
+public function store1(Request $request){
+        $file=$request->file('import_file');
+        Excel::import(new ClientsImport, $file);
+        return redirect()->route('index-client')->with('success', 'Clientes importados exitosamente');
+}
+
   public function store(Request $request) {
     // Validar y guardar datos
     $request->validate([
         'name_Client' => 'required|string|max:255',
         'address_Client' => 'required|string|max:255',
-        'email_Client' => 'required|email|unique:clients,email_Client',
+        'email_Client' => 'required|email',
         'phoneNumber_Client' => 'required|string|regex:/^[0-9]{10,15}$/',
         'RFC' => 'required|string',
     ]);
@@ -71,7 +81,7 @@ public function update(Request $request, $id)
     $request->validate([
      'name_Client' => 'required|string|max:255',
         'address_Client' => 'required|string|max:255',
-        'email_Client' => 'required|email|unique:clients,email_Client',
+        'email_Client' => 'required|email',
         'phoneNumber_Client' => 'required|string|regex:/^[0-9]{10,15}$/',
         'RFC' => 'required|string',
     ]);

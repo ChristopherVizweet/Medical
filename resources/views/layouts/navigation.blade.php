@@ -36,7 +36,7 @@
                     </x-nav-link> 
                     @endhasanyrole
                     @hasanyrole('superadmin|admin|almacen')
-                    <x-nav-link :href="route('index-entrance')" :active="request()->routeIs('index-entrance')">
+                    <x-nav-link :href="route('index-existencias')" :active="request()->routeIs('index-existencias')">
                         Gestión de existencias
                     </x-nav-link>
                     @endhasanyrole

@@ -47,6 +47,10 @@
                     <x-text-input id="manufact_product" class="block mt-1 w-full is-invalid " type="text" name="manufact_product" :value="old('manufact_product')" required />
                     <x-input-error :messages="$errors->get('manufact_product')" class="mt-2 is-invalid" />
 
+                    <x-input-label for="stock" :value="('Stock')" />
+                    <input id="stock" class="block mt-1 w-full" type="number" name="stock" />
+                    <x-input-error :messages="$errors->get('stock')" class="mt-2 is-invalid" />
+
                         <x-input-label  for="valueArt_product" :value="__('Valor por articulo')" />
                     <x-text-input id="valueArt_product" class="block mt-1 w-full is-invalid " type="text" name="valueArt_product" :value="old('valueArt_product')" required />
                     <x-input-error :messages="$errors->get('valueArt_product')" class="mt-2 is-invalid" />

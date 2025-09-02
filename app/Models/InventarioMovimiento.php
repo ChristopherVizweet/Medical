@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class InventarioMovimiento extends Model
+{
+     use HasFactory; 
+
+    protected $fillable = [
+        'product_id',
+        'tipoMovimiento',
+        'cantidad_movimiento',
+        'codigo_movimiento',
+        'material_movimiento',
+        'supplier_id',
+        'numero_factura_movimiento',
+        'costos_movimiento',
+        'fecha_movimiento',
+        'recibe_id',
+        'firma_id',
+        'observaciones_movimiento',
+    ];
+
+    // Relación con producto
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+    // Relaciones
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
+    public function recibe()
+    {
+        return $this->belongsTo(Empleados::class, 'recibe_id');
+    }
+
+    public function firma()
+    {
+        return $this->belongsTo(Empleados::class, 'firma_id');
+    }
+}

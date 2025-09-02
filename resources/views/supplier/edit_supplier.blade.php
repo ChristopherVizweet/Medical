@@ -20,6 +20,7 @@
             <x-input-label for="phoneNumber_supplier" :value="__('Número telefónico')" />
             <x-text-input id="phoneNumber_supplier" class="block mt-1 w-full" type="tel" name="phoneNumber_supplier" value="{{ $supplier->phoneNumber_supplier }}" required />
         </div>
+        
 
         <div style="text-align: center;" class="mt-4">
             <x-primary-button class="ms-4">

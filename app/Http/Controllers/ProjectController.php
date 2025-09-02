@@ -42,7 +42,14 @@ class ProjectController extends Controller
     $projects = $projectsQuery->get();
 
     // Traemos todos los elementos para llenar los selects
-    $clients = Client::all();
+    //$clients = Client::all();
+    if ($request->filled('id_client')) {
+    $clients = Client::where('id', $request->id_client)
+        ->select('id', 'name_Client')
+        ->get();
+} else {
+    $clients = Client::select('id', 'name_Client')->orderBy('name_Client')->get();
+}
     $users = User::all(); // vendedores
     $priorities = Priority::all();
     $statuses = Status::all();

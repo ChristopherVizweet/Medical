@@ -21,6 +21,7 @@ use App\Models\Empleados;
 use App\Models\Entrance;
 use App\Models\Recursos;
 use App\Models\InstalationService;
+use App\Models\Product;
 use Spatie\Permission\Middleware\RoleMiddleware;
 
 
@@ -36,15 +37,22 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/index_Supplier', [SupplierController::class, 'index'])->name('index_Supplier');
     Route::get('/create_supplier', [SupplierController::class, 'create'])->name('create_supplier');
+    Route::get('/import-supplier',[SupplierController::class, 'create1'])->name('import-supplier');
+Route::post('/import-supplier', [SupplierController::class, 'store1'])->name('import-supplier');
     Route::post('/create_supplier', [SupplierController::class, 'store'])->name('store_supplier');
     Route::get('/edit_supplier/{id}', [SupplierController::class, 'edit'])->name('edit_supplier');
     Route::put('/edit_supplier/{id}', [SupplierController::class, 'update'])->name('edit_supplier');
     Route::delete('/delete_supplier/{id}', [SupplierController::class, 'delete'])->name('delete_supplier');
-});
+#});
+#Las rutas que van para la parte de proveedores
+Route::get('/import-supplier',[SupplierController::class, 'create1'])->name('import-supplier');
+Route::post('/import-supplier', [SupplierController::class, 'store1'])->name('import-supplier');
 #Las rutas que vna para la parte de cliente
 Route::get('/index-client',[ClientController::class, 'index'])->name('index-client');
 Route::get('/create-client',[ClientController::class, 'create'])->name('create-client');
 Route::post('/create_client', [ClientController::class, 'store'])->name('store_client');
+Route::get('/import-client',[ClientController::class, 'create1'])->name('import-client');
+Route::post('/import-client', [ClientController::class, 'store1'])->name('import-client');
 Route::get('/edit_client/{id}', [ClientController::class, 'edit'])->name('edit_client');
 Route::put('/edit_client/{id}', [ClientController::class, 'update'])->name('edit_client');
 Route::delete('/delete_client/{id}',[ClientController::class, 'delete'])->name('delete_client');
@@ -71,8 +79,8 @@ Route::put('/edit-product/{id}', [ProductController::class, 'update'])->name('ed
 Route::delete('/delete-product/{id}',[ProductController::class, 'delete'])->name('delete-product');
 
 #Parte para las ventas/cotizaciones/Entrada y salida de mercancia
-Route::get('/index-entrance',[EntranceController::class,'index'])->name('index-entrance');
-Route::get('/create-entrance',[EntranceController::class, 'create'])->name('create-entrance');
+Route::get('/index-existencias',[ProductController::class,'indexExistencias'])->name('index-existencias');
+Route::get('/index-entradas',[ProductController::class, 'indexEntradas'])->name('index-entradas');
 
 
 
@@ -158,7 +166,7 @@ Route::delete('/delete-bank/{id}',[BankController::class, 'delete'])->name('dele
 #Parte para la creacion de PDF
 Route::get('/pdf-project/{id}',[ProjectController::class, 'print'])->name('pdf-project');
 
-
+});
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -5,7 +5,7 @@
 
         <div class="mt-4">
             <div class="text-center text-gray-800 dark:text-white">
-                EDITAR PROVEEDOR
+                EDITAR CLIENTE
             </div>
             <x-input-label for="name_Client" :value="__('Nombre')" />
             <x-text-input id="name_Client" class="block mt-1 w-full" type="text" name="name_Client" value="{{ $client->name_Client }}" required />
@@ -38,4 +38,14 @@
             </a>
         </div>
     </form>
+    @if ($errors->any())
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <strong>¡Error!</strong> Revisa los campos marcados. <br>
+        <ul class="mt-2 list-disc list-inside">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 </x-guest-layout>

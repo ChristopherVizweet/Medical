@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Imports\ProductsImport;
 use App\Models\Categories;
+use App\Models\InventarioMovimiento;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use phpDocumentor\Reflection\Types\Nullable;
 use PhpOffice\PhpSpreadsheet\Calculation\Category;
 
 class ProductController extends Controller
@@ -21,6 +23,7 @@ class ProductController extends Controller
     }
 
     $products = $productQuery->get();
+    
     $categories = Categories::all();
 
     return view('managment_product.products.index-product', compact('products', 'categories'));
@@ -99,6 +102,7 @@ public function store1(Request $request){
             'manufact_product' => 'nullable|string',
             'valueArt_product' => 'nullable|numeric|min:0',
             'image_product' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+            'stock' =>'nullable|integer'
         ]);
     
         // Guardar la imagen si existe
@@ -119,6 +123,7 @@ public function store1(Request $request){
             'manufact_product' => $request->manufact_product,
             'valueArt_product' => $request->valueArt_product,
             'image_product' => $imagePath, // Guardamos la ruta de la imagen
+            'stock' =>$request->stock,
         ]);
         
 
@@ -139,10 +144,11 @@ public function update(Request $request, $id)
     'codeExt_product' => 'nullable|string|max:100',
     'codeInt_product' => 'nullable|string|max:100',
     'diameterMM_product' => 'nullable|numeric|regex:/^\d+(\.\d{1,2})?$/',
-    'diameterIN_product' => 'required|regex:#^\d+(\.\d+)?(/?\d+)?$#',
+    'diameterIN_product' => 'nullable|regex:#^\d+(\.\d+)?(/?\d+)?$#',
     'manufact_product' => 'nullable|string',
     'valueArt_product' => 'nullable|numeric|min:0',
     'image_product' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+    'stock' =>'nullable|integer'
     ]);
 
  // Guardar la imagen si existe
@@ -160,6 +166,7 @@ public function update(Request $request, $id)
         'manufact_product' => $request->manufact_product,
         'valueArt_product' => $request->valueArt_product,
         'image_product' => $imagePath, // Guardamos la ruta de la imagen
+        'stock' =>$request->stock,
     ]);
 
     return redirect()->route('index-product')->with('success', 'Producto actualizado correctamente');
@@ -174,4 +181,15 @@ public function delete($id){
     
     return redirect()->route('index-product')->with('success','Producto eliminado correctamente');
     }
+
+    //Funcion para la entrada de productos
+    public function indexExistencias(Request $request){
+        
+    return view('entrance.index-existencias');    
+}
+    public function indexEntradas(Request $request) {
+       $movimientos = InventarioMovimiento::all();
+        return view('entrance.index-entradas',compact('movimientos'));
     }
+    
+}

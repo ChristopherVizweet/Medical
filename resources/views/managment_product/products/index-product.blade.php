@@ -89,6 +89,7 @@
                   <th class="px-4 py-2">{{ __('Diametro(nominal)') }}</th>
                   <th class="px-4 py-2">{{ __('Diametro(exterior)') }}</th>
                   <th class="px-4 py-2">{{ __('Fabricante') }}</th>
+                  <th class="px-4 py-2">{{ __('Stock') }}</th>
                   <th class="px-4 py-2">{{ __('valor por articulo ($)') }}</th>
                   <th class="px-4 py-2">{{ __('Imagen del producto') }}</th>
                   <th class="px-4 py-2">{{ __('Acciones') }}</th>
@@ -109,8 +110,11 @@
                      <td class="px-4 py-2">{{ $product->diameter_nominal }}</td>
                      <td class="px-4 py-2">{{ $product->diameter_exterior }}</td>
                      <td class="px-4 py-2">{{ $product->manufact_product }}</td>
+                     <td class="px-4 py-2">{{ $product->stock }}</td>                     
                      <td class="px-4 py-2">{{ $product->valueArt_product }}</td>
-                     <td class= "items-center px-4 py-2"> <img class="items-center" src="{{ asset('storage/' . $product->image_product) }}" alt="Imagen del producto" width="300">
+                     <td class= "items-center px-4 py-2"> <img src="{{ asset('storage/images/' . $product->image_product) }}" 
+     alt="Imagen {{ $product->name_product }}" 
+     class="w-20 h-20 object-cover rounded">
                      </td>
                      <td class="px-4 py-2">
                        <a href="{{ route('edit-product', $product->id) }}" class="text-blue-600 hover:underline">Editar</a> |

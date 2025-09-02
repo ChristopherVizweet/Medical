@@ -74,6 +74,12 @@
                         {{ __('Crear proveedores') }}
                     </a>
                 </x-primary-button>
+                <!--Boton para importar datos de Excel-->
+                <x-primary-button class="mt-4">
+          <a href="{{ route('import-supplier') }}" class="text-dark">
+            Importar datos de Excel
+          </a>
+      </x-primary-button>
             @endrole
         </div>
 
