@@ -53,10 +53,10 @@
                   <th class="px-4 py-2">{{ __('proveedor') }}</th>
                   <th class="px-4 py-2">{{ __('número de factura') }}</th>
                   <th class="px-4 py-2">{{ __('costos') }}</th>
+                  <th class="px-4 py-2">{{ __('Fecha de registro') }}</th>
                   <th class="px-4 py-2">{{ __('recibe') }}</th>
                   <th class="px-4 py-2">{{ __('firma') }}</th>
                   <th class="px-4 py-2">{{ __('observaciones') }}</th>
-                  <th class="px-4 py-2">{{ __('fecha') }}</th>
                   <th class="px-4 py-2">{{ __('Acciones') }}</th>
               </tr>
           </thead>
@@ -64,25 +64,25 @@
              @forelse ($movimientos as $movimiento)
              
                  <tr class="">
-                     <td class="px-4 py-2">{{ $inventario->id }}</td>
-                     <td class="px-4 py-2">{{ $inventario->image_product }}</td>
-                     <td class="px-4 py-2">{{ $inventario->cantidad_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $inventario->codigo_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $inventario->material_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $inventario->supplier_id}}</td>
-                     <td class="px-4 py-2">{{ $inventario->numero_factura_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $inventario->costos_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $inventario->fecha_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $inventario->recibe_id}}</td>
-                     <td class="px-4 py-2">{{ $inventario->firma_id}}</td>
-                     <td class="px-4 py-2">{{ $inventario->observaciones_movimiento}}</td>
+                     <td class="px-4 py-2">{{ $movimiento->id }}</td>
+                     <td class="px-4 py-2">{{ $movimiento->image_product }}</td>
+                     <td class="px-4 py-2">{{ $movimiento->cantidad_movimiento}}</td>
+                     <td class="px-4 py-2">{{ $movimiento->codigo_movimiento}}</td>
+                     <td class="px-4 py-2">{{ $movimiento->product_id}}</td>
+                     <td class="px-4 py-2">{{ $movimiento->supplier_id}}</td>
+                     <td class="px-4 py-2">{{ $movimiento->numero_factura_movimiento}}</td>
+                     <td class="px-4 py-2">{{ $movimiento->costos_movimiento}}</td>
+                     <td class="px-4 py-2">{{ $movimiento->fecha_movimiento}}</td>
+                     <td class="px-4 py-2">{{ $movimiento->recibe_id}}</td>
+                     <td class="px-4 py-2">{{ $movimiento->firma_id}}</td>
+                     <td class="px-4 py-2">{{ $movimiento->observaciones_movimiento}}</td>
                      <td class="px-4 py-2">
-                       <!--<a href="{ route('edit-product', $product->id) }}" class="text-blue-600 hover:underline">Editar</a> |
-                        <form action="{ route('delete-product', $product->id) }}" method="POST" style="display:inline-block;">   --> 
-                        @csrf
-                             @method('DELETE')
+                       <!---<a href=" { route('edit-product', $product->id) }}" class="text-blue-600 hover:underline">Editar</a>|
+                        <form  action="{ route('delete-product', $product->id) }}" method="POST" style="display:inline-block;">
+                        csrf
+                             method('DELETE')
                             <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿En verdad deseas eliminar esta categoria?')">Eliminar</button>
-                         </form>
+                         </form> -->
                      </td>
                  </tr>
              @empty
@@ -93,6 +93,11 @@
          </tbody>
          
     </div>
+     <x-primary-button class="mt-4">
+                    <a href="{{ route('create-entradas') }}" class="text-dark"> 
+                         {{ __('Registrar entrada') }}
+                     </a> 
+                </x-primary-button>
      </table>
         </div>
 </x-app-layout>

@@ -45,4 +45,11 @@ class InventarioMovimiento extends Model
     {
         return $this->belongsTo(Empleados::class, 'firma_id');
     }
+
+    public function products()
+    {
+        return $this->hasMany(MovementProduct::class);
+    }
+     public const TIPOS = ['entrada', 'salida'];
+
 }

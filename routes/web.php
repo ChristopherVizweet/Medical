@@ -81,6 +81,8 @@ Route::delete('/delete-product/{id}',[ProductController::class, 'delete'])->name
 #Parte para las ventas/cotizaciones/Entrada y salida de mercancia
 Route::get('/index-existencias',[ProductController::class,'indexExistencias'])->name('index-existencias');
 Route::get('/index-entradas',[ProductController::class, 'indexEntradas'])->name('index-entradas');
+Route::get('/create-entradas',[ProductController::class, 'createEntradas'])->name('create-entradas');
+Route::post('/create-entradas',[ProductController::class, 'storeEntradas'])->name('store-entradas');
 
 
 

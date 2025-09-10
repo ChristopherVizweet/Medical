@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Imports\ProductsImport;
 use App\Models\Categories;
+use App\Models\Empleados;
 use App\Models\InventarioMovimiento;
+use App\Models\MovementProduct;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -184,12 +186,99 @@ public function delete($id){
 
     //Funcion para la entrada de productos
     public function indexExistencias(Request $request){
-        
-    return view('entrance.index-existencias');    
-}
-    public function indexEntradas(Request $request) {
-       $movimientos = InventarioMovimiento::all();
-        return view('entrance.index-entradas',compact('movimientos'));
+     /*$productQuery = Product::with('categories');
+
+    /if ($request->filled('id_categories')) {
+        $productQuery->where('id_categories', $request->id_categories);
     }
+
+    $products = $productQuery->get();*/
+        $products = Product::all();
+        $categories = Categories::all();
+    return view('entrance.index-existencias',compact('products','categories'));    
+}
+    public function indexEntradas() {
+       $movimientos = InventarioMovimiento::all();
+       $materiales = Product::all();
+        return view('entrance.index-entradas',compact('movimientos','materiales'));
+    }
+
+    //Aqui comienzan las funciones para el registro de entradas
+    public function createEntradas(){
+        $materiales=Product::all();
+        $suppliers=Supplier::all();
+        $empleados=Empleados::all();
+        $movimientos=InventarioMovimiento::all();
+        $productos=InventarioMovimiento::all();
+        return view('entrance.create-entradas',compact('materiales','suppliers','empleados','movimientos','productos'));
+    }
+    public function storeEntradas(Request $request)
+{
+    // 1. Validar
+    $validated = $request->validate([
+        'tipoMovimiento'            => 'required|in:entrada,salida',
+        'codigo_movimiento'         => 'nullable|string',
+      
+        'cantidad_movimiento'       => 'nullable|integer|min:1',
+        'supplier_id'               => 'nullable|exists:suppliers,id',
+        'numero_factura_movimiento' => 'nullable|string',
+        'costos_movimiento'         => 'nullable|numeric',
+        'fecha_movimiento'          => 'nullable|date',
+        'recibe_id'                 => 'nullable|exists:empleados,id',
+        'firma_id'                  => 'nullable|exists:empleados,id',
+        'observaciones_movimiento'  => 'nullable|string',
+
+        'productos'                 => 'required|array|min:1',
+        'productos.*.product_id'    => 'required|exists:products,id',
+        'productos.*.cantidad'      => 'required|integer|min:1',
+        'productos.*.costo_unitario'=> 'nullable|numeric|min:0',
+        'productos.*.codigo'=> 'nullable|string'
+    ]);
+
+    // 2. Crear el movimiento principal
+    $movimiento = InventarioMovimiento::create([
+        'tipoMovimiento'            => $validated['tipoMovimiento'],
+      
+        
+        
+        'supplier_id'               => $validated['supplier_id'] ?? null,
+        'numero_factura_movimiento' => $validated['numero_factura_movimiento'] ?? null,
+       
+        'fecha_movimiento'          => $validated['fecha_movimiento'] ?? now(),
+        'recibe_id'                 => $validated['recibe_id'] ?? null,
+        'firma_id'                  => $validated['firma_id'] ?? null,
+        'observaciones_movimiento'  => $validated['observaciones_movimiento'] ?? null,
+    ]);
+
+    // 3. Registrar productos del movimiento y actualizar stock
+    foreach ($validated['productos'] as $producto) {
+        // Guardar en tabla pivot
+        MovementProduct::create([
+            'inventario_movimientos_id' => $movimiento->id,
+            'product_id'               => $producto['product_id'],
+            'cantidad'                 => $producto['cantidad'],
+            'costo_unitario'           => $producto['costo_unitario'] ?? null,
+            'codigo'                   => $producto['codigo'] ?? null
+        ]);
+
+        // Ajustar stock producto por producto
+        $product = Product::findOrFail($producto['product_id']);
+        if ($validated['tipoMovimiento'] === 'entrada') {
+            $product->stock += $producto['cantidad'];
+        } elseif ($validated['tipoMovimiento'] === 'salida') {
+            if ($product->stock < $producto['cantidad']) {
+                return back()->withErrors([
+                    'cantidad' => "No hay suficiente stock para el producto {$product->name_product}."
+                ]);
+            }
+            $product->stock -= $producto['cantidad'];
+        }
+        $product->save();
+    }
+
+    return redirect()->route('index-entradas')->with('success', 'Registrado correctamente');
+}
+
+    
     
 }
