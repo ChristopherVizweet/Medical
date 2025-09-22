@@ -8,12 +8,12 @@
         <!--Aqui comienza el formulario para registrar la entrada-->
     <div class="producto-row grid grid-cols-3 gap-4 items-center">
         
-        <div>
+        <div class="">
             <x-input-label for="tipoMovimiento" :value="__('Tipo de registro')" />
-            <select class="mt-1 block w-full" name="tipoMovimiento" id="tipoMovimiento" required>
-                <option value="">-Seleccionar-</option> 
-                <option value="entrada">Entrada</option>
-                <option value="salida">Salida</option>
+            <select class="mt-1 block w-full " name="tipoMovimiento" id="tipoMovimiento" readonly=true required>
+                
+                <option value="entrada" selected>Entrada</option>
+                
             </select>
         </div>
         <div>
@@ -55,6 +55,11 @@
         </div>
     
 </div>
+        <div>
+            <x-input-label for="observaciones_movimiento" :value="__('Observaciones')" />
+            <x-text-input id="observaciones_movimiento" class="mt-1 block w-full" type="text" name="observaciones_movimiento" :value="old('observaciones_movimiento')" required />
+            <x-input-error :messages="$errors->get('observaciones_movimiento')" class="mt-2" />
+        </div>
         <!--Aqui comienza el registro pero para los productos-->
         
 <div id="productos-wrapper" class="space-y-4  border p-4 rounded-lg mt-3">
@@ -92,11 +97,7 @@
             <input type="number" step="0.01" name="productos[0][costo_unitario]" placeholder="Costo"
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
-          <!-- Botón eliminar -->
-        <button type="button" onclick="eliminarProducto(this)" 
-                class="px-2 py-1 bg-red-600 text-white rounded shadow hover:bg-red-700 transition">
-            ✕
-        </button>
+         
     </div>
 </div>
 
@@ -117,21 +118,23 @@
             </div>
 </div>
 </form>
+
  <script>
     let productoIndex = 1; // empezamos desde 1 porque ya existe el [0]
 
     function agregarProducto() {
         const wrapper = document.getElementById('productos-wrapper');
-
+        
         // Crear un nuevo row
         const newRow = document.createElement('div');
-        newRow.classList.add('producto-row', 'flex', 'gap-2', 'mb-2');
+        newRow.classList.add('producto-row', 'flex', 'mb-2','items-center','grid','grid-cols-5','gap-4');
 
         newRow.innerHTML = `
             <input type="text" name="productos[${productoIndex}][codigo]" placeholder="Código"
-                   class="border rounded p-2 w-32">
+                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
 
-            <select name="productos[${productoIndex}][product_id]" class="border rounded p-2 w-48" required>
+            <select name="productos[${productoIndex}][product_id]" 
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
                 <option value="">-- Seleccionar producto --</option>
                 @foreach($materiales as $material)
                     <option value="{{ $material->id }}">{{ $material->name_product }}</option>
@@ -139,16 +142,31 @@
             </select>
 
             <input type="number" name="productos[${productoIndex}][cantidad]" placeholder="Cantidad"
-                   class="border rounded p-2 w-24" required>
+                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
 
             <input type="number" step="0.01" name="productos[${productoIndex}][costo_unitario]" 
-                   placeholder="Costo unitario" class="border rounded p-2 w-32">
+                   placeholder="Costo unitario" 
+                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+        
+
+        
+             <!-- Botón eliminar -->
+        <button type="button" onclick="eliminarProducto(this)" 
+                class="px-2 py-1 bg-red-600 text-white rounded shadow hover:bg-red-700 transition">
+            ✕
+        </button>
         `;
 
         wrapper.appendChild(newRow);
         productoIndex++;
     }
+
+    function eliminarProducto(boton) {
+        // Elimina el div padre (la fila del producto)
+        boton.closest('.producto-row').remove();
+    }
 </script>
+
  @if ($errors->any())
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
         <strong>¡Error!</strong> Revisa los campos marcados. <br>

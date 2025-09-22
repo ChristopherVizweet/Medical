@@ -28,7 +28,7 @@
    });
 </script>  
        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-           Registro de entradas
+           Registro de salidas
        </h2>            
    </x-slot>
    <div class="container mx-auto mt-8">
@@ -38,7 +38,7 @@
                </div>
            @endif
           
-           <h1 class="text-2xl dark:text-white font-bold mb-4">Entrada de productos</h1>
+           <h1 class="text-2xl dark:text-white font-bold mb-4">Salida de productos</h1>
 
            {{-- Tabla responsive --}}
         <div class="overflow-x-auto rounded-lg shadow">
@@ -46,38 +46,32 @@
                 <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
               <tr class="">
                   <th class="px-4 py-2">{{ __('ID') }}</th>
-                  <th class="px-4 py-2">{{ __('imagen del producto') }}</th>
-                  <th class="px-4 py-2">{{ __('cantidad') }}</th>
-                  <th class="px-4 py-2">{{ __('codigo') }}</th>
-                  <th class="px-4 py-2">{{ __('material') }}</th>
-                  <th class="px-4 py-2">{{ __('proveedor') }}</th>
-                  <th class="px-4 py-2">{{ __('número de factura') }}</th>
-                  <th class="px-4 py-2">{{ __('costos') }}</th>
-                  <th class="px-4 py-2">{{ __('Fecha de registro') }}</th>
-                  <th class="px-4 py-2">{{ __('recibe') }}</th>
-                  <th class="px-4 py-2">{{ __('firma') }}</th>
-                  <th class="px-4 py-2">{{ __('observaciones') }}</th>
+                  <th class="px-4 py-2">{{ __('Folio de salida')}}</th>
+                  <th class="px-4 py-2">{{ __('Nombre de la obra')}}</th>
+                  <th class="px-4 py-2">{{ __('Solicitante')}}</th>
+                  <th class="px-4 py-2">{{ __('Cantidad Requerida')}}</th>
+                  <th class="px-4 py-2">{{ __('Cantidad Aprobada') }}</th>
+                  <th class="px-4 py-2">{{ __('T.P.E')}}</th>
+                  <th class="px-4 py-2">{{ __('Fecha de salida')}}</th>
+                  <th class="px-4 py-2">{{ __('Observaciones')}}</th>
                   <th class="px-4 py-2">{{ __('Acciones') }}</th>
               </tr>
           </thead>
           <tbody>
-             @forelse ($movimientos as $movimiento)
+             @forelse ($movimientos as $movi)
              
                  <tr class="">
-                     <td class="px-4 py-2">{{ $movimiento->id }}</td>
-                     <td class="px-4 py-2">{{ $movimiento->image_product }}</td>
-                     <td class="px-4 py-2">{{ $movimiento->cantidad_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->codigo_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->product_id}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->supplier_id}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->numero_factura_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->costos_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->fecha_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->recibe_id}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->firma_id}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->observaciones_movimiento}}</td>
+                     <td class="px-4 py-2">{{ $movi->id }}</td>
+                     <td class="px-4 py-2">{{ $movi->folio_movimiento ?? 'Sin folio' }}</td>
+                     <td class="px-4 py-2">{{ $movi->obra_movimiento ?? 'Sin nombre de obra'}}</td>
+                     <td class="px-4 py-2">{{ $movi->empleado->Nombre ?? 'Sin solicitante'}}</td>
+                     <td class="px-4 py-2">{{ $movi->cantidadR ?? 'Sin cantidad requerida'}}</td>
+                     <td class="px-4 py-2">{{ $movi->cantidadA ?? 'Sin cantidad aprobada'}}</td>
+                     <td class="px-4 py-2">{{ $movi->cantidad ?? 'Sin T.P.E'}}</td>
+                     <td class="px-4 py-2">{{ $movi->movimiento->fecha_movimiento ?? 'Sin fecha'}}</td>
+                     <td class="px-4 py-2">{{ $movi->movimiento->observaciones_movimiento ?? 'Sin observaciones'}}</td>
                      <td class="px-4 py-2">
-                      <a href=" { route('edit-product', $product->id) }}" class="text-red-600 hover:underline">PDF</a>|  </td>
+                      <a href=" {{ route('pdf-salidas', $movi->id) }}" class="text-red-600 hover:underline">PDF</a>|  </td>
                          <!---<form  action="{ route('delete-product', $product->id) }}" method="POST" style="display:inline-block;">
                         csrf
                              method('DELETE')
@@ -87,15 +81,15 @@
                  </tr>
              @empty
                  <tr>
-                     <td colspan="5" class="px-4 py-2 text-center">Entradas no encontradas</td>
+                     <td colspan="5" class="px-4 py-2 text-center">Salidas no encontradas</td>
                  </tr>
              @endforelse
          </tbody>
          
     </div>
      <x-primary-button class="mt-4">
-                    <a href="{{ route('create-entradas') }}" class="text-dark"> 
-                         {{ __('Registrar entrada') }}
+                    <a href="{{ route('create-salidas') }}" class="text-dark"> 
+                         {{ __('Registrar salida') }}
                      </a> 
                 </x-primary-button>
      </table>

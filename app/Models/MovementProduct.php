@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class MovementProduct extends Model
 {
-    protected $fillable = ['inventario_movimientos_id', 'codigo' ,'product_id', 'cantidad', 'costo_unitario'];
+    protected $fillable = ['inventario_movimientos_id', 'codigo' ,'product_id', 'cantidad', 'costo_unitario',
+'obra_movimiento','empleado_id','folio_movimiento','cantidadR','cantidadA'];
 
     public function movimiento()
     {
@@ -16,5 +17,9 @@ class MovementProduct extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+    public function empleado()
+    {
+        return $this->belongsTo(Empleados::class, 'empleado_id');
     }
 }

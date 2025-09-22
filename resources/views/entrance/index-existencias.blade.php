@@ -48,8 +48,9 @@
                 <h1 class="text-black dark:text-white"> ENTRADA DE PRODUCTOS </h1>
             </button>
                 </a>
-                <a href="">
+               
             <button>
+                 <a href="index-salidas">
                 <img class="text-center" width="150" src="img/salida.png" alt="Boton para salidas">
                 <h1 class="text-black dark:text-white"> SALIDA DE PRODUCTOS </h1>
             </button>

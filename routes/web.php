@@ -83,6 +83,15 @@ Route::get('/index-existencias',[ProductController::class,'indexExistencias'])->
 Route::get('/index-entradas',[ProductController::class, 'indexEntradas'])->name('index-entradas');
 Route::get('/create-entradas',[ProductController::class, 'createEntradas'])->name('create-entradas');
 Route::post('/create-entradas',[ProductController::class, 'storeEntradas'])->name('store-entradas');
+Route::get('/index-salidas',[ProductController::class,'indexSalidas'])->name('index-salidas');
+Route::get('/create-salidas',[ProductController::class, 'createSalidas'])->name('create-salidas');
+Route::post('/create-salidas',[ProductController::class, 'storeSalidas'])->name('store-salidas');
+
+//impresion de las entradas y salidas
+Route::get('/pdf-salidas/{id}',[ProductController::class, 'print'])->name('pdf-salidas');
+
+
+
 
 
 
@@ -168,8 +177,8 @@ Route::delete('/delete-bank/{id}',[BankController::class, 'delete'])->name('dele
 #Parte para la creacion de PDF
 Route::get('/pdf-project/{id}',[ProjectController::class, 'print'])->name('pdf-project');
 
-});
-Route::middleware('auth')->group(function () {
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

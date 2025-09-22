@@ -52,4 +52,9 @@ class InventarioMovimiento extends Model
     }
      public const TIPOS = ['entrada', 'salida'];
 
+     public function productos()
+    {
+        return $this->hasMany(MovementProduct::class, 'inventario_movimientos_id');
+    }
+
 }
