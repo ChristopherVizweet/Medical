@@ -10,4 +10,11 @@ class Empleados extends Model
     'cargo','correoElectronico','numeroTelefonoTrabajo',
 'numeroTelParti','sueldo','calle','ciudad','estadoProv','codigoPostal',
 'pais','foto','tipoSangre'];
+
+
+public function empleado()
+    {
+        return $this->belongsTo(InventarioMovimiento::class);
+    }
 }
+

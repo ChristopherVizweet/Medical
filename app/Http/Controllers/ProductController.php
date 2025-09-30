@@ -304,9 +304,10 @@ public function storeSalidas(Request $request){
         'obra_movimiento'           => 'nullable|string',
         'empleado_id'               => 'nullable|exists:empleados,id',
         'folio_movimiento'          => 'nullable|string',
-        'productos'                 => 'required|array|min:1',
+       
         'productos.*.product_id'    => 'required|exists:products,id',
         'productos.*.cantidad'      => 'required|integer|min:1',
+      
         'productos.*.cantidadR'     => 'nullable|integer',
         'productos.*.cantidadA'     => 'nullable|integer'
     ]);
@@ -355,18 +356,14 @@ public function storeSalidas(Request $request){
 }
 
 //Funcion para convertir a PDF
-public function print($id) //Imprime dependiendo del ID
-{ 
-      $movimientos = MovementProduct::all();
-      $materiales = Product::all();
+public function print($id)
+{
+    
+    $movimientos = InventarioMovimiento::with(['productos','product','obra','productos.empleado'])->findOrFail($id);
 
-    $movimientos = MovementProduct::with(['movimiento','empleado','product']) // si tienes relaciones
-                     ->findOrFail($id);
+    $pdf = Pdf::loadView('entrance.pdf-salidas', compact('movimientos'));
 
-    $pdf = Pdf::loadView('entrance.pdf-salidas',compact('movimientos','materiales'));
-
-    return $pdf->stream('reporte_proyecto_'.$movimientos->id.'.pdf');
-    // También puedes usar ->download() para forzar la descarga
+    return $pdf->stream('Vale_salida_'.$id.'.pdf');
 }
 
 }

@@ -56,5 +56,9 @@ class InventarioMovimiento extends Model
     {
         return $this->hasMany(MovementProduct::class, 'inventario_movimientos_id');
     }
+   
+    public function obra(){
+        return $this->belongsTo(MovementProduct::class);
+    }
 
 }

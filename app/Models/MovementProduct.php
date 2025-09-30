@@ -20,6 +20,6 @@ class MovementProduct extends Model
     }
     public function empleado()
     {
-        return $this->belongsTo(Empleados::class, 'empleado_id');
+        return $this->belongsTo(Empleados::class);
     }
 }
