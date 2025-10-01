@@ -8,28 +8,26 @@
 
     {{--Aqui comienzan los estilos--}}
 <style>
+
 .info-basica {
-    display: flex;       /* Pone todo en línea */
-    flex-wrap: wrap;     /* Si no caben, bajan de línea */
-    gap: 15px;           /* Espacio entre columnas */
+    text-align: center;    /* centra horizontalmente todo el bloque */
+    margin-top: 50px;     /* lo baja un poco desde arriba */
 }
+
 .info-basica p {
-    margin: 0;
+    display: inline-block; /* hace que se alineen en línea */
+    margin: 0 20px;        /* espacio entre ellos */
+    padding-left: 0;       /* quitamos padding extra */
 }
 
 #folio{color: red}
 .texto_footer {color: blue}
-#marca-agua {
-    position: fixed;
-    top: 35%;
-    left: 20%;
-    width: 400px;
-    opacity: 0.5;
-    z-index: -1;
-}
+
 #titulo{
     text-align: center;
-    color: dodgerblue;
+    color: #2F9DD6;
+    margin-top: -50px;
+    font-size: 25px;
 }
 #header{
     color: dodgerblue;
@@ -41,17 +39,106 @@
 }
 #logo{
     height: auto;
-    width: 300px;
+    width: 150px;
 }
+.cantidad{
+    text-align: center;
+}
+.vale {
+    border-bottom: 2px dashed #000; /* línea divisoria */
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+table{
+    font-size: 12px;
+}
+th, td {
+  border: 1px solid grey; /* Borde gris para todas las celdas */
+}
+#titlemenu{
+    font-size: 13px;
+}
+
+.caja{
+  display: inline-block; /* Muestra el elemento como un bloque pero fluye como inline */
+  width: 100px;
+  height: 0px;
+  margin: 60px;
+  margin-top: 70px;
+}
+.linea{
+    border-top: 1px solid #000;
+    width: 90%;  /* línea más larga */
+}
+
 
 </style>
     
 </head>
 
     <body>
-    {{--Aqui comienza el diseño del reporte de PDF--}}
 <div class="contenedor-duplicado">
     <div class="vale">
+    {{--Aqui comienza el diseño del reporte de PDF--}}
+   
+    <div id="header">
+        <img id="logo" src="{{ public_path('img/logo1.png') }}" alt="Logo Empresa" >
+        <h1 id="titulo">VALES DE SALIDA</h1>
+    </div>
+    <div class="info-basica">
+        <p ><strong>FECHA: </strong>{{$movimientos->fecha_movimiento ?? 'Sin fecha'}}</p>
+        <p ><strong>SOLICITA: </strong>{{$movimientos->productos->first()->empleado->Nombre ?? 'Sin nombre'}}</p>
+        <p ><strong>OBRA: </strong>{{$movimientos->productos->first()->obra_movimiento ?? 'Sin nombre de obra'}}</p>
+        <p id="folio"><strong>FOLIO N°: </strong>{{$movimientos->productos->first()->folio_movimiento ?? 'Sin folio'}}</p>
+    </div>
+        
+
+    <div>
+       <h2 id="titlemenu">Productos de salida</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>Cantidad Requerida</th>
+                <th>Cantidad Aprobada</th>
+                <th>T.P.E</th>
+                <th>Observaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach ($movimientos->productos as $detalle)
+    <tr>
+        <td>{{ $detalle->product->name_product ?? 'sin producto' }}</td>
+        <td class="cantidad">{{ $detalle->cantidadR ?? 'sin cantidad requerida' }}</td>
+        <td class="cantidad">{{ $detalle->cantidadA ?? 'sin cantidad aprobada' }}</td>
+        <td class="cantidad">{{ $detalle->cantidad ?? 'sin cantidad' }}</td>
+        <td class="cantidad">{{ $movimientos->observaciones_movimiento ?? 'sin observaciones' }}</td>
+    </tr>
+    @endforeach
+        </tbody>
+
+    </table>
+    </div>
+    <!--Aqui estan la parte de las firmas-->
+        <div class="contenedor-firmas">
+            <div class="caja">
+                <div class="linea"></div>
+                <h5>Firma de autorización</h5>
+            </div>
+            <div class="caja">
+                <div class="linea"></div>
+                <h5>Firma encargado</h5>
+            </div>
+            <div class="caja">
+                <div class="linea"></div>
+                <h5>Firma quien recive</h5>
+            </div>
+        </div>
+</div>
+<!--Aqui esta el duplicado-->
+<div class="vale">
+    {{--Aqui comienza el diseño del reporte de PDF--}}
+   
     <div id="header">
         <img id="logo" src="{{ public_path('img/logo1.png') }}" alt="Logo Empresa" >
         <h1 id="titulo">VALES DE SALIDA</h1>
@@ -78,24 +165,32 @@
     @foreach ($movimientos->productos as $detalle)
     <tr>
         <td>{{ $detalle->product->name_product ?? 'sin producto' }}</td>
-        <td>{{ $detalle->cantidadR ?? 'sin cantidad requerida' }}</td>
-        <td>{{ $detalle->cantidadA ?? 'sin cantidad aprobada' }}</td>
-        <td>{{ $detalle->cantidad ?? 'sin cantidad' }}</td>
-        <td>{{ $movimientos->observaciones_movimiento ?? 'sin observaciones' }}</td>
+        <td class="cantidad">{{ $detalle->cantidadR ?? 'sin cantidad requerida' }}</td>
+        <td class="cantidad">{{ $detalle->cantidadA ?? 'sin cantidad aprobada' }}</td>
+        <td class="cantidad">{{ $detalle->cantidad ?? 'sin cantidad' }}</td>
+        <td class="cantidad">{{ $movimientos->observaciones_movimiento ?? 'sin observaciones' }}</td>
     </tr>
     @endforeach
 </tbody>
 
-    </table>
- 
+</table>
     </div>
-    
-    
-
-
-    
-
-<img id="marca-agua" src="{{ public_path('img/marca_agua.png') }}" alt="Marca de Agua">
-
+     <!--Aqui estan la parte de las firmas-->
+        <div class="contenedor-firmas">
+            <div class="caja">
+                <div class="linea"></div>
+                <h5>Firma de autorización</h5>
+            </div>
+            <div class="caja">
+                <div class="linea"></div>
+                <h5>Firma encargado</h5>
+            </div>
+            <div class="caja">
+                <div class="linea"></div>
+                <h5>Firma quien recive</h5>
+            </div>
+        </div>
+</div> 
+</div>    
     </body>
 </html>

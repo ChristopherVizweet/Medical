@@ -198,7 +198,10 @@ public function delete($id){
     return view('entrance.index-existencias',compact('products','categories'));    
 }
     public function indexEntradas() {
-       $movimientos = InventarioMovimiento::all();
+       $movimientos = InventarioMovimiento::with(['productos.product','recibe','firma'])
+                    ->where('tipoMovimiento', 'entrada')
+                    ->orderBy('fecha_movimiento', 'desc')
+                    ->get();
        $materiales = Product::all();
         return view('entrance.index-entradas',compact('movimientos','materiales'));
     }
@@ -284,8 +287,11 @@ public function delete($id){
 //Aqui van para las funciones para las salidas
 
 public function indexSalidas(){
-    $movimientos = MovementProduct::all();
-    $materiales = Product::all();
+    $movimientos = InventarioMovimiento::with(['productos.product','recibe','firma','productos'])
+                    ->where('tipoMovimiento', 'salida')
+                    ->orderBy('fecha_movimiento', 'desc')
+                    ->get();
+    
     
     return view('entrance.index-salidas', compact('movimientos'));
 }

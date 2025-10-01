@@ -62,14 +62,14 @@
              
                  <tr class="">
                      <td class="px-4 py-2">{{ $movi->id }}</td>
-                     <td class="px-4 py-2">{{ $movi->folio_movimiento ?? 'Sin folio' }}</td>
-                     <td class="px-4 py-2">{{ $movi->obra_movimiento ?? 'Sin nombre de obra'}}</td>
-                     <td class="px-4 py-2">{{ $movi->empleado->Nombre ?? 'Sin solicitante'}}</td>
-                     <td class="px-4 py-2">{{ $movi->cantidadR ?? 'Sin cantidad requerida'}}</td>
-                     <td class="px-4 py-2">{{ $movi->cantidadA ?? 'Sin cantidad aprobada'}}</td>
-                     <td class="px-4 py-2">{{ $movi->cantidad ?? 'Sin T.P.E'}}</td>
-                     <td class="px-4 py-2">{{ $movi->movimiento->fecha_movimiento ?? 'Sin fecha'}}</td>
-                     <td class="px-4 py-2">{{ $movi->movimiento->observaciones_movimiento ?? 'Sin observaciones'}}</td>
+                     <td class="px-4 py-2">{{ $movi->productos->first()->folio_movimiento ?? 'Sin folio' }}</td>
+                     <td class="px-4 py-2">{{ $movi->productos->first()->obra_movimiento ?? 'Sin nombre de obra'}}</td>
+                     <td class="px-4 py-2">{{ $movi->productos->first()->empleado->Nombre ?? 'Sin solicitante'}}</td>
+                     <td class="px-4 py-2">{{ $movi->productos->first()->cantidadR ?? 'Sin cantidad requerida'}}</td>
+                     <td class="px-4 py-2">{{ $movi->productos->first()->cantidadA ?? 'Sin cantidad aprobada'}}</td>
+                     <td class="px-4 py-2">{{ $movi->productos->first()->cantidad ?? 'Sin T.P.E'}}</td>
+                     <td class="px-4 py-2">{{ $movi->fecha_movimiento ?? 'Sin fecha'}}</td>
+                     <td class="px-4 py-2">{{ $movi->observaciones_movimiento ?? 'Sin observaciones'}}</td>
                      <td class="px-4 py-2">
                       <a href=" {{ route('pdf-salidas', $movi->id) }}" class="text-red-600 hover:underline">PDF</a>|  </td>
                          <!---<form  action="{ route('delete-product', $product->id) }}" method="POST" style="display:inline-block;">
