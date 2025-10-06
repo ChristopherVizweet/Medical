@@ -93,7 +93,7 @@ $suppliers = Supplier::all(); // Si también necesitas los proveedores
 public function store1(Request $request){
     $request->validate([
             'id_categories' => 'required|integer|exists:categories,id',
-            'name_product' => 'required|string|max:50',
+            'name_product' => 'required|string|max:255',
             'id_supplier' => 'nullable|integer|exists:suppliers,id',
             'codeExt_product' => 'nullable|string|max:100',
             'codeInt_product' => 'nullable|string|max:100',
@@ -109,7 +109,7 @@ public function store1(Request $request){
     
         // Guardar la imagen si existe
         $imagePath = $request->hasFile('image_product') 
-            ? $request->file('image_product')->store('images', 'public') 
+            ? $request->file('image_product')->store('productos', 'public') 
             : null;
     
         // Crear el producto
@@ -142,7 +142,7 @@ public function edit($id)
 public function update(Request $request, $id)
 {
     $request->validate([
-    'name_product' => 'required|string|max:50',
+    'name_product' => 'required|string|max:255',
     'codeExt_product' => 'nullable|string|max:100',
     'codeInt_product' => 'nullable|string|max:100',
     'diameterMM_product' => 'nullable|numeric|regex:/^\d+(\.\d{1,2})?$/',
@@ -155,7 +155,7 @@ public function update(Request $request, $id)
 
  // Guardar la imagen si existe
         $imagePath = $request->hasFile('image_product') 
-            ? $request->file('image_product')->store('images', 'public') 
+            ? $request->file('image_product')->store('productos', 'public') 
             : null;
 
     $products = Product::findOrFail($id);

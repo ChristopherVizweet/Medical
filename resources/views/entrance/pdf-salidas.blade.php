@@ -83,7 +83,7 @@ th, td {
    
     <div id="header">
         <img id="logo" src="{{ public_path('img/logo1.png') }}" alt="Logo Empresa" >
-        <h1 id="titulo">VALES DE SALIDA</h1>
+        <h1 id="titulo">VALE DE SALIDA</h1>
     </div>
     <div class="info-basica">
         <p ><strong>FECHA: </strong>{{$movimientos->fecha_movimiento ?? 'Sin fecha'}}</p>
@@ -131,7 +131,7 @@ th, td {
             </div>
             <div class="caja">
                 <div class="linea"></div>
-                <h5>Firma quien recive</h5>
+                <h5>Firma quien recibe</h5>
             </div>
         </div>
 </div>
@@ -141,7 +141,7 @@ th, td {
    
     <div id="header">
         <img id="logo" src="{{ public_path('img/logo1.png') }}" alt="Logo Empresa" >
-        <h1 id="titulo">VALES DE SALIDA</h1>
+        <h1 id="titulo">VALE DE SALIDA</h1>
     </div>
     <div class="info-basica">
         <p id="fecha"><strong>FECHA: </strong>{{$movimientos->fecha_movimiento ?? 'Sin fecha'}}</p>
@@ -187,7 +187,7 @@ th, td {
             </div>
             <div class="caja">
                 <div class="linea"></div>
-                <h5>Firma quien recive</h5>
+                <h5>Firma quien recibe</h5>
             </div>
         </div>
 </div> 
