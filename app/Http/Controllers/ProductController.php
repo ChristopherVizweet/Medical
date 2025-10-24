@@ -25,6 +25,7 @@ class ProductController extends Controller
     }
 
     $products = $productQuery->get();
+    $product=Product::all();
     
     $categories = Categories::all();
 
@@ -97,7 +98,7 @@ public function store1(Request $request){
             'id_supplier' => 'nullable|integer|exists:suppliers,id',
             'codeExt_product' => 'nullable|string|max:100',
             'codeInt_product' => 'nullable|string|max:100',
-            'diameterMM_product' => 'nullable|numeric|regex:/^\d+(\.\d{1,2})?$/',
+            'diameterMM_product' => 'nullable|string|max:255',
             'diameterIN_product' => 'nullable|regex:#^\d+(\.\d+)?(/?\d+)?$#',
             'diameter_nominal' => 'nullable|string|max:255',
             'diameter_exterior' => 'nullable|string|max:255',
@@ -360,6 +361,12 @@ public function storeSalidas(Request $request){
     return redirect()->route('index-salidas')->with('success', 'Registrado correctamente');
    
 }
+public function createSalidasObras(){
+    $empleados=Empleados::all();
+    $productos=Product::all();
+
+    return view('entrance.create-salidasObras', compact('empleados','productos'));
+}
 
 //Funcion para convertir a PDF
 public function print($id)
@@ -372,4 +379,13 @@ public function print($id)
     return $pdf->stream('Vale_salida_'.$id.'.pdf');
 }
 
+public function deleteMovements($id){
+    $movimiento=InventarioMovimiento::FindOrFail($id);
+     if($movimiento->productos()->exists()){
+      return redirect()->back()->with('error', 'No se puede eliminar el movimiento porque está asociado a productos.');   
+    }
+    $movimiento->delete();
+    
+    return redirect()->route('index-salidas')->with('success','Producto eliminado correctamente');
+    }
 }

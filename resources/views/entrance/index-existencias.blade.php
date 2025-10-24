@@ -64,8 +64,8 @@
                 <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
               <tr class="">
                   <th class="px-4 py-2">{{ __('ID') }}</th>
-                  <th class="px-4 py-2">{{ __('Tipo') }}</th>
-                  <th class="px-4 py-2">{{ __('Proveedor') }}</th>
+                  <th class="px-2 py-2">{{ __('Tipo') }}</th>
+                  <th class="px-4 py-2">{{ __('Codigo Interior') }}</th>
                   <th class="px-4 py-2">{{ __('Stock') }}</th>
                   <th class="px-4 py-2">{{ __('valor por articulo ($)') }}</th>
                   <th class="px-4 py-2">{{ __('Imagen del producto') }}</th>
@@ -78,12 +78,12 @@
                  <tr class="">
                      <td class="px-4 py-2">{{ $product->id }}</td>
                      <td class="px-4 py-2">{{ $product->name_product }}</td>
-                     <td class="px-4 py-2">{{ $product->id_supplier }}</td>
+                     <td class="px-4 py-2">{{ $product->codeInt_product }}</td>
                      <td class="px-4 py-2">{{ $product->stock }}</td>                     
                      <td class="px-4 py-2">{{ $product->valueArt_product }}</td>
-                     <td class= "items-center px-4 py-2"> <img src="{{ asset('storage/images/' . $product->image_product) }}" 
-     alt="Imagen {{ $product->name_product }}" 
-     class="w-20 h-20 object-cover rounded">
+                    <td class= "items-center px-4 py-2"> <img src="{{ asset('storage/images/productos/' . $product->image_product) }}" 
+                        alt="{{ $product->image_product }}" 
+                        class="w-20 h-20 object-cover rounded">
                      </td>
                      
                  </tr>

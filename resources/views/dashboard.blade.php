@@ -46,6 +46,27 @@ Modo Oscuro/Claro
                 <div class="mx-10 text-black dark:text-white">
                     Aqui algunas recomendaciones
                 </div>
+                <!--Vacaciones proximas-->
+            <div class="float-right mt-8 text-center w-42 font-semibold border text-lg text-black dark:text-white ">
+                Proximas vacaciones de empleados
+                <div class="mx-10 my-4 text-black dark:text-white">
+                    <ul class="list-disc list-inside">
+                        @foreach($proximos as $empleado)
+                            <li>{{ $empleado->Nombre }} {{ $empleado->apellidos }} - Vacaciones: {{ \Carbon\Carbon::parse($empleado->fecha_vacaciones)->format('d/m/Y') }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            <!--cumpleaños proximos-->
+                <div class="float-right mt-8 text-center w-42 font-semibold border text-lg text-black dark:text-white ">
+                Proximos cumpleaños de empleados
+                <div class="mx-10 my-4 text-black dark:text-white">
+                    <ul class="list-disc list-inside">
+                        @foreach($cumpleanosProximos as $empleado)
+                            <li>{{ $empleado->Nombre }} {{ $empleado->apellidos }} - Cumpleaños: {{ \Carbon\Carbon::parse($empleado->fecha_nacimiento)->format('d/m/Y') }}</li>
+                        @endforeach
+                    </ul>
+            </div>
             </div>
         </div>
     </div>

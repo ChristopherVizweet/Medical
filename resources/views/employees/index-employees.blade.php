@@ -70,9 +70,23 @@
                             <td class="px-4 py-2">{{ $empleado->tipoSangre}}</td>
                             <td class="px-4 py-2"><img class="items-center" src="{{ asset('storage/' . $empleado->foto) }}" alt="Imagen de empleado" width="150">
                             </td>
-                            <td class="px-4 py-2"> <a href="{{ route('edit-employees', $empleado->id) }}" class="text-blue-600 dark:text-blue-900 hover:underline">Ver más</a></td>
                             <td class="px-4 py-2">
-                                <!--<a href="{route('edit-user', $empleado->id) }" class="text-blue-600 hover:underline">Editar</a> |-->
+                                <!--Aqui esta la condicion si no existen certificados en los empleados-->
+                                @if ($empleado->certificados_empleados)
+                                    <a href="storage/{{ $empleado->certificados_empleados }}" target="blank_" class="text-blue-600 dark:text-blue-900 hover:underline">Ver certificados</a>|
+                               
+
+                                 <form action="{{ route('delete-certificados', $empleado->id) }}" method="POST" style="display:inline-block;"> 
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 dark:text-red-900 hover:underline" onclick="return confirm('Estas seguro de eliminar este archivo?')">Eliminar certificados</button>
+                                </form>
+                                 @else
+                                    <span class="text-gray-500">Sin certificados</span>
+                                @endif
+                            </td>
+                            <td class="px-4 py-2">
+                                <a href="{{ route('edit-employees', $empleado->id) }}" class="text-blue-600 hover:underline">Editar</a> |
                                 <form action="{{ route('delete-employees', $empleado->id) }}" method="POST" style="display:inline-block;"> 
                                     @csrf
                                     @method('DELETE')

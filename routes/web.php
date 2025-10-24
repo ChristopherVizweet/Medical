@@ -8,6 +8,7 @@ use App\Http\Controllers\BankController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmpleadosController;
 use App\Http\Controllers\EntranceController;
 use App\Http\Controllers\PriorityController;
@@ -25,7 +26,7 @@ use App\Models\Product;
 use Spatie\Permission\Middleware\RoleMiddleware;
 
 
-Route::get('/', [AuthController::class,'index'])->name('login');
+Route::get('/', [DashboardController::class,'index'])->name('login');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -35,6 +36,7 @@ Route::get('/dashboard', function () {
 
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
     Route::get('/index_Supplier', [SupplierController::class, 'index'])->name('index_Supplier');
     Route::get('/create_supplier', [SupplierController::class, 'create'])->name('create_supplier');
     Route::get('/import-supplier',[SupplierController::class, 'create1'])->name('import-supplier');
@@ -77,6 +79,7 @@ Route::post('/import-product', [ProductController::class, 'store'])->name('store
 Route::get('/edit-product/{id}', [ProductController::class, 'edit'])->name('edit-product');
 Route::put('/edit-product/{id}', [ProductController::class, 'update'])->name('edit-product');
 Route::delete('/delete-product/{id}',[ProductController::class, 'delete'])->name('delete-product');
+Route::delete('/delete-product/{id}',[ProductController::class, 'deleteMovements'])->name('delete-product');
 
 #Parte para las ventas/cotizaciones/Entrada y salida de mercancia
 Route::get('/index-existencias',[ProductController::class,'indexExistencias'])->name('index-existencias');
@@ -86,7 +89,7 @@ Route::post('/create-entradas',[ProductController::class, 'storeEntradas'])->nam
 Route::get('/index-salidas',[ProductController::class,'indexSalidas'])->name('index-salidas');
 Route::get('/create-salidas',[ProductController::class, 'createSalidas'])->name('create-salidas');
 Route::post('/create-salidas',[ProductController::class, 'storeSalidas'])->name('store-salidas');
-
+Route::get('/create-salidasObras',[ProductController::class, 'createSalidasObras'])->name('create-salidasObras');
 //impresion de las entradas y salidas
 Route::get('/pdf-salidas/{id}',[ProductController::class, 'print'])->name('pdf-salidas');
 
@@ -111,6 +114,7 @@ Route::post('/create-employees', [EmpleadosController::class, 'store'])->name('s
 Route::get('/edit-employees/{id}',[EmpleadosController::class, 'edit'])->name('edit-employees');
 Route::put('/edit-employees/{id}',[EmpleadosController::class, 'update'])->name('edit-employees');
 Route::delete('/delete-employees/{id}',[EmpleadosController::class, 'delete'])->name('delete-employees');
+Route::delete('/delete-certificados/{id}',[EmpleadosController::class, 'deleteCertificados'])->name('delete-certificados');
 
 #Parte para el proyecto
 Route::get('/index-project',[ProjectController::class,'index'])->name('index-project');

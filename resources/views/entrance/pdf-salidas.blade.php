@@ -20,7 +20,8 @@
     padding-left: 0;       /* quitamos padding extra */
 }
 
-#folio{color: red}
+#folio{color: red;
+float: right;}
 .texto_footer {color: blue}
 
 #titulo{
@@ -84,12 +85,12 @@ th, td {
     <div id="header">
         <img id="logo" src="{{ public_path('img/logo1.png') }}" alt="Logo Empresa" >
         <h1 id="titulo">VALE DE SALIDA</h1>
+        <p id="folio"><strong>FOLIO N°: </strong>{{$movimientos->productos->first()->folio_movimiento ?? 'Sin folio'}}</p>
     </div>
     <div class="info-basica">
         <p ><strong>FECHA: </strong>{{$movimientos->fecha_movimiento ?? 'Sin fecha'}}</p>
         <p ><strong>SOLICITA: </strong>{{$movimientos->productos->first()->empleado->Nombre ?? 'Sin nombre'}}</p>
         <p ><strong>OBRA: </strong>{{$movimientos->productos->first()->obra_movimiento ?? 'Sin nombre de obra'}}</p>
-        <p id="folio"><strong>FOLIO N°: </strong>{{$movimientos->productos->first()->folio_movimiento ?? 'Sin folio'}}</p>
     </div>
         
 
@@ -142,12 +143,12 @@ th, td {
     <div id="header">
         <img id="logo" src="{{ public_path('img/logo1.png') }}" alt="Logo Empresa" >
         <h1 id="titulo">VALE DE SALIDA</h1>
+        <p id="folio"><strong>FOLIO N°: </strong>{{$movimientos->productos->first()->folio_movimiento ?? 'Sin folio'}}</p>
     </div>
     <div class="info-basica">
         <p id="fecha"><strong>FECHA: </strong>{{$movimientos->fecha_movimiento ?? 'Sin fecha'}}</p>
         <p id="empleado"><strong>SOLICITA: </strong>{{$movimientos->productos->first()->empleado->Nombre ?? 'Sin nombre'}}</p>
         <p id="obra"><strong>OBRA: </strong>{{$movimientos->productos->first()->obra_movimiento ?? 'Sin nombre de obra'}}</p>
-        <p id="folio"><strong>FOLIO N°: </strong>{{$movimientos->productos->first()->folio_movimiento ?? 'Sin folio'}}</p>
     </div>
     <div>
        <h2>Productos de salida</h2>

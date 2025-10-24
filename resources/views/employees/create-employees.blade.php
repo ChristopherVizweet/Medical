@@ -33,6 +33,13 @@
             <x-input-error :messages="$errors->get('curp')" class="mt-2" />
         </div>
 
+         {{-- Fecha de nacimiento --}}
+        <div>
+            <x-input-label for="fecha_nacimiento" :value="__('Fecha de nacimiento')" />
+            <x-text-input id="fecha_nacimiento" class="mt-1 block w-full" type="date" name="fecha_nacimiento" :value="old('fecha_nacimiento')" required />
+            <x-input-error :messages="$errors->get('fecha_nacimiento')" class="mt-2" />
+        </div>
+
         {{-- Organización --}}
         <div>
             <x-input-label for="organizacion" :value="__('Organización')" />
@@ -114,6 +121,65 @@
             <x-input-label for="tipoSangre" :value="__('Tipo de sangre')" />
             <x-text-input id="tipoSangre" class="mt-1 block w-full" type="text" name="tipoSangre" :value="old('tipoSangre')" required />
             <x-input-error :messages="$errors->get('tipoSangre')" class="mt-2" />
+        </div>
+        <!--DIV PARA UNIFORMES-->
+        <div class="sm:col-span-2">
+            <h1 class="text-center text-gray-800 dark:text-white">TALLA PARA UNIFORMES</h1>
+            <!--Talla para pantalones-->
+            <x-input-label for="talla_pantalon" :value="__('Talla de pantalón')" />
+            <x-text-input id="talla_pantalon" placeholder="Ejemplo: 30" class="mt-1 block w-full" type="text" name="talla_pantalon" :value="old('talla_pantalon')" required />
+            <x-input-error :messages="$errors->get('talla_pantalon')" class="mt-2" />
+            <!--Talla para camisa-->
+            <x-input-label for="talla_camisa" :value="__('Talla de camisa')" />
+            <select name="talla_camisa" id="talla_camisa" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                <option value="">--Selecciona una talla de camisa--</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+            <!--Talla para calzado-->
+            <x-input-label for="talla_calzado" :value="__('Talla de calzado')" />
+            <select name="talla_calzado" id="talla_calzado" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                <option value="">--Selecciona una talla de calzado--</option>
+                <option value="S">22</option>
+                <option value="M">22.5</option>
+                <option value="L">23</option>
+                <option value="XL">23.5</option>
+                <option value="XXL">24</option>
+                <option value="XXL">24.5</option>
+                <option value="XXL">25</option>
+                <option value="XXL">25.5</option>
+                <option value="XXL">26</option>
+                <option value="XXL">26.5</option>
+                <option value="XXL">27</option>
+                <option value="XXL">27.5</option>
+                <option value="XXL">28</option>
+                <option value="XXL">28.5</option>
+            </select>
+
+        </div>
+
+        {{-- Fecha de vacaciones --}}
+        <div>
+            <x-input-label for="fecha_vacaciones" :value="__('Fecha de vacaciones')" />
+            <x-text-input id="fecha_vacaciones" class="mt-1 block w-full" type="date" name="fecha_vacaciones" :value="old('fecha_vacaciones')" required />
+            <x-input-error :messages="$errors->get('fecha_vacaciones')" class="mt-2" />
+        </div>
+
+        <!--Observaciones-->
+        <div class="">
+            <x-input-label for="observaciones_empleado" :value="__('Observaciones')" />
+            <x-text-input id="observaciones_empleado" class="mt-1 block w-full" type="text" name="observaciones_empleado" :value="old('observaciones_empleado')" required />
+            <x-input-error :messages="$errors->get('observaciones_empleado')" class="mt-2" />
+        </div>
+
+        {{-- certificados --}}
+        <div class="">
+            <x-input-label for="certificados_empleados" :value="__('Certificados de empleado')" />
+            <x-text-input id="certificados_empleados" class="mt-1 block w-full" type="file" name="certificados_empleados" :value="old('certificados_empleados')" required />
+            <x-input-error :messages="$errors->get('certificados_empleados')" class="mt-2" />
         </div>
 
         {{-- Foto --}}

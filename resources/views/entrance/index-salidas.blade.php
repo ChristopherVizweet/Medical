@@ -70,14 +70,14 @@
                      <td class="px-4 py-2">{{ $movi->productos->first()->cantidad ?? 'Sin T.P.E'}}</td>
                      <td class="px-4 py-2">{{ $movi->fecha_movimiento ?? 'Sin fecha'}}</td>
                      <td class="px-4 py-2">{{ $movi->observaciones_movimiento ?? 'Sin observaciones'}}</td>
-                     <td class="px-4 py-2">
-                      <a href=" {{ route('pdf-salidas', $movi->id) }}" class="text-red-600 hover:underline">PDF</a>|  </td>
-                         <!---<form  action="{ route('delete-product', $product->id) }}" method="POST" style="display:inline-block;">
-                        csrf
-                             method('DELETE')
+                     <td class="px-4 py-2"> <a href=" {{ route('pdf-salidas', $movi->id) }}" class="text-red-600 hover:underline">PDF</a>| 
+                    <form  action="{{ route('delete-product', $movi->id) }}" method="POST" style="display:inline-block;">
+                        @csrf
+                             @method('DELETE')
                             <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿En verdad deseas eliminar esta categoria?')">Eliminar</button>
-                         </form> -->
-                    
+                         </form>
+                    </td>
+                         
                  </tr>
              @empty
                  <tr>
@@ -87,11 +87,16 @@
          </tbody>
          
     </div>
-     <x-primary-button class="mt-4">
+    <x-primary-button class="mt-4">
                     <a href="{{ route('create-salidas') }}" class="text-dark"> 
                          {{ __('Registrar salida') }}
                      </a> 
-                </x-primary-button>
+    </x-primary-button>
+    <x-primary-button class="mt-4 ml-4">
+                    <a href="{{ route('create-salidasObras') }}" class="text-dark"> 
+                         {{ __('Registrar salida a obra') }}
+                     </a> 
+    </x-primary-button>
      </table>
         </div>
 </x-app-layout>
