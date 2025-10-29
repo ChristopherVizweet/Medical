@@ -18,4 +18,7 @@ class Product extends Model
 public function categories(){
     return $this->belongsTo(Categories::class, 'id_categories');
 }
+public function product(){
+    return $this->hasMany(InventarioMovimiento::class, 'product_id');
+}
 }

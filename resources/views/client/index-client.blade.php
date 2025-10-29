@@ -43,7 +43,7 @@
             </div>
         @endif
 
-        <h1 class="text-2xl dark:text-white font-bold mb-6">Lista de clientes</h1>
+        <h1 class="text-2xl dark:text-white font-bold mb-6">Filtro de búsqueda</h1>
 
         {{-- Filtros y botón --}}
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">

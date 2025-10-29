@@ -49,22 +49,19 @@
             </div>
         @endif
 
-        <h1 class="text-2xl dark:text-white font-bold mb-6">Lista de proveedores</h1>
+        <h1 class="text-2xl dark:text-white font-bold mb-6">Filtros de búsqueda</h1>
 
         {{-- Filtro y botón en una fila responsive --}}
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
             {{-- Filtro --}}
             <form action="{{ route('index_Supplier') }}" method="GET" class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-                <label class="text-black dark:text-white text-base font-sans" for="id">Buscar por Nombre</label>
-                <select name="id" id="id" required onchange="this.form.submit()"
-                        class="text-black dark:text-black border border-gray-300 rounded px-3 py-1">
-                    <option value="">--Todos--</option>
-                    @foreach ($suppliers as $supplier)
-                        <option value="{{ $supplier->id }}" {{ request('id') == $supplier->id ? 'selected' : '' }}>
-                            {{ $supplier->name_supplier }}
-                        </option>
-                    @endforeach
-                </select>
+               <div class="flex flex-col">
+                    <label for="name_supplier" class="text-black dark:text-white text-base">Buscar por Nombre</label>
+                    <input type="text" name="name_supplier" id="name_supplier" placeholder="Escriba el nombre del proveedor"
+                           value="{{ request('name_supplier') }}"
+                           class="text-black dark:text-black border border-gray-300 rounded px-3 py-1 w-full"
+                           onchange="this.form.submit()">
+                </div>
             </form>
 
             {{-- Botón Crear Proveedores --}}

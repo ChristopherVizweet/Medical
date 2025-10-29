@@ -17,5 +17,17 @@ public function empleado()
     {
         return $this->belongsTo(InventarioMovimiento::class);
     }
+public function encargadoA()
+    {
+        return $this->belongsTo(MovementProduct::class, 'encargado_almacen');
+    }
+public function encargadoE()
+    {
+        return $this->belongsTo(MovementProduct::class, 'encargado_envio');
+    }
+public function encargadoR()
+    {
+        return $this->belongsTo(MovementProduct::class, 'encargado_recibe');
+    }
 }
 

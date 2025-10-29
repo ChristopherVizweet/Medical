@@ -79,7 +79,7 @@ Route::post('/import-product', [ProductController::class, 'store'])->name('store
 Route::get('/edit-product/{id}', [ProductController::class, 'edit'])->name('edit-product');
 Route::put('/edit-product/{id}', [ProductController::class, 'update'])->name('edit-product');
 Route::delete('/delete-product/{id}',[ProductController::class, 'delete'])->name('delete-product');
-Route::delete('/delete-product/{id}',[ProductController::class, 'deleteMovements'])->name('delete-product');
+
 
 #Parte para las ventas/cotizaciones/Entrada y salida de mercancia
 Route::get('/index-existencias',[ProductController::class,'indexExistencias'])->name('index-existencias');
@@ -90,7 +90,12 @@ Route::get('/index-salidas',[ProductController::class,'indexSalidas'])->name('in
 Route::get('/create-salidas',[ProductController::class, 'createSalidas'])->name('create-salidas');
 Route::post('/create-salidas',[ProductController::class, 'storeSalidas'])->name('store-salidas');
 Route::get('/create-salidasObras',[ProductController::class, 'createSalidasObras'])->name('create-salidasObras');
+Route::post('/create-salidasObras',[ProductController::class, 'storeSalidasObras'])->name('store-salidasObras');
+Route::delete('/delete-entradas/{id}',[ProductController::class, 'deleteMovements'])->name('delete-entradas');
+Route::delete('/delete-salidas/{id}',[ProductController::class, 'deleteM'])->name('delete-salidas');
+
 //impresion de las entradas y salidas
+Route::get('/pdf-salidasObras/{id}',[ProductController::class, 'printObra'])->name('pdf-salidasObras');
 Route::get('/pdf-salidas/{id}',[ProductController::class, 'print'])->name('pdf-salidas');
 
 

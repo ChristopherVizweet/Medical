@@ -199,7 +199,8 @@ public function delete($id){
     return view('entrance.index-existencias',compact('products','categories'));    
 }
     public function indexEntradas() {
-       $movimientos = InventarioMovimiento::with(['productos.product','recibe','firma'])
+       $movimientos = InventarioMovimiento::with(['productos.product','recibe','firma',
+       'proveedor','productos','product'])
                     ->where('tipoMovimiento', 'entrada')
                     ->orderBy('fecha_movimiento', 'desc')
                     ->get();
@@ -287,13 +288,18 @@ public function delete($id){
 
 //Aqui van para las funciones para las salidas
 
-public function indexSalidas(){
+public function indexSalidas(Request $request){
+    
+    //$salidasQuery= MovementProduct::query();
+    //if($request->filled('obra_movimiento')){
+      //  $salidasQuery->where('obra_movimiento', $request->obra_movimiento);
+    
+   
     $movimientos = InventarioMovimiento::with(['productos.product','recibe','firma','productos'])
                     ->where('tipoMovimiento', 'salida')
                     ->orderBy('fecha_movimiento', 'desc')
                     ->get();
-    
-    
+  
     return view('entrance.index-salidas', compact('movimientos'));
 }
 public function createSalidas(){
@@ -314,7 +320,6 @@ public function storeSalidas(Request $request){
        
         'productos.*.product_id'    => 'required|exists:products,id',
         'productos.*.cantidad'      => 'required|integer|min:1',
-      
         'productos.*.cantidadR'     => 'nullable|integer',
         'productos.*.cantidadA'     => 'nullable|integer'
     ]);
@@ -326,6 +331,7 @@ public function storeSalidas(Request $request){
         'observaciones_movimiento'  => $validated['observaciones_movimiento'] ?? null,
         'obra_movimiento'           => $validated['obra_movimiento'] ?? null,
         'empleado_id'               => $validated['empleado_id'] ?? null,
+        
         'folio_movimiento'          => $validated['folio_movimiento'] ?? null
     ]);
 
@@ -339,6 +345,7 @@ public function storeSalidas(Request $request){
             'cantidadR'                => $producto['cantidadR'] ?? null,
             'cantidadA'                => $producto['cantidadA'] ?? null,
             'empleado_id'              => $validated['empleado_id'] ?? null,
+            
             'folio_movimiento'         => $validated['folio_movimiento'] ?? null,
             'obra_movimiento'          => $validated['obra_movimiento'] ?? null,
         ]);
@@ -367,7 +374,75 @@ public function createSalidasObras(){
 
     return view('entrance.create-salidasObras', compact('empleados','productos'));
 }
+public function storeSalidasObras(Request $request){
+ // 1. Validar
+    $validated = $request->validate([
+       'tipoMovimiento'            => 'required|in:entrada,salida',
+        'fecha_movimiento'          => 'nullable|date',
+        'observaciones_movimiento'  => 'nullable|string',
+        'obra_movimiento'           => 'nullable|string',
+        'empleado_id'               => 'nullable|exists:empleados,id',
+        'encargado_almacen'        => 'nullable|exists:empleados,id',
+        'encargado_envio'         => 'nullable|exists:empleados,id',
+        'encargado_recibe'       => 'nullable|exists:empleados,id',
+        'folio_movimiento'          => 'nullable|string',
+       
+        'productos.*.product_id'    => 'required|exists:products,id',
+        'productos.*.cantidad'      => 'required|integer|min:1',
+        'productos.*.cantidadE'     => 'nullable|integer',
+        'productos.*.cantidadR'     => 'nullable|integer',
+        'productos.*.cantidadA'     => 'nullable|integer'
+    ]);
 
+    // 2. Crear el movimiento principal
+    $movimiento = InventarioMovimiento::create([
+       'tipoMovimiento'            => $validated['tipoMovimiento'],
+        'fecha_movimiento'          => $validated['fecha_movimiento'] ?? now(),
+        'observaciones_movimiento'  => $validated['observaciones_movimiento'] ?? null,
+        'obra_movimiento'           => $validated['obra_movimiento'] ?? null,
+        'empleado_id'               => $validated['empleado_id'] ?? null,
+        'encargado_almacen'        => $validated['encargado_almacen'] ?? null,
+        'encargado_envio'         => $validated['encargado_envio'] ?? null,
+        'encargado_recibe'       => $validated['encargado_recibe'] ?? null,
+        'folio_movimiento'          => $validated['folio_movimiento'] ?? null
+    ]);
+
+    // 3. Registrar productos del movimiento y actualizar stock
+    foreach ($validated['productos'] as $producto) {
+        // Guardar en tabla pivot
+        MovementProduct::create([
+           'inventario_movimientos_id'=> $movimiento->id,
+            'product_id'               => $producto['product_id'],
+            'cantidad'                 => $producto['cantidad'],
+            'cantidadE'                => $producto['cantidadE'] ?? null,
+            'cantidadR'                => $producto['cantidadR'] ?? null,
+            'cantidadA'                => $producto['cantidadA'] ?? null,
+            'empleado_id'              => $validated['empleado_id'] ?? null,
+            'encargado_almacen'        => $validated['encargado_almacen'] ?? null,
+            'encargado_envio'         => $validated['encargado_envio'] ?? null,
+            'encargado_recibe'       => $validated['encargado_recibe'] ?? null,
+            'folio_movimiento'         => $validated['folio_movimiento'] ?? null,
+            'obra_movimiento'          => $validated['obra_movimiento'] ?? null,
+        ]);
+
+        // Ajustar stock producto por producto
+        $product = Product::findOrFail($producto['product_id']);
+        if ($validated['tipoMovimiento'] === 'entrada') {
+            $product->stock += $producto['cantidad'];
+        } elseif ($validated['tipoMovimiento'] === 'salida') {
+            if ($product->stock < $producto['cantidad']) {
+                return back()->withErrors([
+                    'cantidad' => "No hay suficiente stock para el producto {$product->name_product}."
+                ]);
+            }
+            $product->stock -= $producto['cantidad'];
+        }
+        $product->save();
+    }
+
+    return redirect()->route('index-salidas')->with('success', 'Registrado correctamente');
+   
+}
 //Funcion para convertir a PDF
 public function print($id)
 {
@@ -378,14 +453,28 @@ public function print($id)
 
     return $pdf->stream('Vale_salida_'.$id.'.pdf');
 }
+public function printObra($id)
+{
+    $movimientos = InventarioMovimiento::with(['productos','product','obra','productos.empleado',
+    'productos.encargadoA','productos.encargadoE','productos.encargadoR'])->findOrFail($id);
+    $pdf = Pdf::loadView('entrance.pdf-salidasObras', compact('movimientos'));
+    return $pdf->stream('Vale_salida_Obra_'.$id.'.pdf');
+}
 
 public function deleteMovements($id){
-    $movimiento=InventarioMovimiento::FindOrFail($id);
-     if($movimiento->productos()->exists()){
+    $movimiento=InventarioMovimiento::findOrFail($id);
+    if($movimiento->productos()->exists()){
       return redirect()->back()->with('error', 'No se puede eliminar el movimiento porque está asociado a productos.');   
     }
     $movimiento->delete();
+    return redirect()->route('index-entradas')->with('success','Entrada eliminada correctamente');
+
+}
+public function deleteM($id){
+    $movi=InventarioMovimiento::findOrFail($id);
     
-    return redirect()->route('index-salidas')->with('success','Producto eliminado correctamente');
-    }
+    $movi->delete();
+    return redirect()->route('index-salidas')->with('success','Salida eliminada correctamente');
+
+}
 }

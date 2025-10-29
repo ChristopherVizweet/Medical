@@ -37,9 +37,31 @@
                    {{ session('success') }}
                </div>
            @endif
-          
-           <h1 class="text-2xl dark:text-white font-bold mb-4">Salida de productos</h1>
-
+           <h1 class="text-2xl dark:text-white font-bold mb-4">Filtros de búsqueda</h1>
+           {{--Aqui comienza el filtro por nombre de obra--}}
+            <form action="{{ route('index-salidas') }}" method="GET" class="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full md:w-auto">
+                 {{-- Filtro por folio --}}
+                <div class="flex flex-col">
+                    <label for="folio_movimiento" class="text-black dark:text-white text-base">Buscar por folio</label>
+                    <select name="folio_movimiento" id="folio_movimiento" onchange="this.form.submit()"
+                            class="text-black dark:text-black border border-gray-300 rounded px-3 py-1 w-full">
+                        <option value="">--Todos--</option>
+                        @foreach ($movimientos as $movimiento)
+                            <option value="{{ $movimiento->productos->first()->folio_movimiento }}" {{ request('folio_movimiento') == $movimiento->productos->first()->folio_movimiento ? 'selected' : '' }}>
+                                {{ $movimiento->productos->first()->folio_movimiento }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="flex flex-col">
+                    <label for="obra_movimiento" class="text-black dark:text-white text-base">Buscar por obra</label>
+                    <input type="text" name="obra_movimiento" id="obra_movimiento" placeholder="Escriba el nombre de la obra"
+                           value="{{ request('obra_movimiento') }}"
+                           class="text-black dark:text-black border border-gray-300 rounded px-3 py-1 w-full"
+                           onchange="this.form.submit()">
+                </div>
+                
+            </form>
            {{-- Tabla responsive --}}
         <div class="overflow-x-auto rounded-lg shadow">
              <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
@@ -51,6 +73,7 @@
                   <th class="px-4 py-2">{{ __('Solicitante')}}</th>
                   <th class="px-4 py-2">{{ __('Cantidad Requerida')}}</th>
                   <th class="px-4 py-2">{{ __('Cantidad Aprobada') }}</th>
+                  <th class="px-4 py-2">{{ __('Cantidad Enviada') }}</th>
                   <th class="px-4 py-2">{{ __('T.P.E')}}</th>
                   <th class="px-4 py-2">{{ __('Fecha de salida')}}</th>
                   <th class="px-4 py-2">{{ __('Observaciones')}}</th>
@@ -67,16 +90,39 @@
                      <td class="px-4 py-2">{{ $movi->productos->first()->empleado->Nombre ?? 'Sin solicitante'}}</td>
                      <td class="px-4 py-2">{{ $movi->productos->first()->cantidadR ?? 'Sin cantidad requerida'}}</td>
                      <td class="px-4 py-2">{{ $movi->productos->first()->cantidadA ?? 'Sin cantidad aprobada'}}</td>
+                     <td class="px-4 py-2">{{ $movi->productos->first()->cantidadE ?? 'Sin cantidad enviada'}}</td>
                      <td class="px-4 py-2">{{ $movi->productos->first()->cantidad ?? 'Sin T.P.E'}}</td>
                      <td class="px-4 py-2">{{ $movi->fecha_movimiento ?? 'Sin fecha'}}</td>
                      <td class="px-4 py-2">{{ $movi->observaciones_movimiento ?? 'Sin observaciones'}}</td>
-                     <td class="px-4 py-2"> <a href=" {{ route('pdf-salidas', $movi->id) }}" class="text-red-600 hover:underline">PDF</a>| 
-                    <form  action="{{ route('delete-product', $movi->id) }}" method="POST" style="display:inline-block;">
-                        @csrf
-                             @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿En verdad deseas eliminar esta categoria?')">Eliminar</button>
-                         </form>
+                    <td class="px-4 py-2">
+                                <!--Aqui esta la condicion si tienen cantidad fuera de almacen-->
+                                @if ($movi->productos->first()->cantidadE != null)
+                                    <a href=" {{ route('pdf-salidasObras', $movi->id) }}" target="_blank" class="text-red-600 hover:underline">PDF</a>| 
+                                <form  action="{{ route('delete-salidas', $movi->id) }}" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿En verdad deseas eliminar este registro?')">Eliminar</button>
+                                </form>
+                                    @else
+                                        <a href=" {{ route('pdf-salidas', $movi->id) }}" target="_blank" class="text-red-600 hover:underline">PDF</a>|
+                                        <form  action="{{ route('delete-salidas', $movi->id) }}" method="POST" style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿En verdad deseas eliminar este registro?')">Eliminar</button>
+                                        </form>
+                                    @endif
                     </td>
+
+
+
+
+                     <!--<td class="px-4 py-2"> <a href=" { route('pdf-salidasObras', $movi->id) }}" target="_blank" class="text-red-600 hover:underline">PDF</a>| 
+                    <form  action="{ route('delete-salidas', $movi->id) }}" method="POST" style="display:inline-block;">
+                        csrf
+                             method('DELETE')
+                            <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿En verdad deseas eliminar este registro?')">Eliminar</button>
+                         </form>
+                    </td> -->
                          
                  </tr>
              @empty

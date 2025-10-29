@@ -29,11 +29,12 @@ class InventarioMovimiento extends Model
     {
         return $this->belongsTo(Product::class);
     }
+    
     // Relaciones
 
-    public function supplier()
+    public function proveedor()
     {
-        return $this->belongsTo(Supplier::class);
+        return $this->belongsTo(Supplier::class, 'supplier_id');
     }
 
     public function recibe()

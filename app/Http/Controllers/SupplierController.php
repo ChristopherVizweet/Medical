@@ -19,12 +19,13 @@ class SupplierController extends Controller
         #if (!Auth::check() || !Auth::user()->hasRole('superadmin')) {
             #abort(403, 'No tienes acceso a esta sección');
         #}
-        $select=Supplier::select();
-        if($request->has('id') && !empty($request->id)){
-            $select->where('id',$request->id);
-        }
-       
-        $suppliers = $select->get();
+       $supplierQuery = Supplier::query();
+
+    if ($request->filled('name_supplier')) {
+        $supplierQuery->where('name_supplier', $request->name_supplier);
+    }
+       $suppliers = $supplierQuery->get();
+        
         
         return view('supplier.index_Supplier', compact('suppliers')); 
         

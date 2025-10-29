@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Entrance;
 use App\Models\Categories;
 use App\Models\Product; 
+use App\Models\MovementProduct;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class EntranceController extends Controller
@@ -20,4 +22,5 @@ class EntranceController extends Controller
         $products = Product::all(); // Si también necesitas los proveedores
         return view('entrance.create-entrance', compact('categories', 'products'));
     }
+    
 }

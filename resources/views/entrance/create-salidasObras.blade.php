@@ -40,8 +40,8 @@
             </select>
         </div>
         <div>
-            <x-input-label for="empleado_id" :value="__('Encargado de almacén')" />
-            <select class="mt-1 block w-full" name="empleado_id" id="empleado_id" required>
+            <x-input-label for="encargado_almacen" :value="__('Encargado de almacén')" />
+            <select class="mt-1 block w-full" name="encargado_almacen" id="encargado_almacen" required>
                 <option value="">-Seleccionar-</option> 
                 @foreach($empleados as $empleado)
                 <option value="{{ $empleado->id }}">{{ $empleado->Nombre }}</option>
@@ -49,8 +49,8 @@
             </select>
         </div>
          <div>
-            <x-input-label for="empleado_id" :value="__('Encargado de envío')" />
-            <select class="mt-1 block w-full" name="empleado_id" id="empleado_id" required>
+            <x-input-label for="encargado_envio" :value="__('Encargado de envío')" />
+            <select class="mt-1 block w-full" name="encargado_envio" id="encargado_envio" required>
                 <option value="">-Seleccionar-</option> 
                 @foreach($empleados as $empleado)
                 <option value="{{ $empleado->id }}">{{ $empleado->Nombre }}</option>
@@ -58,8 +58,8 @@
             </select>
         </div>
         <div>
-            <x-input-label for="empleado_id" :value="__('Encargado quien recibe')" />
-            <select class="mt-1 block w-full" name="empleado_id" id="empleado_id" required>
+            <x-input-label for="encargado_recibe" :value="__('Encargado quien recibe')" />
+            <select class="mt-1 block w-full" name="encargado_recibe" id="encargado_recibe" required>
                 <option value="">-Seleccionar-</option> 
                 @foreach($empleados as $empleado)
                 <option value="{{ $empleado->id }}">{{ $empleado->Nombre }}</option>
@@ -74,14 +74,14 @@
         </div>
     <!--Aqui comienza el formulario para los productos-->
     <div id="productos-wrapper" class="space-y-4  border p-4 rounded-lg mt-3">
-    <div class="producto-row grid grid-cols-4 gap-4 items-center">
+    <div class="producto-row grid grid-cols-5 gap-5 items-center">
 
         <!-- Producto -->
         <div>
             <label for="productos[0][product_id]" class="block text-sm font-medium text-gray-700 dark:text-white">Producto</label>
             <select name="productos[0][product_id]" 
                     class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
-                    required>
+                    >
                 <option value="">-- Seleccionar --</option>
                 @foreach($productos as $producto)
                     <option class="text-black dark:text-black" value="{{ $producto->id }}">{{ $producto->name_product }} Diametro {{$producto->diameterMM_product}}mm</option>
@@ -92,26 +92,26 @@
         <!-- Cantidad requerida -->
         <div>
             <label for="productos[0][cantidadR]" class="block text-sm font-medium text-gray-700 dark:text-white">Cantidad requerida</label>
-            <input type="number" name="productos[0][cantidadR]" placeholder="Cantidad requerida" required
+            <input type="number" name="productos[0][cantidadR]" placeholder="Cantidad requerida" 
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
          <!-- Cantidad fuera de almacen -->
         <div>
-            <label for="productos[0][cantidadA]" class="block text-sm font-medium text-gray-700 dark:text-white">cantidad fuera de almacen</label>
-            <input type="number" name="productos[0][cantidadA]" placeholder="Cantidad aprobada" required
+            <label for="productos[0][cantidad]" class="block text-sm font-medium text-gray-700 dark:text-white">cantidad almacén</label>
+            <input type="number" name="productos[0][cantidad]" placeholder="Cantidad fuera de almacén" 
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
          <!-- Cantidad enviada -->
         <div>
-            <label for="productos[0][cantidadA]" class="block text-sm font-medium text-gray-700 dark:text-white">Cantidad enviada</label>
-            <input type="number" name="productos[0][cantidadA]" placeholder="Cantidad aprobada" required
+            <label for="productos[0][cantidadE]" class="block text-sm font-medium text-gray-700 dark:text-white">Cantidad enviada</label>
+            <input type="number" name="productos[0][cantidadE]" placeholder="Cantidad enviada" 
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
 
         <!-- cantidad recibida -->
         <div>
-            <label for="productos[0][cantidad]" class="block text-sm font-medium text-gray-700 dark:text-white">cantidad recibida</label>
-            <input type="number" name="productos[0][cantidad]" placeholder="Total productos aprobados" required
+            <label for="productos[0][cantidadA]" class="block text-sm font-medium text-gray-700 dark:text-white">cantidad recibida</label>
+            <input type="number" name="productos[0][cantidadA]" placeholder="Total productos aprobados" 
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
     </div>
@@ -147,17 +147,20 @@
         newRow.innerHTML = `
 
             <select name="productos[${productoIndex}][product_id]" 
-            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" >
                 <option value="">-- Seleccionar producto --</option>
                 @foreach($productos as $producto)
-                    <option value="{{ $producto->id }}">{{ $producto->name_product }}</option>
+                    <option value="{{ $producto->id }}">{{ $producto->name_product }} Diametro {{$producto->diameterMM_product}}mm</option>
                 @endforeach
             </select>
 
             <input type="number" name="productos[${productoIndex}][cantidadR]" placeholder="Cantidad requerida"
-                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" >
 
-            <input type="text" name="productos[${productoIndex}][cantidadA]" placeholder="Cantidad aprobada"
+            <input type="text" name="productos[${productoIndex}][cantidadA]" placeholder="Cantidad fuera de almacén"
+                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+
+             <input type="text" name="productos[${productoIndex}][cantidadE]" placeholder="Cantidad enviada"
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
 
             <input type="number" step="0.01" name="productos[${productoIndex}][cantidad]" 

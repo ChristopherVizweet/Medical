@@ -17,4 +17,8 @@ class Supplier extends Model
 {
     return $this->hasMany(projectProduct::class, 'supplier_id');
 }
+public function inventarioMovimientos()
+{
+    return $this->hasMany(InventarioMovimiento::class, 'supplier_id');
+}
 }

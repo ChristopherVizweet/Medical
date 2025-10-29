@@ -65,24 +65,27 @@
              
                  <tr class="">
                      <td class="px-4 py-2">{{ $movimiento->id }}</td>
-                     <td class="px-4 py-2">{{ $movimiento->image_product }}</td>
-                     <td class="px-4 py-2">{{ $movimiento->cantidad_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->codigo_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->product_id}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->supplier_id}}</td>
+                     <td class= "items-center px-4 py-2"> <img src="{{ asset('storage/images/productos/' . $movimiento->productos->first()->product->image_product) }}" 
+                        alt="{{ $movimiento->productos->first()->product->image_product }}" 
+                        class="w-20 h-20 object-cover rounded">
+                     </td>
+                     <td class="px-4 py-2">{{ $movimiento->productos->first()->cantidad}}</td>
+                     <td class="px-4 py-2">{{ $movimiento->productos->first()->codigo}}</td>
+                     <td class="px-4 py-2">{{ $movimiento->productos->first()->product->name_product}} Diametro{{ $movimiento->productos->first()->product->diameterMM_product }} mm</td>
+                     <td class="px-4 py-2">{{ $movimiento->proveedor->name_supplier}}</td>
                      <td class="px-4 py-2">{{ $movimiento->numero_factura_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->costos_movimiento}}</td>
+                     <td class="px-4 py-2">{{ $movimiento->productos->first()->costo_unitario}}</td>
                      <td class="px-4 py-2">{{ $movimiento->fecha_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->recibe_id}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->firma_id}}</td>
+                     <td class="px-4 py-2">{{ $movimiento->recibe->Nombre}}</td>
+                     <td class="px-4 py-2">{{ $movimiento->firma->Nombre}}</td>
                      <td class="px-4 py-2">{{ $movimiento->observaciones_movimiento}}</td>
                      <td class="px-4 py-2">
-                      <a href=" { route('edit-product', $product->id) }}" class="text-red-600 hover:underline">PDF</a>|  </td>
-                         <!---<form  action="{ route('delete-product', $product->id) }}" method="POST" style="display:inline-block;">
-                        csrf
-                             method('DELETE')
-                            <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿En verdad deseas eliminar esta categoria?')">Eliminar</button>
-                         </form> -->
+                        <form  action="{{ route('delete-entradas', $movimiento->id) }}" method="POST" style="display:inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿En verdad deseas eliminar esta entrada?')">Eliminar</button>
+                        </form> 
+                    </td>
                     
                  </tr>
              @empty
@@ -93,11 +96,16 @@
          </tbody>
          
     </div>
-     <x-primary-button class="mt-4">
-                    <a href="{{ route('create-entradas') }}" class="text-dark"> 
-                         {{ __('Registrar entrada') }}
-                     </a> 
-                </x-primary-button>
+    <x-primary-button class="mt-4">
+        <a href="{{ route('create-entradas') }}" class="text-dark"> 
+            {{ __('Registrar entrada') }}
+        </a> 
+    </x-primary-button>
+    <x-primary-button class="mt-4 ml-2">
+        <a href="{{ route('create-entradas') }}" class="text-dark"> 
+            {{ __('Exportar a Excel') }}
+        </a> 
+    </x-primary-button>
      </table>
         </div>
 </x-app-layout>
