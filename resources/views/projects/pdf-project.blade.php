@@ -73,7 +73,7 @@
 </div>
     <div class="columna1">
         <p><strong>Nombre del proyecto:</strong> {{ $project->nameProject }}</p>
-        <p id="folio"><strong>Folio del proyecto:</strong> {{ $project->folioProject }}</p>
+        <p id="folio"><strong>Folio del proyecto:</strong> MED-{{ $project->folioProject }}-2025</p>
         <p><strong>Cliente: </strong>{{$project->client->name_Client}}</p>
         <p><strong>Empresa encargada: </strong>{{$project->compani->nameCompany}}</p>
         <p><strong>Vendedor: </strong>{{$project->vendedor->name}}</p>

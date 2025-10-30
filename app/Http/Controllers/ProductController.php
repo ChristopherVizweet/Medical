@@ -14,6 +14,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use phpDocumentor\Reflection\Types\Nullable;
 use PhpOffice\PhpSpreadsheet\Calculation\Category;
 
+use function Pest\Laravel\get;
+
 class ProductController extends Controller
 {
     public function index(Request $request)
@@ -226,7 +228,7 @@ public function delete($id){
       
         'cantidad_movimiento'       => 'nullable|integer|min:1',
         'supplier_id'               => 'nullable|exists:suppliers,id',
-        'numero_factura_movimiento' => 'nullable|string',
+        'numero_factura_movimiento' => 'nullable|integer',
         'costos_movimiento'         => 'nullable|numeric',
         'fecha_movimiento'          => 'nullable|date',
         'recibe_id'                 => 'nullable|exists:empleados,id',
@@ -241,12 +243,14 @@ public function delete($id){
         'productos.*.codigo'        => 'nullable|string',
 
     ]);
+$ultimaFactura=InventarioMovimiento::max('numero_factura_movimiento');
+$nuevaFactura=$ultimaFactura ? $ultimaFactura + 1 : 1;
 
     // 2. Crear el movimiento principal
     $movimiento = InventarioMovimiento::create([
         'tipoMovimiento'            => $validated['tipoMovimiento'],
         'supplier_id'               => $validated['supplier_id'] ?? null,
-        'numero_factura_movimiento' => $validated['numero_factura_movimiento'] ?? null,
+        'numero_factura_movimiento' => $nuevaFactura ?? null,
         'fecha_movimiento'          => $validated['fecha_movimiento'] ?? now(),
         'recibe_id'                 => $validated['recibe_id'] ?? null,
         'firma_id'                  => $validated['firma_id'] ?? null,
@@ -289,17 +293,23 @@ public function delete($id){
 //Aqui van para las funciones para las salidas
 
 public function indexSalidas(Request $request){
-    
-    //$salidasQuery= MovementProduct::query();
-    //if($request->filled('obra_movimiento')){
-      //  $salidasQuery->where('obra_movimiento', $request->obra_movimiento);
-    
-   
-    $movimientos = InventarioMovimiento::with(['productos.product','recibe','firma','productos'])
+    $query = InventarioMovimiento::with(['productos.product','recibe','firma','productos'])
                     ->where('tipoMovimiento', 'salida')
-                    ->orderBy('fecha_movimiento', 'desc')
-                    ->get();
-  
+                    ->orderBy('fecha_movimiento','desc');
+
+    if($request->filled('obra_movimiento')){
+        $query->whereHas('productos', function($q) use ($request) {
+            $q->where('obra_movimiento', $request->obra_movimiento);
+        });
+    }
+    if($request->filled('folio_movimiento')){
+        $query->whereHas('productos', function($q) use ($request) {
+            $q->where('folio_movimiento', $request->folio_movimiento);
+        });
+    }
+   
+    $movimientos = $query->orderBy('fecha_movimiento', 'desc')->get();
+    
     return view('entrance.index-salidas', compact('movimientos'));
 }
 public function createSalidas(){
@@ -316,13 +326,15 @@ public function storeSalidas(Request $request){
         'observaciones_movimiento'  => 'nullable|string',
         'obra_movimiento'           => 'nullable|string',
         'empleado_id'               => 'nullable|exists:empleados,id',
-        'folio_movimiento'          => 'nullable|string',
+        'folio_movimiento'          => 'nullable|integer',
        
         'productos.*.product_id'    => 'required|exists:products,id',
         'productos.*.cantidad'      => 'required|integer|min:1',
         'productos.*.cantidadR'     => 'nullable|integer',
         'productos.*.cantidadA'     => 'nullable|integer'
     ]);
+$ultimoFolio=MovementProduct::max('folio_movimiento');
+$nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
 
     // 2. Crear el movimiento principal
     $movimiento = InventarioMovimiento::create([
@@ -331,8 +343,8 @@ public function storeSalidas(Request $request){
         'observaciones_movimiento'  => $validated['observaciones_movimiento'] ?? null,
         'obra_movimiento'           => $validated['obra_movimiento'] ?? null,
         'empleado_id'               => $validated['empleado_id'] ?? null,
-        
-        'folio_movimiento'          => $validated['folio_movimiento'] ?? null
+
+        'folio_movimiento'          => $nuevoFolio ?? null
     ]);
 
     // 3. Registrar productos del movimiento y actualizar stock
@@ -346,7 +358,7 @@ public function storeSalidas(Request $request){
             'cantidadA'                => $producto['cantidadA'] ?? null,
             'empleado_id'              => $validated['empleado_id'] ?? null,
             
-            'folio_movimiento'         => $validated['folio_movimiento'] ?? null,
+            'folio_movimiento'         => $nuevoFolio ?? null,
             'obra_movimiento'          => $validated['obra_movimiento'] ?? null,
         ]);
 
@@ -385,7 +397,7 @@ public function storeSalidasObras(Request $request){
         'encargado_almacen'        => 'nullable|exists:empleados,id',
         'encargado_envio'         => 'nullable|exists:empleados,id',
         'encargado_recibe'       => 'nullable|exists:empleados,id',
-        'folio_movimiento'          => 'nullable|string',
+        'folio_movimiento'          => 'nullable|integer',
        
         'productos.*.product_id'    => 'required|exists:products,id',
         'productos.*.cantidad'      => 'required|integer|min:1',
@@ -393,7 +405,8 @@ public function storeSalidasObras(Request $request){
         'productos.*.cantidadR'     => 'nullable|integer',
         'productos.*.cantidadA'     => 'nullable|integer'
     ]);
-
+$ultimoFolio=MovementProduct::max('folio_movimiento');
+$nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
     // 2. Crear el movimiento principal
     $movimiento = InventarioMovimiento::create([
        'tipoMovimiento'            => $validated['tipoMovimiento'],
@@ -404,7 +417,7 @@ public function storeSalidasObras(Request $request){
         'encargado_almacen'        => $validated['encargado_almacen'] ?? null,
         'encargado_envio'         => $validated['encargado_envio'] ?? null,
         'encargado_recibe'       => $validated['encargado_recibe'] ?? null,
-        'folio_movimiento'          => $validated['folio_movimiento'] ?? null
+        'folio_movimiento'          => $nuevoFolio ?? null
     ]);
 
     // 3. Registrar productos del movimiento y actualizar stock
@@ -421,7 +434,7 @@ public function storeSalidasObras(Request $request){
             'encargado_almacen'        => $validated['encargado_almacen'] ?? null,
             'encargado_envio'         => $validated['encargado_envio'] ?? null,
             'encargado_recibe'       => $validated['encargado_recibe'] ?? null,
-            'folio_movimiento'         => $validated['folio_movimiento'] ?? null,
+            'folio_movimiento'         => $nuevoFolio ?? null,
             'obra_movimiento'          => $validated['obra_movimiento'] ?? null,
         ]);
 
@@ -463,16 +476,14 @@ public function printObra($id)
 
 public function deleteMovements($id){
     $movimiento=InventarioMovimiento::findOrFail($id);
-    if($movimiento->productos()->exists()){
-      return redirect()->back()->with('error', 'No se puede eliminar el movimiento porque está asociado a productos.');   
-    }
+    
     $movimiento->delete();
     return redirect()->route('index-entradas')->with('success','Entrada eliminada correctamente');
 
 }
 public function deleteM($id){
     $movi=InventarioMovimiento::findOrFail($id);
-    
+   
     $movi->delete();
     return redirect()->route('index-salidas')->with('success','Salida eliminada correctamente');
 

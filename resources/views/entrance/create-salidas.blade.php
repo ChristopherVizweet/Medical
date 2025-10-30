@@ -29,9 +29,9 @@
             @endforeach
             </select>
         </div>
-            <div>
+            <div class="hidden">
                 <x-input-label for="folio_movimiento" :value="__('Folio')" />
-                <x-text-input id="folio_movimiento" class="mt-1 block w-full" type="text" name="folio_movimiento" :value="old('folio_movimiento')" required />
+                <x-text-input id="folio_movimiento" class="mt-1 block w-full" type="text" name="folio_movimiento" :value="old('folio_movimiento')"  />
                 <x-input-error :messages="$errors->get('folio_movimiento')" class="mt-2" />
             </div>
             <div>

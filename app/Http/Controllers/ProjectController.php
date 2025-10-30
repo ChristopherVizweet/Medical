@@ -78,7 +78,7 @@ class ProjectController extends Controller
         //dd($request->nameInstalation);
 
        $request->validate([
-    'folioProject' => 'required|string|max:20',
+    'folioProject' => 'nullable|integer',
     'id_client' => 'required|string|max:50',
     'nameProject' => 'required|string|max:255',
     'seller_id_usuario' => 'required|string|max:50',
@@ -128,10 +128,13 @@ class ProjectController extends Controller
     'totalProductos' => 'required|numeric|min:0',
     
 ]);
-
-    
-       $project = Project::create([
-        'folioProject' => $request->folioProject,
+//Para generar automaticamente el folio del proyecto
+$ultimoFolio=Project::max('folioProject');
+$nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
+$folioFormateado= 'MED-' . str_pad($nuevoFolio, 4, '0', STR_PAD_LEFT) . '-' . date('Y');
+      
+        $project = Project::create([
+        'folioProject' => $request->folioProject ?? $nuevoFolio,
         'id_client'  => $request->id_client,
         'nameProject' => $request->nameProject,
         'seller_id_usuario' => $request->seller_id_usuario,
@@ -199,7 +202,7 @@ public function edit($id)
 }
 public function update(Request $request,$id){
     $request->validate([
-    'folioProject' => 'required|string|max:20',
+    'folioProject' => 'required|integer',
     'id_client' => 'required|string|max:50',
     'nameProject' => 'required|string|max:255',
     'seller_id_usuario' => 'required|string|max:50',

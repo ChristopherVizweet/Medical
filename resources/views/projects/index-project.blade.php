@@ -182,7 +182,7 @@
                     @forelse ($projects as $project)
                         <tr class="border-t">
                             <td class="px-4 py-2">{{ $project->id}}</td>
-                            <td class="px-4 py-2">{{ $project->folioProject}}</td>
+                            <td class="px-4 py-2">MED-{{ $project->folioProject}}-2025</td>
                             <td class="px-4 py-2">{{ $project->nameProject}}</td>
                             <td class="px-4 py-2">{{ $project->client->name_Client ?? 'Sin cliente' }}</td>
                             <td class="px-4 py-2">{{ $project->vendedor->name ?? 'Sin vendedor' }}</td>

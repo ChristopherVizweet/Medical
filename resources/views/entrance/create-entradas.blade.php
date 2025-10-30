@@ -25,9 +25,9 @@
             @endforeach
             </select>
         </div>
-        <div>
+        <div class="hidden">
             <x-input-label for="numero_factura_movimiento" :value="__('Número de factura')" />
-            <x-text-input id="numero_factura_movimiento" class="mt-1 block w-full" type="text" name="numero_factura_movimiento" :value="old('numero_factura_movimiento')" required />
+            <x-text-input id="numero_factura_movimiento" class="mt-1 block w-full" type="text" name="numero_factura_movimiento" :value="old('numero_factura_movimiento')"  />
             <x-input-error :messages="$errors->get('numero_factura_movimiento')" class="mt-2" />
         </div>
         <div>

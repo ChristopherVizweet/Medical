@@ -12,9 +12,9 @@
             <div class="border p-4 rounded-lg">
                 <h2 class="text-lg font-semibold mb-4 dark:text-white">Información del Proyecto</h2>
 
-                    <div >
+                    <div class="hidden" >
                         <x-input-label for="folioProject" :value="__('Folio del proyecto')" />
-                        <x-text-input id="folioProject" class="mt-1 block w-full " type="text" name="folioProject" :value="old('folioProject')" required />
+                        <x-text-input id="folioProject" class="mt-1 block w-full " type="text" name="folioProject" :value="old('folioProject')"  />
                         <x-input-error :messages="$errors->get('folioProject')" class="mt-2" />
                     </div>
 
