@@ -22,6 +22,7 @@ class InventarioMovimiento extends Model
         'recibe_id',
         'firma_id',
         'observaciones_movimiento',
+        'estadoMovimiento'
     ];
 
     // Relación con producto

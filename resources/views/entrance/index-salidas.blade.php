@@ -76,6 +76,7 @@
                   <th class="px-4 py-2">{{ __('Cantidad Enviada') }}</th>
                   <th class="px-4 py-2">{{ __('T.P.E')}}</th>
                   <th class="px-4 py-2">{{ __('Fecha de salida')}}</th>
+                  <th class="px-4 py-2">{{ __('Estado de registro')}}</th>
                   <th class="px-4 py-2">{{ __('Observaciones')}}</th>
                   <th class="px-4 py-2">{{ __('Acciones') }}</th>
               </tr>
@@ -89,15 +90,40 @@
                      <td class="px-4 py-2">{{ $movi->productos->first()->obra_movimiento ?? 'Sin nombre de obra'}}</td>
                      <td class="px-4 py-2">{{ $movi->productos->first()->empleado->Nombre ?? 'Sin solicitante'}}</td>
                      <td class="px-4 py-2">{{ $movi->productos->first()->cantidadR ?? 'Sin cantidad requerida'}}</td>
-                     <td class="px-4 py-2">{{ $movi->productos->first()->cantidadA ?? 'Sin cantidad aprobada'}}</td>
+                     <td class="px-4 py-2">{{ $movi->productos->first()->cantidad ?? 'Sin cantidad aprobada'}}</td>
                      <td class="px-4 py-2">{{ $movi->productos->first()->cantidadE ?? 'Sin cantidad enviada'}}</td>
-                     <td class="px-4 py-2">{{ $movi->productos->first()->cantidad ?? 'Sin T.P.E'}}</td>
+                     <td class="px-4 py-2">{{ $movi->productos->first()->cantidadA ?? 'Sin T.P.E'}}</td>
                      <td class="px-4 py-2">{{ $movi->fecha_movimiento ?? 'Sin fecha'}}</td>
+                     <!--<td class="px-4 py-2">{ $movi->estadoMovimiento ?? 'Sin estado'}}</td>-->
+                    <td class="px-4 py-2">
+        @if ($movi->productos->first()->cantidadE == true)
+            @if ($movi->productos->first()->cantidadE == $movi->productos->first()->cantidadA)
+                        <div class="text-green-500" for="estadoMovimiento">
+                            Completado
+                        </div>
+
+                @elseif ($movi->estadoMovimiento != 'revisado' || $movi->estadoMovimiento != 'En proceso') 
+                        <div class="text-yellow-500" for="estadoMovimiento">
+                            Pendiente
+                        </div>
+                    @if ($movi->estadoMovimiento == 'Revisado')
+                        <div class="text-green-500" for="estadoMovimiento">
+                            Revisado
+                        </div>
+                        @elseif ($movi->productos->first()->cantidadA==null || $movi->productos->first()->encargado_recibe==null)
+                         <div class="text-blue-500" for="estadoMovimiento">
+                             En proceso
+                         </div>
+                    @endif  
+            @endif
+        @endif
+                    </td>
                      <td class="px-4 py-2">{{ $movi->observaciones_movimiento ?? 'Sin observaciones'}}</td>
                     <td class="px-4 py-2">
                                 <!--Aqui esta la condicion si tienen cantidad fuera de almacen-->
-                                @if ($movi->productos->first()->cantidadE != null)
+                                @if ($movi->productos->first()->cantidadE)
                                     <a href=" {{ route('pdf-salidasObras', $movi->id) }}" target="_blank" class="text-red-600 hover:underline">PDF</a>| 
+                                <a href="{{ route('edit-salidas', $movi->id) }}" class="text-blue-600 dark:text-blue-900 hover:underline">Actualizar</a>|
                                 <form  action="{{ route('delete-salidas', $movi->id) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')

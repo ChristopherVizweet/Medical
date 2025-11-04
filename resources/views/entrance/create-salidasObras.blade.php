@@ -10,9 +10,7 @@
             <div class="hidden">
             <x-input-label for="tipoMovimiento" :value="__('Tipo de registro')" />
             <select class="mt-1 block w-full " name="tipoMovimiento" id="tipoMovimiento" readonly=true required>
-                
                 <option value="salida" selected>Salida</option>
-                
             </select>
         </div>
             <div>

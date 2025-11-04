@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Empleados;
+use App\Models\InventarioMovimiento;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -19,7 +20,19 @@ class DashboardController extends Controller
             $cumpleanos->copy()->subDays(3),   // 3 días antes
             $cumpleanos->copy()->addDays(3)    // 3 días después
         ])->get();
-
-        return view('dashboard', compact('proximos', 'cumpleanosProximos'));
+        // Obtener movimientos de tipo 'salida' cuyo estado en la misma tabla sea 'Pendiente'
+        $rPendientes = InventarioMovimiento::where('tipoMovimiento', 'salida')
+            ->where('estadoMovimiento', 'Pendiente')
+            
+            ->get();
+            
+        // Para debug
+        if($rPendientes->isEmpty()) {
+            ('No hay registros pendientes');
+        } else {
+            ('Registros pendientes encontrados: ' . $rPendientes->count());
+        }
+        
+        return view('dashboard', compact('proximos', 'cumpleanosProximos', 'rPendientes'));
     }
 }

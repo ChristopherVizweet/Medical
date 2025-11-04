@@ -46,12 +46,12 @@
                 <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
               <tr class="">
                   <th class="px-4 py-2">{{ __('ID') }}</th>
+                  <th class="px-4 py-2">{{ __('material') }}</th>
                   <th class="px-4 py-2">{{ __('imagen del producto') }}</th>
                   <th class="px-4 py-2">{{ __('cantidad') }}</th>
                   <th class="px-4 py-2">{{ __('codigo') }}</th>
-                  <th class="px-4 py-2">{{ __('material') }}</th>
                   <th class="px-4 py-2">{{ __('proveedor') }}</th>
-                  <th class="px-4 py-2">{{ __('número de factura') }}</th>
+                  <th class="px-4 py-2">{{ __('número de folio') }}</th>
                   <th class="px-4 py-2">{{ __('costos') }}</th>
                   <th class="px-4 py-2">{{ __('Fecha de registro') }}</th>
                   <th class="px-4 py-2">{{ __('recibe') }}</th>
@@ -61,40 +61,43 @@
               </tr>
           </thead>
           <tbody>
+            
              @forelse ($movimientos as $movimiento)
-             
-                 <tr class="">
-                     <td class="px-4 py-2">{{ $movimiento->id }}</td>
-                     <td class= "items-center px-4 py-2"> <img src="{{ asset('storage/images/productos/' . $movimiento->productos->first()->product->image_product) }}" 
-                        alt="{{ $movimiento->productos->first()->product->image_product }}" 
+                @foreach ($movimiento->productos as $producto)
+                <tr class="">
+                <td class="px-4 py-2">{{ $movimiento->id }}</td>
+                <td class="px-4 py-2">
+                    {{ $producto->product->name_product }}
+                    Diametro {{ $producto->product->diameterMM_product }} mm
+                </td>
+                <td class= "items-center px-4 py-2"> <img src="{{ asset('storage/images/productos/' . $producto->product->image_product) }}" 
+                        alt="{{ $producto->product->image_product }}" 
                         class="w-20 h-20 object-cover rounded">
-                     </td>
-                     <td class="px-4 py-2">{{ $movimiento->productos->first()->cantidad}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->productos->first()->codigo}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->productos->first()->product->name_product}} Diametro{{ $movimiento->productos->first()->product->diameterMM_product }} mm</td>
-                     <td class="px-4 py-2">{{ $movimiento->proveedor->name_supplier}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->numero_factura_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->productos->first()->costo_unitario}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->fecha_movimiento}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->recibe->Nombre}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->firma->Nombre}}</td>
-                     <td class="px-4 py-2">{{ $movimiento->observaciones_movimiento}}</td>
-                     <td class="px-4 py-2">
-                        <form  action="{{ route('delete-entradas', $movimiento->id) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿En verdad deseas eliminar esta entrada?')">Eliminar</button>
-                        </form> 
-                    </td>
-                    
+                </td>
+                <td class="px-4 py-2">{{ $producto->cantidad }}</td>
+                <td class="px-4 py-2">{{ $producto->codigo }}</td>
+                <td class="px-4 py-2">{{ $movimiento->proveedor->name_supplier }}</td>
+                <td class="px-4 py-2">{{ $movimiento->numero_factura_movimiento }}</td>
+                <td class="px-4 py-2">{{ $producto->costo_unitario }}</td>
+                <td class="px-4 py-2">{{ $movimiento->fecha_movimiento }}</td>
+                <td class="px-4 py-2">{{ $movimiento->recibe->Nombre }}</td>
+                <td class="px-4 py-2">{{ $movimiento->firma->Nombre }}</td>
+                <td class="px-4 py-2">{{ $movimiento->observaciones_movimiento }}</td>
+                <td class="px-4 py-2">
+                    <form  action="{{ route('delete-entradas', $movimiento->id) }}" method="POST" style="display:inline-block;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿En verdad deseas eliminar esta entrada?')">Eliminar</button>
+                    </form> 
+                </td>
                  </tr>
+                    @endforeach
              @empty
                  <tr>
                      <td colspan="5" class="px-4 py-2 text-center">Entradas no encontradas</td>
                  </tr>
              @endforelse
          </tbody>
-         
     </div>
     <x-primary-button class="mt-4">
         <a href="{{ route('create-entradas') }}" class="text-dark"> 
@@ -102,9 +105,9 @@
         </a> 
     </x-primary-button>
     <x-primary-button class="mt-4 ml-2">
-        <a href="{{ route('create-entradas') }}" class="text-dark"> 
-            {{ __('Exportar a Excel') }}
-        </a> 
+         <a href="{{ route('export-entradas') }}" class="text-dark">
+            Exportar a archivo Excel
+          </a>
     </x-primary-button>
      </table>
         </div>

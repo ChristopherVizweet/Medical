@@ -93,10 +93,13 @@ Route::get('/create-salidasObras',[ProductController::class, 'createSalidasObras
 Route::post('/create-salidasObras',[ProductController::class, 'storeSalidasObras'])->name('store-salidasObras');
 Route::delete('/delete-entradas/{id}',[ProductController::class, 'deleteMovements'])->name('delete-entradas');
 Route::delete('/delete-salidas/{id}',[ProductController::class, 'deleteM'])->name('delete-salidas');
-
+Route::get('/edit-salidas/{id}', [ProductController::class, 'editSalidas'])->name('edit-salidas');
+Route::put('/edit-salidas/{id}', [ProductController::class, 'updateSalidas'])->name('edit-salidas');
 //impresion de las entradas y salidas
 Route::get('/pdf-salidasObras/{id}',[ProductController::class, 'printObra'])->name('pdf-salidasObras');
 Route::get('/pdf-salidas/{id}',[ProductController::class, 'print'])->name('pdf-salidas');
+//La exportacion de las entradas a excel
+Route::get('/export-entradas',[ProductController::class, 'export'])->name('export-entradas');
 
 
 
