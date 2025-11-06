@@ -29,8 +29,7 @@ use Spatie\Permission\Middleware\RoleMiddleware;
 # Página principal: redirige al login
 Route::get('/', function () {
     return redirect()->route('login');
-});
-
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 #Las rutas que van para la parte de proveedor
 
