@@ -26,17 +26,10 @@ use App\Models\Product;
 use Spatie\Permission\Middleware\RoleMiddleware;
 
 
-Route::get('/', [DashboardController::class,'index'])->name('login');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-#Las rutas que van para la parte de proveedor
-
+Route::get('/', [DashboardController::class, 'index'])->name('login');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/index_Supplier', [SupplierController::class, 'index'])->name('index_Supplier');
     Route::get('/create_supplier', [SupplierController::class, 'create'])->name('create_supplier');
     Route::get('/import-supplier',[SupplierController::class, 'create1'])->name('import-supplier');
