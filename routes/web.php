@@ -26,10 +26,11 @@ use App\Models\Product;
 use Spatie\Permission\Middleware\RoleMiddleware;
 
 
-# Página principal: redirige al login
-Route::get('/', function () {
-    return redirect()->route('login');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [DashboardController::class,'index'])->name('login');
+
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
 
 #Las rutas que van para la parte de proveedor
 
