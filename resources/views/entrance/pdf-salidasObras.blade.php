@@ -12,7 +12,7 @@
 .info-basica {
     text-align: center;    /* centra horizontalmente todo el bloque */
     margin-top: 50px;     /* lo baja un poco desde arriba */
-    margin-left: 80px;
+    margin-left: 50px;
 }
 
 .info-basica p {
@@ -99,6 +99,8 @@ th, td {
         <p ><strong>FECHA: </strong>{{$movimientos->fecha_movimiento ?? 'Sin fecha'}}</p>
         <!--<p ><strong>SOLICITA: </strong>{$movimientos->productos->first()->empleado->Nombre ?? 'Sin nombre'}</p>-->
         <p ><strong>OBRA: </strong>{{$movimientos->productos->first()->obra_movimiento ?? 'Sin nombre de obra'}}</p>
+        <p><strong>HORA: </strong>{{$movimientos->created_at ? $movimientos->created_at->format('H:i:s') : 'Sin hora'}}</p>
+
     </div>
         
 
@@ -128,9 +130,9 @@ th, td {
         <td class="cantidad">{{ $detalle->encargadoE->Nombre ?? 'sin encargado de envío' }}</td>
         <td class="cantidad">{{ $detalle->encargadoR->Nombre ?? 'sin encargado quien recibe' }}</td>
         <td class="cantidad">{{ $detalle->cantidadR ?? 'sin cantidad requerida' }}</td>
-        <td class="cantidad">{{ $detalle->cantidadA ?? 'sin cantidad aprobada' }}</td>
+        <td class="cantidad">{{ $detalle->cantidad ?? 'sin cantidad aprobada' }}</td>
         <td class="cantidad">{{ $detalle->cantidadE ?? 'sin cantidad enviada' }}</td>
-        <td class="cantidad">{{ $detalle->cantidad ?? 'sin cantidad recibida' }}</td>
+        <td class="cantidad">{{ $detalle->cantidadA ?? 'sin cantidad recibida' }}</td>
         <td class="cantidad">{{ $movimientos->observaciones_movimiento ?? 'sin observaciones' }}</td>
     </tr>
     @endforeach
@@ -170,6 +172,8 @@ th, td {
         <p ><strong>FECHA: </strong>{{$movimientos->fecha_movimiento ?? 'Sin fecha'}}</p>
         <!--<p ><strong>SOLICITA: </strong>{$movimientos->productos->first()->empleado->Nombre ?? 'Sin nombre'}</p>-->
         <p ><strong>OBRA: </strong>{{$movimientos->productos->first()->obra_movimiento ?? 'Sin nombre de obra'}}</p>
+        <p><strong>HORA: </strong>{{$movimientos->created_at ? $movimientos->created_at->format('H:i:s') : 'Sin hora'}}</p>
+
     </div>
         
 
@@ -199,9 +203,9 @@ th, td {
         <td class="cantidad">{{ $detalle->encargadoE->Nombre ?? 'sin encargado de envío' }}</td>
         <td class="cantidad">{{ $detalle->encargadoR->Nombre ?? 'sin encargado quien recibe' }}</td>
         <td class="cantidad">{{ $detalle->cantidadR ?? 'sin cantidad requerida' }}</td>
-        <td class="cantidad">{{ $detalle->cantidadA ?? 'sin cantidad aprobada' }}</td>
+        <td class="cantidad">{{ $detalle->cantidad ?? 'sin cantidad aprobada' }}</td>
         <td class="cantidad">{{ $detalle->cantidadE ?? 'sin cantidad enviada' }}</td>
-        <td class="cantidad">{{ $detalle->cantidad ?? 'sin cantidad recibida' }}</td>
+        <td class="cantidad">{{ $detalle->cantidadA ?? 'sin cantidad recibida' }}</td>
         <td class="cantidad">{{ $movimientos->observaciones_movimiento ?? 'sin observaciones' }}</td>
     </tr>
     @endforeach

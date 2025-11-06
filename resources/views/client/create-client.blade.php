@@ -19,7 +19,7 @@
         <!-- Phone -->
         <div class="mt-4">
             <x-input-label for="phoneNumber_Client" :value="__('Teléfono')" />
-            <x-text-input id="phoneNumber_Client" class="block mt-1 w-full" autocomplete="off" type="tel" name="phoneNumber_Client" :value="old('phoneNumber_Client')" required />
+            <x-text-input maxlength="10" id="phoneNumber_Client" class="block mt-1 w-full" autocomplete="off" type="text" name="phoneNumber_Client" :value="old('phoneNumber_Client')" required />
             <x-input-error :messages="$errors->get('phoneNumber_Client')" class="mt-2" />
         </div>
 
@@ -33,7 +33,7 @@
         <!-- RFC -->
         <div class="mt-4">
             <x-input-label for="RFC" :value="__('RFC')" />
-            <x-text-input id="RFC" class="block mt-1 w-full" autocomplete="off" type="text" name="RFC" :value="old('RFC')" required />
+            <x-text-input maxlength="13" id="RFC" class="block mt-1 w-full" autocomplete="off" type="text" name="RFC" :value="old('RFC')" required />
             <x-input-error :messages="$errors->get('RFC')" class="mt-2" />
         </div>
 

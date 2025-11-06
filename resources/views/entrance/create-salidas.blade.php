@@ -47,7 +47,7 @@
         </div>
     <!--Aqui comienza el formulario para los productos-->
     <div id="productos-wrapper" class="space-y-4  border p-4 rounded-lg mt-3">
-    <div class="producto-row grid grid-cols-4 gap-4 items-center">
+    <div class="producto-row grid grid-cols-5 gap-4 items-center">
 
         <!-- Producto -->
         <div>
@@ -57,10 +57,17 @@
                     required>
                 <option value="">-- Seleccionar --</option>
                 @foreach($productos as $producto)
-                    <option class="text-black dark:text-black" value="{{ $producto->id }}">{{ $producto->name_product }} Diametro {{$producto->diameterMM_product}}mm</option>
+                    <option class="text-black dark:text-black" value="{{ $producto->id }}" data-stock="{{ $producto->stock }}">{{ $producto->name_product }} Diametro {{$producto->diameterMM_product}}mm</option>
 
                 @endforeach
             </select>
+        </div>
+
+        <!-- Stock editable -->
+        <div>
+            <label for="productos[0][stock]" class="block text-sm font-medium text-gray-700 dark:text-white">Existencias</label>
+            <input readonly="true" type="number" step="any" name="productos[0][stock]" placeholder="Stock disponible"
+                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
 
         <!-- Cantidad requerida -->
@@ -111,25 +118,28 @@
         const newRow = document.createElement('div');
         newRow.classList.add('producto-row', 'flex', 'mb-2','items-center','grid','grid-cols-5','gap-4');
 
-        newRow.innerHTML = `
+     newRow.innerHTML = `
 
-            <select name="productos[${productoIndex}][product_id]" 
-            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
-                <option value="">-- Seleccionar producto --</option>
-                @foreach($productos as $producto)
-                    <option value="{{ $producto->id }}">{{ $producto->name_product }} Diametro {{$producto->diameterMM_product}}mm</option>
-                @endforeach
-            </select>
+         <select name="productos[${productoIndex}][product_id]" 
+         class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+          <option value="">-- Seleccionar producto --</option>
+          @foreach($productos as $producto)
+              <option value="{{ $producto->id }}" data-stock="{{ $producto->stock }}">{{ $producto->name_product }} Diametro {{$producto->diameterMM_product}}mm</option>
+          @endforeach
+         </select>
 
-            <input type="number" name="productos[${productoIndex}][cantidadR]" placeholder="Cantidad requerida"
-                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+         <input type="number" readonly="true" step="any" name="productos[${productoIndex}][stock]" placeholder="Existencias"
+             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
 
-            <input type="text" name="productos[${productoIndex}][cantidadA]" placeholder="Cantidad aprobada"
-                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+         <input type="number" name="productos[${productoIndex}][cantidadR]" placeholder="Cantidad requerida"
+             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
 
-            <input type="number" step="0.01" name="productos[${productoIndex}][cantidad]" 
-                   placeholder="Total productos entregados" 
-                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+         <input type="number" name="productos[${productoIndex}][cantidadA]" placeholder="Cantidad aprobada"
+             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+
+         <input type="number" step="0.01" name="productos[${productoIndex}][cantidad]" 
+             placeholder="Total productos entregados" 
+             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         
 
         
@@ -148,6 +158,18 @@
         // Elimina el div padre (la fila del producto)
         boton.closest('.producto-row').remove();
     }
+
+    // Listener para actualizar el campo stock cuando se selecciona un producto
+    document.addEventListener('change', function(e) {
+        const el = e.target;
+        // comprobar que es un select de producto
+        if (!el.matches || !el.matches('select[name^="productos"][name$="[product_id]"]')) return;
+        const row = el.closest('.producto-row');
+        const opt = el.selectedOptions ? el.selectedOptions[0] : el.options[el.selectedIndex];
+        const stock = opt ? (opt.dataset.stock ?? '') : '';
+        const stockInput = row ? row.querySelector('input[name$="[stock]"]') : null;
+        if (stockInput) stockInput.value = stock;
+    });
 </script>
 
  @if ($errors->any())

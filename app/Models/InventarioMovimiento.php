@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+use function PHPUnit\Framework\isNull;
+
 class InventarioMovimiento extends Model
 {
      use HasFactory; 
@@ -63,4 +65,53 @@ class InventarioMovimiento extends Model
         return $this->belongsTo(MovementProduct::class);
     }
 
+// dentro de la clase InventarioMovimiento
+public function calcularYGuardarEstado(): string
+{
+    // Asegurarnos de tener los productos cargados
+    $this->loadMissing('productos');
+
+    // Si no hay productos, dejamos pendiente por defecto
+    if ($this->productos->isEmpty()) {
+        $this->estadoMovimiento = $this->estadoMovimiento ?? 'Pendiente';
+        $this->save();
+        return $this->estadoMovimiento;
+    }
+
+    // Si cualquier producto no tiene cantidad enviada => 'En proceso'
+    foreach ($this->productos as $p) {
+        if (is_null($p->cantidadE) || $p->cantidadE === '') {
+            $this->estadoMovimiento = 'Completado';
+            $this->save();
+            return $this->estadoMovimiento;
+        }
+        if (is_null($p->cantidadA) || $p->cantidadA === '') {
+            $this->estadoMovimiento = 'En proceso';
+            $this->save();
+            return $this->estadoMovimiento;
+        }
+    }
+    
+
+    // Si todas las filas tienen cantidadE == cantidadA => 'Completado'
+    $todosCompletados = $this->productos->every(function($p) {
+        return (int)$p->cantidadE === (int)$p->cantidadA;
+    });
+
+    if ($todosCompletados) {
+        $this->estadoMovimiento = 'Completado';
+        $this->save();
+        return $this->estadoMovimiento;
+    }
+
+    // Si el movimiento ya fue marcado manualmente como 'Revisado', mantenerlo
+    if ($this->estadoMovimiento === 'Revisado') {
+        return $this->estadoMovimiento;
+    }
+
+    // Por defecto, si hay cantidades enviadas pero no coinciden con aprobadas -> 'Pendiente'
+    $this->estadoMovimiento = 'Pendiente';
+    $this->save();
+    return $this->estadoMovimiento;
+}
 }

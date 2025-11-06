@@ -347,7 +347,6 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
         'obra_movimiento'           => $validated['obra_movimiento'] ?? null,
         'empleado_id'               => $validated['empleado_id'] ?? null,
         'estadoMovimiento'          => $validated['estadoMovimiento'] ?? null,
-
         'folio_movimiento'          => $nuevoFolio ?? null
     ]);
 
@@ -361,7 +360,6 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
             'cantidadR'                => $producto['cantidadR'] ?? null,
             'cantidadA'                => $producto['cantidadA'] ?? null,
             'empleado_id'              => $validated['empleado_id'] ?? null,
-            
             'folio_movimiento'         => $nuevoFolio ?? null,
             'obra_movimiento'          => $validated['obra_movimiento'] ?? null,
         ]);
@@ -425,6 +423,7 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
         'folio_movimiento'          => $nuevoFolio ?? null,
         'estadoMovimiento'          => $validated['estadoMovimiento'] ?? null,
     ]);
+    
 
     // 3. Registrar productos del movimiento y actualizar stock
     foreach ($validated['productos'] as $producto) {
@@ -458,10 +457,11 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
             $product->stock -= $producto['cantidad'];
         }
         $product->save();
+      
     }
 
     return redirect()->route('index-salidas')->with('success', 'Registrado correctamente');
-   
+  
 }
 
     /**
@@ -499,6 +499,7 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
             return redirect()->route('index-salidas')->with('success', 'Salida actualizada correctamente.');
         });
     }
+   
 //Funcion para convertir a PDF
 public function print($id)
 {

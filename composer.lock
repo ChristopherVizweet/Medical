@@ -7843,16 +7843,16 @@
         },
         {
             "name": "laravel-lang/common",
-            "version": "6.7.0",
+            "version": "6.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/common.git",
-                "reference": "098bb5e900c5381d326f3cfd953fee40045e299f"
+                "reference": "8deaf311213d696cbd3cc41ac23705af39a187ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/common/zipball/098bb5e900c5381d326f3cfd953fee40045e299f",
-                "reference": "098bb5e900c5381d326f3cfd953fee40045e299f",
+                "url": "https://api.github.com/repos/Laravel-Lang/common/zipball/8deaf311213d696cbd3cc41ac23705af39a187ff",
+                "reference": "8deaf311213d696cbd3cc41ac23705af39a187ff",
                 "shasum": ""
             },
             "require": {
@@ -7927,7 +7927,7 @@
                 "issues": "https://github.com/Laravel-Lang/common/issues",
                 "source": "https://github.com/Laravel-Lang/common"
             },
-            "time": "2025-03-04T07:34:14+00:00"
+            "time": "2025-06-23T09:38:20+00:00"
         },
         {
             "name": "laravel-lang/config",

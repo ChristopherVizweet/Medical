@@ -95,28 +95,30 @@
                      <td class="px-4 py-2">{{ $movi->productos->first()->cantidadA ?? 'Sin T.P.E'}}</td>
                      <td class="px-4 py-2">{{ $movi->fecha_movimiento ?? 'Sin fecha'}}</td>
                      <!--<td class="px-4 py-2">{ $movi->estadoMovimiento ?? 'Sin estado'}}</td>-->
-                    <td class="px-4 py-2">
-        @if ($movi->productos->first()->cantidadE == true)
-            @if ($movi->productos->first()->cantidadE == $movi->productos->first()->cantidadA)
+                    <td class="px-4 py-2">{{$movi->estadoMovimiento ?? 'Sin estado actual'}}</td>
+        <!--if ($movi->productos->first()->cantidadE == true)
+            if ($movi->productos->first()->cantidadE == $movi->productos->first()->cantidadA)
                         <div class="text-green-500" for="estadoMovimiento">
                             Completado
                         </div>
 
-                @elseif ($movi->estadoMovimiento != 'revisado' || $movi->estadoMovimiento != 'En proceso') 
+                elseif ($movi->estadoMovimiento != 'revisado' || $movi->estadoMovimiento != 'En proceso') 
                         <div class="text-yellow-500" for="estadoMovimiento">
                             Pendiente
                         </div>
-                    @if ($movi->estadoMovimiento == 'Revisado')
+                    if ($movi->estadoMovimiento == 'Revisado')
                         <div class="text-green-500" for="estadoMovimiento">
                             Revisado
                         </div>
-                        @elseif ($movi->productos->first()->cantidadA==null || $movi->productos->first()->encargado_recibe==null)
+                        elseif ($movi->productos->first()->cantidadA==null || $movi->productos->first()->encargado_recibe==null)
                          <div class="text-blue-500" for="estadoMovimiento">
                              En proceso
                          </div>
-                    @endif  
-            @endif
-        @endif
+                    endif  
+            endif
+        endif-->
+
+
                     </td>
                      <td class="px-4 py-2">{{ $movi->observaciones_movimiento ?? 'Sin observaciones'}}</td>
                     <td class="px-4 py-2">

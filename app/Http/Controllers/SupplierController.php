@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Requests\SalidaRequest;
 use App\Imports\SuppliersImport;
 use App\Models\Client;
 use Maatwebsite\Excel\Facades\Excel;
@@ -49,11 +51,12 @@ public function store1(Request $request){
 
 public function store(Request $request) {
     // Validar y guardar datos
-    $request->validate([
+     $request->validate([
         'name_supplier' => 'required|string|max:255',
         'email_supplier' => 'required|email|unique:suppliers,email_supplier',
-        'phoneNumber_supplier' => 'required|string|regex:/^[0-9]{10,15}$/',
+        'phoneNumber_supplier' => 'required|string|max:10',
     ]);
+    
 
     Supplier::create([
         'name_supplier' => $request->name_supplier,

@@ -16,8 +16,9 @@
 
 .info-basica p {
     display: inline-block; /* hace que se alineen en línea */
-    margin: 0 20px;        /* espacio entre ellos */
-    padding-left: 0;       /* quitamos padding extra */
+    margin: 0 5px;        /* espacio entre ellos */
+    margin-left: -90px;
+    margin-left: 8px;       /* quitamos padding extra */
 }
 
 #folio{color: red;
@@ -91,6 +92,7 @@ th, td {
         <p ><strong>FECHA: </strong>{{$movimientos->fecha_movimiento ?? 'Sin fecha'}}</p>
         <p ><strong>SOLICITA: </strong>{{$movimientos->productos->first()->empleado->Nombre ?? 'Sin nombre'}}</p>
         <p ><strong>OBRA: </strong>{{$movimientos->productos->first()->obra_movimiento ?? 'Sin nombre de obra'}}</p>
+        <p><strong>HORA: </strong>{{$movimientos->created_at ? $movimientos->created_at->format('H:i:s') : 'Sin hora'}}</p>
     </div>
         
 
@@ -146,12 +148,13 @@ th, td {
         <p id="folio"><strong>FOLIO N°: </strong>{{$movimientos->productos->first()->folio_movimiento ?? 'Sin folio'}}</p>
     </div>
     <div class="info-basica">
-        <p id="fecha"><strong>FECHA: </strong>{{$movimientos->fecha_movimiento ?? 'Sin fecha'}}</p>
-        <p id="empleado"><strong>SOLICITA: </strong>{{$movimientos->productos->first()->empleado->Nombre ?? 'Sin nombre'}}</p>
-        <p id="obra"><strong>OBRA: </strong>{{$movimientos->productos->first()->obra_movimiento ?? 'Sin nombre de obra'}}</p>
+        <p ><strong>FECHA: </strong>{{$movimientos->fecha_movimiento ?? 'Sin fecha'}}</p>
+        <p ><strong>SOLICITA: </strong>{{$movimientos->productos->first()->empleado->Nombre ?? 'Sin nombre'}}</p>
+        <p ><strong>OBRA: </strong>{{$movimientos->productos->first()->obra_movimiento ?? 'Sin nombre de obra'}}</p>
+        <p><strong>HORA: </strong>{{$movimientos->created_at ? $movimientos->created_at->format('H:i:s') : 'Sin hora'}}</p>
     </div>
     <div>
-       <h2>Productos de salida</h2>
+       <h2 id="titlemenu">Productos de salida</h2>
     <table>
         <thead>
             <tr>

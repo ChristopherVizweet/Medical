@@ -24,7 +24,7 @@
         <!-- Phone Number -->
         <div class="mt-4">
             <x-input-label for="phoneNumber_supplier" :value="__('Número telefonico')" />
-            <x-text-input id="phoneNumber_supplier" class="block mt-1 w-full" autocomplete="off" type="tel" name="phoneNumber_supplier" :value="old('phoneNumber_supplier')" required placeholder="Ej. 5532581234" />
+            <x-text-input id="phoneNumber_supplier" class="block mt-1 w-full" autocomplete="off" type="number" name="phoneNumber_supplier" :value="old('phoneNumber_supplier')" required placeholder="Ej. 5532581234" />
             <x-input-error :messages="$errors->get('phoneNumber_supplier')" class="mt-2" />
         </div>
 
