@@ -30,7 +30,7 @@ Route::get('/', [DashboardController::class,'index'])->name('login');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-});
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 #Las rutas que van para la parte de proveedor
 
