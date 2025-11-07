@@ -40,7 +40,7 @@
           
            <h1 class="text-2xl dark:text-white font-bold mb-4">Existencia de productos</h1>
 
-           <!--Aqui estan los botones para seleccionar entradas o salidas-->
+           <!--Aqui estan los botones para seleccionar entradas o salidas
         <div class="content-center text-center justify-center flex gap-x-20">
             <button>
                 <a href="index-entradas">
@@ -55,7 +55,19 @@
                 <h1 class="text-black dark:text-white"> SALIDA DE PRODUCTOS </h1>
             </button>
                 </a>
-        </div>
+        </div>-->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 justify-items-center">
+  <a href="{{ route('index-entradas') }}" class="w-full max-w-xs text-center p-4 rounded-lg bg-white dark:bg-gray-700 shadow hover:scale-[1.02] transform transition">
+    <img src="{{ asset('img/entrada.png') }}" alt="Entrada" class="mx-auto w-28 md:w-40 object-contain">
+    <div class="mt-2 font-semibold text-sm md:text-base text-gray-900 dark:text-white">ENTRADA DE PRODUCTOS</div>
+  </a>
+
+  <a href="{{ route('index-salidas') }}" class="w-full max-w-xs text-center p-4 rounded-lg bg-white dark:bg-gray-700 shadow hover:scale-[1.02] transform transition">
+    <img src="{{ asset('img/salida.png') }}" alt="Salida" class="mx-auto w-28 md:w-40 object-contain">
+    <div class="mt-2 font-semibold text-sm md:text-base text-gray-900 dark:text-white">SALIDA DE PRODUCTOS</div>
+  </a>
+</div>
+
         <h1 class="text-2xl dark:text-white font-bold mb-4">Registro de productos</h1>
 
            {{-- Tabla responsive --}}

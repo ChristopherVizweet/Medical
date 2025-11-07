@@ -108,7 +108,7 @@ public function store1(Request $request){
             'diameter_exterior' => 'nullable|string|max:255',
             'manufact_product' => 'nullable|string',
             'valueArt_product' => 'nullable|numeric|min:0',
-            'image_product' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+            'image_product' => 'nullable|image|mimes:jpg,png,jpeg|max:5000',
             'stock' =>'nullable|integer'
         ]);
     
@@ -154,7 +154,7 @@ public function update(Request $request, $id)
     'diameterIN_product' => 'nullable|regex:#^\d+(\.\d+)?(/?\d+)?$#',
     'manufact_product' => 'nullable|string',
     'valueArt_product' => 'nullable|numeric|min:0',
-    'image_product' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+    'image_product' => 'nullable|image|mimes:jpg,png,jpeg|max:5000',
     'stock' =>'nullable|integer'
     ]);
 

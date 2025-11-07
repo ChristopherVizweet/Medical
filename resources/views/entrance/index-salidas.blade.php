@@ -62,6 +62,16 @@
                 </div>
                 
             </form>
+             <x-primary-button class="mt-4">
+                    <a href="{{ route('create-salidas') }}" class="text-dark"> 
+                         {{ __('Registrar salida') }}
+                     </a> 
+    </x-primary-button>
+    <x-primary-button class="mt-4">
+                    <a href="{{ route('create-salidasObras') }}" class="text-dark"> 
+                         {{ __('Registrar salida a obra') }}
+                     </a> 
+    </x-primary-button>
            {{-- Tabla responsive --}}
         <div class="overflow-x-auto rounded-lg shadow">
              <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
@@ -161,16 +171,7 @@
          </tbody>
          
     </div>
-    <x-primary-button class="mt-4">
-                    <a href="{{ route('create-salidas') }}" class="text-dark"> 
-                         {{ __('Registrar salida') }}
-                     </a> 
-    </x-primary-button>
-    <x-primary-button class="mt-4 ml-4">
-                    <a href="{{ route('create-salidasObras') }}" class="text-dark"> 
-                         {{ __('Registrar salida a obra') }}
-                     </a> 
-    </x-primary-button>
+   
      </table>
         </div>
 </x-app-layout>

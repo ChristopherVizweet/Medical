@@ -41,7 +41,11 @@
             @endif
     
             <h1 class="text-2xl font-bold mb-4 text-black dark:text-white">Lista de empleados</h1>
-    
+    <x-primary-button class="mt-4">
+                    <a href="{{ route('create-employees') }}" class="text-dark"> 
+                         {{ __('Crear empleado') }}
+                     </a> 
+                </x-primary-button>
            <div class="overflow-x-auto">
      <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
                 <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
@@ -100,11 +104,7 @@
                         </tr>
                     @endforelse
                 </tbody>
-                <x-primary-button class="mt-4">
-                    <a href="{{ route('create-employees') }}" class="text-dark"> 
-                         {{ __('Crear empleado') }}
-                     </a> 
-                </x-primary-button>
+                
             </table>
            </div>
         </div>

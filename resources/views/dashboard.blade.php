@@ -46,68 +46,100 @@ Modo Oscuro/Claro
                 <div class="mx-10 text-black dark:text-white">
                     Aqui algunas recomendaciones
                 </div>
-     <!--Registros pendientes-->
-            <div class="float-left mt-5 text-center w-42 font-semibold border text-lg text-black dark:text-white ">
-                Registros pendientes para revisar
-                <div class="mx-10 my-4 text-black dark:text-white">
-                    @if ($rPendientes->isNotEmpty())
-                    <ul class="list-disc list-inside">
-                        @foreach($rPendientes as $pendientes)
-                            <li>ID: {{ $pendientes->id }} Folio de salida: {{$pendientes->productos->first()->folio_movimiento}}
-                            Obra: {{$pendientes->productos->first()->obra_movimiento}}
-                            Cantidad enviada: {{$pendientes->productos->first()->cantidadE}}
-                            Cantidad recibida: {{$pendientes->productos->first()->cantidad}}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                
-                <button class="bg-blue-900 dark:bg-green-500 rounded px-4 py-2 text-white dark:text-white  hover:bg-blue-400 dark:hover:bg-green-300">
-                    <a href="{{ route('index-salidas') }}" class="text-dark"> 
-                         {{ __('Ver salidas') }}
-                    </a> 
-                </button>
-                
-                @else
-                <div class="mx-10 my-4 text-black dark:text-white">
-                    No hay registros pendientes.
-                </div>
-                @endif
-            </div>
-                <!--Vacaciones proximas-->
-            <div class="float-left mt-5 text-center w-42 font-semibold border text-lg text-black dark:text-white ">
-                Proximas vacaciones
-                <div class="mx-10 my-4 text-black dark:text-white">
-            @if($cumpleanosProximos->isNotEmpty())
-                    <ul class="list-disc list-inside">
-                        @foreach($proximos as $empleado)
-                            <li>{{ $empleado->Nombre }} {{ $empleado->apellidos }} - Vacaciones: {{ \Carbon\Carbon::parse($empleado->fecha_vacaciones)->format('d/m/Y') }}</li>
-                        @endforeach
-                    </ul>
-            @else
-            <div>
-                No hay vacaciones próximas
-            </div>
-            @endif
-                </div>
-            </div>
-            <!--cumpleaños proximos-->
-                <div class="float-left mt-5 text-center w-42 font-semibold border text-lg text-black dark:text-white ">
-                Proximos cumpleaños
-                <div class="mx-10 my-4 text-black dark:text-white">
-            @if($cumpleanosProximos->isNotEmpty())
-                    <ul class="list-disc list-inside">
-                        @foreach($cumpleanosProximos as $empleado)
-                            <li>{{ $empleado->Nombre }} {{ $empleado->apellidos }} - Cumpleaños: {{ \Carbon\Carbon::parse($empleado->fecha_nacimiento)->format('d/m/Y') }}</li>
-                        @endforeach
-                    </ul>
-            @else 
-            <div>
-                No hay cumpleaños próximos
-            </div>
-            @endif
-            </div>
-            </div>
+    <!-- Dashboard cards: responsive grid -->
+<div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4">
+
+  <!-- Registros pendientes -->
+  <section class="bg-white dark:bg-gray-700 border rounded-lg shadow p-4 flex flex-col" aria-labelledby="pending-title">
+    <header class="mb-2">
+      <h3 id="pending-title" class="text-lg font-semibold text-gray-900 dark:text-white">Registros pendientes para revisar</h3>
+    </header>
+
+    <div class="text-sm text-gray-700 dark:text-gray-200 mb-4 flex-1">
+      @if ($rPendientes->isNotEmpty())
+        <ul class="list-disc list-inside space-y-2 max-h-40 overflow-auto pr-2">
+          @foreach($rPendientes as $pendientes)
+            <li class="break-words">
+              <strong>ID:</strong> {{ $pendientes->id }} —
+              <strong>Folio:</strong> {{ optional($pendientes->productos->first())->folio_movimiento ?? '-' }}<br>
+              <strong>Obra:</strong> {{ optional($pendientes->productos->first())->obra_movimiento ?? '-' }}<br>
+              <strong>Enviada:</strong> {{ optional($pendientes->productos->first())->cantidadE ?? '-' }}
+              &nbsp; <strong>Recibida:</strong> {{ optional($pendientes->productos->first())->cantidad ?? '-' }}
+            </li>
+          @endforeach
+        </ul>
+      @else
+        <p class="text-sm text-gray-600 dark:text-gray-300">No hay registros pendientes.</p>
+      @endif
+    </div>
+
+    <div class="mt-3">
+      <a href="{{ route('index-salidas') }}"
+         class="inline-block w-full text-center px-4 py-2 bg-blue-800 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500">
+        Ver salidas
+      </a>
+    </div>
+  </section>
+
+  <!-- Próximas vacaciones -->
+  <section class="bg-white dark:bg-gray-700 border rounded-lg shadow p-4 flex flex-col" aria-labelledby="vacaciones-title">
+    <header class="mb-2">
+      <h3 id="vacaciones-title" class="text-lg font-semibold text-gray-900 dark:text-white">Próximas vacaciones</h3>
+    </header>
+
+    <div class="text-sm text-gray-700 dark:text-gray-200 mb-4 flex-1">
+      @if($proximos->isNotEmpty())
+        <ul class="list-disc list-inside space-y-2 max-h-40 overflow-auto pr-2">
+          @foreach($proximos as $empleado)
+            <li class="truncate">
+              {{ $empleado->Nombre }} {{ $empleado->apellidos }}
+              — Vacaciones: {{ \Carbon\Carbon::parse($empleado->fecha_vacaciones)->format('d/m/Y') }}
+            </li>
+          @endforeach
+        </ul>
+      @else
+        <p class="text-sm text-gray-600 dark:text-gray-300">No hay vacaciones próximas.</p>
+      @endif
+    </div>
+
+    <div class="mt-3">
+      <a href="{{ route('index-employees') ?? '#' }}"
+         class="inline-block w-full text-center px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-400">
+        Ver empleados
+      </a>
+    </div>
+  </section>
+
+  <!-- Próximos cumpleaños -->
+  <section class="bg-white dark:bg-gray-700 border rounded-lg shadow p-4 flex flex-col" aria-labelledby="cumple-title">
+    <header class="mb-2">
+      <h3 id="cumple-title" class="text-lg font-semibold text-gray-900 dark:text-white">Próximos cumpleaños</h3>
+    </header>
+
+    <div class="text-sm text-gray-700 dark:text-gray-200 mb-4 flex-1">
+      @if($cumpleanosProximos->isNotEmpty())
+        <ul class="list-disc list-inside space-y-2 max-h-40 overflow-auto pr-2">
+          @foreach($cumpleanosProximos as $empleado)
+            <li class="truncate">
+              {{ $empleado->Nombre }} {{ $empleado->apellidos }} —
+              {{ \Carbon\Carbon::parse($empleado->fecha_nacimiento)->format('d/m/Y') }}
+            </li>
+          @endforeach
+        </ul>
+      @else
+        <p class="text-sm text-gray-600 dark:text-gray-300">No hay cumpleaños próximos.</p>
+      @endif
+    </div>
+
+    <div class="mt-3">
+      <a href="{{ route('index-employees') ?? '#' }}"
+         class="inline-block w-full text-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-400">
+        Ver empleados
+      </a>
+    </div>
+  </section>
+
+</div>
            
         </div>
     </div>

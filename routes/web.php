@@ -26,12 +26,12 @@ use App\Models\Product;
 use Spatie\Permission\Middleware\RoleMiddleware;
 
 
-// 🔹 Redirige la raíz al login
+//  Redirige la raíz al login
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// 🔹 Rutas protegidas con autenticación
+// Rutas protegidas con autenticación
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/index_Supplier', [SupplierController::class, 'index'])->name('index_Supplier');
@@ -42,7 +42,7 @@ Route::post('/import-supplier', [SupplierController::class, 'store1'])->name('im
     Route::get('/edit_supplier/{id}', [SupplierController::class, 'edit'])->name('edit_supplier');
     Route::put('/edit_supplier/{id}', [SupplierController::class, 'update'])->name('edit_supplier');
     Route::delete('/delete_supplier/{id}', [SupplierController::class, 'delete'])->name('delete_supplier');
-#});
+
 #Las rutas que van para la parte de proveedores
 Route::get('/import-supplier',[SupplierController::class, 'create1'])->name('import-supplier');
 Route::post('/import-supplier', [SupplierController::class, 'store1'])->name('import-supplier');

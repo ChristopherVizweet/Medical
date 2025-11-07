@@ -21,7 +21,7 @@
             <x-text-input id="name_product" class="block mt-1 w-full is-invalid " type="text" name="name_product" :value="old('name_product')" required />
             <x-input-error :messages="$errors->get('name_product')" class="mt-2 is-invalid" /><br>
 
-                <select class="" name="id_supplier" id="id_supplier" required>
+                <select class="mb-2" name="id_supplier" id="id_supplier" :value="__('Proveedor')" required>
                     <option value="">-- Selecciona un proveedor --</option>
                     @foreach ($suppliers as $supplier)
                         <option value="{{ $supplier->id }}">{{ $supplier->name_supplier }}</option>
@@ -32,7 +32,7 @@
                 <x-input-error :messages="$errors->get('codeExt_product')" class="mt-2 is-invalid" />
 
                     <x-input-label  for="codeInt_product" :value="__('Código interior')" />
-                <x-text-input id="codeInt_product" class="block mt-1 w-full is-invalid " type="text" name="codeInt_product" :value="old('codeInt_product')" required />
+                <x-text-input id="codeInt_product" class="block mt-1 w-full is-invalid " type="text" name="codeInt_product" :value="old('codeInt_product')"  />
                 <x-input-error :messages="$errors->get('codeInt_product')" class="mt-2 is-invalid" />
 
                     <x-input-label  for="diameterMM_product" :value="__('Diametro(mm)')" />
@@ -40,11 +40,11 @@
                 <x-input-error :messages="$errors->get('codeInt_product')" class="mt-2 is-invalid" />
 
                     <x-input-label  for="diameterIN_product" :value="__('Diametro(in) o NOMINAL')" />
-                    <x-text-input id="diameterIN_product" class="block mt-1 w-full is-invalid " type="text" name="diameterIN_product" :value="old('diameterIN_product')" required />
+                    <x-text-input id="diameterIN_product" class="block mt-1 w-full is-invalid " type="text" name="diameterIN_product" :value="old('diameterIN_product')"  />
                     <x-input-error :messages="$errors->get('diameterIN_product')" class="mt-2 is-invalid" />
 
                     <x-input-label  for="manufact_product" :value="__('Fabricante')" />
-                    <x-text-input id="manufact_product" class="block mt-1 w-full is-invalid " type="text" name="manufact_product" :value="old('manufact_product')" required />
+                    <x-text-input id="manufact_product" class="block mt-1 w-full is-invalid " type="text" name="manufact_product" :value="old('manufact_product')"  />
                     <x-input-error :messages="$errors->get('manufact_product')" class="mt-2 is-invalid" />
 
                     <x-input-label for="stock" :value="('Stock')" />

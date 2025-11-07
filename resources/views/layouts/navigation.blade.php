@@ -122,6 +122,10 @@
                 {{ __('Gestión de productos') }}
             </x-responsive-nav-link>
 
+            <x-responsive-nav-link :href="route('index-existencias')" :active="request()->routeIs('index-existencias')">
+                {{ __('Gestión de existencias') }}
+            </x-responsive-nav-link>
+
             <x-responsive-nav-link :href="route('index-employees')" :active="request()->routeIs('index-employees')">
                 {{ __('Gestión de empleados') }}
             </x-responsive-nav-link>

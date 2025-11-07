@@ -2,10 +2,10 @@
 <x-app-layout>
     
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-sm text-gray-800 dark:text-gray-200 leading-tight">
             Categorias/Productos
              <!--Boton para cambiar el modo oscuro/claro-->
-<x-mode-button id="theme-toggle" class="float-right" >
+    <x-mode-button id="theme-toggle" class="float-right" >
     Modo escuro/claro
    </x-mode-button>
    <script>

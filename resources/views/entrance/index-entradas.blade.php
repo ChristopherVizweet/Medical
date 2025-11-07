@@ -39,7 +39,17 @@
            @endif
           
            <h1 class="text-2xl dark:text-white font-bold mb-4">Entrada de productos</h1>
-
+            {{--Botones para registro de entradas--}}
+           <x-primary-button class="mt-4">
+        <a href="{{ route('create-entradas') }}" class="text-dark"> 
+            {{ __('Registrar entrada') }}
+        </a> 
+    </x-primary-button>
+    <x-primary-button class="mt-4 ">
+         <a href="{{ route('export-entradas') }}" class="text-dark">
+            Exportar a archivo Excel
+          </a>
+    </x-primary-button>
            {{-- Tabla responsive --}}
         <div class="overflow-x-auto rounded-lg shadow">
              <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
@@ -99,16 +109,8 @@
              @endforelse
          </tbody>
     </div>
-    <x-primary-button class="mt-4">
-        <a href="{{ route('create-entradas') }}" class="text-dark"> 
-            {{ __('Registrar entrada') }}
-        </a> 
-    </x-primary-button>
-    <x-primary-button class="mt-4 ml-2">
-         <a href="{{ route('export-entradas') }}" class="text-dark">
-            Exportar a archivo Excel
-          </a>
-    </x-primary-button>
+    
      </table>
+     
         </div>
 </x-app-layout>
