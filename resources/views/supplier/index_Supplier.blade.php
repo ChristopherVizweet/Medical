@@ -57,13 +57,13 @@
             <form action="{{ route('index_Supplier') }}" method="GET" class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
                <div class="flex flex-col">
                     <label for="name_supplier" class="text-black dark:text-white text-base">Buscar por Nombre</label>
-                    <input type="text" name="name_supplier" id="name_supplier" placeholder="Escriba el nombre del proveedor"
+                    <input type="text" name="name_supplier" id="name_supplier" autocomplete="off" placeholder="Escriba el nombre del proveedor"
                            value="{{ request('name_supplier') }}"
                            class="text-black dark:text-black border border-gray-300 rounded px-3 py-1 w-full"
                            onchange="this.form.submit()">
                 </div>
             </form>
-
+            </div>
             {{-- Botón Crear Proveedores --}}
             @role('superadmin')
                 <x-primary-button>
@@ -78,7 +78,7 @@
           </a>
       </x-primary-button>
             @endrole
-        </div>
+        
 
         {{-- Tabla responsive --}}
         <div class="overflow-x-auto rounded-lg shadow">

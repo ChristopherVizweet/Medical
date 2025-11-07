@@ -62,16 +62,6 @@
                 </div>
                 
             </form>
-             <x-primary-button class="mt-4">
-                    <a href="{{ route('create-salidas') }}" class="text-dark"> 
-                         {{ __('Registrar salida') }}
-                     </a> 
-    </x-primary-button>
-    <x-primary-button class="mt-4">
-                    <a href="{{ route('create-salidasObras') }}" class="text-dark"> 
-                         {{ __('Registrar salida a obra') }}
-                     </a> 
-    </x-primary-button>
            {{-- Tabla responsive --}}
         <div class="overflow-x-auto rounded-lg shadow">
              <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
@@ -84,7 +74,7 @@
                   <th class="px-4 py-2">{{ __('Cantidad Requerida')}}</th>
                   <th class="px-4 py-2">{{ __('Cantidad Aprobada') }}</th>
                   <th class="px-4 py-2">{{ __('Cantidad Enviada') }}</th>
-                  <th class="px-4 py-2">{{ __('T.P.E')}}</th>
+                  <th class="px-4 py-2">{{ __('Cantidad recibida')}}</th>
                   <th class="px-4 py-2">{{ __('Fecha de salida')}}</th>
                   <th class="px-4 py-2">{{ __('Estado de registro')}}</th>
                   <th class="px-4 py-2">{{ __('Observaciones')}}</th>
@@ -171,7 +161,16 @@
          </tbody>
          
     </div>
-   
+    <x-primary-button class="mt-4">
+                    <a href="{{ route('create-salidas') }}" class="text-dark"> 
+                         {{ __('Registrar salida') }}
+                     </a> 
+    </x-primary-button>
+    <x-primary-button class="mt-4">
+                    <a href="{{ route('create-salidasObras') }}" class="text-dark"> 
+                         {{ __('Registrar salida a obra') }}
+                     </a> 
+    </x-primary-button>
      </table>
         </div>
 </x-app-layout>

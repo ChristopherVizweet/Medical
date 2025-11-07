@@ -17,7 +17,7 @@
         </div>
             <div>
                 <x-input-label for="obra_movimiento" :value="__('Obra')" />
-                <x-text-input id="obra_movimiento" class="mt-1 block w-full" type="text" name="obra_movimiento" :value="old('obra_movimiento')" required />
+                <x-text-input autocomplete="off" id="obra_movimiento" class="mt-1 block w-full" type="text" name="obra_movimiento" :value="old('obra_movimiento')" required />
                 <x-input-error :messages="$errors->get('obra_movimiento')" class="mt-2" />
             </div>
             <div>
@@ -42,7 +42,7 @@
         </div>
          <div>
             <x-input-label for="observaciones_movimiento" :value="__('Observaciones')" />
-            <x-text-input id="observaciones_movimiento" class="mt-1 block w-full" type="text" name="observaciones_movimiento" :value="old('observaciones_movimiento')"  />
+            <x-text-input autocomplete="off" id="observaciones_movimiento" class="mt-1 block w-full" type="text" name="observaciones_movimiento" :value="old('observaciones_movimiento')"  />
             <x-input-error :messages="$errors->get('observaciones_movimiento')" class="mt-2" />
         </div>
     <!--Aqui comienza el formulario para los productos-->
@@ -136,16 +136,16 @@
          </select>
 
          <input type="number" readonly="true" step="any" name="productos[${productoIndex}][stock]" placeholder="Existencias"
-             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
 
-         <input type="number" name="productos[${productoIndex}][cantidadR]" placeholder="Cantidad requerida"
+         <input type="number" name="productos[${productoIndex}][cantidadR]" placeholder="Cantidad requerida" 
              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
 
          <input type="number" name="productos[${productoIndex}][cantidadA]" placeholder="Cantidad aprobada"
              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
 
          <input type="number" step="0.01" name="productos[${productoIndex}][cantidad]" 
-             placeholder="Total productos entregados" 
+             placeholder="Total productos entregados" required
              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         
 

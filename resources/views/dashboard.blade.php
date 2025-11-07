@@ -60,24 +60,23 @@ Modo Oscuro/Claro
         <ul class="list-disc list-inside space-y-2 max-h-40 overflow-auto pr-2">
           @foreach($rPendientes as $pendientes)
             <li class="break-words">
-              <strong>ID:</strong> {{ $pendientes->id }} —
+              <strong>ID:</strong> {{ $pendientes->id }}<br>
               <strong>Folio:</strong> {{ optional($pendientes->productos->first())->folio_movimiento ?? '-' }}<br>
               <strong>Obra:</strong> {{ optional($pendientes->productos->first())->obra_movimiento ?? '-' }}<br>
               <strong>Enviada:</strong> {{ optional($pendientes->productos->first())->cantidadE ?? '-' }}
-              &nbsp; <strong>Recibida:</strong> {{ optional($pendientes->productos->first())->cantidad ?? '-' }}
+              &nbsp; <strong>Recibida:</strong> {{ optional($pendientes->productos->first())->cantidadA ?? '-' }}
             </li>
           @endforeach
         </ul>
-      @else
-        <p class="text-sm text-gray-600 dark:text-gray-300">No hay registros pendientes.</p>
-      @endif
-    </div>
-
-    <div class="mt-3">
+        <div class="mt-3">
       <a href="{{ route('index-salidas') }}"
          class="inline-block w-full text-center px-4 py-2 bg-blue-800 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500">
         Ver salidas
       </a>
+    </div>
+      @else
+        <p class="text-sm text-gray-600 dark:text-gray-300">No hay registros pendientes.</p>
+      @endif
     </div>
   </section>
 
@@ -95,6 +94,12 @@ Modo Oscuro/Claro
               {{ $empleado->Nombre }} {{ $empleado->apellidos }}
               — Vacaciones: {{ \Carbon\Carbon::parse($empleado->fecha_vacaciones)->format('d/m/Y') }}
             </li>
+             <div class="mt-3">
+                <a href="{{ route('index-employees') ?? '#' }}"
+                    class="inline-block w-full text-center px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-400">
+                    Ver empleados
+                </a>
+             </div>
           @endforeach
         </ul>
       @else
@@ -102,12 +107,6 @@ Modo Oscuro/Claro
       @endif
     </div>
 
-    <div class="mt-3">
-      <a href="{{ route('index-employees') ?? '#' }}"
-         class="inline-block w-full text-center px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-400">
-        Ver empleados
-      </a>
-    </div>
   </section>
 
   <!-- Próximos cumpleaños -->
@@ -126,16 +125,15 @@ Modo Oscuro/Claro
             </li>
           @endforeach
         </ul>
+        <div class="mt-3">
+                <a href="{{ route('index-employees') ?? '#' }}"
+                    class="inline-block w-full text-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-400">
+                    Ver empleados
+                </a>
+             </div>
       @else
         <p class="text-sm text-gray-600 dark:text-gray-300">No hay cumpleaños próximos.</p>
       @endif
-    </div>
-
-    <div class="mt-3">
-      <a href="{{ route('index-employees') ?? '#' }}"
-         class="inline-block w-full text-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-400">
-        Ver empleados
-      </a>
     </div>
   </section>
 

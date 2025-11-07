@@ -92,7 +92,7 @@
                 <td class="px-4 py-2">{{ $movimiento->fecha_movimiento }}</td>
                 <td class="px-4 py-2">{{ $movimiento->recibe->Nombre }}</td>
                 <td class="px-4 py-2">{{ $movimiento->firma->Nombre }}</td>
-                <td class="px-4 py-2">{{ $movimiento->observaciones_movimiento }}</td>
+                <td class="px-4 py-2">{{ $movimiento->observaciones_movimiento ?? "Sin observaciones" }}</td>
                 <td class="px-4 py-2">
                     <form  action="{{ route('delete-entradas', $movimiento->id) }}" method="POST" style="display:inline-block;">
                         @csrf

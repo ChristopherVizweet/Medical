@@ -67,7 +67,7 @@
         </div>
          <div>
             <x-input-label for="observaciones_movimiento" :value="__('Observaciones')" />
-            <x-text-input id="observaciones_movimiento" class="mt-1 block w-full" type="text" name="observaciones_movimiento" :value="old('observaciones_movimiento')"  />
+            <x-text-input autocomplete="off" id="observaciones_movimiento" class="mt-1 block w-full" type="text" name="observaciones_movimiento" :value="old('observaciones_movimiento')"  />
             <x-input-error :messages="$errors->get('observaciones_movimiento')" class="mt-2" />
         </div>
     <!--Aqui comienza el formulario para los productos-->
@@ -104,7 +104,7 @@
 
          <!-- Cantidad fuera de almacen -->
         <div>
-            <label for="productos[0][cantidad]" class="block text-sm font-medium text-gray-700 dark:text-white">cantidad almacén</label>
+            <label for="productos[0][cantidad]" class="block text-sm font-medium text-gray-700 dark:text-white">cantidad fuera almacén</label>
             <input type="number" name="productos[0][cantidad]" placeholder="Cantidad fuera de almacén" 
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
@@ -171,17 +171,17 @@
              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
 
             <input type="number" name="productos[${productoIndex}][cantidadR]" placeholder="Cantidad requerida"
-                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" >
+                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
 
-            <input type="number" name="productos[${productoIndex}][cantidadA]" placeholder="Cantidad fuera de almacén"
-                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+            <input type="number" name="productos[${productoIndex}][cantidad]" placeholder="Cantidad fuera de almacén"
+                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
 
              <input type="number" name="productos[${productoIndex}][cantidadE]" placeholder="Cantidad enviada"
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
 
-            <input type="number" step="0.01" name="productos[${productoIndex}][cantidad]" 
+            <input type="number" step="0.01" name="productos[${productoIndex}][cantidadA]" 
                    placeholder="Total productos entregados" 
-                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" >
         
 
         

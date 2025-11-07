@@ -65,13 +65,13 @@
                 {{-- Filtro por Nombre --}}
                 <div class="flex flex-col">
                     <label for="name_Client" class="text-black dark:text-white text-base">Buscar por Nombre</label>
-                    <input type="text" name="name_Client" id="name_Client" placeholder="Escriba el nombre"
+                    <input type="text" autocomplete="off" name="name_Client" id="name_Client" placeholder="Escriba el nombre"
                            value="{{ request('name_Client') }}"
                            class="text-black dark:text-black border border-gray-300 rounded px-3 py-1 w-full"
                            onchange="this.form.submit()">
                 </div>
             </form>
-
+        </div>
             {{-- Botón Crear Cliente --}}
             <x-primary-button>
                 <a href="{{ route('create-client') }}" class="text-dark">
@@ -84,7 +84,7 @@
             Importar datos de Excel
           </a>
       </x-primary-button>
-        </div>
+
 
         {{-- Tabla responsive --}}
         <div class="overflow-x-auto rounded-lg shadow">

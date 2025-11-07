@@ -371,7 +371,7 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
         } elseif ($validated['tipoMovimiento'] === 'salida') {
             if ($product->stock < $producto['cantidad']) {
                 return back()->withErrors([
-                    'cantidad' => "No hay suficiente stock para el producto {$product->name_product}."
+                    'cantidad' => "No hay suficiente stock para el producto {$product->name_product} de {$product->diameterMM_product} mm."
                 ]);
             }
             $product->stock -= $producto['cantidad'];
@@ -451,7 +451,7 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
         } elseif ($validated['tipoMovimiento'] === 'salida') {
             if ($product->stock < $producto['cantidad']) {
                 return back()->withErrors([
-                    'cantidad' => "No hay suficiente stock para el producto {$product->name_product}."
+                    'cantidad' => "No hay suficiente stock para el producto {$product->name_product} de {$product->diameterMM_product} mm."
                 ]);
             }
             $product->stock -= $producto['cantidad'];

@@ -6,7 +6,7 @@
             <h1 class="text-2xl font-bold">NUEVA ENTRADA</h1>
         </div><br>
         <!--Aqui comienza el formulario para registrar la entrada-->
-    <div class="producto-row grid grid-cols-3 gap-4 items-center">
+    <div class="producto-row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
         
         <div class="">
             <x-input-label for="tipoMovimiento" :value="__('Tipo de registro')" />
@@ -57,13 +57,13 @@
 </div>
         <div>
             <x-input-label for="observaciones_movimiento" :value="__('Observaciones')" />
-            <x-text-input id="observaciones_movimiento" class="mt-1 block w-full" type="text" name="observaciones_movimiento" :value="old('observaciones_movimiento')" required />
+            <x-text-input id="observaciones_movimiento" class="mt-1 block w-full" type="text" name="observaciones_movimiento" :value="old('observaciones_movimiento')"  />
             <x-input-error :messages="$errors->get('observaciones_movimiento')" class="mt-2" />
         </div>
         <!--Aqui comienza el registro pero para los productos-->
         
 <div id="productos-wrapper" class="space-y-4  border p-4 rounded-lg mt-3">
-    <div class="producto-row grid grid-cols-4 gap-4 items-center">
+   <div class="producto-row grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-center">
 
         <!-- codigo -->
         <div>
@@ -102,20 +102,20 @@
 </div>
 
 
-<!-- Botón -->
-<div class="mt-4">
+<!-- Botones de acción -->
+<div class="mt-4 flex flex-col sm:flex-row gap-4 justify-center items-center">
     <button type="button" onclick="agregarProducto()" id="add-producto"
-        class="px-4 py-2 bg-indigo-600 text-white  rounded-lg shadow hover:bg-indigo-700 transition">
+        class="w-full sm:w-auto px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition">
         + Agregar otro producto
     </button>
-</div>
 
-    <div class="text-center">
-                <x-primary-button class="ms-4">Registrar</x-primary-button>
-                <a href="{{ route('index-entradas') }}" class="ms-4 inline-block px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500">
-                    Cancelar
-                </a>
-            </div>
+    <div class="flex flex-col sm:flex-row gap-4 items-center">
+        <x-primary-button class="w-full sm:w-auto">Registrar</x-primary-button>
+        <a href="{{ route('index-salidas') }}" 
+           class="w-full sm:w-auto px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500">
+            Cancelar
+        </a>
+    </div>
 </div>
 </form>
 
@@ -127,7 +127,13 @@
         
         // Crear un nuevo row
         const newRow = document.createElement('div');
-        newRow.classList.add('producto-row', 'flex', 'mb-2','items-center','grid','grid-cols-5','gap-4');
+        newRow.classList.add('producto-row',  'grid',
+        'grid-cols-1',      // 1 columna en móvil
+        'md:grid-cols-3',   // 3 columnas en tablet
+        'lg:grid-cols-5',   // 5 columnas en desktop
+        'gap-4',
+        'items-center',
+        'mb-2');
 
         newRow.innerHTML = `
             <input type="text" name="productos[${productoIndex}][codigo]" placeholder="Código"
