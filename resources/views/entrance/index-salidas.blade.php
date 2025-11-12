@@ -117,8 +117,6 @@
                     endif  
             endif
         endif-->
-
-
                     </td>
                      <td class="px-4 py-2">{{ $movi->observaciones_movimiento ?? 'Sin observaciones'}}</td>
                     <td class="px-4 py-2">

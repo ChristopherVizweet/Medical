@@ -29,7 +29,7 @@ class ProductController extends Controller
     }
 
     $products = $productQuery->get();
-    $product=Product::all();
+    
     
     $categories = Categories::all();
 
