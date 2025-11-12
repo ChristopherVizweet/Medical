@@ -10,7 +10,8 @@
                <h1>REGISTRAR PRODUCTO</h1> 
             </div><br>
            
-            <select class="" name="id_categories" id="id_categories" required>
+            <x-input-label  for="name_product" :value="__('Categoría')" />
+            <select class="mb-2" name="id_categories" id="id_categories" required>
                 <option value="">-- Selecciona una categoría --</option> 
                 @foreach ($categories as $categorie)
                     <option value="{{ $categorie->id }}">{{ $categorie->name_categories }}</option><br>
@@ -31,21 +32,11 @@
                 <x-text-input id="codeExt_product" class="block mt-1 w-full is-invalid " type="text" name="codeExt_product" :value="old('codeExt_product')" required />
                 <x-input-error :messages="$errors->get('codeExt_product')" class="mt-2 is-invalid" />
 
-                    <x-input-label  for="codeInt_product" :value="__('Código interior')" />
-                <x-text-input id="codeInt_product" class="block mt-1 w-full is-invalid " type="text" name="codeInt_product" :value="old('codeInt_product')"  />
-                <x-input-error :messages="$errors->get('codeInt_product')" class="mt-2 is-invalid" />
-
+                  
                     <x-input-label  for="diameterMM_product" :value="__('Diametro(mm)')" />
                 <x-text-input id="diameterMM_product" class="block mt-1 w-full is-invalid " type="text" name="diameterMM_product" :value="old('diameterMM_product')" required />
                 <x-input-error :messages="$errors->get('codeInt_product')" class="mt-2 is-invalid" />
 
-                    <x-input-label  for="diameterIN_product" :value="__('Diametro(in) o NOMINAL')" />
-                    <x-text-input id="diameterIN_product" class="block mt-1 w-full is-invalid " type="text" name="diameterIN_product" :value="old('diameterIN_product')"  />
-                    <x-input-error :messages="$errors->get('diameterIN_product')" class="mt-2 is-invalid" />
-
-                    <x-input-label  for="manufact_product" :value="__('Fabricante')" />
-                    <x-text-input id="manufact_product" class="block mt-1 w-full is-invalid " type="text" name="manufact_product" :value="old('manufact_product')"  />
-                    <x-input-error :messages="$errors->get('manufact_product')" class="mt-2 is-invalid" />
 
                     <x-input-label for="stock" :value="('Stock')" />
                     <input id="stock" class="block mt-1 w-full" type="number" name="stock" />

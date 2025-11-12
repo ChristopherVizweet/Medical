@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
         protected $fillable=[
-            'id_categories','name_product','codeExt_product','codeInt_product','diameterMM_product',
-            'diameterIN_product','manufact_product','valueArt_product','id_supplier','image_product',
-            'diameter_nominal','diameter_exterior','stock'
+            'id_categories','name_product','codeExt_product','diameterMM_product',
+            'manufact_product','valueArt_product','id_supplier','image_product',
+            'stock'
         ];
   public function projectProduct()
 {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Empleados;
 use App\Models\InventarioMovimiento;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -33,6 +34,10 @@ class DashboardController extends Controller
             ('Registros pendientes encontrados: ' . $rPendientes->count());
         }
         
-        return view('dashboard', compact('proximos', 'cumpleanosProximos', 'rPendientes'));
+        //Para obtener productos con bajo o nulo inventario
+        $bnproducto = Product::Where('stock','<','10')
+        ->get();
+
+        return view('dashboard', compact('proximos', 'cumpleanosProximos', 'rPendientes','bnproducto'));
     }
 }

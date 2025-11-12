@@ -48,6 +48,32 @@ Modo Oscuro/Claro
                 </div>
     <!-- Dashboard cards: responsive grid -->
 <div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4">
+   <!--Seccion para el bajo o nulo inventario-->
+  <section class="bg-white dark:bg-gray-700 border rounded-lg shadow p-4 flex flex-col">
+    <header class="mb-2">
+      <h3 id="inventario-title" class="text-lg font-semibold text-gray-900 dark:text-white">Bajo o Nulo inventario</h3>
+    </header>
+    <div class="text-sm text-gray-700 dark:text-gray-200 mb-4 flex-1">
+      @if($bnproducto->isNotEmpty())
+        <ul class="list-disc list-inside space-y-2 max-h-40 overflow-auto pr-2">
+          @foreach($bnproducto as $bnproductos)
+            <li class="truncate">
+              {{ $bnproductos->name_product }} {{$bnproductos->diameterMM_product }} <br>
+             Cantidad en Stock: {{$bnproductos->stock}}
+            </li>
+          @endforeach
+          <div class="mt-3">
+                <a href="{{ route('index-product') ?? '#' }}"
+                    class="inline-block w-full text-center px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-400">
+                    Ver productos
+                </a>
+             </div>
+        </ul>
+      @else
+        <p class="text-sm text-gray-600 dark:text-gray-300">No hay bajo inventario.</p>
+      @endif
+    </div>
+  </section>
 
   <!-- Registros pendientes -->
   <section class="bg-white dark:bg-gray-700 border rounded-lg shadow p-4 flex flex-col" aria-labelledby="pending-title">
@@ -136,7 +162,6 @@ Modo Oscuro/Claro
       @endif
     </div>
   </section>
-
 </div>
            
         </div>

@@ -67,46 +67,4 @@
     <div class="mt-2 font-semibold text-sm md:text-base text-gray-900 dark:text-white">SALIDA DE PRODUCTOS</div>
   </a>
 </div>
-
-        <h1 class="text-2xl dark:text-white font-bold mb-4">Registro de productos</h1>
-
-           {{-- Tabla responsive --}}
-        <div class="overflow-x-auto rounded-lg shadow">
-             <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
-                <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
-              <tr class="">
-                  <th class="px-4 py-2">{{ __('ID') }}</th>
-                  <th class="px-2 py-2">{{ __('Tipo') }}</th>
-                  <th class="px-4 py-2">{{ __('Codigo Interior') }}</th>
-                  <th class="px-4 py-2">{{ __('Stock') }}</th>
-                  <th class="px-4 py-2">{{ __('valor por articulo ($)') }}</th>
-                  <th class="px-4 py-2">{{ __('Imagen del producto') }}</th>
-                  <th class="px-4 py-2">{{ __('Acciones') }}</th>
-              </tr>
-          </thead>
-          <tbody>
-             @forelse ($products as $product)
-             
-                 <tr class="">
-                     <td class="px-4 py-2">{{ $product->id }}</td>
-                     <td class="px-4 py-2">{{ $product->name_product }}</td>
-                     <td class="px-4 py-2">{{ $product->codeInt_product }}</td>
-                     <td class="px-4 py-2">{{ $product->stock }}</td>                     
-                     <td class="px-4 py-2">{{ $product->valueArt_product }}</td>
-                    <td class= "items-center px-4 py-2"> <img src="{{ asset('storage/images/productos/' . $product->image_product) }}" 
-                        alt="{{ $product->image_product }}" 
-                        class="w-20 h-20 object-cover rounded">
-                     </td>
-                     
-                 </tr>
-             @empty
-                 <tr>
-                     <td colspan="5" class="px-4 py-2 text-center">Productos no encontrados</td>
-                 </tr>
-             @endforelse
-         </tbody>
-         
-    </div>
-     </table>
-        </div>
 </x-app-layout>
