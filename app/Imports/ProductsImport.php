@@ -40,7 +40,7 @@ class ProductsImport implements ToModel, WithHeadingRow
             'codeExt_product'  => $row['codigo'],
             'diameterMM_product' => $row['diametro'],
             //'manufact_product'   => $row['proveedor'],
-            //'valueArt_product'   => $row['valor_por_articulo'],
+            'valueArt_product'   => $row['valor_por_articulo'],
             'stock'              => $row['stock'],
             'image_product'      => $row['imagen'],
         ]);

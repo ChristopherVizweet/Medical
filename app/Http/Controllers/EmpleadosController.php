@@ -106,7 +106,7 @@ public function update(Request $request, $id)
         'estadoProv' => 'required|string|max:30',
         'codigoPostal' => 'required|integer',
         'pais' => 'required|string|max:15',
-        'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+        'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:5000',
         'tipoSangre'=>'required|string|max:20',
         'talla_pantalon' => 'nullable|string|max:10',
         'talla_camisa' => 'nullable|string|max:10',
@@ -114,7 +114,7 @@ public function update(Request $request, $id)
         'observaciones_empleado' => 'nullable|string|max:255',
         'fecha_nacimiento' => 'nullable|date',
         'fecha_vacaciones' => 'nullable|date',
-        'certificados_empleados' => 'nullable|file|mimes:pdf|max:2048',
+        'certificados_empleados' => 'nullable|file|mimes:pdf|max:5000',
     ]);
 
     $imagePath1 = $request->hasFile('foto') 

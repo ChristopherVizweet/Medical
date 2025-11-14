@@ -114,7 +114,7 @@ public function store1(Request $request){
     
         // Guardar la imagen si existe
         $imagePath = $request->hasFile('image_product') 
-            ? $request->file('image_product')->store('productos', 'public') 
+            ? $request->file('image_product')->store('productos/', 'public') 
             : null;
     
         // Crear el producto
@@ -149,9 +149,9 @@ public function update(Request $request, $id)
     $request->validate([
     'name_product' => 'required|string|max:255',
     'codeExt_product' => 'nullable|string|max:100',
-    'codeInt_product' => 'nullable|string|max:100',
-    'diameterMM_product' => 'nullable|numeric|regex:/^\d+(\.\d{1,2})?$/',
-    'diameterIN_product' => 'nullable|regex:#^\d+(\.\d+)?(/?\d+)?$#',
+    //'codeInt_product' => 'nullable|string|max:100',
+    'diameterMM_product' => 'nullable|string',
+    //'diameterIN_product' => 'nullable|regex:#^\d+(\.\d+)?(/?\d+)?$#',
     'manufact_product' => 'nullable|string',
     'valueArt_product' => 'nullable|numeric|min:0',
     'image_product' => 'nullable|image|mimes:jpg,png,jpeg|max:5000',
@@ -159,9 +159,9 @@ public function update(Request $request, $id)
     ]);
 
  // Guardar la imagen si existe
-        $imagePath = $request->hasFile('image_product') 
-            ? $request->file('image_product')->store('productos', 'public') 
-            : null;
+        $imagePath1 = $request->hasFile('image_product') 
+            ? $request->file('image_product')->store('productos/', 'public') 
+            : $request -> input('image_product_actual');
 
     $products = Product::findOrFail($id);
     $products->update([
@@ -172,7 +172,7 @@ public function update(Request $request, $id)
         'diameterIN_product' => $request->diameterIN_product,
         'manufact_product' => $request->manufact_product,
         'valueArt_product' => $request->valueArt_product,
-        'image_product' => $imagePath, // Guardamos la ruta de la imagen
+        'image_product' => $imagePath1, // Guardamos la ruta de la imagen
         'stock' =>$request->stock,
     ]);
 

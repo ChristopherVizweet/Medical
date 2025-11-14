@@ -7,6 +7,18 @@
             <div class="text-center text-gray-800 dark:text-white">
                 EDITAR PRODUCTO
             </div>
+ <div class="mt-4 justify-center justify-items-center text-center">
+            <x-input-label for="image_product" value="('Foto del producto')"/>
+            <x-text-input id="image_product"  class="block mt-1 w-full justify-center justify-items-center text-center" type="file" name="image_product" value/>
+            <input type="hidden" name="image_product_actual" value="{{ $products->image_product }}">
+ </div> 
+            <!-- Mostrar imagen actual -->
+@if ($products->image_product)
+    <div class="mt-2 justify-center justify-items-center text-center">
+        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">Imagen actual:</p>
+        <img src="{{ asset('storage/productos/' . $products->image_product) }}" alt="image_product_actual" class="w-16 h-16 object-contain rounded-md mx-auto">
+    </div>
+@endif
             <x-input-label for="name_product" :value="__('Nombre del producto')" />
             <x-text-input id="name_product" class="block mt-1 w-full" type="text" name="name_product" value="{{ $products->name_product }}" required />
 
@@ -22,8 +34,7 @@
             <x-input-label for="valueArt_product" :value="__('Valor por articulo')" />
             <x-text-input id="valueArt_product" class="block mt-1 w-full" type="number" name="valueArt_product" value="{{ $products->valueArt_product }}" required />
             
-            <x-input-label for="image_product" :value="('Imagen del producto')"/>
-            <x-text-input id="image_product" class="block mt-1 w-full" type="file" name="image_product" value="{{$products->image_product}}" required/>
+           
         </div>
         <div style="text-align: center;" class="mt-4">
             <x-primary-button class="ms-4">

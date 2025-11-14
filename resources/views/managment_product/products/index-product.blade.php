@@ -96,7 +96,7 @@
                  <tr class="">
                      <td class="px-4 py-2">{{ $product->id }}</td>
                      <td class="px-4 py-2">{{ $product->categories->name_categories }}</td>
-                     <td class= "items-center px-4 py-2 "> <img src="{{ asset('storage/images/productos/' . $product->image_product)  }} "  
+                     <td class= "items-center px-4 py-2 "> <img src="{{ asset('storage/productos/' . $product->image_product)  }} "  
                         alt="{{ $product->image_product }}" 
                         class="w-16 h-16 object-contain rounded-md mx-auto"> 
                      </td>
@@ -105,7 +105,7 @@
                      <td class="px-4 py-2">{{ $product->diameterMM_product }}</td>
                      <td class="px-4 py-2">{{ $product->id_supplier }}</td>
                      <td class="px-4 py-2">{{ $product->stock }}</td>                     
-                     <td class="px-4 py-2">{{ $product->valueArt_product }}</td>
+                     <td class="px-4 py-2">${{ $product->valueArt_product }}</td>
                      <td class="px-4 py-2">
                        <a href="{{ route('edit-product', $product->id) }}" class="text-blue-600 hover:underline">Editar</a> |
                         <form action="{{ route('delete-product', $product->id) }}" method="POST" style="display:inline-block;">    
