@@ -103,7 +103,7 @@
                      <td class="px-4 py-2">{{ $product->name_product }}</td>
                      <td class="px-4 py-2">{{ $product->codeExt_product }}</td>
                      <td class="px-4 py-2">{{ $product->diameterMM_product }}</td>
-                     <td class="px-4 py-2">{{ $product->id_supplier }}</td>
+                     <td class="px-4 py-2">{{ $product->id_supplier ?? 'Sin proveedor' }}</td>
                      <td class="px-4 py-2">{{ $product->stock }}</td>                     
                      <td class="px-4 py-2">${{ $product->valueArt_product }}</td>
                      <td class="px-4 py-2">

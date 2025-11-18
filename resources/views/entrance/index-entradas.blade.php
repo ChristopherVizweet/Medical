@@ -80,9 +80,9 @@
                     {{ $producto->product->name_product }}
                     Diametro {{ $producto->product->diameterMM_product }} mm
                 </td>
-                <td class= "items-center px-4 py-2"> <img src="{{ asset('storage/images/productos/' . $producto->product->image_product) }}" 
+                <td class= "items-center px-4 py-2"> <img src="{{ asset('storage/productos/' . $producto->product->image_product) }}" 
                         alt="{{ $producto->product->image_product }}" 
-                        class="w-20 h-20 object-cover rounded">
+                        class="w-20 h-20 object-contain rounded-md mx-auto">
                 </td>
                 <td class="px-4 py-2">{{ $producto->cantidad }}</td>
                 <td class="px-4 py-2">{{ $producto->codigo }}</td>

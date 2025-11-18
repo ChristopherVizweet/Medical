@@ -8,10 +8,10 @@
                 EMPLEADO
             </div>
        <div class="mt-4 justify-center justify-items-center text-center">
-    <x-input-label for="foto" value="('Foto del empleado')"/>
-    <x-text-input id="foto"  class="block mt-1 w-full justify-center justify-items-center text-center" type="file" name="foto" value/>
-    <input type="hidden" name="foto_actual" value="{{ $empleados->foto }}">
-            </div> 
+            <x-input-label for="foto" value="('Foto del empleado')"/>
+            <x-text-input id="foto"  class="block mt-1 w-full justify-center justify-items-center text-center" type="file" name="foto" value/>
+            <input type="hidden" name="foto_actual" value="{{ $empleados->foto }}">
+        </div> 
 
 <!-- Mostrar imagen actual -->
 @if ($empleados->foto)

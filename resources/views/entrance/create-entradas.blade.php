@@ -7,7 +7,7 @@
         </div><br>
         <!--Aqui comienza el formulario para registrar la entrada-->
     <div class="producto-row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
-        
+       
         <div class="">
             <x-input-label for="tipoMovimiento" :value="__('Tipo de registro')" />
             <select class="mt-1 block w-full " name="tipoMovimiento" id="tipoMovimiento" readonly=true required>

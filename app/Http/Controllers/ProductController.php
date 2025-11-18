@@ -268,8 +268,8 @@ $nuevaFactura=$ultimaFactura ? $ultimaFactura + 1 : 1;
             'product_id'               => $producto['product_id'],
             'cantidad'                 => $producto['cantidad'],
             'costo_unitario'           => $producto['costo_unitario'] ?? null,
-            'codigo'                   => $producto['codigo'] ?? null,
-
+            'codigo'                   => $producto['codigo'] ?? null
+            
             
         ]);
 
