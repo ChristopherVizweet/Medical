@@ -23,9 +23,9 @@ return new class extends Migration
             $table->date('dateEnd');
             $table->decimal('budget');
             $table->string('accountBank',100);
-            $table->varchar('id_priority',100);
-            $table->varchar('id_instalationService',255);
-            $table->varchar('id_status',100);
+            $table->string('id_priority',100);
+            $table->string('id_instalationService',255);
+            $table->string('id_status',100);
             $table->date('requestDate');
             $table->date('estimateDate');
             $table->date('authorizedDate');
