@@ -46,6 +46,7 @@ Modo Oscuro/Claro
                 <div class="mx-10 text-black dark:text-white">
                     Aqui algunas recomendaciones
                 </div>
+ @role('superadmin')
     <!-- Dashboard cards: responsive grid -->
 <div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4">
    <!--Seccion para el bajo o nulo inventario-->
@@ -163,7 +164,7 @@ Modo Oscuro/Claro
     </div>
   </section>
 </div>
-           
+@endrole
         </div>
     </div>
     </div>

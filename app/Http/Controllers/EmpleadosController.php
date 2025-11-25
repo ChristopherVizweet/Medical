@@ -49,7 +49,7 @@ class EmpleadosController extends Controller
             ? $request->file('certificados_empleados')->store('certificados', 'public')
             : null;
 
-             // Crear el producto
+             // Crear el empleado
         Empleados::create([
             'curp'=>$request->curp,
             'Nombre'=>$request->Nombre,
@@ -65,7 +65,7 @@ class EmpleadosController extends Controller
             'estadoProv'=>$request->estadoProv,
             'codigoPostal'=>$request->codigoPostal,
             'pais'=>$request->pais,
-            'foto' => $imagePath, // Guardamos la ruta de la imagen
+            'foto' => $imagePath, // se guarda la ruta de la imagen
             'tipoSangre' => $request->tipoSangre,
             'talla_pantalon'=>$request->talla_pantalon,
             'talla_camisa'=>$request->talla_camisa,

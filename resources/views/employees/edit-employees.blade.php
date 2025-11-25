@@ -58,7 +58,7 @@
         </div>
          <div class="mt-4">
            <x-input-label for="sueldo" :value="__('Sueldo $')" />
-            <x-text-input id="sueldo" class="block mt-1 w-full" type="text" name="sueldo"  value="{{ $empleados->sueldo }}" required />
+            <x-text-input id="sueldo" class="block mt-1 w-full" type="text" name="sueldo"  value="{{ $empleados->sueldo }}"  />
         </div>
          <div class="mt-4">
            <x-input-label for="calle" :value="__('Calle')" />
@@ -82,7 +82,7 @@
         </div>
         <div class="mt-4">
            <x-input-label for="tipoSangre" :value="__('Tipo de sangre')" />
-            <x-text-input id="tipoSangre" class="block mt-1 w-full" type="text" name="tipoSangre"  value="{{ $empleados->tipoSangre }}" required />
+            <x-text-input id="tipoSangre" class="block mt-1 w-full" type="text" name="tipoSangre"  value="{{ $empleados->tipoSangre }}"  />
         </div>
         <div>
              <x-input-label for="talla_pantalon" :value="__('Talla de pantalón')" />
@@ -125,7 +125,7 @@
         </div>
         <div>
              <x-input-label for="observaciones_empleado" :value="__('Observaciones del empleado')" />
-             <x-text-input id="observaciones_empleado" class="block mt-1 w-full" type="text" name="observaciones_empleado" value="{{ $empleados->observaciones_empleado }}" required />
+             <x-text-input id="observaciones_empleado" class="block mt-1 w-full" type="text" name="observaciones_empleado" value="{{ $empleados->observaciones_empleado }}"  />
         </div>
         <div class="text-center">
             <x-input-label for="certificados_empleados" value="Certificados del empleado"/>

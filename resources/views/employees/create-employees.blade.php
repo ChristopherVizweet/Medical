@@ -171,21 +171,21 @@
         <!--Observaciones-->
         <div class="">
             <x-input-label for="observaciones_empleado" :value="__('Observaciones')" />
-            <x-text-input id="observaciones_empleado" class="mt-1 block w-full" type="text" name="observaciones_empleado" :value="old('observaciones_empleado')" required />
+            <x-text-input id="observaciones_empleado" class="mt-1 block w-full" type="text" name="observaciones_empleado" :value="old('observaciones_empleado')"  />
             <x-input-error :messages="$errors->get('observaciones_empleado')" class="mt-2" />
         </div>
 
         {{-- certificados --}}
         <div class="">
             <x-input-label for="certificados_empleados" :value="__('Certificados de empleado')" />
-            <x-text-input id="certificados_empleados" class="mt-1 block w-full" type="file" name="certificados_empleados" :value="old('certificados_empleados')" required />
+            <x-text-input id="certificados_empleados" class="mt-1 block w-full" type="file" name="certificados_empleados" :value="old('certificados_empleados')"  />
             <x-input-error :messages="$errors->get('certificados_empleados')" class="mt-2" />
         </div>
 
         {{-- Foto --}}
         <div class="sm:col-span-2">
             <x-input-label for="foto" :value="__('Foto de empleado')" />
-            <x-text-input id="foto" class="mt-1 block w-full" type="file" name="foto" :value="old('foto')" required />
+            <x-text-input id="foto" class="mt-1 block w-full" type="file" name="foto" :value="old('foto')"  />
             <x-input-error :messages="$errors->get('foto')" class="mt-2" />
         </div>
 
