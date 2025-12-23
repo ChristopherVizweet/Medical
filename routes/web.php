@@ -90,18 +90,20 @@ Route::get('/create-salidasObras',[ProductController::class, 'createSalidasObras
 Route::post('/create-salidasObras',[ProductController::class, 'storeSalidasObras'])->name('store-salidasObras');
 Route::delete('/delete-entradas/{id}',[ProductController::class, 'deleteMovements'])->name('delete-entradas');
 Route::delete('/delete-salidas/{id}',[ProductController::class, 'deleteM'])->name('delete-salidas');
+//Editar información en salidas de obra
 Route::get('/edit-salidas/{id}', [ProductController::class, 'editSalidas'])->name('edit-salidas');
 Route::put('/edit-salidas/{id}', [ProductController::class, 'updateSalidas'])->name('edit-salidas');
+//Editar información en salidas locales
+Route::get('/edit-salidasL/{id}', [ProductController::class, 'editSalida'])->name('edit-salidasL');
+Route::put('/edit-salidasL/{id}', [ProductController::class, 'updateSalida'])->name('edit-salidasL');
+
+Route::get('/edit-salidasLL/{id}', [ProductController::class, 'editSalida'])->name('edit-salidasLL');
+Route::put('/edit-salidasLL/{id}', [ProductController::class, 'updateSalida'])->name('edit-salidasLL');
 //impresion de las entradas y salidas
 Route::get('/pdf-salidasObras/{id}',[ProductController::class, 'printObra'])->name('pdf-salidasObras');
 Route::get('/pdf-salidas/{id}',[ProductController::class, 'print'])->name('pdf-salidas');
 //La exportacion de las entradas a excel
 Route::get('/export-entradas',[ProductController::class, 'export'])->name('export-entradas');
-
-
-
-
-
 
 #Parte para la visualizacion y creacion de usuarios.
 Route::get('/index-user',[UserController::class,'index'])->name('index-user');

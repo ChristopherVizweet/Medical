@@ -73,25 +73,41 @@
         <!-- Cantidad requerida -->
         <div>
             <label for="productos[0][cantidadR]" class="block text-sm font-medium text-gray-700 dark:text-white">Cantidad requerida</label>
-            <input type="number" name="productos[0][cantidadR]" placeholder="Cantidad requerida" required
+            <input type="number" name="productos[0][cantidadR]" placeholder="Cantidad requerida" 
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
-         <!-- Cantidad aprobada -->
-        <div>
+        <!-- Cantidad aprobada -->
+        @role('superadmin')
+       <div>
             <label for="productos[0][cantidadA]" class="block text-sm font-medium text-gray-700 dark:text-white">Cantidad aprobada</label>
-            <input type="number" name="productos[0][cantidadA]" placeholder="Cantidad aprobada" required
-                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                <input type="number" name="productos[0][cantidadA]" placeholder="Cantidad aprobada"  value=0
+                       class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+        </div>
+        @endrole
         </div>
         <!-- TPE -->
+        @role('superadmin')
         <div>
             <label for="productos[0][cantidad]" class="block text-sm font-medium text-gray-700 dark:text-white">T.P.E</label>
-            <input type="number" name="productos[0][cantidad]" placeholder="Total productos aprobados" required
+            <input type="number" name="productos[0][cantidad]" placeholder="Total productos aprobados" value=0
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
-    </div>
+        @else
+            <input type="hidden" name="productos[0][cantidad]" placeholder="Total productos aprobados" value=0
+                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+        @endrole
+         <!--Aqui esta la cantidad enviada para agregarle por defecto 0-->
+         <div class="hidden">
+            <label for="productos[0][cantidadE]" class="block text-sm font-medium text-gray-700 dark:text-white">Productos enviados</label>
+            <input type="number" name="productos[0][cantidadE]" placeholder="Total productos enviados" value=0
+                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+        </div>
+    
 </div>
+    </div>
 
 <!-- Botones de acción -->
+
 <div class="mt-4 flex flex-col sm:flex-row gap-4 justify-center items-center">
     <button type="button" onclick="agregarProducto()" id="add-producto"
         class="w-full sm:w-auto px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition">
@@ -137,18 +153,20 @@
 
          <input type="number" readonly="true" step="any" name="productos[${productoIndex}][stock]" placeholder="Existencias"
              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
-
-         <input type="number" name="productos[${productoIndex}][cantidadR]" placeholder="Cantidad requerida" 
-             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
-
-         <input type="number" name="productos[${productoIndex}][cantidadA]" placeholder="Cantidad aprobada"
+        <div>
+         <label class="block text-sm font-medium text-gray-700 dark:text-white">Cant. Req.</label>
+         <input type="number" name="productos[${productoIndex}][cantidadR]" placeholder="Cantidad requerida" value=0
+             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" >
+        </div>
+        <div class="hidden">
+         <input type="number" name="productos[${productoIndex}][cantidadA]" placeholder="Cantidad aprobada" value=0
              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
 
          <input type="number" step="0.01" name="productos[${productoIndex}][cantidad]" 
-             placeholder="Total productos entregados" required
+             placeholder="Total productos entregados" value=0
              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+        </div>
         
-
         
              <!-- Botón eliminar -->
         <button type="button" onclick="eliminarProducto(this)" 

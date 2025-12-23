@@ -80,19 +80,29 @@ public function calcularYGuardarEstado(): string
 
     // Si cualquier producto no tiene cantidad enviada => 'En proceso'
     foreach ($this->productos as $p) {
-        if (is_null($p->cantidadE) || $p->cantidadE === '') {
-            $this->estadoMovimiento = 'Completado';
+    
+       // if (is_null($p->cantidadE) || $p->cantidadE === '') {
+         //   $this->estadoMovimiento = 'Completado';
+           // $this->save();
+            //return $this->estadoMovimiento;
+        //}
+        if($p->cantidadR>0 && $p->cantidadA==0){
+            $this->estadoMovimiento = 'Solicitud';
             $this->save();
             return $this->estadoMovimiento;
         }
-        if (is_null($p->cantidadA) || $p->cantidadA === '') {
-            $this->estadoMovimiento = 'En proceso';
+        if($p->cantidadR>0 && $p->cantidadA>0 && $p->cantidad==0){
+            $this->estadoMovimiento = 'Aprobado';
+            $this->save();
+            return $this->estadoMovimiento;
+        }
+         if($p->cantidadA == $p->cantidad){
+            $this->estadoMovimiento = 'Completado';
             $this->save();
             return $this->estadoMovimiento;
         }
     }
     
-
     // Si todas las filas tienen cantidadE == cantidadA => 'Completado'
     $todosCompletados = $this->productos->every(function($p) {
         return (int)$p->cantidadE === (int)$p->cantidadA;
@@ -108,7 +118,9 @@ public function calcularYGuardarEstado(): string
     if ($this->estadoMovimiento === 'Revisado') {
         return $this->estadoMovimiento;
     }
-
+    if ($this->estadoMovimiento === 'Solicitado') {
+        return $this->estadoMovimiento;
+    }
     // Por defecto, si hay cantidades enviadas pero no coinciden con aprobadas -> 'Pendiente'
     $this->estadoMovimiento = 'Pendiente';
     $this->save();

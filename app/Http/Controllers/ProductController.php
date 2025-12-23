@@ -297,7 +297,7 @@ $nuevaFactura=$ultimaFactura ? $ultimaFactura + 1 : 1;
 public function indexSalidas(Request $request){
     $query = InventarioMovimiento::with(['productos.product','recibe','firma','productos'])
                     ->where('tipoMovimiento', 'salida')
-                    ->orderBy('fecha_movimiento','desc');
+                    ->orderBy('id','desc');
 
     if($request->filled('obra_movimiento')){
         $query->whereHas('productos', function($q) use ($request) {
@@ -332,10 +332,13 @@ public function storeSalidas(Request $request){
         'estadoMovimiento'          => 'nullable|string',
        
         'productos.*.product_id'    => 'required|exists:products,id',
-        'productos.*.cantidad'      => 'required|integer|min:1',
+        'productos.*.cantidad'      => 'required|integer|min:0',
         'productos.*.cantidadR'     => 'nullable|integer',
-        'productos.*.cantidadA'     => 'nullable|integer'
+        'productos.*.cantidadA'     => 'nullable|integer',
+        'productos.*.cantidadE'     => 'nullable|integer',
+    
     ]);
+    
 $ultimoFolio=MovementProduct::max('folio_movimiento');
 $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
 
@@ -358,12 +361,13 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
             'product_id'               => $producto['product_id'],
             'cantidad'                 => $producto['cantidad'],
             'cantidadR'                => $producto['cantidadR'] ?? null,
+            'cantidadE'                => $producto['cantidadE'] ?? null,
             'cantidadA'                => $producto['cantidadA'] ?? null,
             'empleado_id'              => $validated['empleado_id'] ?? null,
             'folio_movimiento'         => $nuevoFolio ?? null,
             'obra_movimiento'          => $validated['obra_movimiento'] ?? null,
         ]);
-
+ 
         // Ajustar stock producto por producto
         $product = Product::findOrFail($producto['product_id']);
         if ($validated['tipoMovimiento'] === 'entrada') {
@@ -378,7 +382,7 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
         }
         $product->save();
     }
-
+   
     return redirect()->route('index-salidas')->with('success', 'Registrado correctamente');
    
 }
@@ -463,6 +467,73 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
     return redirect()->route('index-salidas')->with('success', 'Registrado correctamente');
   
 }
+public function editSalida($id)
+{
+    $productos=Product::all(); // Obtener todos los productos
+    $empleados = Empleados::all(); // Obtener todos los empleados
+    $salidas = InventarioMovimiento::with(['productos.product','productos.empleado','recibe','firma',
+       'proveedor','productos','product'])->findOrFail($id);// Busca la salida por ID
+    return view('entrance.edit-salidasL', compact('salidas', 'empleados', 'productos')); // Carga la vista correcta
+}
+//Función para editar salida de material local
+public function updateSalida(Request $request, $id)
+    {
+        $validated = $request->validate([
+        'tipoMovimiento'            => 'required|in:entrada,salida',
+        'fecha_movimiento'          => 'nullable|date',
+        'observaciones_movimiento'  => 'nullable|string',
+        'obra_movimiento'           => 'nullable|string',
+        'empleado_id'               => 'nullable|exists:empleados,id',
+        'folio_movimiento'          => 'nullable|integer',
+        'estadoMovimiento'          => 'nullable|string',
+       
+        'productos.*.pivot_id'     => 'nullable|integer|exists:movement_products,id',
+        'productos.*.product_id'    => 'required|exists:products,id',
+        'productos.*.cantidad'      => 'required|integer|min:0',
+        'productos.*.cantidadR'     => 'nullable|integer',
+        'productos.*.cantidadA'     => 'nullable|integer',
+        'productos.*.cantidadE'     => 'nullable|integer',
+        ]);
+
+        $movimiento = InventarioMovimiento::findOrFail($id);
+        $movimiento->update([
+            'observaciones_movimiento' => $validated['observaciones_movimiento'] ?? $movimiento->observaciones_movimiento,
+            'empleado_id' => $validated['empleado_id'] ?? $movimiento->empleado_id,
+            'cantidadA' => $validated['cantidadA'] ?? $movimiento->cantidadA,
+            'estadoMovimiento' => $validated['estadoMovimiento'] ?? $movimiento->estadoMovimiento,
+                
+        ]);
+
+        if ($request->has('productos') && is_array($request->productos)) {
+            foreach ($request->productos as $item) {
+                // Solo procesar si nos envían pivot_id (registro existente)
+                if (!empty($item['pivot_id'])) {
+                    $mp = MovementProduct::find($item['pivot_id']);
+                    if ($mp) {
+                        $mp->cantidad = $item['cantidad'] ?? $mp->cantidad;
+                        if (array_key_exists('cantidadE', $item)) $mp->cantidadE = $item['cantidadE'];
+                        if (array_key_exists('cantidadA', $item)) $mp->cantidadA = $item['cantidadA'];
+                        if (array_key_exists('cantidadR', $item)) $mp->cantidadR = $item['cantidadR'];
+                        $mp->save();
+                    }
+                }
+                 // Ajustar stock producto por producto 
+        $mp = Product::findOrFail($item['product_id']);
+            if ($mp->stock < $item['cantidad']) {
+                return back()->withErrors([
+                    'cantidad' => "No hay suficiente stock para el producto {$mp->name_product} de {$mp->diameterMM_product} mm."
+                ]);
+            }
+            $mp->stock -= $item['cantidad'];
+        $mp->save();
+            }
+           
+        }
+        
+            return redirect()->route('index-salidas')->with('success', 'Salida actualizada correctamente.');
+    }
+
+ 
 
     /**
      * Update a salida de obra and its products (create/update/delete pivot rows).
@@ -488,16 +559,21 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
             'productos.*.cantidadA'     => 'nullable|integer'
         ]);
 
-        return DB::transaction(function() use ($validated, $id, $request) {
-            $movimiento = InventarioMovimiento::findOrFail($id);
-            $movimiento->update([
-                'observaciones_movimiento' => $validated['observaciones_movimiento'] ?? $movimiento->observaciones_movimiento,
-                'encargado_recibe' => $validated['encargado_recibe'] ?? $movimiento->encargado_recibe,
-                'cantidad' => $validated['cantidad'] ?? $movimiento->cantidad,
-                'estadoMovimiento' => $validated['estadoMovimiento'] ?? $movimiento->estadoMovimiento,
-            ]);
-            return redirect()->route('index-salidas')->with('success', 'Salida actualizada correctamente.');
-        });
+        // Actualizar la salida
+        $salidas = InventarioMovimiento::findOrFail($id);
+        $salidas->update([
+            'obra_movimiento' => $request->obra_movimiento,
+            'tipoMovimiento' => $request->tipoMovimiento,
+            'fecha_movimiento' => $request->fecha_movimiento,
+            'observaciones_movimiento' => $request->observaciones_movimiento,
+            'empleado_id' => $request->empleado_id,
+            'cantidad' => $request->cantidad,
+            'folio_movimiento' => $request->folio_movimiento,
+            'estadoMovimiento' => $request->estadoMovimiento,
+        ]);
+
+        // Redireccionar con mensaje de éxito
+        return redirect()->route('index-salidas')->with('success', 'Salida actualizada correctamente.');
     }
    
 //Funcion para convertir a PDF
@@ -541,10 +617,10 @@ public function editSalidas($id)
     $productos=Product::all(); // Obtener todos los productos
     $empleados = Empleados::all(); // Obtener todos los empleados
     $salidas = InventarioMovimiento::with(['productos.product','productos.empleado','recibe','firma',
-       'proveedor','productos','product'])->findOrFail($id);// Busca la salida por ID
+    'proveedor','productos','product'])->findOrFail($id);// Busca la salida por ID
     return view('entrance.edit-salidas', compact('salidas', 'empleados', 'productos')); // Carga la vista correcta
 }
- public function updateSalidas(Request $request, string $id)
+public function updateSalidas(Request $request, string $id)
     {
         // Validar los datos del formulario
         $request->validate([
