@@ -22,18 +22,18 @@ class ProductController extends Controller
 {
     public function index(Request $request)
 {
-    $productQuery = Product::with('categories');
+    //$productQuery = Product::with('categories');
 
-    if ($request->filled('id_categories')) {
-        $productQuery->where('id_categories', $request->id_categories);
-    }
+    //if ($request->filled('id_categories')) {
+        //    $productQuery->where('id_categories', $request->id_categories);
+        //}
 
-    $products = $productQuery->get();
+//    $products = $productQuery->get();
     
-    
+    $products=Product::paginate(10);
     $categories = Categories::all();
 
-    return view('managment_product.products.index-product', compact('products', 'categories'));
+    return view('managment_product.products.index-product', compact('categories','products'));
 }
     public function create(){
         //$categories = Categories::all(); // Obtener todas las categorías
@@ -198,9 +198,10 @@ public function delete($id){
     }
 
     $products = $productQuery->get();*/
-        $products = Product::all();
-        $categories = Categories::all();
-    return view('entrance.index-existencias',compact('products','categories'));    
+    //AQUI COMENTE PRODUCTOS Y CATEGORIAS POR QUE ES INNCESESARIO
+        //$products =  Product::with('categories')->get();
+        //$categories = Categories::with('products')->get();
+    return view('entrance.index-existencias');    
 }
     public function indexEntradas() {
        $movimientos = InventarioMovimiento::with(['productos.product','recibe','firma',
@@ -208,7 +209,7 @@ public function delete($id){
                     ->where('tipoMovimiento', 'entrada')
                     ->orderBy('fecha_movimiento', 'desc')
                     ->get();
-       $materiales = Product::all();
+       $materiales = Product::paginate(50);    
         return view('entrance.index-entradas',compact('movimientos','materiales'));
     }
 

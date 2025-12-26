@@ -22,12 +22,36 @@
                 <div>
                     <x-input-label for="nameProject" :value="__('Nombre del proyecto')" />
                     <x-text-input id="nameProject" class="mt-1 block w-full" type="text" name="nameProject"
-                        :value="old('nameProject')" required />
+                        :value="old('nameProject')" />
                     <x-input-error :messages="$errors->get('nameProject')" class="mt-2" />
-                </div>
+                </div> <br>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <!---AQUI COMIENZA EL ESTILO DE LOS CAMPOS-->
+                    <div>
+                        <x-input-label for="estado_project" :value="__('Estado')" />
+                        <x-text-input id="estado_project" class="mt-1 block w-full" type="text" name="estado_project"
+                            placeholder="Ingrese el estado del proyecto" :value="old('estado_project')" required />
+                        <x-input-error :messages="$errors->get('estado_project')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-input-label for="lugar_project" :value="__('Lugar')" />
+                        <x-text-input id="lugar_project" class="mt-1 block w-full" type="text" name="lugar_project"
+                            placeholder="Ingrese el lugar del proyecto" :value="old('lugar_project')" required />
+                        <x-input-error :messages="$errors->get('lugar_project')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-input-label for="area_project" :value="__('Área')" />
+                        <x-text-input id="area_project" class="mt-1 block w-full" type="text" name="area_project"
+                            placeholder="Ingrese el área del proyecto" :value="old('area_project')" required />
+                        <x-input-error :messages="$errors->get('area_project')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-input-label for="piso_project" :value="__('Piso')" />
+                        <x-text-input id="piso_project" class="mt-1 block w-full" type="text" name="piso_project"
+                            placeholder="Ingrese el piso del proyecto" :value="old('piso_project')" required />
+                        <x-input-error :messages="$errors->get('piso_project')" class="mt-2" />
+                    </div>
 
                     <div>
                         <x-input-label for="id_client" :value="__('Cliente')" />
@@ -132,16 +156,16 @@
                     {{-- Fecha de inicio --}}
                     <div>
                         <x-input-label for="dateBegin" :value="__('Fecha de inicio')" />
-                        <x-text-input id="dateBegin" class="mt-1 block w-full max-w-md" type="date" name="dateBegin"
-                            :value="old('dateBegin')" required />
+                        <x-text-input id="dateBegin" class="mt-1 block w-full max-w-md" type="date"
+                            name="dateBegin" :value="old('dateBegin')" required />
                         <x-input-error :messages="$errors->get('dateBegin')" class="mt-2" />
                     </div>
 
                     {{-- Fecha de finalización --}}
                     <div>
                         <x-input-label for="dateEnd" :value="__('Fecha de finalización')" />
-                        <x-text-input id="dateEnd" class="mt-1 block w-full max-w-md" type="date" name="dateEnd"
-                            :value="old('dateEnd')" required />
+                        <x-text-input id="dateEnd" class="mt-1 block w-full max-w-md" type="date"
+                            name="dateEnd" :value="old('dateEnd')" required />
                         <x-input-error :messages="$errors->get('dateEnd')" class="mt-2" />
                     </div>
 
@@ -237,8 +261,10 @@
                         <thead>
                             <tr>
                                 <th>Trabajador</th>
-                                <th>Jornadas</th>
                                 <th>Salario</th>
+                                <th>Jornadas</th>
+                                <th>Horas extra</th>
+                                <th>Salario extra</th>
                                 <th>Total Salario</th>
                                 <th>Acción</th>
                             </tr>
@@ -247,12 +273,20 @@
                             <tr>
                                 <td>
                                     <select name="id_empleado[]" for="id_empleado"
-                                        class="text-black dark:text-black w-full border p-1" required>
+                                        class="text-black dark:text-black w-full border p-1 empleado" required>
                                         <option class="text-black dark:text-black">-Seleccionar-</option>
                                         @foreach ($empleados as $empleado)
-                                            <option value="{{ $empleado->id }}">{{ $empleado->Nombre }}</option>
+                                            <option value="{{ $empleado->id }}"
+                                                data-sueldo="{{ $empleado->sueldo }}">{{ $empleado->Nombre }}
+                                            </option>
                                         @endforeach
                                     </select>
+                                </td>
+                                <td>
+                                    <input type="number" for="salario" id="salario" name="salario[]"
+                                        class="text-black dark:text-black w-full border p-1 salario bg-gray-50"
+                                        step="0.01" oninput="calcularTotal(this)" readonly
+                                        title="Asignado por empleado">
                                 </td>
                                 <td>
                                     <input type="number" for="jornadas" id="jornadas" name="jornadas[]"
@@ -260,16 +294,20 @@
                                         oninput="calcularTotal(this)">
                                 </td>
                                 <td>
-                                    <input type="number" for="salario" id="salario" name="salario[]"
-                                        class="text-black dark:text-black w-full border p-1 salario" step="0.01"
-                                        oninput="calcularTotal(this)">
+                                    <input type="number"
+                                        class="text-black dark:text-black  w-full border p-1 bg-gray-100 "
+                                        placeholder="Horas extra">
+                                </td>
+                                <td>
+                                    <input type="number"
+                                        class="text-black dark:text-black  w-full border p-1 bg-gray-100"
+                                        placeholder="Salario(Horas exra)">
                                 </td>
                                 <td>
                                     <input type="number" for="totalSalario" id="totalSalario" name="TotalSalario[]"
                                         class="text-black dark:text-black total-salario w-full border p-1 bg-gray-100 total"
                                         step="0.01" readonly>
                                 </td>
-
                                 <td class="text-center">
                                     <button type="button" onclick="eliminarFila(this)"
                                         class="text-red-600 hover:underline">Eliminar</button>
@@ -354,8 +392,36 @@ agregar y eliminar campos --}}
                 }
             </script>
             <script>
-                console.log('Total:', total);
-                console.log('Suma mano de obra:', total.toFixed(2));
+                // Populate salary when an employee is selected
+                function setSalaryFromSelect(selectEl) {
+                    const row = selectEl.closest('tr');
+                    const opt = selectEl.selectedOptions[0];
+                    const sueldo = opt?.dataset?.sueldo ?? '';
+                    const salaryInput = row.querySelector('.salario');
+                    if (salaryInput) salaryInput.value = sueldo;
+                }
+
+                // Delegated listener for dynamically added rows
+                document.addEventListener('change', function(e) {
+                    if (e.target && e.target.matches && e.target.matches('.empleado')) {
+                        setSalaryFromSelect(e.target);
+                    }
+                });
+
+                // On load, set salary for existing selected options
+                document.addEventListener('DOMContentLoaded', function() {
+                    document.querySelectorAll('.empleado').forEach(function(sel) {
+                        setSalaryFromSelect(sel);
+                    });
+                });
+
+                // Keep existing console logs (if needed)
+                try {
+                    console.log('Total:', total);
+                    console.log('Suma mano de obra:', total.toFixed(2));
+                } catch (e) {
+                    // ignore if total not defined
+                }
             </script>
 
 
@@ -416,7 +482,8 @@ agregar y eliminar campos --}}
 
 
                     <button type="button" onclick="agregarProducto()" class="text-blue-700 hover:underline mt-4">+
-                        Agregar otro producto</button>
+                        Agregar otro producto
+                    </button>
                 </div>
             </div>
             {{-- Este script es para agregar y eliminar campos en productos --}}
@@ -469,7 +536,9 @@ agregar y eliminar campos --}}
 
                 }
             </script>
+            {{-- Gastos deducibles y no deducibles --}}
 
+            {{-- Resumen de cuentas --}}
             <div class="border p-4 rounded-lg">
                 <h2 class="text-lg font-semibold mb-4 dark:text-white">Cuentas</h2>
                 <div class="flex flex-col space-y-4 text-left text-gray-800 dark:text-white">
@@ -505,6 +574,10 @@ agregar y eliminar campos --}}
 
             {{-- Botones --}}
             <div class="text-center">
+                <button type="button" onclick="openPagosModal()"
+                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                    + Agregar pagos
+                </button>
                 <x-primary-button class="ms-4">Registrar</x-primary-button>
                 <a href="{{ route('index-project') }}"
                     class="ms-4 inline-block px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500">
@@ -513,6 +586,40 @@ agregar y eliminar campos --}}
             </div>
         </div>
     </form>
+    {{-- Modal --}}
+    {{-- Comienza el modal de pagos --}}
+    <div id="pagosModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+
+        <div class="bg-white w-3/4 rounded-lg shadow-lg p-6">
+
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Pagos del proyecto</h2>
+                <button onclick="closePagosModal()" class="text-gray-500">✖</button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="border-b mb-4 flex gap-4">
+                <button onclick="showTab('deducible')" class="tab-btn font-semibold">
+                    Deducibles
+                </button>
+                <button onclick="showTab('no-deducible')" class="tab-btn text-gray-500">
+                    No deducibles
+                </button>
+            </div>
+
+            <!-- Contenido -->
+            @include('projects.deducibles')
+            @include('projects.no_deducibles')
+
+            <!-- Footer -->
+            <div class="mt-4 text-right">
+                <button onclick="closePagosModal()" class="bg-blue-600 text-white px-4 py-2 rounded">
+                    Guardar pagos
+                </button>
+            </div>
+        </div>
+    </div>
     {{-- -Aqui es para mostrar los errores del sistema- --}}
 
     @if ($errors->any())
@@ -526,6 +633,25 @@ agregar y eliminar campos --}}
         </div>
     @endif
 
+    {{-- Script para abrir y cerrar el modal de pagos --}}
+    <script>
+        function openPagosModal() {
+            document.getElementById('pagosModal').classList.remove('hidden');
+        }
+
+        function closePagosModal() {
+            document.getElementById('pagosModal').classList.add('hidden');
+        }
+    </script>
+    {{-- Script para abrir y cerrar las pestañas de diferentes pagos --}}
+    <script>
+        function showTab(tab) {
+            document.getElementById('deducible').classList.add('hidden');
+            document.getElementById('no-deducible').classList.add('hidden');
+
+            document.getElementById(tab).classList.remove('hidden');
+        }
+    </script>
     {{-- CALCULO DE DIAS PARA LAS PRIMERAS FECHAS --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
