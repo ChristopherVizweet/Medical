@@ -14,6 +14,7 @@ use App\Models\Product;
 use App\Models\Recursos;
 use App\Models\Status;
 use App\Models\Supplier;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Calculation\Token\Stack;
 
@@ -159,24 +160,7 @@ $folioFormateado= 'MED-' . str_pad($nuevoFolio, 4, '0', STR_PAD_LEFT) . '-' . da
         'ejecutionDate' => $request->ejecutionDate,
     ]);
 
-    foreach ($request->id_empleado as $index => $empleadoId) {
-        $project->empleados()->create([
-            'id_empleado' => $empleadoId,
-            'jornadas' => $request->jornadas[$index],
-            'salario' => $request->salario[$index],
-            'total_salario' => $request->TotalSalario[$index],
-        ]);
-    }
-
-    foreach ($request->id_product as $index => $productId) {
-        $project->productos()->create([
-            'product_id' => $productId,
-            'supplier_id' => $request->id_supplier[$index],
-            'costo' => $request->costo[$index],
-        ]);
-    }
-   
-    $project->services()->sync($request->nameInstalation);
+    
 
     return redirect()->route('index-project')->with('success', 'Proyecto creado exitosamente');
 }

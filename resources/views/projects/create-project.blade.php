@@ -586,8 +586,10 @@ agregar y eliminar campos --}}
             </div>
         </div>
     </form>
-    {{-- Modal --}}
-    {{-- Comienza el modal de pagos --}}
+    {{-- Modal 
+     <form method="POST" action="{{ route('deducibles-store') }}" enctype="multipart/form-data">
+        @csrf
+    {{-- Comienza el modal de pagos 
     <div id="pagosModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
 
         <div class="bg-white w-3/4 rounded-lg shadow-lg p-6">
@@ -614,12 +616,13 @@ agregar y eliminar campos --}}
 
             <!-- Footer -->
             <div class="mt-4 text-right">
-                <button onclick="closePagosModal()" class="bg-blue-600 text-white px-4 py-2 rounded">
+                <x-primary-button onclick="closePagosModal()" class="bg-blue-600 text-white px-4 py-2 rounded">
                     Guardar pagos
-                </button>
+                </x-primary-button>
             </div>
         </div>
     </div>
+   </form> --}}
     {{-- -Aqui es para mostrar los errores del sistema- --}}
 
     @if ($errors->any())

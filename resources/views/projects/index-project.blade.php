@@ -192,7 +192,8 @@
                             <td class="px-4 py-2">${{ $project->budget }}</td>
                             <td class="px-4 py-2">{{ $project->priority->namePriority ?? 'Sin prioridad' }}</td>
                             <td class="px-4 py-2">{{ $project->status->nameStatus ?? 'Sin estado' }}</td>
-                            <td class="px-4 py-2"> <a href="{{ route('edit-project', $project->id) }}" class="text-blue-600 dark:text-blue-900 hover:underline">Editar</a></td>
+                            <td class="px-4 py-2"> <a href="{{ route('edit-project', $project->id) }}" class="text-blue-600 dark:text-blue-900 hover:underline">Editar |</a>
+                           <a href="{{ route('deducibles', $project->id) }}" class="text-green-300 dark:text-green-300 hover:underline">+Agregar gastos </a></td>
                             <td class="px-4 py-2">
                                 <a href="{{route('pdf-project', $project->id) }}" class="text-red-600 hover:underline" target=_blank>PDF</a> | 
                                  <a href="{{route('edit-project', $project->id) }}" class="text-green-800 hover:underline">Excel</a>

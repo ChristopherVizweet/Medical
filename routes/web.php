@@ -18,6 +18,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\RecursosController;
+use App\Http\Controllers\PaymentController;
 use App\Models\Empleados;
 use App\Models\Entrance;
 use App\Models\Recursos;
@@ -188,11 +189,14 @@ Route::delete('/delete-bank/{id}',[BankController::class, 'delete'])->name('dele
 #Parte para la creacion de PDF
 Route::get('/pdf-project/{id}',[ProjectController::class, 'print'])->name('pdf-project');
 
+#Parte de los gastos
+Route::get('/deducibles/{project_id}', [PaymentController::class, 'create'])->name('deducibles');
+Route::post('/deducibles/{project_id}', [PaymentController::class, 'store_dedu'])->name('deducibles-store');
 
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';

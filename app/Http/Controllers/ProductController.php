@@ -228,7 +228,6 @@ public function delete($id){
     $validated = $request->validate([
         'tipoMovimiento'            => 'required|in:entrada,salida',
         'codigo_movimiento'         => 'nullable|string',
-      
         'cantidad_movimiento'       => 'nullable|integer|min:1',
         'supplier_id'               => 'nullable|exists:suppliers,id',
         'numero_factura_movimiento' => 'nullable|integer',
@@ -255,8 +254,8 @@ $nuevaFactura=$ultimaFactura ? $ultimaFactura + 1 : 1;
         'supplier_id'               => $validated['supplier_id'] ?? null,
         'numero_factura_movimiento' => $nuevaFactura ?? null,
         'fecha_movimiento'          => $validated['fecha_movimiento'] ?? now(),
-        'recibe_id'                 => $validated['recibe_id'] ?? null,
-        'firma_id'                  => $validated['firma_id'] ?? null,
+        'recibe_id'                 => $validated['recibe_id'] ?? null,  
+        'firma_id'                  => $validated['firma_id'] ?? null,  
         'observaciones_movimiento'  => $validated['observaciones_movimiento'] ?? null,
 
     ]);
@@ -270,8 +269,6 @@ $nuevaFactura=$ultimaFactura ? $ultimaFactura + 1 : 1;
             'cantidad'                 => $producto['cantidad'],
             'costo_unitario'           => $producto['costo_unitario'] ?? null,
             'codigo'                   => $producto['codigo'] ?? null
-            
-            
         ]);
 
         // Ajustar stock producto por producto
