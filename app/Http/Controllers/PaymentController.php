@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Empleados;
 use App\Models\Project;
 use App\Models\Payment;
@@ -67,5 +67,21 @@ public function create(Project $project_id)
         }
 
          return redirect()->route('index-project')->with('success', 'Gastos actualizados correctamente.');
+    }
+    public function verPayments(Project $project_id)
+    {
+        $payments = Payment::with('empleado')->where('project_id',$project_id->id)->get();
+        
+        $empleados = Empleados::with('payments')->get();
+        return view('projects.payments.ver-payments', compact('payments','empleados','project_id'));
+    }
+    public function print( $project_id){
+        $projects = Project::findOrFail($project_id);
+        $payments = Payment::with('empleado')->where('tipo','deducible')->where('project_id',$project_id)->get();
+        $nopayment = Payment::with('empleado')->where('tipo','no_deducible')->where('project_id',$project_id)->get();
+        $empleados = Empleados::with('payments')->get();
+        $pagos = Payment::with(['empleado'])->where('project_id',$project_id)->get();
+        $pdf = Pdf::loadView('projects.payments.ver-gastos', compact('pagos','empleados','projects', 'payments','nopayment'));
+        return $pdf->stream('reporte_gastos_proyecto_'.$project_id.'.pdf'); 
     }
 }

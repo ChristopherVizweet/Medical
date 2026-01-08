@@ -29,5 +29,15 @@ public function encargadoR()
     {
         return $this->belongsTo(MovementProduct::class, 'encargado_recibe');
     }
+public function payments()
+    {
+        return $this->hasMany(Payment::class,'empleados_id');
+    }
+
+    // Accesor para el nombre completo
+    public function getFullNameAttribute()
+    {
+        return trim("{$this->Nombre} {$this->apellidos}");
+    }
 }
 

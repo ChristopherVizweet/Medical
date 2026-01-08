@@ -186,12 +186,15 @@ Route::put('/edit-bank/{id}',[BankController::class, 'update'])->name('edit-bank
 Route::delete('/delete-bank/{id}',[BankController::class, 'delete'])->name('delete-bank');
 
 
-#Parte para la creacion de PDF
+#Parte para la creacion de PDF para el proyecto
 Route::get('/pdf-project/{id}',[ProjectController::class, 'print'])->name('pdf-project');
+#Parte para la creacion de PDF para gastos del proyecto
+Route::get('/ver-gastos/{project_id}',[PaymentController::class, 'print'])->name('ver-gastos');
 
 #Parte de los gastos
 Route::get('/deducibles/{project_id}', [PaymentController::class, 'create'])->name('deducibles');
 Route::post('/deducibles/{project_id}', [PaymentController::class, 'store_dedu'])->name('deducibles-store');
+Route::get('/ver-payments/{project_id}', [PaymentController::class, 'verPayments'])->name('ver-payments');
 
 
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

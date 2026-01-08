@@ -2,13 +2,10 @@
 <form method="POST" action="{{ route('deducibles-store',  ['project_id' => $project_id]) }}" enctype="multipart/form-data">
     @csrf
 
-    <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
-        <button id="tab-deducible" type="button" class="px-4 py-2 -mb-px border-b-2 border-blue-500 text-blue-600 font-semibold" onclick="openTab('deducible')">Gastos deducibles</button>
-        <button id="tab-no" type="button" class="px-4 py-2 -mb-px border-b-2 border-transparent text-gray-600 hover:text-gray-800 dark:text-gray-300" onclick="openTab('no-deducible')">Gastos no deducibles</button>
-    </div>
+    
    <div class="border rounded-lg shadow-sm p-6 dark:border-gray-600">
     <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-        Gastos deducibles
+        GASTOS
     </h3>
 
     <!-- CONTENEDOR DE GASTOS -->
@@ -67,17 +64,17 @@
 
                 <div>
                     <label class="label">Subtotal</label>
-                    <input type="number" name="payments[0][subtotal]" class="input">
+                    <input type="number" step="0.01" name="payments[0][subtotal]" class="input">
                 </div>
 
                 <div>
                     <label class="label">IVA</label>
-                    <input type="number" name="payments[0][iva]" class="input" value="0">
+                    <input type="number" step="0.01" name="payments[0][iva]" class="input" value="0">
                 </div>
 
                 <div>
                     <label class="label">Total</label>
-                    <input type="number" name="payments[0][total]" class="input" >
+                    <input type="number" step="0.01" name="payments[0][total]" class="input" >
                 </div>
 
                 <div class="lg:col-span-3">

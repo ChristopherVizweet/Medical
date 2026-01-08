@@ -174,7 +174,7 @@
                         <th class="pc-4 py-2">{{('Presupuesto')}}</th>
                         <th class="pc-4 py-2">{{('Prioridad')}}</th>
                         <th class="pc-4 py-2">{{('Estado')}}</th>
-                        <th class=" px-4 py-2">{{('Ver') }}</th>
+                        <th class=" px-4 py-2">{{('Imprimir') }}</th>
                         <th class="px-4 py-2">{{('Acciones') }}</th>
                     </tr>
                 </thead>
@@ -182,7 +182,7 @@
                     @forelse ($projects as $project)
                         <tr class="border-t">
                             <td class="px-4 py-2">{{ $project->id}}</td>
-                            <td class="px-4 py-2">MED-{{ $project->folioProject}}-2025</td>
+                            <td class="px-4 py-2">MED-{{ $project->folioProject}}-2026</td>
                             <td class="px-4 py-2">{{ $project->nameProject}}</td>
                             <td class="px-4 py-2">{{ $project->client->name_Client ?? 'Sin cliente' }}</td>
                             <td class="px-4 py-2">{{ $project->vendedor->name ?? 'Sin vendedor' }}</td>
@@ -192,15 +192,18 @@
                             <td class="px-4 py-2">${{ $project->budget }}</td>
                             <td class="px-4 py-2">{{ $project->priority->namePriority ?? 'Sin prioridad' }}</td>
                             <td class="px-4 py-2">{{ $project->status->nameStatus ?? 'Sin estado' }}</td>
-                            <td class="px-4 py-2"> <a href="{{ route('edit-project', $project->id) }}" class="text-blue-600 dark:text-blue-900 hover:underline">Editar |</a>
-                           <a href="{{ route('deducibles', $project->id) }}" class="text-green-300 dark:text-green-300 hover:underline">+Agregar gastos </a></td>
+                            <td class="px-4 py-2"> 
+                                <a href="{{route('pdf-project', $project->id) }}" class="text-red-600 hover:underline" target=_blank>PDF proyecto </a>|
+                           <a href="{{ route('ver-gastos', $project->id) }}" class="text-green-700 dark:text-green-300 hover:underline">PDF gastos </a></td>
                             <td class="px-4 py-2">
-                                <a href="{{route('pdf-project', $project->id) }}" class="text-red-600 hover:underline" target=_blank>PDF</a> | 
-                                 <a href="{{route('edit-project', $project->id) }}" class="text-green-800 hover:underline">Excel</a>
+                                
+                               <a href="{{ route('edit-project', $project->id) }}" class="text-blue-700 dark:text-blue-900 hover:underline">Editar </a>|
+                               <a href="{{ route('deducibles', $project->id) }}" class="text-green-700 dark:text-green-300 hover:underline">+Agregar gastos </a>|
+                               <a href="{{ route('ver-payments', $project->id) }}" class="text-green-700 dark:text-green-300 hover:underline">Ver gastos </a>|
                                 <form action="{{ route('delete-project', $project->id) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-400 dark:text-900 hover:underline" onclick="return confirm('Estas seguro de eliminar este proyecto?')">X Eliminar</button>
+                                    <button type="submit" class="text-red-400 dark:text-900 hover:underline" onclick="return confirm('Estas seguro de eliminar este proyecto?')">Eliminar</button>
                                 </form>
                             </td>
                         </tr>
