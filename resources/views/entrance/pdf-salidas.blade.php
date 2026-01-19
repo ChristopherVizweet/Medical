@@ -11,7 +11,8 @@
 
 .info-basica {
     text-align: center;    /* centra horizontalmente todo el bloque */
-    margin-top: 50px;     /* lo baja un poco desde arriba */
+    margin-top: 50px; 
+        /* lo baja un poco desde arriba */
 }
 
 .info-basica p {
@@ -52,7 +53,7 @@ float: right;}
     padding-bottom: 20px;
 }
 table{
-    font-size: 12px;
+    font-size: 9px;
 }
 th, td {
   border: 1px solid grey; /* Borde gris para todas las celdas */

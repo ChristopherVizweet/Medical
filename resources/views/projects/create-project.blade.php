@@ -157,7 +157,7 @@
                     <div>
                         <x-input-label for="dateBegin" :value="__('Fecha de inicio')" />
                         <x-text-input id="dateBegin" class="mt-1 block w-full max-w-md" type="date"
-                            name="dateBegin" :value="old('dateBegin')" required />
+                            name="dateBegin" :value="old('dateBegin')"  />
                         <x-input-error :messages="$errors->get('dateBegin')" class="mt-2" />
                     </div>
 
@@ -165,7 +165,7 @@
                     <div>
                         <x-input-label for="dateEnd" :value="__('Fecha de finalización')" />
                         <x-text-input id="dateEnd" class="mt-1 block w-full max-w-md" type="date"
-                            name="dateEnd" :value="old('dateEnd')" required />
+                            name="dateEnd" :value="old('dateEnd')"  />
                         <x-input-error :messages="$errors->get('dateEnd')" class="mt-2" />
                     </div>
 
@@ -178,7 +178,7 @@
                     <div>
                         <x-input-label for="requestDate" :value="__('Fecha de solicitud')" />
                         <x-text-input id="requestDate" class="mt-1 block w-full max-w-md" type="date"
-                            name="requestDate" :value="old('requestDate')" required />
+                            name="requestDate" :value="old('requestDate')"  />
                         <x-input-error :messages="$errors->get('requestDate')" class="mt-2" />
                     </div>
 
@@ -186,7 +186,7 @@
                     <div>
                         <x-input-label for="estimateDate" :value="__('Fecha de cotización')" />
                         <x-text-input id="estimateDate" class="mt-1 block w-full max-w-md" type="date"
-                            name="estimateDate" :value="old('estimateDate')" required />
+                            name="estimateDate" :value="old('estimateDate')"  />
                         <x-input-error :messages="$errors->get('estimateDate')" class="mt-2" />
                     </div>
 
@@ -199,7 +199,7 @@
                     <div>
                         <x-input-label for="authorizedDate" :value="__('Fecha autorizada')" />
                         <x-text-input id="authorizedDate" class="mt-1 block w-full max-w-md" type="date"
-                            name="authorizedDate" :value="old('authorizedDate')" required />
+                            name="authorizedDate" :value="old('authorizedDate')"  />
                         <x-input-error :messages="$errors->get('authorizedDate')" class="mt-2" />
                     </div>
 
@@ -212,7 +212,7 @@
                     <div>
                         <x-input-label for="ejecutionDate" :value="__('Fecha en ejecución')" />
                         <x-text-input id="ejecutionDate" class="mt-1 block w-full max-w-md" type="date"
-                            name="ejecutionDate" :value="old('ejecutionDate')" required />
+                            name="ejecutionDate" :value="old('ejecutionDate')"  />
                         <x-input-error :messages="$errors->get('ejecutionDate')" class="mt-2" />
                     </div>
 
@@ -225,7 +225,7 @@
                     <div>
                         <x-input-label for="finishDate" :value="__('Fecha de terminación')" />
                         <x-text-input id="finishDate" class="mt-1 block w-full max-w-md" type="date"
-                            name="finishDate" :value="old('finishDate')" required />
+                            name="finishDate" :value="old('finishDate')"  />
                         <x-input-error :messages="$errors->get('finishDate')" class="mt-2" />
                     </div>
 
@@ -238,18 +238,11 @@
             </div>
             {{-- Servicios Autorizados --}}
             <div class="border p-4 rounded-lg">
-                <h2 class="text-lg font-semibold mb-4 dark:text-white">Servicio Autorizado</h2>
-                <div class="grid grid-cols-2 gap-2 dark:text-white">
-                    @foreach ($services as $service)
-                        <label class="flex items-center space-x-2">
-                            <input type="checkbox" name="nameInstalation[]" value="{{ $service->id }}"
-                                {{ in_array($service->id, old('nameInstalation', [])) ? 'checked' : '' }}
-                                class="rounded">
-                            <span>{{ $service->nameInstalation }}</span>
-                        </label>
-                    @endforeach
-
-                </div>
+            <h2 class="text-lg font-semibold mb-4 dark:text-white">Servicio Autorizado</h2>               
+                @foreach ($services as $service)
+                    <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" data-id="{{ $service->id }}">{{ $service->nameInstalation }}</button>
+                @endforeach
+                        
             </div>
 
             {{-- Mano de Obra --}}
@@ -272,8 +265,8 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <select name="id_empleado[]" for="id_empleado"
-                                        class="text-black dark:text-black w-full border p-1 empleado" required>
+                                    <select name="id_empleado[]" for="id_empleado" id="id_empleado"
+                                        class="text-black dark:text-black w-full border p-1 empleado" >
                                         <option class="text-black dark:text-black">-Seleccionar-</option>
                                         @foreach ($empleados as $empleado)
                                             <option value="{{ $empleado->id }}"
@@ -304,7 +297,7 @@
                                         placeholder="Salario(Horas exra)">
                                 </td>
                                 <td>
-                                    <input type="number" for="totalSalario" id="totalSalario" name="TotalSalario[]"
+                                    <input type="number" for="total_salario" id="total_salario" name="total_salario[]"
                                         class="text-black dark:text-black total-salario w-full border p-1 bg-gray-100 total"
                                         step="0.01" readonly>
                                 </td>
@@ -574,10 +567,7 @@ agregar y eliminar campos --}}
 
             {{-- Botones --}}
             <div class="text-center">
-                <button type="button" onclick="openPagosModal()"
-                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                    + Agregar pagos
-                </button>
+                
                 <x-primary-button class="ms-4">Registrar</x-primary-button>
                 <a href="{{ route('index-project') }}"
                     class="ms-4 inline-block px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500">
@@ -586,43 +576,7 @@ agregar y eliminar campos --}}
             </div>
         </div>
     </form>
-    {{-- Modal 
-     <form method="POST" action="{{ route('deducibles-store') }}" enctype="multipart/form-data">
-        @csrf
-    {{-- Comienza el modal de pagos 
-    <div id="pagosModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-
-        <div class="bg-white w-3/4 rounded-lg shadow-lg p-6">
-
-            <!-- Header -->
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold">Pagos del proyecto</h2>
-                <button onclick="closePagosModal()" class="text-gray-500">✖</button>
-            </div>
-
-            <!-- Tabs -->
-            <div class="border-b mb-4 flex gap-4">
-                <button onclick="showTab('deducible')" class="tab-btn font-semibold">
-                    Deducibles
-                </button>
-                <button onclick="showTab('no-deducible')" class="tab-btn text-gray-500">
-                    No deducibles
-                </button>
-            </div>
-
-            <!-- Contenido -->
-            @include('projects.deducibles')
-            @include('projects.no_deducibles')
-
-            <!-- Footer -->
-            <div class="mt-4 text-right">
-                <x-primary-button onclick="closePagosModal()" class="bg-blue-600 text-white px-4 py-2 rounded">
-                    Guardar pagos
-                </x-primary-button>
-            </div>
-        </div>
-    </div>
-   </form> --}}
+    
     {{-- -Aqui es para mostrar los errores del sistema- --}}
 
     @if ($errors->any())

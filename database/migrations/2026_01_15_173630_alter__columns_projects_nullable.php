@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-           // $table->string('id_client')->nullable();
+           //$table->integer('empleados_id')->nullable()->change(); EJEMPLO
+           $table->integer('jornadas')->nullable()->change();
+           $table->integer('salario')->nullable()->change();
+           
         });
     }
 
@@ -22,7 +25,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            //$table->dropColumn('id_client');
+            //$table->foreignId('empleados_id')->nullable(false)->change(); EJEMPLO
+            $table->foreignId('jornadas')->nullable(false)->change();
+            $table->foreignId('salario')->nullable(false)->change();
         });
     }
 };

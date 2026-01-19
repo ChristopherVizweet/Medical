@@ -14,7 +14,8 @@ use App\Models\Product;
 use App\Models\Recursos;
 use App\Models\Status;
 use App\Models\Supplier;
-use App\Models\Payment;
+use App\Models\ProjectEmployee;
+
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Calculation\Token\Stack;
 
@@ -76,7 +77,7 @@ class ProjectController extends Controller
     }
     public function store(Request $request) {
         // Validar y guardar datos
-        //dd($request->nameInstalation);
+        //dd($request->all());
 
        $request->validate([
     'folioProject' => 'nullable|integer',
@@ -97,7 +98,10 @@ class ProjectController extends Controller
     'finishDate' => 'required|date',
     'recursosObtenidos' => 'required|string',
     'ejecutionDate' => 'required|date',
-
+    'estado_project' => 'nullable|string',
+    'lugar_project' => 'nullable|string',
+    'area_project' => 'nullable|string',
+    'piso_project' => 'nullable|string',
     // Instalación (nombre como string[] porque es checkbox)
     //'nameInstalation' => 'required|array|min:1',
     //'nameInstalation.*' => 'required|string',
@@ -110,11 +114,11 @@ class ProjectController extends Controller
     'id_empleado' => 'required|array|min:1',
     'id_empleado.*' => 'required|string|exists:empleados,id',
     'jornadas' => 'required|array',
-    'jornadas.*' => 'required|integer|min:1',
+    'jornadas.*' => 'nullable|integer|min:1',
     'salario' => 'required|array',
     'salario.*' => 'required|numeric|min:0',
-    'TotalSalario' => 'required|array',
-    'TotalSalario.*' => 'required|numeric|min:0',
+    'total_salario' => 'required|array',
+    'total_salario.*' => 'nullable|numeric|min:0',
 
     // Productos
     'id_product' => 'required|array|min:1',
@@ -135,6 +139,7 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
 $folioFormateado= 'MED-' . str_pad($nuevoFolio, 4, '0', STR_PAD_LEFT) . '-' . date('Y');
       
         $project = Project::create([
+            //dd($request->all()),
         'folioProject' => $request->folioProject ?? $nuevoFolio,
         'id_client'  => $request->id_client,
         'nameProject' => $request->nameProject,
@@ -147,8 +152,12 @@ $folioFormateado= 'MED-' . str_pad($nuevoFolio, 4, '0', STR_PAD_LEFT) . '-' . da
         'accountBank' => $request->accountBank,
         'id_priority' => $request->id_priority,
         #'id_instalationService' => implode(', ', $request->nameInstalation),
+        'estado_project' => $request->estado_project,
+        'lugar_project' => $request->lugar_project,
+        'area_project' => $request->area_project,
+        'piso_project' => $request->piso_project,
         
-
+        
         'id_status' => $request->id_status,
         'requestDate' => $request->requestDate,
         'estimateDate' => $request->estimateDate,
@@ -160,6 +169,28 @@ $folioFormateado= 'MED-' . str_pad($nuevoFolio, 4, '0', STR_PAD_LEFT) . '-' . da
         'ejecutionDate' => $request->ejecutionDate,
     ]);
 
+    // Guardar empleados con jornadas y salarios
+    foreach ($request->id_empleado as $index => $empleadoId) {
+        $project->empleados()->create([
+            'id_empleado' => $empleadoId,
+            'jornadas' => $request->jornadas[$index],
+            'salario' => $request->salario[$index],
+            'total_salario' => $request->total_salario[$index],
+        ]);
+    }
+
+    // Guardar productos
+    foreach ($request->id_product as $index => $productId) {
+        $project->productos()->create([
+            'product_id' => $productId,
+            'supplier_id' => $request->id_supplier[$index],
+            'costo' => $request->costo[$index],
+        ]);
+    }
+
+    // Guardar servicios de instalación
+    $project->services()->sync($request->nameInstalation);
+   
     
 
     return redirect()->route('index-project')->with('success', 'Proyecto creado exitosamente');
@@ -204,7 +235,10 @@ public function update(Request $request,$id){
     'finishDate' => 'required|date',
     'recursosObtenidos' => 'required|string',
     'ejecutionDate' => 'required|date',
-
+    'estado_project' => 'nullable|string',
+    'lugar_project' => 'nullable|string',
+    'area_project' => 'nullable|string',
+    'piso_project' => 'nullable|string',
     // Instalación (nombre como string[] porque es checkbox)
     //'nameInstalation' => 'required|array|min:1',
     //'nameInstalation.*' => 'required|string',
@@ -308,16 +342,19 @@ public function delete($id){
         $suppliers=Supplier::all();
         $products=Product::all();
         
-    
-    $project = Project::with(['empleados.empleado', 'productos.productoc','productos.supplier',
+    $project = Project::with(['productos.productoc','empleados.empleado','productos.supplier',
     'services','client','compani','vendedor','encargado','priority','status','recursos',
-    'empleados','cuenta']) // si tienes relaciones
+    'cuenta']) // si tienes relaciones
                      ->findOrFail($id);
 
-    $pdf = Pdf::loadView('projects.pdf-project', compact('project','services','services','empleados','priorities','users','clients','companies','services','statues','recursos','banks','suppliers','products'));
+    $pdf = Pdf::loadView('projects.pdf-project', compact('empleados','project','projects','services','services','priorities','users','clients','companies','services','statues','recursos','banks','suppliers','products'));
 
     return $pdf->stream('reporte_proyecto_'.$project->id.'.pdf');
     // También puedes usar ->download() para forzar la descarga
 }
+//Vista de cotización de red de gases
+public function cotizacionRedGases(){
+    return view('cotizaciones.cotizacion-redgases');
 }
 
+}
