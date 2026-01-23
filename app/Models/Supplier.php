@@ -11,7 +11,7 @@ class Supplier extends Model
     #use HasFactory;
     use HasRoles;
     
-    protected $fillable = ['name_supplier', 'email_supplier', 'phoneNumber_supplier'];
+    protected $fillable = ['name_supplier', 'email_supplier', 'phoneNumber_supplier', 'rfc_supplier'];
 
  public function projectProduct()
 {

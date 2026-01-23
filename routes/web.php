@@ -185,6 +185,11 @@ Route::get('/edit-bank/{id}',[BankController::class, 'edit'])->name('edit-bank')
 Route::put('/edit-bank/{id}',[BankController::class, 'update'])->name('edit-bank');
 Route::delete('/delete-bank/{id}',[BankController::class, 'delete'])->name('delete-bank');
 
+#Parte de las facturas
+Route::get('/index-facturas',[App\Http\Controllers\FacturaController::class,'index'])->name('index-facturas');
+Route::get('/create-facturas',[App\Http\Controllers\FacturaController::class,'create'])->name('create-facturas');
+Route::post('/create-facturas',[App\Http\Controllers\FacturaController::class,'store'])->name('store-facturas');
+
 
 #Parte para la creacion de PDF para el proyecto
 Route::get('/pdf-project/{id}',[ProjectController::class, 'print'])->name('pdf-project');

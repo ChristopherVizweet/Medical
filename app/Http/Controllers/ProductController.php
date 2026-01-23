@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EntradasExport;
 use App\Exports\InvoicesExport;
+use App\Models\Project;
 use phpDocumentor\Reflection\Types\Nullable;
 use PhpOffice\PhpSpreadsheet\Calculation\Category;
 use function Pest\Laravel\get;
@@ -35,10 +36,10 @@ class ProductController extends Controller
 
     return view('managment_product.products.index-product', compact('categories','products'));
 }
-    public function create(){
+    public function create(Project $project_id){
         //$categories = Categories::all(); // Obtener todas las categorías
         //$suppliers = Supplier::all(); // Si también necesitas los proveedores
-        return view('managment_product.products.import-product');
+        return view('managment_product.products.import-product', compact('project_id'));
     }
    # public function create(){
     #    $categories = Categories::all(); // Obtener todas las categorías

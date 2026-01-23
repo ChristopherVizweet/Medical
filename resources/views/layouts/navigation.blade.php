@@ -11,7 +11,7 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-10 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         Panel
                     </x-nav-link>
@@ -25,11 +25,19 @@
                         Clientes
                     </x-nav-link>
                     @endhasanyrole
+
                    @hasanyrole('superadmin|ventas')
                     <x-nav-link :href="route('index-project')" :active="request()->routeIs('index-project')">
                         Proyectos
                     </x-nav-link>
                     @endhasanyrole
+
+                    @hasanyrole('superadmin')
+                    <x-nav-link :href="route('index-facturas')" :active="request()->routeIs('index-facturas')">
+                        Facturas y Comprobantes
+                    </x-nav-link>
+                    @endhasanyrole
+
                     @hasanyrole('superadmin|almacen')
                     <x-nav-link :href="route('index-managmentp')" :active="request()->routeIs('index-managmentp')">
                         Gestión de productos

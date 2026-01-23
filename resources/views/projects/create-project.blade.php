@@ -58,7 +58,7 @@
                         <select class="mt-1 block w-full" name="id_client" id="id_client" required>
                             <option value="">-Seleccionar-</option>
                             @foreach ($clients as $client)
-                                <option value="{{ $client->id }}">{{ $client->name_Client }}</option><br>
+                            <option value="{{ $client->id }}">{{ $client->name_Client }}</option><br>
                             @endforeach
                         </select>
                     </div>
@@ -68,7 +68,7 @@
                         <select class="mt-1 block w-full" name="company" id="company" required>
                             <option value="">-Seleccionar-</option>
                             @foreach ($companies as $company)
-                                <option value="{{ $company->id }}">{{ $company->nameCompany }}</option><br>
+                            <option value="{{ $company->id }}">{{ $company->nameCompany }}</option><br>
                             @endforeach
                         </select>
                     </div>
@@ -79,7 +79,7 @@
                         <select class="mt-1 block w-full" name="seller_id_usuario" id="seller_id_usuario" required>
                             <option value="">-Seleccionar-</option>
                             @foreach ($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option><br>
+                            <option value="{{ $user->id }}">{{ $user->name }}</option><br>
                             @endforeach
                         </select>
                     </div>
@@ -90,7 +90,7 @@
                         <select class="mt-1 block w-full" name="inCharge_id_usuario" id="inCharge_id_usuario" required>
                             <option value="">-Seleccionar-</option>
                             @foreach ($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option><br>
+                            <option value="{{ $user->id }}">{{ $user->name }}</option><br>
                             @endforeach
                         </select>
                     </div>
@@ -100,7 +100,7 @@
                         <select class="mt-1 block w-full" name="id_priority" id="id_priority" required>
                             <option value="">-Seleccionar-</option>
                             @foreach ($priorities as $priority)
-                                <option value="{{ $priority->id }}">{{ $priority->namePriority }}</option><br>
+                            <option value="{{ $priority->id }}">{{ $priority->namePriority }}</option><br>
                             @endforeach
                         </select>
                     </div>
@@ -110,7 +110,7 @@
                         <select class="mt-1 block w-full" name="id_status" id="id_status" required>
                             <option value="">-Seleccionar-</option>
                             @foreach ($statues as $status)
-                                <option value="{{ $status->id }}">{{ $status->nameStatus }}</option><br>
+                            <option value="{{ $status->id }}">{{ $status->nameStatus }}</option><br>
                             @endforeach
                         </select>
                     </div>
@@ -126,7 +126,7 @@
                         <select class="mt-1 block w-full" name="recursosObtenidos" id="recursosObtenidos" required>
                             <option value="">-Seleccionar-</option>
                             @foreach ($recursos as $recurso)
-                                <option value="{{ $recurso->id }}">{{ $recurso->recursosObtenidos }}</option><br>
+                            <option value="{{ $recurso->id }}">{{ $recurso->recursosObtenidos }}</option><br>
                             @endforeach
                         </select>
                     </div>
@@ -136,7 +136,7 @@
                         <select class="mt-1 block w-full" name="accountBank" id="accountBank" required>
                             <option value="">-Seleccionar-</option>
                             @foreach ($banks as $bank)
-                                <option value="{{ $bank->id }}">{{ $bank->accountBank }}</option><br>
+                            <option value="{{ $bank->id }}">{{ $bank->accountBank }}</option><br>
                             @endforeach
                         </select>
                     </div>
@@ -241,12 +241,12 @@
                 <h2 class="text-lg font-semibold mb-4 dark:text-white">Servicio Autorizado</h2>
                 <div class="grid grid-cols-2 gap-2 dark:text-white">
                     @foreach ($services as $service)
-                        <label class="flex items-center space-x-2">
-                            <input type="checkbox" name="nameInstalation[]" value="{{ $service->id }}"
-                                {{ in_array($service->id, old('nameInstalation', [])) ? 'checked' : '' }}
-                                class="rounded">
-                            <span>{{ $service->nameInstalation }}</span>
-                        </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" name="nameInstalation[]" value="{{ $service->id }}"
+                            {{ in_array($service->id, old('nameInstalation', [])) ? 'checked' : '' }}
+                            class="rounded">
+                        <span>{{ $service->nameInstalation }}</span>
+                    </label>
                     @endforeach
 
                 </div>
@@ -276,9 +276,9 @@
                                         class="text-black dark:text-black w-full border p-1 empleado" required>
                                         <option class="text-black dark:text-black">-Seleccionar-</option>
                                         @foreach ($empleados as $empleado)
-                                            <option value="{{ $empleado->id }}"
-                                                data-sueldo="{{ $empleado->sueldo }}">{{ $empleado->Nombre }}
-                                            </option>
+                                        <option value="{{ $empleado->id }}"
+                                            data-sueldo="{{ $empleado->sueldo }}">{{ $empleado->Nombre }}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -446,7 +446,7 @@ agregar y eliminar campos --}}
                                         required>
                                         <option value="">-Seleccionar-</option>
                                         @foreach ($products as $product)
-                                            <option value="{{ $product->id }}">{{ $product->name_product }}</option>
+                                        <option value="{{ $product->id }}">{{ $product->name_product }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -455,8 +455,8 @@ agregar y eliminar campos --}}
                                         class="w-full border p-1 text-black dark:text-black" required>
                                         <option value="">-Seleccionar-</option>
                                         @foreach ($suppliers as $supplier)
-                                            <option value="{{ $supplier->id }}">{{ $supplier->name_supplier }}
-                                            </option>
+                                        <option value="{{ $supplier->id }}">{{ $supplier->name_supplier }}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -588,7 +588,7 @@ agregar y eliminar campos --}}
     </form>
     {{-- Modal 
      <form method="POST" action="{{ route('deducibles-store') }}" enctype="multipart/form-data">
-        @csrf
+    @csrf
     {{-- Comienza el modal de pagos 
     <div id="pagosModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
 
@@ -626,14 +626,14 @@ agregar y eliminar campos --}}
     {{-- -Aqui es para mostrar los errores del sistema- --}}
 
     @if ($errors->any())
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-            <strong>¡Error!</strong> Revisa los campos marcados. <br>
-            <ul class="mt-2 list-disc list-inside">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <strong>¡Error!</strong> Revisa los campos marcados. <br>
+        <ul class="mt-2 list-disc list-inside">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
 
     {{-- Script para abrir y cerrar el modal de pagos --}}
