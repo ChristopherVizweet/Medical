@@ -47,15 +47,17 @@
                     <tr class="bg-gray-200">
                         <th class="px-4 py-2">{{('ID') }}</th>
                         <th class="px-4 py-2">{{('Nombre de la empresa') }}</th>
+                        <th class="px-4 py-2">{{('RFC') }}</th>
                         <th class="px-4 py-2">{{('Acciones') }}</th>
                     </tr>
-                </thead>
+                </thead>  
                 <tbody>
                     @forelse ($companies as $company)
                         <tr class="border-t">
                             <td class="px-4 py-2">{{ $company->id}}</td>
                             <td class="px-4 py-2">{{ $company->nameCompany}}</td>
-                            <td class="px-4 py-2">
+                            <td class="px-4 py-2">{{ $company->rfc_company}}</td>
+                            <td class="px-4 py-2">  
                                 <a href="{{route('edit-company', $company->id) }}" class="text-blue-600 hover:underline">Editar </a>| 
                                 <form action="{{ route('delete-company', $company->id) }}" method="POST" style="display:inline-block;"> 
                                     @csrf

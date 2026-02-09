@@ -1,15 +1,12 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('store-entradas', ['factura' => $factura->id]) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('store-entradasSinFactura') }}" enctype="multipart/form-data">
         @csrf
 
-        <!-- Campo oculto para pasar el factura_id en el formulario -->
-        <input type="hidden" name="factura_id" value="{{ $factura->id }}">
-
         <div class="text-center text-gray-800 dark:text-white">
-            <h1 class="text-2xl font-bold">NUEVA ENTRADA</h1>
+            <h1 class="text-2xl font-bold">NUEVA ENTRADA (sin factura)</h1>
         </div><br>
         <!--Aqui comienza el formulario para registrar la entrada-->
-        <div class="producto-row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 items-center">
+        <div class="producto-row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
 
             <div class="hidden">
                 <x-input-label for="tipoMovimiento" :value="__('Tipo de registro')" />
@@ -19,7 +16,7 @@
 
                 </select>
             </div>
-            <!--<div>
+            <div>
                 <x-input-label for="supplier_id" :value="__('Proveedor')" />
                 <select class="mt-1 block w-full" name="supplier_id" id="supplier_id" >
                     <option value="">-Seleccionar-</option>
@@ -27,8 +24,8 @@
                     <option value="{{ $supplier->id }}">{{ $supplier->name_supplier }}</option>
                     @endforeach
                 </select>
-                <input readonly class="w-full" type="text" value="{{ $supplier->name_supplier }}"> Aqui debe de haber un comentario
-            </div> -->
+                <!-- <input readonly class="w-full" type="text" value="{{ $supplier->name_supplier }}"> -->
+            </div>
             <div class="hidden">
                 <x-input-label for="numero_factura_movimiento" :value="__('Número de factura')" />
                 <x-text-input id="numero_factura_movimiento" class="mt-1 block w-full" type="text" name="numero_factura_movimiento" :value="old('numero_factura_movimiento')" />
@@ -104,9 +101,6 @@
 
             </div>
         </div>
-
-        <!--Input para colocar el numero de factura-->
-            <input type="hidden" for="factura_id" name="factura_id" value="{{ $factura->id }}"> 
 
         <!-- Botones de acción -->
         <div class="mt-4 flex flex-col sm:flex-row gap-4 justify-center items-center">

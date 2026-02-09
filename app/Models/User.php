@@ -34,5 +34,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
    
-    
+    public function facturasAlmacen()
+    {
+        return $this->hasMany(Factura::class, 'responsable_almacen_id_factura');
+    }
 }

@@ -6,9 +6,10 @@
                 <div class="px-6 py-8 sm:px-8">
                     <form action="{{ route('store-facturas') }}" enctype="multipart/form-data" method="POST" class="space-y-6">
                         @csrf
-
+                       
                         <!-- Información del Cliente -->
                         <div class="border-b border-gray-200 dark:border-gray-700 pb-6 mb-6">
+                            
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
@@ -24,7 +25,7 @@
                                     <label for="" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         Nombre emisor<span class="text-red-500">*</span>
                                     </label>
-                                    <select name="nombre_emisor" id="nombre_emisor" class="w-full nombre_emisor">
+                                    <select name="supplier_id" class="w-full nombre_emisor">
                                         <option value="">-Seleccionar-</option>
                                         @foreach($proveedores as $proveedor)
                                         <option value="{{ $proveedor->id }}"
@@ -48,7 +49,7 @@
                                     <label for="" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         Nombre receptor<span class="text-red-500">*</span>
                                     </label>
-                                    <select name="nombre_receptor" class="w-full nombre_receptor" id="nombre_receptor">
+                                    <select name="company_id" class="w-full nombre_receptor" >
                                         <option value="">Seleccionar</option>
                                         @foreach($empresas as $empresa)
                                         <option value="{{ $empresa->id }}"
@@ -116,7 +117,7 @@
                                     <label for="" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         Folio de factura<span class="text-red-500">*</span>
                                     </label>
-                                    <input type="text" id="folio_factura" placeholder="ej. 512458" name="folio_factura" class="block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 @error('folio_factura') border-red-500 @enderror">
+                                    <input type="text" id="folio_factura" placeholder="ej. P512458..." name="folio_factura" class="block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 @error('folio_factura') border-red-500 @enderror">
                                     @error('folio_factura')
                                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                     @enderror
@@ -129,7 +130,7 @@
                                     <label for="folio_fiscal"" class=" block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         Folio fiscal de factura (Opcional)<span class="text-red-500">*</span>
                                     </label>
-                                    <input type="text" id="folio_fiscal" placeholder="ej. 002B6996-7866..." name="folio_fiscal" class="w-full block px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 @error('folio_fiscal') border-red-500 @enderror">
+                                    <input type="text" id="folio_fiscal" placeholder="ej. 002B6996-7866-..." name="folio_fiscal" class="w-full block px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 @error('folio_fiscal') border-red-500 @enderror">
                                     @error('folio_fiscal')
                                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                     @enderror
@@ -241,13 +242,13 @@
                             <label for="responsable_almacen" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                 Responsable de almacén<span class="text-red-500">*</span>
                             </label>
-                            <select name="responsable_almacen_id_factura" id="responsable_almacen_id_factura">
+                            <select name="user_id" id="">
                                 <option value="">-Seleccionar-</option>
                                 @foreach($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }} {{ $user->ap_user}}</option>
+                                <option value="{{ $user->id }}">{{ $user->name }} {{ $user->ap_user}} {{$user->am_user}}</option>
                                 @endforeach
                             </select>
-                            @error('responsable_almacen_id_factura')
+                            @error('user_id')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
@@ -256,15 +257,16 @@
                             <label for="responsable_chofer_id_factura" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                 Persona responsable(Chofer)<span class="text-red-500">*</span>
                             </label>
-                            <select name="responsable_chofer_id_factura" id="responsable_chofer_id_factura">
+                            <select name="empleado_id" id="">
                                 <option value="">-Seleccionar-</option>
                                 @foreach($empleados as $empleado)
-                                <option value="{{ $empleado->id }}">{{ $empleado->Nombre }} {{ $empleado->ap_user}}</option>
+                                <option value="{{ $empleado->id }}">{{ $empleado->Nombre }} {{ $empleado->apellidos}}</option>
                                 @endforeach
                             </select>
-                            @error('responsable_chofer_id_factura')
+                            @error('empleado_id')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                             @enderror
+                            
                             <!--CAMPOS PARA EL CHOFER-->
                             <div class="mt-6">
                                 <label for="destino_factura" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -282,10 +284,13 @@
                                 <label for="obra_factura" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Selecciona obra:<span class="text-red-500">*</span>
                                 </label>
-                                <select name="obra_factura" id="obra_factura">
+                                <select name="project_id" id="obra_factura">
                                     <option value="">-Seleccionar-</option>
                                     @foreach($proyectos as $proyecto)
-                                    <option value="{{ $proyecto->id }}">Folio: MED-{{ $proyecto->folioProject }}-2026. Estado: {{ $proyecto->estado_project }}. Área: {{ $proyecto->area_project }}.
+                                    <option value="{{ $proyecto->id }}">
+                                        Folio: MED-{{ $proyecto->folioProject }}-2026. 
+                                        Estado: {{ $proyecto->estado_project }}. 
+                                        Área: {{ $proyecto->area_project }}.
                                         Piso: {{ $proyecto->piso_project }}</option>
                                     @endforeach
                                 </select>
@@ -355,7 +360,7 @@
                         <!-- Total -->
                         <div>
                             <label for="subtotal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                Subtotal <span class="text-red-500">*</span>
+                                Total <span class="text-red-500">*</span>
                             </label>
                             <input type="number" id="total_factura" name="total_factura" step="0.01" value="{{ old('total_factura') }}" placeholder="0.00" class="block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 @error('total_factura') border-red-500 @enderror">
                             @error('total_factura')
@@ -370,7 +375,7 @@
                             <select id="status_factura" name="status_factura" class="block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 @error('status_factura') border-red-500 @enderror">
                                 <option value="">Seleccionar estado</option>
                                 <option value="pendiente" {{ old('status_factura') == 'pendiente' ? 'selected' : '' }}>Pendiente</option>
-                                <option value="pagado" {{ old('status_factura') == 'pagado' ? 'selected' : '' }}>Pagado</option>
+                                <option value="completado" {{ old('status_factura') == 'completado' ? 'selected' : '' }}>Completado</option>
                                 <option value="cancelado" {{ old('status_factura') == 'cancelado' ? 'selected' : '' }}>Cancelado</option>
                             </select>
                             @error('status_factura')
@@ -390,15 +395,14 @@
                     Información Adicional
                 </h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+                    
                     <!-- Notas -->
                     <div>
                         <label for="notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Notas
+                            Observaciones o notas:
                         </label>
-                        <input type="text" id="observaciones_factura" name="observaciones_factura" value="{{ old('observaciones_factura') }}" placeholder="Notas adicionales..." class="block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                        <input type="textarea" id="observaciones_factura" name="observaciones_factura" value="{{ old('observaciones_factura') }}" placeholder="Notas adicionales..." class="block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
                     </div>
                 </div>
 
@@ -428,16 +432,14 @@
                             
                                 Crear Factura y registrar materiales
                         </button>-->
-                    <x-primary-button>
-                        Registrar factura
-                    </x-primary-button>
-                    
-                        <a href="{{ route('index-facturas') }}"
-                    class="w-full bg-red-700 sm:w-auto px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500">
-                    Cancelar
-                </a>
-                        
-                   
+                
+                    <a href="{{ route('index-facturas')}}"
+                        class="w-full bg-red-700 sm:w-auto px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500">
+                        Cancelar
+                    </a>
+                    <a href="">
+                        <button class="inline-flex items-center px-4 py-2 bg-green-700 dark:bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white dark:text-white uppercase tracking-widest hover:bg-green-400 dark:hover:bg-green-400 focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">Registrar factura</button> 
+                    </a>
                     
                 </div>
                 </form>

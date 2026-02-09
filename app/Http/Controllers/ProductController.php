@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EntradasExport;
 use App\Exports\InvoicesExport;
+use App\Models\Factura;
 use App\Models\Project;
 use phpDocumentor\Reflection\Types\Nullable;
 use PhpOffice\PhpSpreadsheet\Calculation\Category;
@@ -208,25 +209,115 @@ public function delete($id){
        $movimientos = InventarioMovimiento::with(['productos.product','recibe','firma',
        'proveedor','productos','product'])
                     ->where('tipoMovimiento', 'entrada')
-                    ->orderBy('fecha_movimiento', 'desc')
+                    ->orderBy('id', 'desc')
                     ->get();
        $materiales = Product::paginate(50);    
         return view('entrance.index-entradas',compact('movimientos','materiales'));
     }
 
     //Aqui comienzan las funciones para el registro de entradas
-    public function createEntradas(){
+    public function createEntradas(Factura $factura){
         $materiales=Product::all();
         $suppliers=Supplier::all();
         $empleados=Empleados::all();
         $movimientos=InventarioMovimiento::all();
         $productos=InventarioMovimiento::all();
-        return view('entrance.create-entradas',compact('materiales','suppliers','empleados','movimientos','productos'));
+        return view('entrance.create-entradas',compact('factura','materiales','suppliers','empleados','movimientos','productos'));
     }
-    public function storeEntradas(Request $request)
+//METODO O FUNCION PARA GUARDAR LOS CAMPOS DE ENTRADA CON FACTURA
+    public function storeEntradasConFactura(Request $request)
 {
+    // DEBUG: Ver qué está llegando
+    //dd($request->all());
+    
     // 1. Validar
+    //dd($request->all());
     $validated = $request->validate([
+        'factura_id'                => 'required|exists:facturas,id',
+        'tipoMovimiento'            => 'required|in:entrada,salida',
+        'codigo_movimiento'         => 'nullable|string',
+        'cantidad_movimiento'       => 'nullable|integer|min:1',
+        
+        'numero_factura_movimiento' => 'nullable|integer',
+        'costos_movimiento'         => 'nullable|numeric',
+        'fecha_movimiento'          => 'nullable|date',
+        'recibe_id'                 => 'nullable|exists:empleados,id',
+        'firma_id'                  => 'nullable|exists:empleados,id',
+        'observaciones_movimiento'  => 'nullable|string',
+       
+
+        'productos'                 => 'required|array|min:1',
+        'productos.*.product_id'    => 'required|exists:products,id',
+        'productos.*.cantidad'      => 'required|integer|min:1',
+        'productos.*.costo_unitario'=> 'nullable|numeric|min:0',
+        'productos.*.codigo'        => 'nullable|string',
+
+    ]);
+$ultimaFactura=InventarioMovimiento::max('numero_factura_movimiento');
+$nuevaFactura=$ultimaFactura ? $ultimaFactura + 1 : 1;
+
+    // 2. Crear el movimiento principal
+    $movimiento = InventarioMovimiento::create([
+        'factura_id' => $validated['factura_id'],
+        'tipoMovimiento'            => $validated['tipoMovimiento'],
+        'supplier_id'               => $validated['supplier_id'] ?? null,
+        'numero_factura_movimiento' => $nuevaFactura ?? null,
+        'fecha_movimiento'          => $validated['fecha_movimiento'] ?? now(),
+        'recibe_id'                 => $validated['recibe_id'] ?? null,  
+        'firma_id'                  => $validated['firma_id'] ?? null,  
+        'observaciones_movimiento'  => $validated['observaciones_movimiento'] ?? null,
+
+    ]);
+
+    // 3. Registrar productos del movimiento y actualizar stock
+    foreach ($validated['productos'] as $producto) {
+        // Guardar en tabla pivot
+        MovementProduct::create([
+            
+            'inventario_movimientos_id' => $movimiento->id,
+            'product_id'               => $producto['product_id'],
+            'cantidad'                 => $producto['cantidad'],
+            'costo_unitario'           => $producto['costo_unitario'] ?? null,
+            'codigo'                   => $producto['codigo'] ?? null
+        ]);
+
+        // Ajustar stock producto por producto
+        $product = Product::findOrFail($producto['product_id']);
+        if ($validated['tipoMovimiento'] === 'entrada') {
+            $product->stock += $producto['cantidad'];
+        } elseif ($validated['tipoMovimiento'] === 'salida') {
+            if ($product->stock < $producto['cantidad']) {
+                return back()->withErrors([
+                    'cantidad' => "No hay suficiente stock para el producto {$product->name_product}."
+                ]);
+            }
+            $product->stock -= $producto['cantidad'];
+        }
+        $product->save();
+    }
+
+    return redirect()->route('index-entradas')->with('success', 'Entrada de material registrada correctamente');
+   
+}
+//Aqui comienzan las funciones para el registro de entradas
+    public function createEntradasSinFactura(){
+        $materiales=Product::all();
+        $suppliers=Supplier::all();
+        $empleados=Empleados::all();
+        $movimientos=InventarioMovimiento::all();
+        $productos=InventarioMovimiento::all();
+        return view('entrance.create-entradasSF',compact('materiales','suppliers','empleados','movimientos','productos'));
+    }
+//EL metodo o funcion para guardar la informacion de las entradas sin necesidad de factura:
+    public function storeEntradasSinFActura(Request $request)
+{
+    // DEBUG: Ver qué está llegando
+    //dd($request->all());
+    
+    // 1. Validar
+    //dd($request->all());
+    $validated = $request->validate([
+        'factura_id'                => 'nullable|exists:facturas,id',
         'tipoMovimiento'            => 'required|in:entrada,salida',
         'codigo_movimiento'         => 'nullable|string',
         'cantidad_movimiento'       => 'nullable|integer|min:1',
@@ -265,6 +356,7 @@ $nuevaFactura=$ultimaFactura ? $ultimaFactura + 1 : 1;
     foreach ($validated['productos'] as $producto) {
         // Guardar en tabla pivot
         MovementProduct::create([
+            
             'inventario_movimientos_id' => $movimiento->id,
             'product_id'               => $producto['product_id'],
             'cantidad'                 => $producto['cantidad'],
@@ -290,7 +382,6 @@ $nuevaFactura=$ultimaFactura ? $ultimaFactura + 1 : 1;
     return redirect()->route('index-entradas')->with('success', 'Registrado correctamente');
    
 }
-
 //Aqui van para las funciones para las salidas
 
 public function indexSalidas(Request $request){

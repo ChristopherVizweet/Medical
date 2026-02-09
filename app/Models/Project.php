@@ -67,5 +67,10 @@ public function cuenta(){
     return $this->belongsTo(Bank::class,'accountBank');
 }
 
+public function facturas()
+{
+    return $this->hasMany(Factura::class);
+}
+
 }
 

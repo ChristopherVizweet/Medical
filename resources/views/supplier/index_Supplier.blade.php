@@ -86,7 +86,9 @@
                 <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
                     <tr>
                         <th class="px-4 py-2">ID</th>
-                        <th class="px-4 py-2">Nombre</th>
+                        <th class="px-4 py-2">Nombre de la empresa</th>
+                        <th class="px-4 py-2">Nombre del encargado</th>
+                        <th class="px-4 py-2">RFC</th>
                         <th class="px-4 py-2">Email</th>
                         <th class="px-4 py-2">Número telefónico</th>
                         <th class="px-4 py-2">Acciones</th>
@@ -97,6 +99,8 @@
                         <tr class="border-t dark:border-gray-700">
                             <td class="px-4 py-2">{{ $supplier->id }}</td>
                             <td class="px-4 py-2">{{ $supplier->name_supplier }}</td>
+                            <td class="px-4 py-2">{{ $supplier->encargado_suppliers }}</td>
+                            <td class="px-4 py-2">{{ $supplier->rfc_supplier }}</td>
                             <td class="px-4 py-2">{{ $supplier->email_supplier }}</td>
                             <td class="px-4 py-2">{{ $supplier->phoneNumber_supplier }}</td>
                             <td class="px-4 py-2 space-x-2">

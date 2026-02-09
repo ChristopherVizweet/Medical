@@ -21,7 +21,7 @@ class SupplierController extends Controller
         #if (!Auth::check() || !Auth::user()->hasRole('superadmin')) {
             #abort(403, 'No tienes acceso a esta sección');
         #}
-       $supplierQuery = Supplier::query();
+       $supplierQuery = Supplier::query()->orderBy('id','desc');
 
     if ($request->filled('name_supplier')) {
         $supplierQuery->where('name_supplier', $request->name_supplier);
@@ -53,6 +53,8 @@ public function store(Request $request) {
     // Validar y guardar datos
      $request->validate([
         'name_supplier' => 'required|string|max:255',
+        'encargado_suppliers' => 'required|string|max:255',
+        'rfc_supplier' => 'required|string|max:13',
         'email_supplier' => 'required|email|unique:suppliers,email_supplier',
         'phoneNumber_supplier' => 'required|string|max:10',
     ]);
@@ -60,6 +62,8 @@ public function store(Request $request) {
 
     Supplier::create([
         'name_supplier' => $request->name_supplier,
+        'encargado_suppliers' => $request->encargado_suppliers,
+        'rfc_supplier' => $request->rfc_supplier,
         'email_supplier' => $request->email_supplier,
         'phoneNumber_supplier' => $request->phoneNumber_supplier,
     ]);
@@ -77,6 +81,8 @@ public function update(Request $request, $id)
         'name_supplier' => 'required|string|max:255',
         'email_supplier' => 'required|email|unique:suppliers,email_supplier,' . $id,
         'phoneNumber_supplier' => 'required|string|regex:/^[0-9]{10,15}$/',
+        'encargado_suppliers' => 'required|string|max:255',
+        'rfc_supplier' => 'required|string|max:13',
     ]);
 
     $supplier = Supplier::findOrFail($id);
@@ -84,8 +90,9 @@ public function update(Request $request, $id)
         'name_supplier' => $request->name_supplier,
         'email_supplier' => $request->email_supplier,
         'phoneNumber_supplier' => $request->phoneNumber_supplier,
+        'encargado_suppliers' => $request->encargado_suppliers,
+        'rfc_supplier' => $request->rfc_supplier,
     ]);
-
     return redirect()->route('index_Supplier')->with('success', 'Proveedor actualizado correctamente');
 }
 

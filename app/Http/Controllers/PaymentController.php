@@ -19,8 +19,6 @@ public function create(Project $project_id)
     {
         //dd($request->payments);
         $validated = $request->validate([
-          
-
             'payments' => 'required|array',
             'payments.*.tipo' => 'nullable|in:deducible,no_deducible',
             'payments.*.concepto' => 'nullable|string|max:255',

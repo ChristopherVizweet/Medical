@@ -24,7 +24,8 @@ class InventarioMovimiento extends Model
         'recibe_id',
         'firma_id',
         'observaciones_movimiento',
-        'estadoMovimiento'
+        'estadoMovimiento',
+        'factura_id'
     ];
 
     // Relación con producto
@@ -63,6 +64,10 @@ class InventarioMovimiento extends Model
    
     public function obra(){
         return $this->belongsTo(MovementProduct::class);
+    }
+    public function factura()
+    {
+        return $this->belongsTo(Factura::class, 'factura_id');
     }
 
 // dentro de la clase InventarioMovimiento

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-             $table->string('id_priority', 100)->change();
+            $table->string('id_priority', 100)->change();
             $table->string('id_instalationService', 100)->change();
             $table->string('id_status', 100)->change();
         });

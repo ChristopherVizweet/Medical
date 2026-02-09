@@ -41,7 +41,7 @@
            <h1 class="text-2xl dark:text-white font-bold mb-4">Entrada de productos</h1>
             {{--Botones para registro de entradas--}}
            <x-primary-button class="mt-4">
-        <a href="{{ route('create-entradas') }}" class="text-dark"> 
+        <a href="{{ route('create-entradasSF') }}" class="text-dark"> 
             {{ __('Registrar entrada') }}
         </a> 
     </x-primary-button>
@@ -56,17 +56,18 @@
                 <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
               <tr class="">
                   <th class="px-4 py-2">{{ __('ID') }}</th>
-                  <th class="px-4 py-2">{{ __('material') }}</th>
-                  <th class="px-4 py-2">{{ __('imagen del producto') }}</th>
-                  <th class="px-4 py-2">{{ __('cantidad') }}</th>
-                  <th class="px-4 py-2">{{ __('codigo') }}</th>
-                  <th class="px-4 py-2">{{ __('proveedor') }}</th>
-                  <th class="px-4 py-2">{{ __('número de folio') }}</th>
-                  <th class="px-4 py-2">{{ __('costos') }}</th>
+                  <th class="px-4 py-2">{{ __('Material') }}</th>
+                  <th class="px-4 py-2">{{ __('Imagen del producto') }}</th>
+                  <th class="px-4 py-2">{{ __('Cantidad') }}</th>
+                  <th class="px-4 py-2">{{ __('Codigo') }}</th>
+                  <th class="px-4 py-2">{{ __('Proveedor') }}</th>
+                  <th class="px-4 py-2">{{ __('Número de folio') }}</th>
+                  <th class="px-4 py-2">{{ __('Factura') }}</th>
+                  <th class="px-4 py-2">{{ __('Costos') }}</th>
                   <th class="px-4 py-2">{{ __('Fecha de registro') }}</th>
-                  <th class="px-4 py-2">{{ __('recibe') }}</th>
-                  <th class="px-4 py-2">{{ __('firma') }}</th>
-                  <th class="px-4 py-2">{{ __('observaciones') }}</th>
+                  <th class="px-4 py-2">{{ __('Recibe') }}</th>
+                  <th class="px-4 py-2">{{ __('Firma') }}</th>
+                  <th class="px-4 py-2">{{ __('Observaciones') }}</th>
                   <th class="px-4 py-2">{{ __('Acciones') }}</th>
               </tr>
           </thead>
@@ -84,14 +85,15 @@
                         alt="{{ $producto->product->image_product }}" 
                         class="w-20 h-20 object-contain rounded-md mx-auto">
                 </td>
-                <td class="px-4 py-2">{{ $producto->cantidad }}</td>
-                <td class="px-4 py-2">{{ $producto->codigo }}</td>
-                <td class="px-4 py-2">{{ $movimiento->proveedor->name_supplier }}</td>
-                <td class="px-4 py-2">{{ $movimiento->numero_factura_movimiento }}</td>
-                <td class="px-4 py-2">{{ $producto->costo_unitario }}</td>
-                <td class="px-4 py-2">{{ $movimiento->fecha_movimiento }}</td>
-                <td class="px-4 py-2">{{ $movimiento->recibe->Nombre }}</td>
-                <td class="px-4 py-2">{{ $movimiento->firma->Nombre }}</td>
+                <td class="px-4 py-2">{{ $producto->cantidad ?? "Sin cantidad de material"}}</td>
+                <td class="px-4 py-2">{{ $producto->codigo ?? "Sin codigo de producto" }}</td>
+                <td class="px-4 py-2">{{ $movimiento->proveedor->name_supplier ?? "Verificar proveedor en facturas" }}</td>
+                <td class="px-4 py-2">{{ $movimiento->numero_factura_movimiento ?? "Sin número de movimiento" }}</td>
+                <td class="px-4 py-2">{{ $movimiento->folio_factura ?? "Sin factura"}}</td>
+                <td class="px-4 py-2">{{ $producto->costo_unitario ?? "Sin costo unitario" }}</td>
+                <td class="px-4 py-2">{{ $movimiento->fecha_movimiento ?? "Sin fecha de movimiento" }}</td>
+                <td class="px-4 py-2">{{ $movimiento->recibe->Nombre ?? "Sin nombre quien recibe"}}</td>
+                <td class="px-4 py-2">{{ $movimiento->firma->Nombre ?? "Sin firma" }}</td>
                 <td class="px-4 py-2">{{ $movimiento->observaciones_movimiento ?? "Sin observaciones" }}</td>
                 <td class="px-4 py-2">
                     <form  action="{{ route('delete-entradas', $movimiento->id) }}" method="POST" style="display:inline-block;">

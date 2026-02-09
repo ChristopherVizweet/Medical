@@ -21,4 +21,5 @@ public function categories(){
 public function product(){
     return $this->hasMany(InventarioMovimiento::class, 'product_id');
 }
+ 
 }

@@ -2,13 +2,23 @@
     <form method="POST" action="{{ route('edit_supplier', $supplier->id) }}">
         @csrf
         @method('PUT')
-
-        <div class="mt-4">
-            <div class="text-center text-gray-800 dark:text-white">
+<div class="text-center text-gray-800 dark:text-white">
                 EDITAR PROVEEDOR
-            </div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-2 gap-2">
+        <div class="mt-4">
             <x-input-label for="name_supplier" :value="__('Nombre')" />
             <x-text-input id="name_supplier" class="block mt-1 w-full" type="text" name="name_supplier" value="{{ $supplier->name_supplier }}" required />
+        </div>
+
+        <div class="mt-4">
+            <x-input-label for="encargado_suppliers" :value="__('Nombre del encargado')" />
+            <x-text-input id="encargado_suppliers" class="block mt-1 w-full" type="text" name="encargado_suppliers" value="{{ $supplier->encargado_suppliers }}" required />
+        </div>
+
+        <div class="mt-4">
+            <x-input-label for="rfc_supplier" :value="__('RFC del proveedor')" />
+            <x-text-input id="rfc_supplier" class="block mt-1 w-full" type="text" name="rfc_supplier" value="{{ $supplier->rfc_supplier }}" required />
         </div>
 
         <div class="mt-4">
@@ -21,7 +31,7 @@
             <x-text-input id="phoneNumber_supplier" class="block mt-1 w-full" type="tel" name="phoneNumber_supplier" value="{{ $supplier->phoneNumber_supplier }}" required />
         </div>
         
-
+</div>
         <div style="text-align: center;" class="mt-4">
             <x-primary-button class="ms-4">
                 {{ __('Actualizar') }}
