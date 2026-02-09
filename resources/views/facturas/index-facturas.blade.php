@@ -37,9 +37,9 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         {{-- Mensajes --}}
         @if (session('success'))
-        <div class="fade-out bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-            {{ session('success') }}
-        </div>
+            <div class="fade-out bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                {{ session('success') }}
+            </div>
         @endif
 
         <h1 class="text-2xl dark:text-white font-bold mb-6">Filtro de búsqueda</h1>
@@ -85,7 +85,7 @@
                         <td class="px-6 py-2">
                             @if($factura->comprobante_pdf)
                             <div class="flex justify-center"> <!--Revisar por que no muestra las imagenes-->
-                                <a href="{{ asset('storage/app/public'. $factura->comprobante_pdf)}}"
+                                <a href="{{ asset('storage/'. $factura->comprobante_pdf)}}"
                                     target="_blank" class="inline-flex items-center justify-center w-10 h-10 bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800 text-white rounded transition-colors" title="Ver comprobante">
                                     📄
                                 </a>

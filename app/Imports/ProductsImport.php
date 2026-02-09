@@ -30,7 +30,7 @@ class ProductsImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        // Número de fila que Laravel Excel agrega automáticamente
+        // Número de fila que Laravel Exceel agrega automáticamente
         $rowNumber = $row['__rowNum__'] ?? null;
         $imageName = $this->images[$rowNumber] ?? null;
 
@@ -39,7 +39,7 @@ class ProductsImport implements ToModel, WithHeadingRow
             'name_product'     => $row['articulo'],
             'codeExt_product'  => $row['codigo'],
             'diameterMM_product' => $row['diametro'],
-            //'manufact_product'   => $row['proveedor'],
+            'id_supplier'   => $row['proveedor'],
             'valueArt_product'   => $row['valor_por_articulo'],
             'stock'              => $row['stock'],
             'image_product'      => $row['imagen'],

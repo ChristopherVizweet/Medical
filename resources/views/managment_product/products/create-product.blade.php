@@ -43,7 +43,7 @@
                     <x-input-error :messages="$errors->get('stock')" class="mt-2 is-invalid" />
 
                         <x-input-label  for="valueArt_product" :value="__('Valor por articulo')" />
-                    <x-text-input id="valueArt_product" class="block mt-1 w-full is-invalid " type="text" name="valueArt_product" :value="old('valueArt_product')" required />
+                    <x-text-input id="valueArt_product" step="0.01" class="block mt-1 w-full is-invalid " type="text" name="valueArt_product" :value="old('valueArt_product')" required />
                     <x-input-error :messages="$errors->get('valueArt_product')" class="mt-2 is-invalid" />
 
                         <x-input-label for="image_product" :value="('Imagen del Producto')" />

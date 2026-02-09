@@ -13,7 +13,7 @@
                 <!-- Información del Cliente -->
 
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-10 w-10">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                     </svg>
                     Información general
@@ -93,7 +93,7 @@
                 <!----------------------------------------------- FECHA DE PAGO --------------------------------------------------------------->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4  flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 mr-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-10 w-10 mr-1">
                             <path d="M19.5,2h-1.5V.5c0-.28-.22-.5-.5-.5s-.5,.22-.5,.5v1.5H7V.5c0-.28-.22-.5-.5-.5s-.5,.22-.5,.5v1.5h-1.5C2.02,2,0,4.02,0,6.5v13c0,2.48,2.02,4.5,4.5,4.5h15c2.48,0,4.5-2.02,4.5-4.5V6.5c0-2.48-2.02-4.5-4.5-4.5Zm-8,7v4H7v-4h4.5Zm5.5,0v4h-4.5v-4h4.5Zm6,0v4h-5v-4h5ZM6,13H1v-4H6v4Zm-5,1H6v4H1v-4Zm6,0h4.5v4H7v-4Zm4.5,5v4H7v-4h4.5Zm1,0h4.5v4h-4.5v-4Zm0-1v-4h4.5v4h-4.5Zm5.5-4h5v4h-5v-4ZM4.5,3h15c1.93,0,3.5,1.57,3.5,3.5v1.5H1v-1.5c0-1.93,1.57-3.5,3.5-3.5ZM1,19.5v-.5H6v4h-1.5c-1.93,0-3.5-1.57-3.5-3.5Zm18.5,3.5h-1.5v-4h5v.5c0,1.93-1.57,3.5-3.5,3.5Z" />
                         </svg>
                         Fecha de pago
@@ -124,7 +124,7 @@
                 </div>
                 <!---------------------------------------PERSONAL RESPONSABLE---------------------------------------------------------------------------->
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mt-6 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-10 w-10">
                         <path d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z" />
                     </svg>
                     Personal responsable
@@ -192,7 +192,7 @@
                 <!----------------------------------Totales y facturas----------------------------------->
                 <div class="grid grid-cols-3 md:grid-cols-3 gap-2 mt-6">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-10 w-10">
                             <path d="M10.464 8.746c.227-.18.497-.311.786-.394v2.795a2.252 2.252 0 0 1-.786-.393c-.394-.313-.546-.681-.546-1.004 0-.323.152-.691.546-1.004ZM12.75 15.662v-2.824c.347.085.664.228.921.421.427.32.579.686.579.991 0 .305-.152.671-.579.991a2.534 2.534 0 0 1-.921.42Z" />
                             <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v.816a3.836 3.836 0 0 0-1.72.756c-.712.566-1.112 1.35-1.112 2.178 0 .829.4 1.612 1.113 2.178.502.4 1.102.647 1.719.756v2.978a2.536 2.536 0 0 1-.921-.421l-.879-.66a.75.75 0 0 0-.9 1.2l.879.66c.533.4 1.169.645 1.821.75V18a.75.75 0 0 0 1.5 0v-.81a4.124 4.124 0 0 0 1.821-.749c.745-.559 1.179-1.344 1.179-2.191 0-.847-.434-1.632-1.179-2.191a4.122 4.122 0 0 0-1.821-.75V8.354c.29.082.559.213.786.393l.415.33a.75.75 0 0 0 .933-1.175l-.415-.33a3.836 3.836 0 0 0-1.719-.755V6Z" clip-rule="evenodd" />
                         </svg>
@@ -224,7 +224,7 @@
                 </div>
                 <!----------------------------------Info adicional---------->
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-10 w-10">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                     </svg>
 
@@ -247,9 +247,9 @@
                     </label>
                     @if($factura->comprobante_pdf)
                     <div class="flex justify-center"> <!--Revisar por que no muestra las imagenes-->
-                        <a href="{{ asset('storage/app/public'. $factura->comprobante_pdf)}}"
+                        <a href="{{ asset('storage/'. $factura->comprobante_pdf)}}"
                             target="_blank" class="mr-6 inline-flex items-center justify-center p-5 w-20 h-20 bg-green-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800 text-white rounded transition-colors" title="Ver comprobante">
-                            <svg id="Layer_1" height="80" viewBox="0 0 24 24" width="80" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1">
+                            <svg class="h-10 w-10" id="Layer_1" height="80" viewBox="0 0 24 24" width="80" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1">
                                 <path d="m16.652 15.548a1.5 1.5 0 0 1 -.189 2.1 5.981 5.981 0 0 1 -3.47 1.352 3.33 3.33 0 0 1 -2.179-.841 2.4 2.4 0 0 0 -.236-.174 3.535 3.535 0 0 0 -1.1.649 1.5 1.5 0 0 1 -1.969-2.263 5.409 5.409 0 0 1 3.126-1.371 3.133 3.133 0 0 1 2.032.8c.256.2.27.2.326.2a3.028 3.028 0 0 0 1.551-.656 1.5 1.5 0 0 1 2.108.204zm-1.152-5.548h-7a1.5 1.5 0 0 0 0 3h7a1.5 1.5 0 0 0 0-3zm6.5-2.843v11.343a5.506 5.506 0 0 1 -5.5 5.5h-9a5.506 5.506 0 0 1 -5.5-5.5v-13a5.506 5.506 0 0 1 5.5-5.5h7.343a5.464 5.464 0 0 1 3.889 1.611l1.657 1.657a5.464 5.464 0 0 1 1.611 3.889zm-3 11.343v-11.5h-2a2 2 0 0 1 -2-2v-2h-7.5a2.5 2.5 0 0 0 -2.5 2.5v13a2.5 2.5 0 0 0 2.5 2.5h9a2.5 2.5 0 0 0 2.5-2.5z" />
                             </svg>
                         </a>

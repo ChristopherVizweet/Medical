@@ -30,18 +30,18 @@
 
                     @hasanyrole('superadmin')
                     <x-nav-link :href="route('index-facturas')" :active="request()->routeIs('index-facturas')">
-                        Facturas y Comprobantes
+                        Facturas 
                     </x-nav-link>
                     @endhasanyrole
 
                     @hasanyrole('superadmin|almacen')
                     <x-nav-link :href="route('index-managmentp')" :active="request()->routeIs('index-managmentp')">
-                        Gestión de productos
+                        Productos
                     </x-nav-link>
                     @endhasanyrole
                     @hasanyrole('superadmin|admin|almacen')
                     <x-nav-link :href="route('index-existencias')" :active="request()->routeIs('index-existencias')">
-                        Gestión de existencias
+                        Existencias
                     </x-nav-link>
                     @endhasanyrole
                     @role('superadmin')
