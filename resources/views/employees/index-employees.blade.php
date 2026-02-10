@@ -50,17 +50,17 @@
      <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
                 <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
                     <tr>
-                        <th class="px-4 py-2">{{ __('ID') }}</th>
-                         <th class="pc-4 py-2">{{('Foto de empleado')}}</th>
-                        <th class="px-4 py-2">{{ __('Nombre') }}</th>
-                        <th class="px-4 py-2">{{ __('Apellidos') }}</th>
-                        <th class="px-4 py-2">{{ __('Organizacion') }}</th>
-                        <th class="px-4 py-2">{{ __('Cargo') }}</th>
-                        <th class="px-4 py-2">{{ __('Telefono de trabajo') }}</th>
-                        <th class="px-4 py-2">{{ __('Tipo de sangre') }}</th>
-                        <th class="px-4 py-2">{{ __('Curriculum Vitae') }}</th>
-                        <th class=" px-4 py-2">{{ __('Ver') }}</th>
-                        <th class="px-4 py-2">{{ __('Acciones') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('ID') }}</th>
+                        <th class="px-4 py-2 text-center">{{('Foto de empleado')}}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Nombre') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Apellidos') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Organizacion') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Cargo') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Telefono de trabajo') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Tipo de sangre') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Curriculum Vitae') }}</th>
+                        <th class=" px-4 py-2 text-center">{{ __('Ver') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Acciones') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,14 +69,30 @@
                             <td class="px-4 py-2">{{ $empleado->id}}</td>
                              <td class="px-4 py-2"><img class="items-center w-27 h-27" src="{{ asset('storage/' . $empleado->foto) }}" alt="Imagen de empleado" width="150">
                             </td>
-                            <td class="px-4 py-2">{{ $empleado->Nombre}}</td>
-                            <td class="px-4 py-2">{{ $empleado->apellidos}}</td>
-                            <td class="px-4 py-2">{{ $empleado->organizacion }}</td>
-                            <td class="px-4 py-2">{{ $empleado->cargo }}</td>
-                            <td class="px-4 py-2">{{ $empleado->numeroTelefonoTrabajo}}</td>
-                            <td class="px-4 py-2">{{ $empleado->tipoSangre}}</td>
+                            <td class="text-center px-4 py-2">{{ $empleado->Nombre}}</td>
+                            <td class="text-center px-4 py-2">{{ $empleado->apellidos}}</td>
+                            <td class="text-center px-4 py-2">{{ $empleado->organizacion }}</td>
+                            <td class="text-center px-4 py-2">{{ $empleado->cargo }}</td>
+                            <td class="text-center px-4 py-2">{{ $empleado->numeroTelefonoTrabajo}}</td>
+                            <td class="text-center px-4 py-2">{{ $empleado->tipoSangre}}</td>
                         
-                            <td class="px-4 py-2">{{ $empleado->cv_empleado ?? 'Sin CV' }}</td>
+                            <td class="px-4 py-2 items-center">
+                                 <!--Condicion para el CV-->
+                            @if($empleado->cv_empleado)    
+                            <a href="storage/{{ $empleado->cv_empleado }}" target="blank_" class=" items-center text-blue-600 dark:text-blue-900 hover:underline">
+                                <svg class="ml-4 w-12 h-12 fill-blue-500 hover:fill-green-700" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                    <path d="m424-318 282-282-56-56-226 226-114-114-56 56 170 170ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h168q13-36 43.5-58t68.5-22q38 0 68.5 22t43.5 58h168q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm301.5-598.5Q510-807 510-820t-8.5-21.5Q493-850 480-850t-21.5 8.5Q450-833 450-820t8.5 21.5Q467-790 480-790t21.5-8.5ZM200-200v-560 560Z"/>
+                                </svg>
+                                <form action="{{ route('delete-cv', $empleado->id) }}" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 dark:text-red-900 hover:underline mt-4" onclick="return confirm('Estas seguro de eliminar este archivo?')">Eliminar CV</button>
+                                </form>
+                                @else
+                                <span class="text-red-500">Sin curriculum</span>
+                                @endif
+                            </a></td>
+
                             <td class="px-4 py-2">
                                 <!--Aqui esta la condicion si no existen certificados en los empleados-->
                                 @if ($empleado->certificados_empleados)

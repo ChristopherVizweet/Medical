@@ -6,7 +6,7 @@
                 <div class="px-6 py-8 sm:px-8">
                     <form action="{{ route('edit-facturas',$factura->id) }}" enctype="multipart/form-data" method="POST" class="space-y-6">
                         @csrf
-                         @method('PUT')
+                        @method('PUT')
                         <div class="text-center text-lg font-semibold  text-gray-800 dark:text-white">
                             ACTUALIZAR FACTURA
                         </div>
@@ -85,8 +85,8 @@
                                 <label for="subtotal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Fecha de pago <span class="text-red-500">*</span>
                                 </label>
-                                <input  type="date" name="fecha_pago" id="fecha_pago" value="{{ old('fecha_pago', now()->format('Y-m-d')) }}"  class="block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 @error('total_factura') border-red-500 @enderror">
-                        
+                                <input type="date" name="fecha_pago" id="fecha_pago" value="{{ old('fecha_pago', now()->format('Y-m-d')) }}" class="block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 @error('total_factura') border-red-500 @enderror">
+
                             </div>
                             <!-----------------------------------------------TOTAL--------------------------------------------------------------->
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
@@ -115,8 +115,8 @@
                                     Status <span class="text-red-500">*</span>
                                 </label>
                                 <select id="status_factura" name="status_factura" class="block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 @error('status_factura') border-red-500 @enderror">
-                                <option value="pendiente">Pendiente</option>
-                                <option value="completado">Completado</option>
+                                    <option value="pendiente">Pendiente</option>
+                                    <option value="completado">Completado</option>
                                 </select>
                                 @error('status_factura')
                                 <p class="mt-1 text-sm text-red-500">{{ $message }}</p>

@@ -131,6 +131,7 @@ Route::get('/edit-employees/{id}',[EmpleadosController::class, 'edit'])->name('e
 Route::put('/edit-employees/{id}',[EmpleadosController::class, 'update'])->name('edit-employees');
 Route::delete('/delete-employees/{id}',[EmpleadosController::class, 'delete'])->name('delete-employees');
 Route::delete('/delete-certificados/{id}',[EmpleadosController::class, 'deleteCertificados'])->name('delete-certificados');
+Route::delete('/delete-cv/{id}',[EmpleadosController::class, 'deleteCV'])->name('delete-cv');
 
 #Parte para el proyecto
 Route::get('/index-project',[ProjectController::class,'index'])->name('index-project');

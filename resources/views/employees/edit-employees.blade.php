@@ -5,7 +5,7 @@
 
         <div class="mt-4">
             <div class="text-center text-gray-800 dark:text-white">
-                EMPLEADO
+               EDITAR EMPLEADO
             </div>
        <div class="mt-4 justify-center justify-items-center text-center">
             <x-input-label for="foto" value="('Foto del empleado')"/>
@@ -20,41 +20,62 @@
         <img src="{{ asset('storage/' . $empleados->foto) }}" alt="Foto actual" class="w-40 h-40 object-cover rounded justify-items-center">
     </div>
 @endif
+        <!--Archivo adjunto de curriculum-->
+        <div class="text-center mb-6 mt-6">
+            <x-input-label for="cv_empleado" />
+            @if ($empleados->cv_empleado)
+                <span class="text-green-700 font-semibold">CUENTA CON CURRICULUM</span>
+                <!--Actualizar CV-->
+            <div class="mt-4 ">
+            <x-input-label for="cv_empleado" class="" value="ACTUALIZAR CV"/>
+            <x-text-input id="cv_empleado"  class="block mt-1 w-full justify-center justify-items-center text-center" type="file" name="cv_empleado" value/>
+            <input class="flex justify-center text-center items-center" type="hidden" name="cv_actual" value="{{ $empleados->cv_empleado }}">
+        </div> 
+            @else
+                <span class="text-red-700 font-semibold">SIN CURRICULUM</span>
+                <div class="mt-4 ">
+            <x-input-label for="cv_empleado" class="" value="AGREGAR CV"/>
+            <x-text-input id="cv_empleado"  class="block mt-1 w-full justify-center justify-items-center text-center" type="file" name="cv_empleado" value/>
+            <input class="flex justify-center text-center items-center" type="hidden" name="cv_actual" value="{{ $empleados->cv_empleado }}">
+        </div> 
+            @endif
+        </div>
+
         <div>
             <x-input-label for="Nombre" :value="__('Nombre de empleado')" />
-            <x-text-input id="Nombre" class="block mt-1 w-full" type="text" name="Nombre"  value="{{ $empleados->Nombre }}" required />
+            <x-text-input id="Nombre" class="block mt-1 w-full" type="text" name="Nombre"  value="{{ $empleados->Nombre }}"  />
         </div>
         <div class="mt-4">
            <x-input-label for="apellidos" :value="__('Apellidos')" />
-            <x-text-input id="apellidos" class="block mt-1 w-full" type="text" name="apellidos"  value="{{ $empleados->apellidos }}" required />
+            <x-text-input id="apellidos" class="block mt-1 w-full" type="text" name="apellidos"  value="{{ $empleados->apellidos }}"  />
         </div>
         <div class="mt-4">
            <x-input-label for="curp" :value="__('CURP')" />
-            <x-text-input id="curp" class="block mt-1 w-full" type="text" name="curp"  value="{{ $empleados->curp }}" required />
+            <x-text-input id="curp" class="block mt-1 w-full" type="text" name="curp"  value="{{ $empleados->curp }}"  />
         </div>
         <div>
             <x-input-label for="fecha_nacimiento" :value="__('Fecha de nacimiento')" />
-            <x-text-input id="fecha_nacimiento" class="block mt-1 w-full" type="date" name="fecha_nacimiento"  value="{{ $empleados->fecha_nacimiento }}" required />
+            <x-text-input id="fecha_nacimiento" class="block mt-1 w-full" type="date" name="fecha_nacimiento"  value="{{ $empleados->fecha_nacimiento }}"  />
         </div>
         <div class="mt-4">
            <x-input-label for="organizacion" :value="__('Organización')" />
-            <x-text-input id="organizacion" class="block mt-1 w-full" type="text" name="organizacion"  value="{{ $empleados->organizacion }}" required />
+            <x-text-input id="organizacion" class="block mt-1 w-full" type="text" name="organizacion"  value="{{ $empleados->organizacion }}"  />
         </div>
         <div class="mt-4">
            <x-input-label for="cargo" :value="__('Cargo')" />
-            <x-text-input id="cargo" class="block mt-1 w-full" type="text" name="cargo"  value="{{ $empleados->cargo }}" required />
+            <x-text-input id="cargo" class="block mt-1 w-full" type="text" name="cargo"  value="{{ $empleados->cargo }}"  />
         </div>
         <div class="mt-4">
            <x-input-label for="correoElectronico" :value="__('Correo Electronico')" />
-            <x-text-input id="correoElectronico" class="block mt-1 w-full" type="email" name="correoElectronico"  value="{{ $empleados->correoElectronico }}" required />
+            <x-text-input id="correoElectronico" class="block mt-1 w-full" type="email" name="correoElectronico"  value="{{ $empleados->correoElectronico }}"  />
         </div>
         <div class="mt-4">
            <x-input-label for="numeroTelefonoTrabajo" :value="__('Número del trabajo')" />
-            <x-text-input id="numeroTelefonoTrabajo" class="block mt-1 w-full" type="text" name="numeroTelefonoTrabajo"  value="{{ $empleados->numeroTelefonoTrabajo }}" required />
+            <x-text-input id="numeroTelefonoTrabajo" class="block mt-1 w-full" type="text" name="numeroTelefonoTrabajo"  value="{{ $empleados->numeroTelefonoTrabajo }}"  />
         </div>
          <div class="mt-4">
            <x-input-label for="numeroTelParti" :value="__('Número particular')" />
-            <x-text-input id="numeroTelParti" class="block mt-1 w-full" type="text" name="numeroTelParti"  value="{{ $empleados->numeroTelParti }}" required />
+            <x-text-input id="numeroTelParti" class="block mt-1 w-full" type="text" name="numeroTelParti"  value="{{ $empleados->numeroTelParti }}"  />
         </div>
          <div class="mt-4">
            <x-input-label for="sueldo" :value="__('Sueldo $')" />
@@ -62,23 +83,23 @@
         </div>
          <div class="mt-4">
            <x-input-label for="calle" :value="__('Calle')" />
-            <x-text-input id="calle" class="block mt-1 w-full" type="text" name="calle"  value="{{ $empleados->calle }}" required />
+            <x-text-input id="calle" class="block mt-1 w-full" type="text" name="calle"  value="{{ $empleados->calle }}"  />
         </div>
         <div class="mt-4">
            <x-input-label for="ciudad" :value="__('Ciudad')" />
-            <x-text-input id="ciudad" class="block mt-1 w-full" type="text" name="ciudad"  value="{{ $empleados->ciudad }}" required />
+            <x-text-input id="ciudad" class="block mt-1 w-full" type="text" name="ciudad"  value="{{ $empleados->ciudad }}"  />
         </div>
         <div class="mt-4">
            <x-input-label for="estadoProv" :value="__('Estado/Provincia')" />
-            <x-text-input id="estadoProv" class="block mt-1 w-full" type="text" name="estadoProv"  value="{{ $empleados->estadoProv }}" required />
+            <x-text-input id="estadoProv" class="block mt-1 w-full" type="text" name="estadoProv"  value="{{ $empleados->estadoProv }}"  />
         </div>
         <div class="mt-4">
            <x-input-label for="codigoPostal" :value="__('Codigo Postal')" />
-            <x-text-input id="codigoPostal" class="block mt-1 w-full" type="text" name="codigoPostal"  value="{{ $empleados->codigoPostal }}" required />
+            <x-text-input id="codigoPostal" class="block mt-1 w-full" type="text" name="codigoPostal"  value="{{ $empleados->codigoPostal }}"  />
         </div>
         <div class="mt-4">
            <x-input-label for="pais" :value="__('País')" />
-            <x-text-input id="pais" class="block mt-1 w-full" type="text" name="pais"  value="{{ $empleados->pais }}" required />
+            <x-text-input id="pais" class="block mt-1 w-full" type="text" name="pais"  value="{{ $empleados->pais }}"  />
         </div>
         <div class="mt-4">
            <x-input-label for="tipoSangre" :value="__('Tipo de sangre')" />
@@ -86,42 +107,42 @@
         </div>
         <div>
              <x-input-label for="talla_pantalon" :value="__('Talla de pantalón')" />
-             <x-text-input id="talla_pantalon" class="block mt-1 w-full" type="text" name="talla_pantalon"  value="{{ $empleados->talla_pantalon }}" required />
+             <x-text-input id="talla_pantalon" class="block mt-1 w-full" type="text" name="talla_pantalon"  value="{{ $empleados->talla_pantalon }}"  />
         </div>
         <div>
             <x-input-label for="talla_camisa" :value="__('Talla de camisa')" />
             <select name="talla_camisa" id="talla_camisa" value="{{ $empleados->talla_camisa }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" >
-                <option value="">--Selecciona una talla de camisa--</option>
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
-                <option value="XXL">XXL</option>
+                <option value=""></option>
+                <option value="S" {{ $empleados->talla_camisa == 'S' ? 'selected' : '' }}>S</option>
+                <option value="M" {{ $empleados->talla_camisa == 'M' ? 'selected' : '' }}>M</option>
+                <option value="L" {{ $empleados->talla_camisa == 'L' ? 'selected' : '' }}>L</option>
+                <option value="XL" {{ $empleados->talla_camisa == 'XL' ? 'selected' : '' }}>XL</option>
+                <option value="XXL" {{ $empleados->talla_camisa == 'XXL' ? 'selected' : '' }}>XXL</option>
             </select>
         </div>
         <div>
              <x-input-label for="talla_calzado" :value="__('Talla de calzado')" />
             <select name="talla_calzado" id="talla_calzado" value="{{ $empleados->talla_calzado }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" >
                 <option value="">--Selecciona una talla de calzado--</option>
-                <option value="S">22</option>
-                <option value="M">22.5</option>
-                <option value="L">23</option>
-                <option value="XL">23.5</option>
-                <option value="XXL">24</option>
-                <option value="XXL">24.5</option>
-                <option value="XXL">25</option>
-                <option value="XXL">25.5</option>
-                <option value="XXL">26</option>
-                <option value="XXL">26.5</option>
-                <option value="XXL">27</option>
-                <option value="XXL">27.5</option>
-                <option value="XXL">28</option>
-                <option value="XXL">28.5</option>
+                <option value="22" {{ $empleados->talla_calzado == '22' ? 'selected' : '' }}>22</option>
+                <option value="22.5" {{ $empleados->talla_calzado == '22.5' ? 'selected' : '' }}>22.5</option>
+                <option value="23" {{ $empleados->talla_calzado == '23' ? 'selected' : '' }}>23</option>
+                <option value="23.5" {{ $empleados->talla_calzado == '23.5' ? 'selected' : '' }}>23.5</option>
+                <option value="24" {{ $empleados->talla_calzado == '24' ? 'selected' : '' }}>24</option>
+                <option value="24.5" {{ $empleados->talla_calzado == '24.5' ? 'selected' : '' }}>24.5</option>
+                <option value="25" {{ $empleados->talla_calzado == '25' ? 'selected' : '' }}>25</option>
+                <option value="25.5" {{ $empleados->talla_calzado == '25.5' ? 'selected' : '' }}>25.5</option>
+                <option value="26" {{ $empleados->talla_calzado == '26' ? 'selected' : '' }}>26</option>
+                <option value="26.5" {{ $empleados->talla_calzado == '26.5' ? 'selected' : '' }}>26.5</option>
+                <option value="27" {{ $empleados->talla_calzado == '27' ? 'selected' : '' }}>27</option>
+                <option value="27.5" {{ $empleados->talla_calzado == '27.5' ? 'selected' : '' }}>27.5</option>
+                <option value="28" {{ $empleados->talla_calzado == '28' ? 'selected' : '' }}>28</option>
+                <option value="28.5" {{ $empleados->talla_calzado == '28.5' ? 'selected' : '' }}>28.5</option>
             </select>
         </div>
         <div>
              <x-input-label for="fecha_vacaciones" :value="__('Fecha de vacaciones')" />
-             <x-text-input id="fecha_vacaciones" class="block mt-1 w-full" type="date" name="fecha_vacaciones" value="{{ $empleados->fecha_vacaciones }}" required />
+             <x-text-input id="fecha_vacaciones" class="block mt-1 w-full" type="date" name="fecha_vacaciones" value="{{ $empleados->fecha_vacaciones }}"  />
         </div>
         <div>
              <x-input-label for="observaciones_empleado" :value="__('Observaciones del empleado')" />
@@ -135,7 +156,7 @@
                 <span class="text-red-700 font-semibold">Sin capacitaciones/certificados</span>
             @endif
         </div>
-        <div class="mt-4 justify-center justify-items-center text-center">
+        <div class="mt-4 grid place-items-center">
             <x-input-label for="certificados_empleados" value="Agregar o actualizar certificados del empleado"/>
             <x-text-input id="certificados_empleados"  class="block mt-1 w-full justify-center justify-items-center text-center" type="file" name="certificados_empleados" value/>
             <input class="text-center" type="hidden" name="certificados_actual" value="{{ $empleados->certificados_empleados }}">
