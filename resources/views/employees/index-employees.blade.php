@@ -51,13 +51,14 @@
                 <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
                     <tr>
                         <th class="px-4 py-2">{{ __('ID') }}</th>
+                         <th class="pc-4 py-2">{{('Foto de empleado')}}</th>
                         <th class="px-4 py-2">{{ __('Nombre') }}</th>
                         <th class="px-4 py-2">{{ __('Apellidos') }}</th>
                         <th class="px-4 py-2">{{ __('Organizacion') }}</th>
                         <th class="px-4 py-2">{{ __('Cargo') }}</th>
                         <th class="px-4 py-2">{{ __('Telefono de trabajo') }}</th>
                         <th class="px-4 py-2">{{ __('Tipo de sangre') }}</th>
-                        <th class="pc-4 py-2">{{('Foto de empleado')}}</th>
+                        <th class="px-4 py-2">{{ __('Curriculum Vitae') }}</th>
                         <th class=" px-4 py-2">{{ __('Ver') }}</th>
                         <th class="px-4 py-2">{{ __('Acciones') }}</th>
                     </tr>
@@ -66,14 +67,16 @@
                     @forelse ($empleados as $empleado)
                         <tr class="border-t">
                             <td class="px-4 py-2">{{ $empleado->id}}</td>
+                             <td class="px-4 py-2"><img class="items-center w-27 h-27" src="{{ asset('storage/' . $empleado->foto) }}" alt="Imagen de empleado" width="150">
+                            </td>
                             <td class="px-4 py-2">{{ $empleado->Nombre}}</td>
                             <td class="px-4 py-2">{{ $empleado->apellidos}}</td>
                             <td class="px-4 py-2">{{ $empleado->organizacion }}</td>
                             <td class="px-4 py-2">{{ $empleado->cargo }}</td>
                             <td class="px-4 py-2">{{ $empleado->numeroTelefonoTrabajo}}</td>
                             <td class="px-4 py-2">{{ $empleado->tipoSangre}}</td>
-                            <td class="px-4 py-2"><img class="items-center" src="{{ asset('storage/' . $empleado->foto) }}" alt="Imagen de empleado" width="150">
-                            </td>
+                        
+                            <td class="px-4 py-2">{{ $empleado->cv_empleado ?? 'Sin CV' }}</td>
                             <td class="px-4 py-2">
                                 <!--Aqui esta la condicion si no existen certificados en los empleados-->
                                 @if ($empleado->certificados_empleados)

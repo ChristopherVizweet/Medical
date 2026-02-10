@@ -2,16 +2,17 @@
     <form method="POST" action="{{ route('edit_client', $client->id) }}">
         @csrf
         @method('PUT')
-
-        <div class="mt-4">
             <div class="text-center text-gray-800 dark:text-white">
                 EDITAR CLIENTE
             </div>
+<div class="mb-9 grid grid-cols-2 md:grid-cols-2 gap-2">
+        <div class="mt-4">
             <x-input-label for="name_Client" :value="__('Nombre')" />
             <x-text-input id="name_Client" class="block mt-1 w-full" type="text" name="name_Client" value="{{ $client->name_Client }}" required />
         </div>
+
         <div class="mt-4">
-            <x-input-label for="address_Client" :value="__('Dirección')" />
+            <x-input-label for="address_Client" :value="__('Ubicación')" />
             <x-text-input id="address_Client" class="block mt-1 w-full" type="text" name="address_Client" value="{{ $client->address_Client }}" required />
         </div>
         <div class="mt-4">
@@ -27,7 +28,7 @@
             <x-input-label for="RFC" :value="__('RFC')" />
             <x-text-input id="RFC" class="block mt-1 w-full" type="text" name="RFC" value="{{ $client->RFC }}" required />
         </div>
-
+</div>
         <div style="text-align: center;" class="mt-4">
             <x-primary-button class="ms-4">
                 {{ __('Actualizar') }}

@@ -61,7 +61,7 @@ class ClientController extends Controller
       'name_Client' => 'required|string|max:255',
       'address_Client' => 'required|string|max:255',
       'email_Client' => 'required|email',
-      'phoneNumber_Client' => 'required|string|regex:/^[0-9]{10,15}$/',
+      'phoneNumber_Client' => 'required|string|max:10',
       'RFC' => 'required|string',
     ]);
 
@@ -88,7 +88,7 @@ class ClientController extends Controller
       'name_Client' => 'required|string|max:255',
       'address_Client' => 'required|string|max:255',
       'email_Client' => 'required|email',
-      'phoneNumber_Client' => 'required|string|regex:/^[0-9]{10,15}$/',
+      'phoneNumber_Client' => 'required|string|max:10',
       'RFC' => 'required|string',
     ]);
 
