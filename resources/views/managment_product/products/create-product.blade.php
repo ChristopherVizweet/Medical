@@ -9,7 +9,7 @@
                 <h1>REGISTRAR PRODUCTO</h1>
             </div><br>
 
-            <x-input-label for="name_product" :value="__('Categoría')" />
+            <x-input-label for="id_categories" :value="__('Categoría')" />
             <select class="mb-2" name="id_categories" id="id_categories" required>
                 <option value="">-- Selecciona una categoría --</option>
                 @foreach ($categories as $categorie)
@@ -21,33 +21,47 @@
             <x-text-input id="name_product" class="block mt-1 w-full is-invalid " type="text" name="name_product" :value="old('name_product')" required />
             <x-input-error :messages="$errors->get('name_product')" class="mt-2 is-invalid" /><br>
 
-            <select class="mb-2" name="id_supplier" id="id_supplier" :value="__('Proveedor')" required>
-                <option value="">-- Selecciona un proveedor --</option>
-                @foreach ($suppliers as $supplier)
-                <option value="{{ $supplier->id }}">{{ $supplier->name_supplier }}</option>
-                @endforeach
-            </select>
-            <x-input-label for="codeExt_product" :value="__('Código exterior')" />
-            <x-text-input id="codeExt_product" class="block mt-1 w-full is-invalid " type="text" name="codeExt_product" :value="old('codeExt_product')" required />
-            <x-input-error :messages="$errors->get('codeExt_product')" class="mt-2 is-invalid" />
-
-
-            <x-input-label for="diameterMM_product" :value="__('Diametro(mm)')" />
-            <x-text-input id="diameterMM_product" class="block mt-1 w-full is-invalid " type="text" name="diameterMM_product" :value="old('diameterMM_product')" required />
-            <x-input-error :messages="$errors->get('codeInt_product')" class="mt-2 is-invalid" />
-
-
-            <x-input-label for="stock" :value="('Stock')" />
-            <input id="stock" class="block mt-1 w-full" type="number" name="stock" />
-            <x-input-error :messages="$errors->get('stock')" class="mt-2 is-invalid" />
-
-            <x-input-label for="valueArt_product" :value="__('Valor por articulo')" />
-            <x-text-input id="valueArt_product" step="0.01" class="block mt-1 w-full is-invalid " type="text" name="valueArt_product" :value="old('valueArt_product')" required />
-            <x-input-error :messages="$errors->get('valueArt_product')" class="mt-2 is-invalid" />
-
-            <x-input-label for="image_product" :value="('Imagen del Producto')" />
-            <input id="image_product" class="block mt-1 w-full" type="file" name="image_product" />
-            <x-input-error :messages="$errors->get('image_product')" class="mt-2 is-invalid" />
+            <div class="mb-9 grid grid-cols-2 md:grid-cols-2 gap-4">
+                <div>
+                    <x-input-label for="codeExt_product" :value="__('Código exterior')" />
+                    <x-text-input id="codeExt_product" class="block mt-1 w-full is-invalid " type="text" name="codeExt_product" :value="old('codeExt_product')" required />
+                    <x-input-error :messages="$errors->get('codeExt_product')" class="mt-2 is-invalid" />
+                </div>
+                <div>
+                    <x-input-label for="codeint_product" :value="__('Código interior')" />
+                    <x-text-input id="codeint_product" class="block mt-1 w-full is-invalid " type="text" name="codeint_product" :value="old('codeint_product')" required />
+                    <x-input-error :messages="$errors->get('codeint_product')" class="mt-2 is-invalid" />
+                </div>
+            </div>
+            <div class="mb-9 grid grid-cols-2 md:grid-cols-2 gap-4">
+                <div>
+                    <x-input-label for="diameterMM_product" :value="__('Diametro(mm)')" />
+                    <x-text-input id="diameterMM_product" class="block mt-1 w-full is-invalid " type="text" name="diameterMM_product" :value="old('diameterMM_product')" required />
+                    <x-input-error :messages="$errors->get('diameterMM_product')" class="mt-2 is-invalid" />
+                </div>
+                <div>
+                    <x-input-label for="diameterinch_product" :value="__('Diametro(inch)')" />
+                    <x-text-input id="diameterinch_product" class="block mt-1 w-full is-invalid " type="text" name="diameterinch_product" :value="old('diameterinch_product')" required />
+                    <x-input-error :messages="$errors->get('diameterinch_product')" class="mt-2 is-invalid" />
+                </div>
+            </div>
+            <div class="mb-9 grid grid-cols-2 md:grid-cols-2 gap-4">
+                <div>
+                    <x-input-label for="stock" :value="('Stock')" />
+                    <input id="stock" class="block mt-1 w-full" type="number" name="stock" />
+                    <x-input-error :messages="$errors->get('stock')" class="mt-2 is-invalid" />
+                </div>
+                <div>
+                    <x-input-label for="valueArt_product" :value="__('Valor por articulo')" />
+                    <x-text-input id="valueArt_product" step="0.01" class="block mt-1 w-full is-invalid " type="text" name="valueArt_product" :value="old('valueArt_product')" required />
+                    <x-input-error :messages="$errors->get('valueArt_product')" class="mt-2 is-invalid" />
+                </div>
+            </div>
+            <div>
+                <x-input-label for="image_product" :value="('Imagen del Producto')" />
+                <input id="image_product" class="block mt-1 w-full" type="file" name="image_product" />
+                <x-input-error :messages="$errors->get('image_product')" class="mt-2 is-invalid" />
+            </div>
         </div>
         <div style="text-align: center;" class="mt-4">
             <x-primary-button class="ms-4 ">

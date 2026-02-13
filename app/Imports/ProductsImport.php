@@ -40,7 +40,6 @@ class ProductsImport implements ToModel, WithHeadingRow
             'codeExt_product'  => $row['codigo_ext'] ?? null,
             'codeint_product' => $row['codigo_int'] ?? null,
             'diameterMM_product' => $row['diametro_mm'] ?? null,
-            //Falta agregar diametro en pulgadas
             'diameterinch_product' => $row['diametro_in'] ?? null,
             'valueArt_product'   => $row['valor_por_articulo'] ?? null,
             'stock'              => $row['stock'] ?? null,

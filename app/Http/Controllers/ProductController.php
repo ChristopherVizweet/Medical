@@ -101,14 +101,10 @@ public function store1(Request $request){
     $request->validate([
             'id_categories' => 'required|integer|exists:categories,id',
             'name_product' => 'required|string|max:255',
-            'id_supplier' => 'nullable|integer|exists:suppliers,id',
             'codeExt_product' => 'nullable|string|max:100',
-            'codeInt_product' => 'nullable|string|max:100',
+            'codeint_product' => 'nullable|string|max:100',
             'diameterMM_product' => 'nullable|string|max:255',
-            'diameterIN_product' => 'nullable|regex:#^\d+(\.\d+)?(/?\d+)?$#',
-            'diameter_nominal' => 'nullable|string|max:255',
-            'diameter_exterior' => 'nullable|string|max:255',
-            'manufact_product' => 'nullable|string',
+            'diameterinch_product' => 'nullable|string|max:255',
             'valueArt_product' => 'nullable|numeric|min:0',
             'image_product' => 'nullable|image|mimes:jpg,png,jpeg|max:5000',
             'stock' =>'nullable|integer'
@@ -123,13 +119,11 @@ public function store1(Request $request){
         Product::create([
             
             'id_categories' => $request->id_categories,
-            'name_product' => $request->name_product,
-            'id_supplier' => $request->id_supplier,
+            'name_product' => $request->name_product, 
             'codeExt_product' => $request->codeExt_product,
-            'codeInt_product' => $request->codeInt_product,
+            'codeint_product' => $request->codeint_product,
             'diameterMM_product' => $request->diameterMM_product,
-            'diameterIN_product' => $request->diameterIN_product,
-            'manufact_product' => $request->manufact_product,
+            'diameterinch_product' => $request->diameterinch_product,
             'valueArt_product' => $request->valueArt_product,
             'image_product' => $imagePath, // Guardamos la ruta de la imagen
             'stock' =>$request->stock,
