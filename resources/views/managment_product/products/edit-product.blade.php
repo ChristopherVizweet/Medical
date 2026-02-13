@@ -32,7 +32,7 @@
             <x-text-input id="stock" class="block mt-1 w-full" type="number" name="stock" value="{{ $products->stock }}"  />
 
             <x-input-label for="valueArt_product" :value="__('Valor por articulo')" />
-            <x-text-input id="valueArt_product" class="block mt-1 w-full" type="number" name="valueArt_product" value="{{ $products->valueArt_product }}" required />
+            <x-text-input id="valueArt_product" step="0.01" class="block mt-1 w-full" type="number" name="valueArt_product" value="{{ $products->valueArt_product }}" required />
             
            
         </div>

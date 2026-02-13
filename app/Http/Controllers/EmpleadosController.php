@@ -133,6 +133,7 @@ public function update(Request $request, $id)
     $curriculum_vitae1 = $request->hasFile('cv_empleado')
             ? $request->file('cv_empleado')->store('curriculums', 'public')
             : $request -> input('cv_actual');
+            
     $empleados = Empleados::findOrFail($id);
     $empleados->update([
         'curp'=>$request->curp,

@@ -35,7 +35,7 @@
                     @endhasanyrole
 
                     @hasanyrole('superadmin|almacen')
-                    <x-nav-link :href="route('index-managmentp')" :active="request()->routeIs('index-managmentp')">
+                    <x-nav-link :href="route('index-product')" :active="request()->routeIs('index-product')">
                         Productos
                     </x-nav-link>
                     @endhasanyrole

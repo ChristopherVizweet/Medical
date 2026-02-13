@@ -32,7 +32,7 @@ class ProductController extends Controller
 
 //    $products = $productQuery->get();
     
-    $products=Product::paginate(10);
+    $products=Product::orderBy('id','desc')->get();
     $categories = Categories::all();
 
     return view('managment_product.products.index-product', compact('categories','products'));
@@ -116,7 +116,7 @@ public function store1(Request $request){
     
         // Guardar la imagen si existe
         $imagePath = $request->hasFile('image_product') 
-            ? $request->file('image_product')->store('productos/', 'public') 
+            ? $request->file('image_product')->store('productos', 'public') 
             : null;
     
         // Crear el producto
@@ -151,9 +151,9 @@ public function update(Request $request, $id)
     $request->validate([
     'name_product' => 'required|string|max:255',
     'codeExt_product' => 'nullable|string|max:100',
-    //'codeInt_product' => 'nullable|string|max:100',
+    'codeint_product' => 'nullable|string|max:100',
     'diameterMM_product' => 'nullable|string',
-    //'diameterIN_product' => 'nullable|regex:#^\d+(\.\d+)?(/?\d+)?$#',
+    'diameterinch_product' => 'nullable|string|max:255',
     'manufact_product' => 'nullable|string',
     'valueArt_product' => 'nullable|numeric|min:0',
     'image_product' => 'nullable|image|mimes:jpg,png,jpeg|max:5000',
@@ -162,7 +162,7 @@ public function update(Request $request, $id)
 
  // Guardar la imagen si existe
         $imagePath1 = $request->hasFile('image_product') 
-            ? $request->file('image_product')->store('productos/', 'public') 
+            ? $request->file('image_product')->store('storage', 'public') 
             : $request -> input('image_product_actual');
 
     $products = Product::findOrFail($id);

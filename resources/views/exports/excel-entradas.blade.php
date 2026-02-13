@@ -25,13 +25,13 @@
                 {{ $producto->product->name_product }}
                 Diametro {{ $producto->product->diameterMM_product }} mm
             </td>
-            <td class="px-4 py-2">{{ $movimiento->proveedor->name_supplier }}</td>
-            <td class="px-4 py-2">{{ $movimiento->numero_factura_movimiento }}</td>
-            <td class="px-4 py-2">{{ $producto->costo_unitario }}</td>
-            <td class="px-4 py-2">{{ $movimiento->fecha_movimiento }}</td>
-            <td class="px-4 py-2">{{ $movimiento->recibe->Nombre }}</td>
-            <td class="px-4 py-2">{{ $movimiento->firma->Nombre }}</td>
-            <td class="px-4 py-2">{{ $movimiento->observaciones_movimiento }}</td>
+            <td class="px-4 py-2">{{ $movimiento->proveedor->name_supplier  ?? 'Sin valor' }}</td>
+            <td class="px-4 py-2">{{ $movimiento->numero_factura_movimiento  ?? 'Sin valor' }}</td>
+            <td class="px-4 py-2">{{ $producto->costo_unitario  ?? 'Sin valor' }}</td>
+            <td class="px-4 py-2">{{ $movimiento->fecha_movimiento  ?? 'Sin valor' }}</td>
+            <td class="px-4 py-2">{{ $movimiento->recibe->Nombre ?? 'Sin valor' }}</td>
+            <td class="px-4 py-2">{{ $movimiento->firma->Nombre ?? 'Sin valor' }}</td>
+            <td class="px-4 py-2">{{ $movimiento->observaciones_movimiento  ?? 'Sin valor' }}</td>
         </tr>
     @endforeach
 @empty
