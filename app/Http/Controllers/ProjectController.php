@@ -218,23 +218,23 @@ public function edit($id)
 public function update(Request $request,$id){
     $request->validate([
     'folioProject' => 'required|integer',
-    'id_client' => 'required|string|max:50',
-    'nameProject' => 'required|string|max:255',
-    'seller_id_usuario' => 'required|string|max:50',
-    'company' => 'required|string|max:20',
-    'inCharge_id_usuario' => 'required|string|max:50',
-    'dateBegin' => 'required|date',
-    'dateEnd' => 'required|date',
-    'budget' => 'required|numeric|min:0',
-    'accountBank' => 'required|string|max:100',
-    'id_priority' => 'required|string|max:100',
-    'id_status' => 'required|string|max:100',
-    'requestDate' => 'required|date',
-    'estimateDate' => 'required|date',
-    'authorizedDate' => 'required|date',
-    'finishDate' => 'required|date',
-    'recursosObtenidos' => 'required|string',
-    'ejecutionDate' => 'required|date',
+    'id_client' => 'nullable|string|max:50',
+    'nameProject' => 'nullable|string|max:255',
+    'seller_id_usuario' => 'nullable|string|max:50',
+    'company' => 'nullable|string|max:20',
+    'inCharge_id_usuario' => 'nullable|string|max:50',
+    'dateBegin' => 'nullable|date',
+    'dateEnd' => 'nullable|date',
+    'budget' => 'nullable|numeric|min:0',
+    'accountBank' => 'nullable|string|max:100',
+    'id_priority' => 'nullable|string|max:100',
+    'id_status' => 'nullable|string|max:100',
+    'requestDate' => 'nullable|date',
+    'estimateDate' => 'nullable|date',
+    'authorizedDate' => 'nullable|date',
+    'finishDate' => 'nullable|date',
+    'recursosObtenidos' => 'nullable|string',
+    'ejecutionDate' => 'nullable|date',
     'estado_project' => 'nullable|string',
     'lugar_project' => 'nullable|string',
     'area_project' => 'nullable|string',
@@ -248,26 +248,26 @@ public function update(Request $request,$id){
     'nameInstalation.*' => 'exists:instalation_services,id',
 
     // Mano de obra
-    'id_empleado' => 'required|array|min:1',
-    'id_empleado.*' => 'required|string|exists:empleados,id',
-    'jornadas' => 'required|array',
-    'jornadas.*' => 'required|integer|min:1',
-    'salario' => 'required|array',
-    'salario.*' => 'required|numeric|min:0',
-    'TotalSalario' => 'required|array',
-    'TotalSalario.*' => 'required|numeric|min:0',
+    'id_empleado' => 'nullable|array|min:1',
+    'id_empleado.*' => 'nullable|string|exists:empleados,id',
+    'jornadas' => 'nullable|array',
+    'jornadas.*' => 'nullable|integer|min:1',
+    'salario' => 'nullable|array',
+    'salario.*' => 'nullable|numeric|min:0',
+    'TotalSalario' => 'nullable|array',
+    'TotalSalario.*' => 'nullable|numeric|min:0',
 
     // Productos
-    'id_product' => 'required|array|min:1',
-    'id_product.*' => 'required|exists:products,id',
-    'id_supplier' => 'required|array|min:1',
-    'id_supplier.*' => 'required|exists:suppliers,id',
-    'costo' => 'required|array|min:1',
-    'costo.*' => 'required|numeric|min:0',
+    'id_product' => 'nullable|array|min:1',
+    'id_product.*' => 'nullable|exists:products,id',
+   // 'id_supplier' => 'nullable|array|min:1', Se quita proveedores de productos por proyectos
+   // 'id_supplier.*' => 'nullable|exists:suppliers,id', 
+    'costo' => 'nullable|array|min:1',
+    'costo.*' => 'nullable|numeric|min:0',
 
     // Totales
-    'totalManoObra' => 'required|numeric|min:0',
-    'totalProductos' => 'required|numeric|min:0',
+    'totalManoObra' => 'nullable|numeric|min:0',
+    'totalProductos' => 'nullable|numeric|min:0',
     ]);
 
     $projects = Project::findOrFail($id);
@@ -307,13 +307,13 @@ public function update(Request $request,$id){
     foreach ($request->id_product as $index => $productId) {
         $projects->productos()->create([
             'product_id' => $productId,
-            'supplier_id' => $request->id_supplier[$index],
+           // 'supplier_id' => $request->id_supplier[$index], Se quita proveedores de productos por proyecto
             'costo' => $request->costo[$index],
         ]);
     }
 $project = Project::with('empleados')->find($id); // si usas un modelo intermedio tipo ProjectEmployee
 $products = Product::all();
-$suppliers = Supplier::all();
+//$suppliers = Supplier::all(); Se quita valores de la tabla de proveedores por que no se utiilizan
 $project = Project::with('productos')->find($id);
 $project->services()->sync($request->nameInstalation); //Actualiza y guarda  el cambio en la modificación
 
