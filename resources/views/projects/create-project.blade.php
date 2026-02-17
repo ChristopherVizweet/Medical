@@ -26,7 +26,6 @@
                 <h2 class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 dark:text-white">Información de la empresa</h2>
                 <div class="mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div>
-<<<<<<< HEAD
                         <x-input-label for="estado_project" :value="__('Estado')" />
                         <x-text-input id="estado_project" class="mt-1 block w-full" type="text" name="estado_project"
                             placeholder="Ingrese el estado del proyecto" :value="old('estado_project')" required />
@@ -64,10 +63,6 @@
                     <div>
                         <x-input-label for="company" :value="__('Empresa encargada')" />
                         <select class="mt-1 block w-full" name="company" id="company" required>
-=======
-                        <x-input-label for="company" :value="__('Empresa encargada')"/>
-                        <select class="mt-1 block w-full" name="company" id="company" >
->>>>>>> feature-planProyectos
                             <option value="">-Seleccionar-</option>
                             @foreach ($companies as $company)
                             <option value="{{ $company->id }}">{{ $company->nameCompany }}</option><br>
@@ -112,13 +107,8 @@
                         <x-input-label for="id_client" :value="__('Cliente')" />
                         <select class="mt-1 block w-full" name="id_client" id="id_client" >
                             <option value="">-Seleccionar-</option>
-<<<<<<< HEAD
-                            @foreach ($statues as $status)
-                            <option value="{{ $status->id }}">{{ $status->nameStatus }}</option><br>
-=======
                             @foreach ($clients as $client)
                             <option value="{{ $client->id }}">{{ $client->name_Client }}</option><br>
->>>>>>> feature-planProyectos
                             @endforeach
                         </select>
                     </div>
@@ -278,7 +268,6 @@
                         Duración en días entre ejecución y terminación: <span id="dias_duracion4">0</span> días
                     </div>
 
-<<<<<<< HEAD
                 </div>
             </div>
             {{-- Servicios Autorizados --}}
@@ -293,8 +282,6 @@
                         <span>{{ $service->nameInstalation }}</span>
                     </label>
                     @endforeach
-=======
->>>>>>> feature-planProyectos
 
                 </div>
             </div>
@@ -628,14 +615,11 @@ agregar y eliminar campos --}}
             </div>
         </div>
     </form>
-<<<<<<< HEAD
     {{-- Modal 
      <form method="POST" action="{{ route('deducibles-store') }}" enctype="multipart/form-data">
     @csrf
     {{-- Comienza el modal de pagos 
     <div id="pagosModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-=======
->>>>>>> feature-planProyectos
 
     {{-- -Aqui es para mostrar los errores del sistema- --}}
 
@@ -793,8 +777,4 @@ agregar y eliminar campos --}}
         });
     </script>
 
-<<<<<<< HEAD
 </x-guest-layout>
-=======
-    </x-guest-layout>
->>>>>>> feature-planProyectos
