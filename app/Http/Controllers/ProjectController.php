@@ -356,5 +356,8 @@ public function delete($id){
 public function cotizacionRedGases(){
     return view('cotizaciones.cotizacion-redgases');
 }
+public function indexCotizacion(){
+    return view('cotizaciones.index-cotizacion');
+}
 
 }

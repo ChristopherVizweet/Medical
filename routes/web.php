@@ -131,9 +131,11 @@ Route::post('/create-project',[ProjectController::class,'store'])->name('store-p
 Route::get('/edit-project/{id}',[ProjectController::class, 'edit'])->name('edit-project');
 Route::put('/edit-project/{id}',[ProjectController::class, 'update'])->name('edit-project');
 Route::delete('/delete-project/{id}',[ProjectController::class, 'delete'])->name('delete-project');
+Route::get('/index-cotizacion',[ProjectController::class, 'indexCotizacion'])->name('index-cotizacion');
 #COtizaciones de red de gases
 Route::get('/cotizacion-redgases',[ProjectController::class,'cotizacionRedGases'])->name('cotizacion-redgases');
 Route::post('/cotizacion-redgases',[ProjectController::class,'storeCotizacionRedGases'])->name('store-cotizacion-redgases');
+
 
 
 #Parte de los servicios de instalación

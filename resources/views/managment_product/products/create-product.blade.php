@@ -22,12 +22,12 @@
             <x-text-input id="name_product" class="block mt-1 w-full is-invalid " type="text" name="name_product" :value="old('name_product')" required />
             <x-input-error :messages="$errors->get('name_product')" class="mt-2 is-invalid" /><br>
 
-                <select class="mb-2" name="id_supplier" id="id_supplier" :value="__('Proveedor')" required>
+               <!--select class="mb-2" name="id_supplier" id="id_supplier" :value="__('Proveedor')" required>
                     <option value="">-- Selecciona un proveedor --</option>
                     @foreach ($suppliers as $supplier)
                         <option value="{{ $supplier->id }}">{{ $supplier->name_supplier }}</option>
                     @endforeach
-                </select>
+                </select-->
                 <x-input-label  for="codeExt_product" :value="__('Código exterior')" />
                 <x-text-input id="codeExt_product" class="block mt-1 w-full is-invalid " type="text" name="codeExt_product" :value="old('codeExt_product')" required />
                 <x-input-error :messages="$errors->get('codeExt_product')" class="mt-2 is-invalid" />

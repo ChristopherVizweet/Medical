@@ -27,7 +27,7 @@
                 <div class="mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div>
                         <x-input-label for="company" :value="__('Empresa encargada')"/>
-                        <select class="mt-1 block w-full" name="company" id="company" required>
+                        <select class="mt-1 block w-full" name="company" id="company" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($companies as $company)
                             <option value="{{ $company->id }}">{{ $company->nameCompany }}</option><br>
@@ -36,7 +36,7 @@
                     </div>
                     <div>
                         <x-input-label for="seller_id_usuario" :value="__('Vendedor')"/>
-                        <select class="mt-1 block w-full" name="seller_id_usuario" id="seller_id_usuario" required>
+                        <select class="mt-1 block w-full" name="seller_id_usuario" id="seller_id_usuario" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($users as $user)
                             <option value="{{ $user->id }}">{{ $user->name }}</option><br>
@@ -45,7 +45,7 @@
                     </div>
                     <div>
                         <x-input-label for="inCharge_id_usuario" :value="__('Encargado de obra')"/>
-                        <select class="mt-1 block w-full" name="inCharge_id_usuario" id="inCharge_id_usuario" required>
+                        <select class="mt-1 block w-full" name="inCharge_id_usuario" id="inCharge_id_usuario" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($users as $user)
                             <option value="{{ $user->id }}">{{ $user->name }}</option><br>
@@ -55,7 +55,7 @@
 
                     <div>
                         <x-input-label for="id_priority" :value="__('Prioridad')" />
-                        <select class="mt-1 block w-full" name="id_priority" id="id_priority" required>
+                        <select class="mt-1 block w-full" name="id_priority" id="id_priority" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($priorities as $priority)
                             <option value="{{ $priority->id }}">{{ $priority->namePriority }}</option><br>
@@ -70,7 +70,7 @@
                     <!---AQUI COMIENZA EL ESTILO DE LOS CAMPOS-->
                     <div>
                         <x-input-label for="id_client" :value="__('Cliente')" />
-                        <select class="mt-1 block w-full" name="id_client" id="id_client" required>
+                        <select class="mt-1 block w-full" name="id_client" id="id_client" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($clients as $client)
                             <option value="{{ $client->id }}">{{ $client->name_Client }}</option><br>
@@ -80,32 +80,32 @@
                     <div>
                         <x-input-label for="estado_project" :value="__('Estado')" />
                         <x-text-input id="estado_project" class="mt-1 block w-full" type="text" name="estado_project"
-                            placeholder="Ingrese el estado del proyecto" :value="old('estado_project')" required />
+                            placeholder="Ingrese el estado del proyecto" :value="old('estado_project')"  />
                         <x-input-error :messages="$errors->get('estado_project')" class="mt-2" />
                     </div>
                     <div>
                         <x-input-label for="lugar_project" :value="__('Lugar')" />
                         <x-text-input id="lugar_project" class="mt-1 block w-full" type="text" name="lugar_project"
-                            placeholder="Ingrese el lugar del proyecto" :value="old('lugar_project')" required />
+                            placeholder="Ingrese el lugar del proyecto" :value="old('lugar_project')"  />
                         <x-input-error :messages="$errors->get('lugar_project')" class="mt-2" />
                     </div>
                     <div>
                         <x-input-label for="area_project" :value="__('Área')" />
                         <x-text-input id="area_project" class="mt-1 block w-full" type="text" name="area_project"
-                            placeholder="Ingrese el área del proyecto" :value="old('area_project')" required />
+                            placeholder="Ingrese el área del proyecto" :value="old('area_project')"  />
                         <x-input-error :messages="$errors->get('area_project')" class="mt-2" />
                     </div>
                     <div>
                         <x-input-label for="piso_project" :value="__('Piso')" />
                         <x-text-input id="piso_project" class="mt-1 block w-full" type="text" name="piso_project"
-                            placeholder="Ingrese el piso del proyecto" :value="old('piso_project')" required />
+                            placeholder="Ingrese el piso del proyecto" :value="old('piso_project')"  />
                         <x-input-error :messages="$errors->get('piso_project')" class="mt-2" />
                     </div>
 
                     <div>
                         <x-input-label for="budget" :value="__('Presupuesto')" />
                         <x-text-input id="budget" class="mt-1 block w-full" type="number" step="0.01"
-                            name="budget" placeholder="Ingrese el monto" :value="old('budget')" required />
+                            name="budget" placeholder="Ingrese el monto" :value="old('budget')"  />
                         <x-input-error :messages="$errors->get('budget')" class="mt-2" />
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                 <div class="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-3">
                     <div>
                         <x-input-label for="id_status" :value="__('Status')" />
-                        <select class="mt-1 block w-full" name="id_status" id="id_status" required>
+                        <select class="mt-1 block w-full" name="id_status" id="id_status" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($statues as $status)
                             <option value="{{ $status->id }}">{{ $status->nameStatus }}</option><br>
@@ -123,7 +123,7 @@
                     </div>
                     <div>
                         <x-input-label for="recursosObtenidos" :value="__('Recursos obtenidos por:')" />
-                        <select class="mt-1 block w-full" name="recursosObtenidos" id="recursosObtenidos" required>
+                        <select class="mt-1 block w-full" name="recursosObtenidos" id="recursosObtenidos" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($recursos as $recurso)
                             <option value="{{ $recurso->id }}">{{ $recurso->recursosObtenidos }}</option><br>
@@ -133,7 +133,7 @@
 
                     <div>
                         <x-input-label for="accountBank" :value="__('Cuenta bancaria')" />
-                        <select class="mt-1 block w-full" name="accountBank" id="accountBank" required>
+                        <select class="mt-1 block w-full" name="accountBank" id="accountBank" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($banks as $bank)
                             <option value="{{ $bank->id }}">{{ $bank->accountBank }}</option><br>
@@ -145,7 +145,7 @@
             </div>
 
             {{--</div>--}}
-
+<!--
             {{-- Fechas --}}
             <div class="border p-10 rounded-lg">
                 <h2 class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 dark:text-white">Fechas estimadas</h2>
@@ -239,10 +239,10 @@
 
             {{-- Mano de Obra --}}
             <div class="border p-10 rounded-lg">
-                <h2 class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 dark:text-white">Mano de obra</h2>
+                <h2 class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 dark:text-white">Mano de obra</h2>-->
                
                     <!--div class="grid grid-cols-1 gap-4"-->
-                    <table class="w-full text-center text-black dark:text-white" id="tabla-trabajadores">
+                   <!-- <table class="w-full text-center text-black dark:text-white" id="tabla-trabajadores">
                         <thead>
                             <tr>
                                 <th>Trabajador</th>
@@ -552,13 +552,13 @@ agregar y eliminar campos --}}
 
                 // Ejecutar al cargar la página
                 window.addEventListener('DOMContentLoaded', actualizarResumen);
-            </script>
+            </script> -->
 
 
             {{-- Botones --}}
             <div class="text-center">
 
-                <x-primary-button class="ms-4">Registrar</x-primary-button>
+                <x-primary-button class="ms-4"><a href="index-cotizacion">Registrar</a></x-primary-button>
                 <a href="{{ route('index-project') }}"
                     class="ms-4 inline-block px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500">
                     Cancelar
