@@ -79,7 +79,7 @@ public function create(Project $project_id)
         $nopayment = Payment::with('empleado')->where('tipo','no_deducible')->where('project_id',$project_id)->get();
         $empleados = Empleados::with('payments')->get();
         $pagos = Payment::with(['empleado'])->where('project_id',$project_id)->get();
-        $pdf = Pdf::loadView('projects.payments.ver-gastos', compact('pagos','empleados','projects', 'payments','nopayment'));
+        $pdf = Pdf::loadView('projects.payments.ver-gastos', compact('pagos','empleados','projects','projects', 'payments','nopayment'));
         return $pdf->stream('reporte_gastos_proyecto_'.$project_id.'.pdf'); 
     }
 }

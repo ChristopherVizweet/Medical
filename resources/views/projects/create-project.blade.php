@@ -1,34 +1,32 @@
-<x-guest-layout>
+<x-app-layout>
     <form method="POST" action="{{ route('store-project') }}" enctype="multipart/form-data">
         @csrf
-
-        <div class="text-center text-gray-800 dark:text-white">
-            <h1 class="text-2xl font-bold">NUEVO PROYECTO</h1>
-        </div><br>
-
-        <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg max-w-6xl mx-auto space-y-6">
+        <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg max-w-8xl mx-auto space-y-6">
 
             {{-- Información General --}}
-            <div class="border p-4 rounded-lg">
-                <h2 class="text-lg font-semibold mb-4 dark:text-white">Información del Proyecto</h2>
-
+            <div class="border p-10 rounded-lg">
+                <div class="text-center text-gray-800 dark:text-white">
+                    <h1 class="text-lg font-semibold">NUEVO PROYECTO</h1>
+                </div>
+                <h2 class="text-center text-4xl font-sans font-semibold mb-4 dark:text-white">Información del Proyecto</h2>
                 <div class="hidden">
-                    <x-input-label for="folioProject" :value="__('Folio del proyecto')" />
+                    <x-input-label for="folioProject" :value="__('Folio del proyecto')"/>
                     <x-text-input id="folioProject" class="mt-1 block w-full " type="text" name="folioProject"
                         :value="old('folioProject')" />
-                    <x-input-error :messages="$errors->get('folioProject')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('folioProject')" class="mt-2"/>
                 </div>
 
                 <div>
-                    <x-input-label for="nameProject" :value="__('Nombre del proyecto')" />
+                    <x-input-label for="nameProject" :value="__('Nombre del proyecto')"/>
                     <x-text-input id="nameProject" class="mt-1 block w-full" type="text" name="nameProject"
                         :value="old('nameProject')" />
-                    <x-input-error :messages="$errors->get('nameProject')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('nameProject')" class="mt-2"/>
                 </div> <br>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!---AQUI COMIENZA EL ESTILO DE LOS CAMPOS-->
+                <!--Seccion para informacion sobre la empresa encargada-->
+                <h2 class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 dark:text-white">Información de la empresa</h2>
+                <div class="mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div>
+<<<<<<< HEAD
                         <x-input-label for="estado_project" :value="__('Estado')" />
                         <x-text-input id="estado_project" class="mt-1 block w-full" type="text" name="estado_project"
                             placeholder="Ingrese el estado del proyecto" :value="old('estado_project')" required />
@@ -66,28 +64,28 @@
                     <div>
                         <x-input-label for="company" :value="__('Empresa encargada')" />
                         <select class="mt-1 block w-full" name="company" id="company" required>
+=======
+                        <x-input-label for="company" :value="__('Empresa encargada')"/>
+                        <select class="mt-1 block w-full" name="company" id="company" >
+>>>>>>> feature-planProyectos
                             <option value="">-Seleccionar-</option>
                             @foreach ($companies as $company)
                             <option value="{{ $company->id }}">{{ $company->nameCompany }}</option><br>
                             @endforeach
                         </select>
                     </div>
-
-
                     <div>
-                        <x-input-label for="seller_id_usuario" :value="__('Vendedor')" />
-                        <select class="mt-1 block w-full" name="seller_id_usuario" id="seller_id_usuario" required>
+                        <x-input-label for="seller_id_usuario" :value="__('Vendedor')"/>
+                        <select class="mt-1 block w-full" name="seller_id_usuario" id="seller_id_usuario" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($users as $user)
                             <option value="{{ $user->id }}">{{ $user->name }}</option><br>
                             @endforeach
                         </select>
                     </div>
-
-
                     <div>
-                        <x-input-label for="inCharge_id_usuario" :value="__('Encargado')" />
-                        <select class="mt-1 block w-full" name="inCharge_id_usuario" id="inCharge_id_usuario" required>
+                        <x-input-label for="inCharge_id_usuario" :value="__('Encargado de obra')"/>
+                        <select class="mt-1 block w-full" name="inCharge_id_usuario" id="inCharge_id_usuario" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($users as $user)
                             <option value="{{ $user->id }}">{{ $user->name }}</option><br>
@@ -97,33 +95,80 @@
 
                     <div>
                         <x-input-label for="id_priority" :value="__('Prioridad')" />
-                        <select class="mt-1 block w-full" name="id_priority" id="id_priority" required>
+                        <select class="mt-1 block w-full" name="id_priority" id="id_priority" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($priorities as $priority)
                             <option value="{{ $priority->id }}">{{ $priority->namePriority }}</option><br>
                             @endforeach
                         </select>
                     </div>
+                </div>
+                <!--Seccion para informacion sobre el cliente y su ubicacion-->
+                <h2 class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 dark:text-white">Información del cliente</h2>
+                <div class="mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+                    <!---AQUI COMIENZA EL ESTILO DE LOS CAMPOS-->
+                    <div>
+                        <x-input-label for="id_client" :value="__('Cliente')" />
+                        <select class="mt-1 block w-full" name="id_client" id="id_client" >
+                            <option value="">-Seleccionar-</option>
+<<<<<<< HEAD
+                            @foreach ($statues as $status)
+                            <option value="{{ $status->id }}">{{ $status->nameStatus }}</option><br>
+=======
+                            @foreach ($clients as $client)
+                            <option value="{{ $client->id }}">{{ $client->name_Client }}</option><br>
+>>>>>>> feature-planProyectos
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <x-input-label for="estado_project" :value="__('Estado')" />
+                        <x-text-input id="estado_project" class="mt-1 block w-full" type="text" name="estado_project"
+                            placeholder="Ingrese el estado del proyecto" :value="old('estado_project')"  />
+                        <x-input-error :messages="$errors->get('estado_project')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-input-label for="lugar_project" :value="__('Lugar')" />
+                        <x-text-input id="lugar_project" class="mt-1 block w-full" type="text" name="lugar_project"
+                            placeholder="Ingrese el lugar del proyecto" :value="old('lugar_project')"  />
+                        <x-input-error :messages="$errors->get('lugar_project')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-input-label for="area_project" :value="__('Área')" />
+                        <x-text-input id="area_project" class="mt-1 block w-full" type="text" name="area_project"
+                            placeholder="Ingrese el área del proyecto" :value="old('area_project')"  />
+                        <x-input-error :messages="$errors->get('area_project')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-input-label for="piso_project" :value="__('Piso')" />
+                        <x-text-input id="piso_project" class="mt-1 block w-full" type="text" name="piso_project"
+                            placeholder="Ingrese el piso del proyecto" :value="old('piso_project')"  />
+                        <x-input-error :messages="$errors->get('piso_project')" class="mt-2" />
+                    </div>
 
                     <div>
+                        <x-input-label for="budget" :value="__('Presupuesto')" />
+                        <x-text-input id="budget" class="mt-1 block w-full" type="number" step="0.01"
+                            name="budget" placeholder="Ingrese el monto" :value="old('budget')"  />
+                        <x-input-error :messages="$errors->get('budget')" class="mt-2" />
+                    </div>
+                </div>
+                <!--Seccion para informacion sobre el status y recursos-->
+                <h2 class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 dark:text-white">Status y recurso</h2>
+                <div class="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-3">
+                    <div>
                         <x-input-label for="id_status" :value="__('Status')" />
-                        <select class="mt-1 block w-full" name="id_status" id="id_status" required>
+                        <select class="mt-1 block w-full" name="id_status" id="id_status" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($statues as $status)
                             <option value="{{ $status->id }}">{{ $status->nameStatus }}</option><br>
                             @endforeach
                         </select>
                     </div>
-
-                    <div>
-                        <x-input-label for="budget" :value="__('Presupuesto')" />
-                        <x-text-input id="budget" class="mt-1 block w-full" type="number" step="0.01"
-                            name="budget" placeholder="Ingrese el monto" :value="old('budget')" required />
-                        <x-input-error :messages="$errors->get('budget')" class="mt-2" />
-                    </div>
                     <div>
                         <x-input-label for="recursosObtenidos" :value="__('Recursos obtenidos por:')" />
-                        <select class="mt-1 block w-full" name="recursosObtenidos" id="recursosObtenidos" required>
+                        <select class="mt-1 block w-full" name="recursosObtenidos" id="recursosObtenidos" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($recursos as $recurso)
                             <option value="{{ $recurso->id }}">{{ $recurso->recursosObtenidos }}</option><br>
@@ -133,7 +178,7 @@
 
                     <div>
                         <x-input-label for="accountBank" :value="__('Cuenta bancaria')" />
-                        <select class="mt-1 block w-full" name="accountBank" id="accountBank" required>
+                        <select class="mt-1 block w-full" name="accountBank" id="accountBank" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($banks as $bank)
                             <option value="{{ $bank->id }}">{{ $bank->accountBank }}</option><br>
@@ -141,78 +186,77 @@
                         </select>
                     </div>
 
-
                 </div>
             </div>
 
-
-
+            {{--</div>--}}
+<!--
             {{-- Fechas --}}
-            <div class="border p-4 rounded-lg">
-                <h2 class="text-lg font-semibold mb-4 dark:text-white">Fechas</h2>
+            <div class="border p-10 rounded-lg">
+                <h2 class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 dark:text-white">Fechas estimadas</h2>
+                <div class=" mb-6 grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4">
 
-                <div class="flex flex-col space-y-4 text-left text-gray-800 dark:text-white">
+                    <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4">
+                        {{-- Fecha de inicio --}}
+                        <div class="text-center items-center">
+                            <x-input-label for="dateBegin" :value="__('Fecha de inicio')" />
+                            <x-text-input id="dateBegin" class="mt-1 w-full" type="date"
+                                name="dateBegin" :value="old('dateBegin')" />
+                            <x-input-error :messages="$errors->get('dateBegin')" class="mt-2" />
+                        </div>
 
-                    {{-- Fecha de inicio --}}
-                    <div>
-                        <x-input-label for="dateBegin" :value="__('Fecha de inicio')" />
-                        <x-text-input id="dateBegin" class="mt-1 block w-full max-w-md" type="date"
-                            name="dateBegin" :value="old('dateBegin')" required />
-                        <x-input-error :messages="$errors->get('dateBegin')" class="mt-2" />
+                        {{-- Fecha de finalización --}}
+                        <div class="text-center">
+                            <x-input-label for="dateEnd" :value="__('Fecha de finalización')" />
+                            <x-text-input id="dateEnd" class="mt-1 w-full" type="date"
+                                name="dateEnd" :value="old('dateEnd')" />
+                            <x-input-error :messages="$errors->get('dateEnd')" class="mt-2" />
+                        </div>
                     </div>
-
-                    {{-- Fecha de finalización --}}
-                    <div>
-                        <x-input-label for="dateEnd" :value="__('Fecha de finalización')" />
-                        <x-text-input id="dateEnd" class="mt-1 block w-full max-w-md" type="date"
-                            name="dateEnd" :value="old('dateEnd')" required />
-                        <x-input-error :messages="$errors->get('dateEnd')" class="mt-2" />
-                    </div>
-
                     {{-- Duración del proyecto --}}
                     <div class="text-xl text-center">
                         Duración del proyecto: <span id="dias_duracion">0</span> días
                     </div>
+                    <h2 class=" bg-blue-800 text-center text-2xl font-sans font-semibold mb-4 text-white dark:text-white">Fechas estimadas por etapas</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4">
+                        {{-- Fecha de solicitud --}}
+                        <div>
+                            <x-input-label for="requestDate" :value="__('Fecha de solicitud')" />
+                            <x-text-input id="requestDate" class="mt-1 block w-full" type="date"
+                                name="requestDate" :value="old('requestDate')" />
+                            <x-input-error :messages="$errors->get('requestDate')" class="mt-2" />
+                        </div>
 
-                    {{-- Fecha de solicitud --}}
-                    <div>
-                        <x-input-label for="requestDate" :value="__('Fecha de solicitud')" />
-                        <x-text-input id="requestDate" class="mt-1 block w-full max-w-md" type="date"
-                            name="requestDate" :value="old('requestDate')" required />
-                        <x-input-error :messages="$errors->get('requestDate')" class="mt-2" />
+                        {{-- Fecha de cotización --}}
+                        <div>
+                            <x-input-label for="estimateDate" :value="__('Fecha de cotización')" />
+                            <x-text-input id="estimateDate" class="mt-1 block w-full" type="date"
+                                name="estimateDate" :value="old('estimateDate')" />
+                            <x-input-error :messages="$errors->get('estimateDate')" class="mt-2" />
+                        </div>
                     </div>
-
-                    {{-- Fecha de cotización --}}
-                    <div>
-                        <x-input-label for="estimateDate" :value="__('Fecha de cotización')" />
-                        <x-text-input id="estimateDate" class="mt-1 block w-full max-w-md" type="date"
-                            name="estimateDate" :value="old('estimateDate')" required />
-                        <x-input-error :messages="$errors->get('estimateDate')" class="mt-2" />
-                    </div>
-
                     {{-- Duración en días --}}
                     <div class="text-xl text-center">
                         Duración en días entre solicitud y cotización: <span id="dias_duracion1">0</span> días
                     </div>
 
-                    {{-- Fecha autorizada --}}
-                    <div>
-                        <x-input-label for="authorizedDate" :value="__('Fecha autorizada')" />
-                        <x-text-input id="authorizedDate" class="mt-1 block w-full max-w-md" type="date"
-                            name="authorizedDate" :value="old('authorizedDate')" required />
-                        <x-input-error :messages="$errors->get('authorizedDate')" class="mt-2" />
-                    </div>
 
+                    {{-- Fecha autorizada --}}
+                    <div class="flex w-full items-center justify-center">
+                        <x-input-label class="text-center" for="authorizedDate" :value="__('Fecha autorizada: ')" />
+                        <x-text-input id="authorizedDate" class="ml-4 mt-1 block w-full max-w-md" type="date"
+                            name="authorizedDate" :value="old('authorizedDate')" />
+                    </div>
                     {{-- Duración en días --}}
                     <div class="text-xl text-center">
                         Duración en días entre cotización y autorizada: <span id="dias_duracion2">0</span> días
                     </div>
 
                     {{-- Fecha en ejecución --}}
-                    <div>
-                        <x-input-label for="ejecutionDate" :value="__('Fecha en ejecución')" />
-                        <x-text-input id="ejecutionDate" class="mt-1 block w-full max-w-md" type="date"
-                            name="ejecutionDate" :value="old('ejecutionDate')" required />
+                    <div class="flex w-full items-center justify-center">
+                        <x-input-label for="ejecutionDate" :value="__('Fecha en ejecución:')" />
+                        <x-text-input id="ejecutionDate" class="ml-4  mt-1 block w-full max-w-md" type="date"
+                            name="ejecutionDate" :value="old('ejecutionDate')" />
                         <x-input-error :messages="$errors->get('ejecutionDate')" class="mt-2" />
                     </div>
 
@@ -222,10 +266,10 @@
                     </div>
 
                     {{-- Fecha de terminación --}}
-                    <div>
-                        <x-input-label for="finishDate" :value="__('Fecha de terminación')" />
-                        <x-text-input id="finishDate" class="mt-1 block w-full max-w-md" type="date"
-                            name="finishDate" :value="old('finishDate')" required />
+                    <div class="flex w-full items-center justify-center">
+                        <x-input-label for="finishDate" class="text-center" :value="__('Fecha de terminación: ')" />
+                        <x-text-input id="finishDate" class="ml-4 mt-1 block w-full max-w-md" type="date"
+                            name="finishDate" :value="old('finishDate')" />
                         <x-input-error :messages="$errors->get('finishDate')" class="mt-2" />
                     </div>
 
@@ -234,6 +278,7 @@
                         Duración en días entre ejecución y terminación: <span id="dias_duracion4">0</span> días
                     </div>
 
+<<<<<<< HEAD
                 </div>
             </div>
             {{-- Servicios Autorizados --}}
@@ -248,16 +293,18 @@
                         <span>{{ $service->nameInstalation }}</span>
                     </label>
                     @endforeach
+=======
+>>>>>>> feature-planProyectos
 
                 </div>
             </div>
 
             {{-- Mano de Obra --}}
-            <div class="border p-4 rounded-lg text-black dark:text-white">
-                <h2 class="text-lg font-semibold mb-4 dark:text-white">Mano de Obra</h2>
-
-                <div class="grid grid-cols-1 gap-4">
-                    <table class="w-full text-center text-black dark:text-white" id="tabla-trabajadores">
+            <div class="border p-10 rounded-lg">
+                <h2 class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 dark:text-white">Mano de obra</h2>-->
+               
+                    <!--div class="grid grid-cols-1 gap-4"-->
+                   <!-- <table class="w-full text-center text-black dark:text-white" id="tabla-trabajadores">
                         <thead>
                             <tr>
                                 <th>Trabajador</th>
@@ -272,8 +319,8 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <select name="id_empleado[]" for="id_empleado"
-                                        class="text-black dark:text-black w-full border p-1 empleado" required>
+                                    <select name="id_empleado[]" for="id_empleado" id="id_empleado"
+                                        class="text-black dark:text-black w-full border p-1 empleado">
                                         <option class="text-black dark:text-black">-Seleccionar-</option>
                                         @foreach ($empleados as $empleado)
                                         <option value="{{ $empleado->id }}"
@@ -304,7 +351,7 @@
                                         placeholder="Salario(Horas exra)">
                                 </td>
                                 <td>
-                                    <input type="number" for="totalSalario" id="totalSalario" name="TotalSalario[]"
+                                    <input type="number" for="total_salario" id="total_salario" name="total_salario[]"
                                         class="text-black dark:text-black total-salario w-full border p-1 bg-gray-100 total"
                                         step="0.01" readonly>
                                 </td>
@@ -322,12 +369,11 @@
                                 class="text-black dark:text-black w-full border p-1 bg-gray-200" readonly></td>
                     </tr>
 
-
+    <div class="text-center">
                     <button type="button" onclick="agregarTrabajador()" class="text-blue-700 hover:underline mt-4">+
                         Agregar otro trabajador</button>
-                </div>
-            </div>
-
+               </div>
+</div>
             {{-- Este script es para la multiplicacion entre jornadas y salario, 
 agregar y eliminar campos --}}
             <script>
@@ -426,9 +472,8 @@ agregar y eliminar campos --}}
 
 
             {{-- Costo de productos --}}
-            <div class="border p-4 rounded-lg text-black dark:text-white">
-                <h2 class="text-lg font-semibold mb-4 dark:text-white">Costo de productos</h2>
-
+            <div class="border p-10 rounded-lg text-black dark:text-white">
+                <h2 class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 text-black dark:text-white">Costo de productos</h2>
                 <div class="grid grid-cols-1 gap-4">
                     <table class="w-full text-left text-black dark:text-white" id="tabla-productos">
                         <thead>
@@ -538,7 +583,7 @@ agregar y eliminar campos --}}
             </script>
             {{-- Gastos deducibles y no deducibles --}}
 
-            {{-- Resumen de cuentas --}}
+            {{-- Resumen de cuentas --}}  
             <div class="border p-4 rounded-lg">
                 <h2 class="text-lg font-semibold mb-4 dark:text-white">Cuentas</h2>
                 <div class="flex flex-col space-y-4 text-left text-gray-800 dark:text-white">
@@ -569,16 +614,13 @@ agregar y eliminar campos --}}
 
                 // Ejecutar al cargar la página
                 window.addEventListener('DOMContentLoaded', actualizarResumen);
-            </script>
+            </script> -->
 
 
             {{-- Botones --}}
             <div class="text-center">
-                <button type="button" onclick="openPagosModal()"
-                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                    + Agregar pagos
-                </button>
-                <x-primary-button class="ms-4">Registrar</x-primary-button>
+
+                <x-primary-button class="ms-4"><a href="index-cotizacion">Registrar</a></x-primary-button>
                 <a href="{{ route('index-project') }}"
                     class="ms-4 inline-block px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500">
                     Cancelar
@@ -586,43 +628,15 @@ agregar y eliminar campos --}}
             </div>
         </div>
     </form>
+<<<<<<< HEAD
     {{-- Modal 
      <form method="POST" action="{{ route('deducibles-store') }}" enctype="multipart/form-data">
     @csrf
     {{-- Comienza el modal de pagos 
     <div id="pagosModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+=======
+>>>>>>> feature-planProyectos
 
-        <div class="bg-white w-3/4 rounded-lg shadow-lg p-6">
-
-            <!-- Header -->
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold">Pagos del proyecto</h2>
-                <button onclick="closePagosModal()" class="text-gray-500">✖</button>
-            </div>
-
-            <!-- Tabs -->
-            <div class="border-b mb-4 flex gap-4">
-                <button onclick="showTab('deducible')" class="tab-btn font-semibold">
-                    Deducibles
-                </button>
-                <button onclick="showTab('no-deducible')" class="tab-btn text-gray-500">
-                    No deducibles
-                </button>
-            </div>
-
-            <!-- Contenido -->
-            @include('projects.deducibles')
-            @include('projects.no_deducibles')
-
-            <!-- Footer -->
-            <div class="mt-4 text-right">
-                <x-primary-button onclick="closePagosModal()" class="bg-blue-600 text-white px-4 py-2 rounded">
-                    Guardar pagos
-                </x-primary-button>
-            </div>
-        </div>
-    </div>
-   </form> --}}
     {{-- -Aqui es para mostrar los errores del sistema- --}}
 
     @if ($errors->any())
@@ -779,4 +793,8 @@ agregar y eliminar campos --}}
         });
     </script>
 
+<<<<<<< HEAD
 </x-guest-layout>
+=======
+    </x-guest-layout>
+>>>>>>> feature-planProyectos
