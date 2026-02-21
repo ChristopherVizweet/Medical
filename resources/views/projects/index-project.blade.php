@@ -51,7 +51,13 @@
                     {{ __('Nuevo proyecto') }}
                 </a>
             </x-primary-button>
-
+            
+            <!--Boton para cotizacion primero-->
+              <x-primary-button class="font-semibold">
+                <a href="{{ route('index-cotizacion') }}" class="text-dark">
+                    {{ __('Cotizaciones rapidas') }}
+                </a>
+            </x-primary-button>
             <!-- Botón Ver más -->
             <x-primary-button @click="open = !open" class="font-semibold">
                 {{ __('Ver más') }}
