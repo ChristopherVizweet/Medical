@@ -9,7 +9,7 @@ class Product extends Model
         protected $fillable=[
             'id_categories','name_product','codeExt_product','diameterMM_product',
             'manufact_product','valueArt_product','id_supplier','image_product',
-            'stock'
+            'stock','codeint_product','diameterinch_product'
         ];
   public function projectProduct()
 {
@@ -21,4 +21,5 @@ public function categories(){
 public function product(){
     return $this->hasMany(InventarioMovimiento::class, 'product_id');
 }
+ 
 }

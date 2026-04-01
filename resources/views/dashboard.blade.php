@@ -76,6 +76,34 @@ Modo Oscuro/Claro
     </div>
   </section>
 
+<!--Seccion para estados de los pagos de facturas-->
+  <section class="bg-white dark:bg-gray-700 border rounded-lg shadow p-4 flex flex-col">
+    <header class="mb-2">
+      <h3 id="inventario-title" class="text-lg font-semibold text-gray-900 dark:text-white">Status de facturas</h3>
+    </header>
+    <div class="text-sm text-gray-700 dark:text-gray-200 mb-4 flex-1">
+     @if($facturasStatus->isNotEmpty())
+        <ul class="list-disc list-inside space-y-2 max-h-40 overflow-auto pr-2">
+          @foreach($facturasStatus as $facturasS)
+            <li class="truncate">
+             ID: {{ $facturasS->id }}.  Nombre del emisor:{{$facturasS->first()->nombre_emisor }} <br>
+             Fecha limite de pago: {{$facturasS->fecha_vencimiento}}
+            </li>
+          @endforeach
+          <div class="mt-3">
+                <a href="{{ route('index-facturas') ?? '#' }}"
+                    class="inline-block w-full text-center px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-400">
+                    Ver Facturas
+                </a>
+             </div>
+        </ul>
+      @else
+        <p class="text-sm text-gray-600 dark:text-gray-300">No hay facturas pendientes.</p>
+      @endif
+    </div>
+  </section>
+
+
   <!-- Registros pendientes -->
   <section class="bg-white dark:bg-gray-700 border rounded-lg shadow p-4 flex flex-col" aria-labelledby="pending-title">
     <header class="mb-2">

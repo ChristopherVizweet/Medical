@@ -9,9 +9,9 @@ class Project extends Model
 {
     protected $fillable = ['folioProject','id_client','nameProject','seller_id_usuario',
 'company','inCharge_id_usuario','dateBegin','dateEnd',
-'budget','accountBank','id_priority',
-'id_status','requestDate','estimateDate','authorizedDate',
-'finishDate','totalManoObra','recursosObtenidos','ejecutionDate','totalProductos'];
+'budget','accountBank','id_priority','id_status','requestDate','estimateDate','authorizedDate','finishDate','totalManoObra',
+'recursosObtenidos','ejecutionDate','estado_project','lugar_project','area_project','piso_project',
+'totalProductos','horas_project','horasExtras','salarioHorasExtras'];
 
 public function client()
 {
@@ -65,6 +65,11 @@ public function recursos(){
 
 public function cuenta(){
     return $this->belongsTo(Bank::class,'accountBank');
+}
+
+public function facturas()
+{
+    return $this->hasMany(Factura::class);
 }
 
 }

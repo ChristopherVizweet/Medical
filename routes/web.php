@@ -11,6 +11,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmpleadosController;
 use App\Http\Controllers\EntranceController;
+use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\PriorityController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
@@ -82,8 +83,15 @@ Route::delete('/delete-product/{id}',[ProductController::class, 'delete'])->name
 #Parte para las ventas/cotizaciones/Entrada y salida de mercancia
 Route::get('/index-existencias',[ProductController::class,'indexExistencias'])->name('index-existencias');
 Route::get('/index-entradas',[ProductController::class, 'indexEntradas'])->name('index-entradas');
-Route::get('/create-entradas',[ProductController::class, 'createEntradas'])->name('create-entradas');
-Route::post('/create-entradas',[ProductController::class, 'storeEntradas'])->name('store-entradas');
+
+#Parte para la entrada sin factura
+Route::get('/create-entradas/{factura}',[ProductController::class, 'createEntradas'])->name('create-entradas');
+Route::post('/create-entradas/{factura}',[ProductController::class, 'storeEntradasConFactura'])->name('store-entradas');
+
+#Parte para la entrada sin factura
+Route::get('/create-entradasSF',[ProductController::class, 'createEntradasSinFactura'])->name('create-entradasSF');
+Route::post('/create-entradasSF',[ProductController::class, 'storeEntradasSinFActura'])->name('store-entradasSinFactura');
+
 Route::get('/index-salidas',[ProductController::class,'indexSalidas'])->name('index-salidas');
 Route::get('/create-salidas',[ProductController::class, 'createSalidas'])->name('create-salidas');
 Route::post('/create-salidas',[ProductController::class, 'storeSalidas'])->name('store-salidas');
@@ -123,6 +131,7 @@ Route::get('/edit-employees/{id}',[EmpleadosController::class, 'edit'])->name('e
 Route::put('/edit-employees/{id}',[EmpleadosController::class, 'update'])->name('edit-employees');
 Route::delete('/delete-employees/{id}',[EmpleadosController::class, 'delete'])->name('delete-employees');
 Route::delete('/delete-certificados/{id}',[EmpleadosController::class, 'deleteCertificados'])->name('delete-certificados');
+Route::delete('/delete-cv/{id}',[EmpleadosController::class, 'deleteCV'])->name('delete-cv');
 
 #Parte para el proyecto
 Route::get('/index-project',[ProjectController::class,'index'])->name('index-project');
@@ -131,6 +140,11 @@ Route::post('/create-project',[ProjectController::class,'store'])->name('store-p
 Route::get('/edit-project/{id}',[ProjectController::class, 'edit'])->name('edit-project');
 Route::put('/edit-project/{id}',[ProjectController::class, 'update'])->name('edit-project');
 Route::delete('/delete-project/{id}',[ProjectController::class, 'delete'])->name('delete-project');
+Route::get('/index-cotizacion',[ProjectController::class, 'indexCotizacion'])->name('index-cotizacion');
+#COtizaciones de red de gases
+Route::get('/cotizacion-redgases',[ProjectController::class,'cotizacionRedGases'])->name('cotizacion-redgases');
+Route::post('/cotizacion-redgases',[ProjectController::class,'storeCotizacionRedGases'])->name('store-cotizacion-redgases');
+
 
 
 #Parte de los servicios de instalación
@@ -184,6 +198,16 @@ Route::post('/create-bank',[BankController::class,'store'])->name('store-bank');
 Route::get('/edit-bank/{id}',[BankController::class, 'edit'])->name('edit-bank');
 Route::put('/edit-bank/{id}',[BankController::class, 'update'])->name('edit-bank');
 Route::delete('/delete-bank/{id}',[BankController::class, 'delete'])->name('delete-bank');
+
+#Parte de las facturas
+Route::get('/index-facturas',[App\Http\Controllers\FacturaController::class,'index'])->name('index-facturas');
+Route::get('/create-facturas',[App\Http\Controllers\FacturaController::class,'create'])->name('create-facturas');
+Route::post('/create-facturas',[App\Http\Controllers\FacturaController::class,'store'])->name('store-facturas');
+Route::get('/edit-facturas/{id}',[App\Http\Controllers\FacturaController::class,'edit'])->name('edit-facturas');
+Route::put('/edit-facturas/{id}',[App\Http\Controllers\FacturaController::class,'update'])->name('edit-facturas');
+
+#Parte de la vista completa de las facturas
+Route::get('/show-facturas/{id}',[App\Http\Controllers\FacturaController::class,'show'])->name('show-facturas');
 
 
 #Parte para la creacion de PDF para el proyecto

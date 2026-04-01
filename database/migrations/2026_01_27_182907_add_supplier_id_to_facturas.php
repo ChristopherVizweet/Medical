@@ -11,18 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('projects', function (Blueprint $table) {
-            $table->string('id_client')->nullable();
+        Schema::table('facturas', function (Blueprint $table) {
+            $table->foreignId('supplier_id')->nullable()->constrained('suppliers')->onDelete('set Null');
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::table('projects', function (Blueprint $table) {
-            $table->dropColumn('id_client');
+        Schema::table('facturas', function (Blueprint $table) {
+           $table->dropColumn('supplier_id');
         });
     }
 };

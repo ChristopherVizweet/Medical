@@ -1,48 +1,51 @@
 <x-guest-layout>
     <form method="POST" action="{{ route('store_client') }}">
         @csrf
+         <div class="text-center text-gray-800 dark:text-white">
+                CREAR CLIENTE
+            </div>
+        <div class="mb-9 grid grid-cols-2 md:grid-cols-2 gap-4 mt-6">
+            <!-- Name -->
+            <div>
+                <x-input-label for="name_Client" :value="__('Nombre')" />
+                <x-text-input id="name_Client" class="block mt-1 w-full" type="text" name="name_Client" :value="old('name_Client')" required autofocus autocomplete="off" />
+                <x-input-error :messages="$errors->get('name_client')" class="mt-2" />
+            </div>
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name_Client" :value="__('Nombre')" />
-            <x-text-input id="name_Client" class="block mt-1 w-full" type="text" name="name_Client" :value="old('name_Client')" required autofocus autocomplete="off" />
-            <x-input-error :messages="$errors->get('name_client')" class="mt-2" />
+            <!-- Address -->
+            <div class="">
+                <x-input-label for="address_Client" :value="__('Ubicación')" />
+                <x-text-input id="address_Client" class="block mt-1 w-full" autocomplete="off" type="text" name="address_Client" :value="old('address_Client')" required />
+                <x-input-error :messages="$errors->get('address_Client')" class="mt-2" />
+            </div>
+
+            <!-- Phone -->
+            <div class="mt-4">
+                <x-input-label for="phoneNumber_Client" :value="__('Teléfono')" />
+                <x-text-input maxlength="10" id="phoneNumber_Client" class="block mt-1 w-full" placeholder="Ej. 5566334455" autocomplete="off" type="tel" name="phoneNumber_Client" :value="old('phoneNumber_Client')" required />
+                <x-input-error :messages="$errors->get('phoneNumber_Client')" class="mt-2" />
+            </div>
+
+            <!-- Email Address -->
+            <div class="mt-4">
+                <x-input-label for="email_Client" :value="__('Email')" />
+                <x-text-input id="email_Client" class="block mt-1 w-full" autocomplete="off" type="email" name="email_Client" :value="old('email_Client')" required />
+                <x-input-error :messages="$errors->get('email_Client')" class="mt-2" />
+            </div>
+
+            <!-- RFC -->
+            <div class="mt-4">
+                <x-input-label for="RFC" :value="__('RFC')" />
+                <x-text-input maxlength="13" id="RFC" class="block mt-1 w-full" autocomplete="off" type="text" name="RFC" :value="old('RFC')" required />
+                <x-input-error :messages="$errors->get('RFC')" class="mt-2" />
+            </div>
         </div>
-
-        <!-- Address -->
-        <div class="mt-4">
-            <x-input-label for="address_Client" :value="__('Dirección')" />
-            <x-text-input id="address_Client" class="block mt-1 w-full" autocomplete="off" type="text" name="address_Client" :value="old('address_Client')" required />
-            <x-input-error :messages="$errors->get('address_Client')" class="mt-2" />
-        </div>
-
-        <!-- Phone -->
-        <div class="mt-4">
-            <x-input-label for="phoneNumber_Client" :value="__('Teléfono')" />
-            <x-text-input maxlength="10" id="phoneNumber_Client" class="block mt-1 w-full" autocomplete="off" type="text" name="phoneNumber_Client" :value="old('phoneNumber_Client')" required />
-            <x-input-error :messages="$errors->get('phoneNumber_Client')" class="mt-2" />
-        </div>
-
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email_Client" :value="__('Email')" />
-            <x-text-input id="email_Client" class="block mt-1 w-full" autocomplete="off" type="email" name="email_Client" :value="old('email_Client')" required />
-            <x-input-error :messages="$errors->get('email_Client')" class="mt-2" />
-        </div>
-
-        <!-- RFC -->
-        <div class="mt-4">
-            <x-input-label for="RFC" :value="__('RFC')" />
-            <x-text-input maxlength="13" id="RFC" class="block mt-1 w-full" autocomplete="off" type="text" name="RFC" :value="old('RFC')" required />
-            <x-input-error :messages="$errors->get('RFC')" class="mt-2" />
-        </div>
-
         <!-- Submit and Cancel Buttons -->
         <div style="text-align: center;" class="mt-4">
             <x-primary-button class="ms-4">
-            Registrar
+                Registrar
             </x-primary-button>
-            
+
             <a href="{{ route('index-client') }}" class="ms-4 inline-block px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 focus:bg-gray-500 active:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                 Cancelar
             </a>

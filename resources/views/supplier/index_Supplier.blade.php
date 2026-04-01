@@ -11,7 +11,7 @@
         </div>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function() {
                 const themeToggle = document.getElementById("theme-toggle");
                 const body = document.documentElement;
                 const currentTheme = localStorage.getItem("theme");
@@ -22,7 +22,7 @@
                     body.classList.remove("dark");
                 }
 
-                themeToggle.addEventListener("click", function () {
+                themeToggle.addEventListener("click", function() {
                     if (body.classList.contains("dark")) {
                         body.classList.remove("dark");
                         localStorage.setItem("theme", "light");
@@ -38,15 +38,15 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-4">
         {{-- Mensajes de sesión --}}
         @if (session('success'))
-            <div class="fade-out bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                {{ session('success') }}
-            </div>
+        <div class="fade-out bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+            {{ session('success') }}
+        </div>
         @endif
 
         @if (session('error'))
-            <div id="flash-message" class="fade-out bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-2">
-                {{ session('error') }}
-            </div>
+        <div id="flash-message" class="fade-out bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-2">
+            {{ session('error') }}
+        </div>
         @endif
 
         <h1 class="text-2xl dark:text-white font-bold mb-6">Filtros de búsqueda</h1>
@@ -55,30 +55,30 @@
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
             {{-- Filtro --}}
             <form action="{{ route('index_Supplier') }}" method="GET" class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-               <div class="flex flex-col">
+                <div class="flex flex-col">
                     <label for="name_supplier" class="text-black dark:text-white text-base">Buscar por Nombre</label>
                     <input type="text" name="name_supplier" id="name_supplier" autocomplete="off" placeholder="Escriba el nombre del proveedor"
-                           value="{{ request('name_supplier') }}"
-                           class="text-black dark:text-black border border-gray-300 rounded px-3 py-1 w-full"
-                           onchange="this.form.submit()">
+                        value="{{ request('name_supplier') }}"
+                        class="text-black dark:text-black border border-gray-300 rounded px-3 py-1 w-full"
+                        onchange="this.form.submit()">
                 </div>
             </form>
-            </div>
-            {{-- Botón Crear Proveedores --}}
-            @role('superadmin')
-                <x-primary-button>
-                    <a href="{{ route('create_supplier') }}" class="text-dark">
-                        {{ __('Crear proveedores') }}
-                    </a>
-                </x-primary-button>
-                <!--Boton para importar datos de Excel-->
-                <x-primary-button class="mt-4">
-          <a href="{{ route('import-supplier') }}" class="text-dark">
-            Importar datos de Excel
-          </a>
-      </x-primary-button>
-            @endrole
-        
+        </div>
+        {{-- Botón Crear Proveedores --}}
+        @role('superadmin')
+        <x-primary-button>
+            <a href="{{ route('create_supplier') }}" class="text-dark">
+                {{ __('Crear proveedores') }}
+            </a>
+        </x-primary-button>
+        <!--Boton para importar datos de Excel-->
+        <x-primary-button class="mt-4">
+            <a href="{{ route('import-supplier') }}" class="text-dark">
+                Importar datos de Excel
+            </a>
+        </x-primary-button>
+        @endrole
+
 
         {{-- Tabla responsive --}}
         <div class="overflow-x-auto rounded-lg shadow">
@@ -86,7 +86,9 @@
                 <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
                     <tr>
                         <th class="px-4 py-2">ID</th>
-                        <th class="px-4 py-2">Nombre</th>
+                        <th class="px-4 py-2">Nombre de la empresa</th>
+                        <th class="px-4 py-2">Nombre del encargado</th>
+                        <th class="px-4 py-2">RFC</th>
                         <th class="px-4 py-2">Email</th>
                         <th class="px-4 py-2">Número telefónico</th>
                         <th class="px-4 py-2">Acciones</th>
@@ -94,25 +96,27 @@
                 </thead>
                 <tbody>
                     @forelse ($suppliers as $supplier)
-                        <tr class="border-t dark:border-gray-700">
-                            <td class="px-4 py-2">{{ $supplier->id }}</td>
-                            <td class="px-4 py-2">{{ $supplier->name_supplier }}</td>
-                            <td class="px-4 py-2">{{ $supplier->email_supplier }}</td>
-                            <td class="px-4 py-2">{{ $supplier->phoneNumber_supplier }}</td>
-                            <td class="px-4 py-2 space-x-2">
-                                <a href="{{ route('edit_supplier', $supplier->id) }}" class="text-blue-600 dark:text-blue-900 hover:underline">Editar</a>
-                                <form action="{{ route('delete_supplier', $supplier->id) }}" method="POST" class="inline-block"
-                                    onsubmit="return confirm('¿En verdad deseas eliminar este proveedor?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 dark:text-red-900 hover:underline">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
+                    <tr class="border-t dark:border-gray-700">
+                        <td class="px-4 py-2">{{ $supplier->id }}</td>
+                        <td class="px-4 py-2">{{ $supplier->name_supplier }}</td>
+                        <td class="px-4 py-2">{{ $supplier->encargado_suppliers }}</td>
+                        <td class="px-4 py-2">{{ $supplier->rfc_supplier }}</td>
+                        <td class="px-4 py-2">{{ $supplier->email_supplier }}</td>
+                        <td class="px-4 py-2">{{ $supplier->phoneNumber_supplier }}</td>
+                        <td class="px-4 py-2 space-x-2">
+                            <a href="{{ route('edit_supplier', $supplier->id) }}" class="text-blue-600 dark:text-blue-900 hover:underline">Editar</a>
+                            <form action="{{ route('delete_supplier', $supplier->id) }}" method="POST" class="inline-block"
+                                onsubmit="return confirm('¿En verdad deseas eliminar este proveedor?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 dark:text-red-900 hover:underline">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
                     @empty
-                        <tr>
-                            <td colspan="5" class="px-4 py-2 text-center text-gray-500">Proveedores no encontrados</td>
-                        </tr>
+                    <tr>
+                        <td colspan="5" class="px-4 py-2 text-center text-gray-500">Proveedores no encontrados</td>
+                    </tr>
                     @endforelse
                 </tbody>
             </table>

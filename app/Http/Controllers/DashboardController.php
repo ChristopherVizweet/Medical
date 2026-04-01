@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Empleados;
+use App\Models\Factura;
 use App\Models\InventarioMovimiento;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -26,7 +27,15 @@ class DashboardController extends Controller
             ->where('estadoMovimiento', 'Pendiente')
             
             ->get();
-            
+        
+        $facturasStatus = Factura::where('status_factura','pendiente')
+           ->get();
+        // Para debug de estados de factura
+        if($facturasStatus->isEmpty()){
+            ('NO hay facturas pendientes por pagar');
+        } else {
+            ('Registros pendientes encontrados: ' . $facturasStatus->count());
+        }
         // Para debug
         if($rPendientes->isEmpty()) {
             ('No hay registros pendientes');
@@ -38,6 +47,6 @@ class DashboardController extends Controller
         $bnproducto = Product::Where('stock','<','10')
         ->get();
 
-        return view('dashboard', compact('proximos', 'cumpleanosProximos', 'rPendientes','bnproducto'));
+        return view('dashboard', compact('facturasStatus','proximos','cumpleanosProximos', 'rPendientes','bnproducto'));
     }
 }

@@ -43,8 +43,13 @@
         @endif
 
         <div class="flex bg-gray-200 dark:bg-gray-800 justify-center">
-           <a href="index-categories"> <x-primary-button  class="flex-1 text-white text-center bg-gray-100 px-4 py-2 m-2">CATEGORIAS</x-primary-button> </a>
-           <a href="index-product"> <x-primary-button class="flex-1 text-white text-center bg-gray-100 px-4 py-2 m-2">PRODUCTOS</x-primary-button></a>
+           <a href="index-categories"> 
+            <x-primary-button>CATEGORIAS
+            </x-primary-button> </a>
+
+           <a href="index-product"> 
+            <x-primary-button>PRODUCTOS
+            </x-primary-button></a>
           </div>
           
       

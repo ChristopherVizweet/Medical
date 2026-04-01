@@ -9,7 +9,7 @@
         th, td { border: 1px solid #000; padding: 5px; text-align: left; }
         #fechas { text-align: center; }
         #cuentass { border: 2px solid blue; display: flex; padding: 5px; width: 100%; height: 20%; }
-        #general { border: 2px solid blue; display: flex; padding: 5px; width: 100%; height: 18%; justify-content: space-between;}
+        #general { border: 2px solid blue; display: flex; padding: 5px; width: 100%; height: 23%; justify-content: space-between;}
         h1 { text-align: center; font-size: 11px; }
         h3 { text-align: center; font-size: 9px; }
         #folio { color: red; }
@@ -65,29 +65,32 @@
     
     <h5>Reporte del Proyecto #{{ $project->id }}</h5>
     {{--Aqui comienza el diseño del reporte de PDF--}}
-    <div id="general">
-        <div id="header">
-    <img src="{{ public_path('img/logo1.png') }}" alt="Logo Empresa" width="50">
+<div id="general">
+    <div id="header">
     <img id="logo2" src="{{ public_path('img/logo2.jpg') }}" alt="Logo Empresa2" width="30px">
+    <img src="{{ public_path('img/logo1.png') }}" alt="Logo Empresa" width="50px">
     <h1>MEDICAL GAS SYSTEMS INTERNATIONAL SA DE CV</h1>
-</div>
-    <div class="columna1">
-        <p><strong>Nombre del proyecto:</strong> {{ $project->nameProject }}</p>
-        <p id="folio"><strong>Folio del proyecto:</strong> MED-{{ $project->folioProject }}-2025</p>
-        <p><strong>Cliente: </strong>{{$project->client->name_Client}}</p>
-        <p><strong>Empresa encargada: </strong>{{$project->compani->nameCompany}}</p>
-        <p><strong>Vendedor: </strong>{{$project->vendedor->name}}</p>
+    </div>
+        <div class="columna1">
+            <p id="folio"><strong>Folio del proyecto:</strong> MED-{{ $project->folioProject }}-2025</p>
+            <p><strong>Nombre del proyecto:</strong> {{ $project->nameProject }}</p>
+            <p><strong>Empresa encargada: </strong>{{$project->compani->nameCompany}}</p>
+            <p><strong>Estado: </strong>{{$project->estado_project}}</p>
+            <p><strong>Lugar: </strong>{{$project->lugar_project}}</p>
+            <p><strong>Área: </strong>{{$project->area_project}}</p>
+            <p><strong>Piso: </strong>{{$project->piso_project}}</p>
         </div>
         <div class="columna2">
-        <p><strong>Encargado: </strong>{{$project->encargado->name}}</p>
-        <p><strong>Prioridad: </strong>{{$project->priority->namePriority}}</p>
-        <p><strong>Status: </strong>{{$project->status->nameStatus}}</p>
-        <p><strong>Recursos obtenidos por: </strong>{{$project->recursos->recursosObtenidos}}</p>
-        <p><strong>Presupuesto:</strong> ${{ number_format($project->budget, 2) }}</p>
+            <p><strong>Cliente: </strong>{{$project->client->name_Client}}</p>
+            <p><strong>Encargado: </strong>{{$project->encargado->name}}</p>
+             <p><strong>Vendedor: </strong>{{$project->vendedor->name}}</p>
+            <p><strong>Prioridad: </strong>{{$project->priority->namePriority}}</p>
+            <p><strong>Status: </strong>{{$project->status->nameStatus}}</p>
+            <p><strong>Recursos obtenidos por: </strong>{{$project->recursos->recursosObtenidos}}</p>
+            <p><strong>Presupuesto:</strong> ${{ number_format($project->budget, 2) }}</p>
         </div>
-    </div>
-    
-
+</div>
+<!--comienza la tabla de empleados y productos-->
     <h2>Empleados Asignados</h2>
     <table>
         <thead>
@@ -104,7 +107,7 @@
                 <td>{{ $empleado->empleado->Nombre }}</td>
                 <td>{{ $empleado->jornadas }}</td>
                 <td>${{ number_format($empleado->salario, 2) }}</td>
-                <td>${{ number_format($empleado->total_salario, 2)}}</td>
+                <td>${{ number_format($empleado->total_salario, 2) }}</td>
             </tr>
             @endforeach
         </tbody>

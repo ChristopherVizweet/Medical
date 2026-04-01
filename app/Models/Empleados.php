@@ -10,7 +10,7 @@ class Empleados extends Model
     'cargo','correoElectronico','numeroTelefonoTrabajo',
 'numeroTelParti','sueldo','calle','ciudad','estadoProv','codigoPostal',
 'pais','foto','tipoSangre','talla_pantalon','talla_camisa','talla_calzado',
-'observaciones_empleado','fecha_nacimiento','fecha_vacaciones','certificados_empleados'];
+'observaciones_empleado','fecha_nacimiento','fecha_vacaciones','certificados_empleados','cv_empleado'];
 
 
 public function empleado()
@@ -33,11 +33,8 @@ public function payments()
     {
         return $this->hasMany(Payment::class,'empleados_id');
     }
-
-    // Accesor para el nombre completo
-    public function getFullNameAttribute()
-    {
-        return trim("{$this->Nombre} {$this->apellidos}");
+public function responsable(){
+        return $this->hasMany(Factura::class); //Muchos empleados tiene una factura
     }
 }
 

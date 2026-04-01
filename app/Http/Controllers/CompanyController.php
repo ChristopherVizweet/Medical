@@ -33,11 +33,13 @@ class CompanyController extends Controller
 {
     $request->validate([
      'nameCompany' => 'required|string|max:50',
+     'rfc_company' => 'required|string|max:13',
     ]);
 
     $companies = Company::findOrFail($id);
     $companies->update([
        'nameCompany' => $request->nameCompany,
+       'rfc_company' => $request->rfc_company,
     ]);
 
     return redirect()->route('index-company')->with('success', 'Empresa actualizada correctamente');

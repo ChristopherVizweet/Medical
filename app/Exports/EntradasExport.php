@@ -43,4 +43,3 @@ class InvoicesExport implements WithDrawings
         return $drawing;
     }
 }
-

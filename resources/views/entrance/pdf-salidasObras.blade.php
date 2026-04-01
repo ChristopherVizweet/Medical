@@ -37,12 +37,12 @@ float: right;}
 }
 #header.img{
     float: left;
-    height: 250%;
-    width: 250px;
+    height: 200%;
+    width: 200px;
 }
 #logo{
     height: auto;
-    width: 150px;
+    width: 100px;
 }
 .cantidad{
     text-align: center;
@@ -53,13 +53,13 @@ float: right;}
     padding-bottom: 20px;
 }
 table{
-    font-size: 12px;
+    font-size: 9px;
 }
 th, td {
   border: 1px solid grey; /* Borde gris para todas las celdas */
 }
 #titlemenu{
-    font-size: 13px;
+    font-size: 9px;
 }
 
 .caja{

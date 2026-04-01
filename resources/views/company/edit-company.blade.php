@@ -10,6 +10,10 @@
             <x-input-label for="nameCompany" :value="__('Nombre de la empresa')" />
             <x-text-input id="nameCompany" class="block mt-1 w-full" type="text" name="nameCompany" value="{{ $companies->nameCompany }}" required />
         </div>
+        <div class="mt-4">
+             <x-input-label for="rfc_company" :value="__('RFC de la empresa')" />
+            <x-text-input id="rfc_company" class="block mt-1 w-full" type="text" name="rfc_company" value="{{ $companies->rfc_company }}" required />
+        </div>
         <div style="text-align: center;" class="mt-4">
             <x-primary-button class="ms-4">
                 {{ __('Actualizar') }}

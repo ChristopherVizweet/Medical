@@ -50,30 +50,47 @@
      <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
                 <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
                     <tr>
-                        <th class="px-4 py-2">{{ __('ID') }}</th>
-                        <th class="px-4 py-2">{{ __('Nombre') }}</th>
-                        <th class="px-4 py-2">{{ __('Apellidos') }}</th>
-                        <th class="px-4 py-2">{{ __('Organizacion') }}</th>
-                        <th class="px-4 py-2">{{ __('Cargo') }}</th>
-                        <th class="px-4 py-2">{{ __('Telefono de trabajo') }}</th>
-                        <th class="px-4 py-2">{{ __('Tipo de sangre') }}</th>
-                        <th class="pc-4 py-2">{{('Foto de empleado')}}</th>
-                        <th class=" px-4 py-2">{{ __('Ver') }}</th>
-                        <th class="px-4 py-2">{{ __('Acciones') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('ID') }}</th>
+                        <th class="px-4 py-2 text-center">{{('Foto de empleado')}}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Nombre') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Apellidos') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Organizacion') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Cargo') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Telefono de trabajo') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Tipo de sangre') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Curriculum Vitae') }}</th>
+                        <th class=" px-4 py-2 text-center">{{ __('Ver') }}</th>
+                        <th class="px-4 py-2 text-center">{{ __('Acciones') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($empleados as $empleado)
                         <tr class="border-t">
                             <td class="px-4 py-2">{{ $empleado->id}}</td>
-                            <td class="px-4 py-2">{{ $empleado->Nombre}}</td>
-                            <td class="px-4 py-2">{{ $empleado->apellidos}}</td>
-                            <td class="px-4 py-2">{{ $empleado->organizacion }}</td>
-                            <td class="px-4 py-2">{{ $empleado->cargo }}</td>
-                            <td class="px-4 py-2">{{ $empleado->numeroTelefonoTrabajo}}</td>
-                            <td class="px-4 py-2">{{ $empleado->tipoSangre}}</td>
-                            <td class="px-4 py-2"><img class="items-center" src="{{ asset('storage/' . $empleado->foto) }}" alt="Imagen de empleado" width="150">
+                             <td class="px-4 py-2"><img class="items-center w-27 h-27" src="{{ asset('storage/' . $empleado->foto) }}" alt="Imagen de empleado" width="150">
                             </td>
+                            <td class="text-center px-4 py-2">{{ $empleado->Nombre}}</td>
+                            <td class="text-center px-4 py-2">{{ $empleado->apellidos}}</td>
+                            <td class="text-center px-4 py-2">{{ $empleado->organizacion }}</td>
+                            <td class="text-center px-4 py-2">{{ $empleado->cargo }}</td>
+                            <td class="text-center px-4 py-2">{{ $empleado->numeroTelefonoTrabajo}}</td>
+                            <td class="text-center px-4 py-2">{{ $empleado->tipoSangre}}</td>
+                        
+                            <td class="px-4 py-2 text-center items-center">
+                                 <!--Condicion para el CV-->
+                            @if($empleado->cv_empleado)    
+                            <a href="storage/{{ $empleado->cv_empleado }}" target="blank_" class="text-center items-center text-blue-600 dark:text-blue-900 hover:underline">
+                                Ver CV
+                                <form action="{{ route('delete-cv', $empleado->id) }}" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 dark:text-red-900 hover:underline mt-4" onclick="return confirm('Estas seguro de eliminar este archivo?')">Eliminar CV</button>
+                                </form>
+                                @else
+                                <span class="text-red-500">Sin curriculum</span>
+                                @endif
+                            </a></td>
+
                             <td class="px-4 py-2">
                                 <!--Aqui esta la condicion si no existen certificados en los empleados-->
                                 @if ($empleado->certificados_empleados)

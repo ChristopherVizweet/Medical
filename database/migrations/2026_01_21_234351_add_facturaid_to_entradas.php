@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('projects', function (Blueprint $table) {
-              $table->dropColumn('id_empleado');
+        Schema::table('inventario_movimientos', function (Blueprint $table) {
+            $table->foreignId('factura_id')->nullable()->after('id')->constrained('facturas')->onDelete('set null');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('projects', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_empleado')->nullable(); // Si quieres restaurarla
+        Schema::table('inventario_movimientos', function (Blueprint $table) {
+            
         });
     }
 };

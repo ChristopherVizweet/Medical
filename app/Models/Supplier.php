@@ -11,7 +11,9 @@ class Supplier extends Model
     #use HasFactory;
     use HasRoles;
     
-    protected $fillable = ['name_supplier', 'email_supplier', 'phoneNumber_supplier'];
+    protected $fillable = ['name_supplier', 
+    'email_supplier', 'phoneNumber_supplier', 
+    'rfc_supplier','encargado_suppliers'];
 
  public function projectProduct()
 {
@@ -20,5 +22,8 @@ class Supplier extends Model
 public function inventarioMovimientos()
 {
     return $this->hasMany(InventarioMovimiento::class, 'supplier_id');
+}
+public function facturas(){
+    return $this->hasMany(Factura::class);
 }
 }

@@ -26,16 +26,17 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"> <!---AQUI COMIENZA EL ESTILO DE LOS CAMPOS-->
 
                    <div>
-    <x-input-label for="id_client" :value="__('Cliente')" />
-    <select class="mt-1 block w-full" name="id_client" id="id_client" required>
-        <option value="">-Seleccionar-</option>
-        @foreach ($clients as $client)
-            <option value="{{ $client->id }}" {{ $projects->id_client == $client->id ? 'selected' : '' }}>
-                {{ $client->name_Client }}
-            </option>
-        @endforeach
-    </select>
-</div>
+                        <x-input-label for="id_client" :value="__('Cliente')" />
+                        <select class="mt-1 block w-full" name="id_client" id="id_client" required>
+                            <option value="">-Seleccionar-</option>
+                            @foreach ($clients as $client)
+                                <option value="{{ $client->id }}" 
+                                {{ $projects->id_client == $client->id ? 'selected' : '' }}>
+                                    {{ $client->name_Client }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
 
                     <div>
