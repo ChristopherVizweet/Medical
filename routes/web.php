@@ -8,6 +8,9 @@ use App\Http\Controllers\BankController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\CotizacionController;
+use App\Http\Controllers\CotizacionRedMedicinalController;
+use App\Http\Controllers\CotizacionSeccionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmpleadosController;
 use App\Http\Controllers\EntranceController;
@@ -131,10 +134,13 @@ Route::post('/create-project',[ProjectController::class,'store'])->name('store-p
 Route::get('/edit-project/{id}',[ProjectController::class, 'edit'])->name('edit-project');
 Route::put('/edit-project/{id}',[ProjectController::class, 'update'])->name('edit-project');
 Route::delete('/delete-project/{id}',[ProjectController::class, 'delete'])->name('delete-project');
-Route::get('/index-cotizacion',[ProjectController::class, 'indexCotizacion'])->name('index-cotizacion');
-#COtizaciones de red de gases
-Route::get('/cotizacion-redgases',[ProjectController::class,'cotizacionRedGases'])->name('cotizacion-redgases');
-Route::post('/cotizacion-redgases',[ProjectController::class,'storeCotizacionRedGases'])->name('store-cotizacion-redgases');
+
+#Cotizaciones 
+Route::get('/index-cotizacion',[CotizacionController::class, 'index'])->name('index-cotizacion');
+Route::get('/create-cotizacion',[CotizacionController::class,'create'])->name('create-cotizacion');
+Route::post('/index-cotizacion',[CotizacionController::class, 'store'])->name('index-cotizacion-store');
+
+
 
 
 

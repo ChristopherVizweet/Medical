@@ -37,8 +37,10 @@ class ProductsImport implements ToModel, WithHeadingRow
         return new Product([
             'id_categories'    => $this->categories[strtolower(trim($row['categoria']))] ?? null,
             'name_product'     => $row['articulo'],
-            'codeExt_product'  => $row['codigo'],
-            'diameterMM_product' => $row['diametro'],
+            'codeExt_product'  => $row['codigo_exterior'],
+            'codeInt_product' => $row['codigo_interno'],
+            'diameterMM_product' => $row['diametro_mm'],
+            'diameterIN_product' => $row['diametro_in'],
             //'manufact_product'   => $row['proveedor'],
             'valueArt_product'   => $row['valor_por_articulo'],
             'stock'              => $row['stock'],

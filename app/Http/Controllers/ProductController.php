@@ -30,7 +30,7 @@ class ProductController extends Controller
 
 //    $products = $productQuery->get();
     
-    $products=Product::paginate(10);
+    $products=Product::all();
     $categories = Categories::all();
 
     return view('managment_product.products.index-product', compact('categories','products'));

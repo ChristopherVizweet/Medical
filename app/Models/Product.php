@@ -21,4 +21,11 @@ public function categories(){
 public function product(){
     return $this->hasMany(InventarioMovimiento::class, 'product_id');
 }
+public function seccion(){
+    return $this->belongsTo(CotizacionSeccion::class, 'tipo_seccion', 'tipo_seccion');
 }
+public function detalleCotizacion(){
+    return $this->hasMany(CotizacionPartidaDetalleRed::class, 'concepto_detalle_rm_id');
+}
+}
+
