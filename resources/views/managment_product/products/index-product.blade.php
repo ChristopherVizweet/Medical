@@ -61,6 +61,7 @@
     </div>
 
     <!--Boton para crear un nuevo producto-->
+    @hasanyrole('superadmin|admin|ventas')
     <div class="flex items-center space-x-2">
         <x-primary-button class="mt-4">
             <a href="{{ route('create-product') }}" class="text-dark">
@@ -79,6 +80,7 @@
             </a>
         </x-primary-button>
     </div>
+    @endhasanyrole
     <div class="overflow-x-auto rounded-lg shadow">
         <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
             <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
@@ -92,8 +94,8 @@
                     <th class="px-4 py-2">Diametro(mm)</th>
                     <th class="px-4 py-2">Diametro(inch)</th>
                     <th class="px-4 py-2">Stock</th>
-                    <th class="px-4 py-2">valor por articulo ($)</th>
-                    <th class="px-4 py-2">Acciones</th>
+                    @hasanyrole('superadmin|admin') <th class="px-4 py-2">valor por articulo ($)</th> @endhasanyrole
+                     @hasanyrole('superadmin|admin') <th class="px-4 py-2">Acciones</th> @endhasanyrole
                 </tr>
             </thead>
             <tbody>
@@ -115,14 +117,14 @@
                     <td class="px-4 py-2">{{ $product->diameterMM_product ?? 'Sin diametro(mm)'}}</td>
                     <td class="px-4 py-2">{{ $product->diameterinch_product ?? 'Sin diametro(inch)'}}</td>
                     <td class="px-4 py-2">{{ $product->stock ?? 'Sin stock'}}</td>
-                    <td class="px-4 py-2">${{ $product->valueArt_product ?? 'Sin valor unitario'}}</td>
+                    @hasanyrole('superadmin|admin') <td class="px-4 py-2">${{ $product->valueArt_product ?? 'Sin valor unitario'}}</td> @endhasanyrole
                     <td class="px-4 py-2">
-                        <a href="{{ route('edit-product', $product->id) }}" class="text-blue-600 hover:underline">Editar</a> |
+                           @hasanyrole('superadmin|admin') <a href="{{ route('edit-product', $product->id) }}" class="text-blue-600 hover:underline">Editar</a> |
                         <form action="{{ route('delete-product', $product->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿En verdad deseas eliminar esta categoria?')">Eliminar</button>
-                        </form>
+                        </form> @endhasanyrole
                     </td>
                 </tr>
                 @empty

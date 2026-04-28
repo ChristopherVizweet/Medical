@@ -22,12 +22,14 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);*/
+    
         
     #Aqui estoy colocando el nombre de los roles
     $superadmin = Role::create(['name' => 'superadmin']);
     $admin = Role::create(['name' => 'admin']);
     $ventas = Role::create(['name' => 'ventas']);
     $almacen = Role::create(['name' => 'almacen']);
+    $laboratorio = Role::create(['name' => 'laboratorio']);
 
     #Estos son los permisos
     #Permisos para gestionar a los clientes
@@ -67,6 +69,8 @@ class DatabaseSeeder extends Seeder
 'ver proveedores','crear proveedores','editar proveedores','eliminar proveedores','ver productos',
 'crear productos','editar productos','eliminar productos','gestionar ventas','gestionar existencias']);
     $almacen->givePermissionTo(['gestionar existencias']);
+    $this->call(SuperadminSeeder::class);
+    
     }
 
 }

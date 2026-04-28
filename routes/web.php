@@ -221,6 +221,13 @@ Route::post('/deducibles/{project_id}', [PaymentController::class, 'store_dedu']
 Route::get('/ver-payments/{project_id}', [PaymentController::class, 'verPayments'])->name('ver-payments');
 
 
+#Parte para registro de vehiculos
+Route::get('/index-vehiculos',[App\Http\Controllers\VehiculoController::class,'index'])->name('index-vehiculos');
+Route::get('/create-vehiculos',[App\Http\Controllers\VehiculoController::class,'create'])->name('create-vehiculos');
+
+
+
+
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

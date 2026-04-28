@@ -10,20 +10,20 @@
                 </div>
                 <h2 class="text-center text-4xl font-sans font-semibold mb-4 dark:text-white">Información del Proyecto</h2>
                 <div class="hidden">
-                    <x-input-label for="folioProject" :value="__('Folio del proyecto')"/>
+                    <x-input-label for="folioProject" :value="__('Folio del proyecto')" />
                     <x-text-input id="folioProject" class="mt-1 block w-full " type="text" name="folioProject"
                         :value="old('folioProject')" />
-                    <x-input-error :messages="$errors->get('folioProject')" class="mt-2"/>
+                    <x-input-error :messages="$errors->get('folioProject')" class="mt-2" />
                 </div>
 
                 <div>
-                    <x-input-label for="nameProject" :value="__('Nombre del proyecto')"/>
+                    <x-input-label for="nameProject" :value="__('Nombre del proyecto')" />
                     <x-text-input id="nameProject" class="mt-1 block w-full" type="text" name="nameProject"
                         :value="old('nameProject')" />
-                    <x-input-error :messages="$errors->get('nameProject')" class="mt-2"/>
+                    <x-input-error :messages="$errors->get('nameProject')" class="mt-2" />
                 </div> <br>
                 <!--Seccion para informacion sobre la empresa encargada-->
-                <h2 class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 dark:text-white">Información de la empresa</h2>
+                <h2 class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 dark:text-white">Información del proyecto a realizar</h2>
                 <div class="mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div>
                         <x-input-label for="estado_project" :value="__('Estado')" />
@@ -50,15 +50,15 @@
                         <x-input-error :messages="$errors->get('piso_project')" class="mt-2" />
                     </div>
 
-                    <div>
+                    <!--<div>
                         <x-input-label for="id_client" :value="__('Cliente')" />
-                        <select class="mt-1 block w-full" name="id_client" id="id_client" required>
+                        <select class="mt-1 block w-full" name="id_client" id="id_client_project" required>
                             <option value="">-Seleccionar-</option>
                             @foreach ($clients as $client)
                             <option value="{{ $client->id }}">{{ $client->name_Client }}</option><br>
                             @endforeach
                         </select>
-                    </div>
+                    </div>-->
 
                     <div>
                         <x-input-label for="company" :value="__('Empresa encargada')" />
@@ -70,8 +70,8 @@
                         </select>
                     </div>
                     <div>
-                        <x-input-label for="seller_id_usuario" :value="__('Vendedor')"/>
-                        <select class="mt-1 block w-full" name="seller_id_usuario" id="seller_id_usuario" >
+                        <x-input-label for="seller_id_usuario" :value="__('Vendedor')" />
+                        <select class="mt-1 block w-full" name="seller_id_usuario" id="seller_id_usuario">
                             <option value="">-Seleccionar-</option>
                             @foreach ($users as $user)
                             <option value="{{ $user->id }}">{{ $user->name }}</option><br>
@@ -79,8 +79,8 @@
                         </select>
                     </div>
                     <div>
-                        <x-input-label for="inCharge_id_usuario" :value="__('Encargado de obra')"/>
-                        <select class="mt-1 block w-full" name="inCharge_id_usuario" id="inCharge_id_usuario" >
+                        <x-input-label for="inCharge_id_usuario" :value="__('Encargado de obra')" />
+                        <select class="mt-1 block w-full" name="inCharge_id_usuario" id="inCharge_id_usuario">
                             <option value="">-Seleccionar-</option>
                             @foreach ($users as $user)
                             <option value="{{ $user->id }}">{{ $user->name }}</option><br>
@@ -90,7 +90,7 @@
 
                     <div>
                         <x-input-label for="id_priority" :value="__('Prioridad')" />
-                        <select class="mt-1 block w-full" name="id_priority" id="id_priority" >
+                        <select class="mt-1 block w-full" name="id_priority" id="id_priority">
                             <option value="">-Seleccionar-</option>
                             @foreach ($priorities as $priority)
                             <option value="{{ $priority->id }}">{{ $priority->namePriority }}</option><br>
@@ -105,51 +105,108 @@
                     <!---AQUI COMIENZA EL ESTILO DE LOS CAMPOS-->
                     <div>
                         <x-input-label for="id_client" :value="__('Cliente')" />
-                        <select class="mt-1 block w-full" name="id_client" id="id_client" >
+                        <select class="mt-1 block w-full" name="id_client" id="id_client">
                             <option value="">-Seleccionar-</option>
                             @foreach ($clients as $client)
-                            <option value="{{ $client->id }}">{{ $client->name_Client }}</option><br>
+                            <option value="{{ $client->id }}" data-email="{{ $client->email_Client }}" data-rfc="{{ $client->RFC }}" data-supervisor="{{ $client->supervisor }}" data-email-supervisor="{{ $client->email_supervisor }}" data-telefono-supervisor="{{ $client->telefono_supervisor }}" data-encargado="{{ $client->encargado }}" data-email-encargado="{{ $client->email_encargado }}" data-telefono-encargado="{{ $client->telefono_encargado }}">{{ $client->name_Client }}</option><br>
                             @endforeach
                         </select>
                     </div>
                     <div>
-                        <x-input-label for="estado_project" :value="__('Estado')" />
-                        <x-text-input id="estado_project" class="mt-1 block w-full" type="text" name="estado_project"
-                            placeholder="Ingrese el estado del proyecto" :value="old('estado_project')"  />
-                        <x-input-error :messages="$errors->get('estado_project')" class="mt-2" />
+                        <x-input-label for="email_Client" :value="__('Correo electronico')" />
+                        <x-text-input id="email_Client" class="mt-1 block w-full" type="text" name="email_Client"
+                            placeholder="CORREO DE LA EMPRESA" :value="old('email_Client')" />
+                        <x-input-error :messages="$errors->get('email_Client')" class="mt-2" />
                     </div>
                     <div>
-                        <x-input-label for="lugar_project" :value="__('Lugar')" />
-                        <x-text-input id="lugar_project" class="mt-1 block w-full" type="text" name="lugar_project"
-                            placeholder="Ingrese el lugar del proyecto" :value="old('lugar_project')"  />
-                        <x-input-error :messages="$errors->get('lugar_project')" class="mt-2" />
+                        <x-input-label for="RFC" :value="__('RFC')" />
+                        <x-text-input id="RFC" class="mt-1 block w-full" type="text" name="RFC"
+                            placeholder="RFC DE LA EMPRESA" :value="old('RFC')" />
+                        <x-input-error :messages="$errors->get('RFC')" class="mt-2" />
+                    </div>
+                    <!-- DATOS DEL SUPERVISOR -->
+                    <div>
+                        <x-input-label for="supervisor" :value="__('Nombre del supervisor')" />
+                        <x-text-input id="supervisor" class="mt-1 block w-full" type="text" name="supervisor"
+                            placeholder="NOMBRE DEL SUPERVISOR" :value="old('supervisor')" />
+                        <x-input-error :messages="$errors->get('supervisor')" class="mt-2" />
                     </div>
                     <div>
-                        <x-input-label for="area_project" :value="__('Área')" />
-                        <x-text-input id="area_project" class="mt-1 block w-full" type="text" name="area_project"
-                            placeholder="Ingrese el área del proyecto" :value="old('area_project')"  />
-                        <x-input-error :messages="$errors->get('area_project')" class="mt-2" />
+                        <x-input-label for="email_supervisor" :value="__('Correo del supervisor')" />
+                        <x-text-input id="email_supervisor" class="mt-1 block w-full" type="text" name="email_supervisor"
+                            placeholder="CORREO DEL SUPERVISOR" :value="old('email_supervisor')" />
+                        <x-input-error :messages="$errors->get('email_supervisor')" class="mt-2" />
                     </div>
                     <div>
-                        <x-input-label for="piso_project" :value="__('Piso')" />
-                        <x-text-input id="piso_project" class="mt-1 block w-full" type="text" name="piso_project"
-                            placeholder="Ingrese el piso del proyecto" :value="old('piso_project')"  />
-                        <x-input-error :messages="$errors->get('piso_project')" class="mt-2" />
+                        <x-input-label for="telefono_supervisor" :value="__('Teléfono del supervisor')" />
+                        <x-text-input id="telefono_supervisor" class="mt-1 block w-full" type="text" name="telefono_supervisor"
+                            placeholder="TELÉFONO DEL SUPERVISOR" :value="old('telefono_supervisor')" />
+                        <x-input-error :messages="$errors->get('telefono_supervisor')" class="mt-2" />
                     </div>
 
+                    <!-- DATOS DEL EMCARGADO -->
                     <div>
-                        <x-input-label for="budget" :value="__('Presupuesto')" />
-                        <x-text-input id="budget" class="mt-1 block w-full" type="number" step="0.01"
-                            name="budget" placeholder="Ingrese el monto" :value="old('budget')"  />
-                        <x-input-error :messages="$errors->get('budget')" class="mt-2" />
+                        <x-input-label for="encargado" :value="__('Nombre del encargado')" />
+                        <x-text-input id="encargado" class="mt-1 block w-full" type="text" name="encargado"
+                            placeholder="NOMBRE DEL ENCARGADO" :value="old('encargado')" />
+                        <x-input-error :messages="$errors->get('encargado')" class="mt-2" />
                     </div>
+                    <div>
+                        <x-input-label for="email_encargado" :value="__('Correo del encargado')" />
+                        <x-text-input id="email_encargado" class="mt-1 block w-full" type="text" name="email_encargado"
+                            placeholder="CORREO DEL ENCARGADO" :value="old('email_encargado')" />
+                        <x-input-error :messages="$errors->get('email_encargado')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-input-label for="telefono_encargado" :value="__('Teléfono del encargado')" />
+                        <x-text-input id="telefono_encargado" class="mt-1 block w-full" type="text" name="telefono_encargado"
+                            placeholder="TELÉFONO DEL ENCARGADO" :value="old('telefono_encargado')" />
+                        <x-input-error :messages="$errors->get('telefono_encargado')" class="mt-2" />
+                    </div>
+                  
+                    <script>
+                        // Listener para auto-llenar campos del cliente
+                        document.getElementById('id_client').addEventListener('change', function() {
+                            const selectedOption = this.selectedOptions[0];
+                            if (selectedOption.value) {
+                                document.getElementById('email_Client').value = selectedOption.dataset.email || '';
+                                document.getElementById('RFC').value = selectedOption.dataset.rfc || '';
+                                document.getElementById('supervisor').value = selectedOption.dataset.supervisor || '';
+                                document.getElementById('email_supervisor').value = selectedOption.dataset.emailSupervisor || '';
+                                document.getElementById('telefono_supervisor').value = selectedOption.dataset.telefonoSupervisor || '';
+                                document.getElementById('encargado').value = selectedOption.dataset.encargado || '';
+                                document.getElementById('email_encargado').value = selectedOption.dataset.emailEncargado || '';
+                                document.getElementById('telefono_encargado').value = selectedOption.dataset.telefonoEncargado || '';
+                            } else {
+                                // Limpiar campos si no se selecciona nada
+                                document.getElementById('email_Client').value = '';
+                                document.getElementById('RFC').value = '';
+                                document.getElementById('supervisor').value = '';
+                                document.getElementById('email_supervisor').value = '';
+                                document.getElementById('telefono_supervisor').value = '';
+                                document.getElementById('encargado').value = '';
+                                document.getElementById('email_encargado').value = '';
+                                document.getElementById('telefono_encargado').value = '';
+                            }
+                        });
+
+                        // Sincronizar los dos selects de cliente
+                        document.getElementById('id_client_project').addEventListener('change', function() {
+                            document.getElementById('id_client').value = this.value;
+                            document.getElementById('id_client').dispatchEvent(new Event('change'));
+                        });
+                        document.getElementById('id_client').addEventListener('change', function() {
+                            document.getElementById('id_client_project').value = this.value;
+                        });
+                    </script>
+
                 </div>
                 <!--Seccion para informacion sobre el status y recursos-->
                 <h2 class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 dark:text-white">Status y recurso</h2>
                 <div class="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-3">
                     <div>
                         <x-input-label for="id_status" :value="__('Status')" />
-                        <select class="mt-1 block w-full" name="id_status" id="id_status" >
+                        <select class="mt-1 block w-full" name="id_status" id="id_status">
                             <option value="">-Seleccionar-</option>
                             @foreach ($statues as $status)
                             <option value="{{ $status->id }}">{{ $status->nameStatus }}</option><br>
@@ -158,7 +215,7 @@
                     </div>
                     <div>
                         <x-input-label for="recursosObtenidos" :value="__('Recursos obtenidos por:')" />
-                        <select class="mt-1 block w-full" name="recursosObtenidos" id="recursosObtenidos" >
+                        <select class="mt-1 block w-full" name="recursosObtenidos" id="recursosObtenidos">
                             <option value="">-Seleccionar-</option>
                             @foreach ($recursos as $recurso)
                             <option value="{{ $recurso->id }}">{{ $recurso->recursosObtenidos }}</option><br>
@@ -168,19 +225,24 @@
 
                     <div>
                         <x-input-label for="accountBank" :value="__('Cuenta bancaria')" />
-                        <select class="mt-1 block w-full" name="accountBank" id="accountBank" >
+                        <select class="mt-1 block w-full" name="accountBank" id="accountBank">
                             <option value="">-Seleccionar-</option>
                             @foreach ($banks as $bank)
                             <option value="{{ $bank->id }}">{{ $bank->accountBank }}</option><br>
                             @endforeach
                         </select>
                     </div>
-
+                    <div>
+                        <x-input-label for="budget" :value="__('Presupuesto')" />
+                        <x-text-input id="budget" class="mt-1 block w-full" type="number" step="0.01"
+                            name="budget" placeholder="Ingrese el monto" :value="old('budget')" />
+                        <x-input-error :messages="$errors->get('budget')" class="mt-2" />
+                    </div>
                 </div>
             </div>
 
             {{--</div>--}}
-<!--
+            <!--
             {{-- Fechas --}}
             <div class="border p-10 rounded-lg">
                 <h2 class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 dark:text-white">Fechas estimadas</h2>
@@ -289,9 +351,9 @@
             {{-- Mano de Obra --}}
             <div class="border p-10 rounded-lg">
                 <h2 class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 dark:text-white">Mano de obra</h2>-->
-               
-                    <!--div class="grid grid-cols-1 gap-4"-->
-                   <!-- <table class="w-full text-center text-black dark:text-white" id="tabla-trabajadores">
+
+            <!--div class="grid grid-cols-1 gap-4"-->
+            <!-- <table class="w-full text-center text-black dark:text-white" id="tabla-trabajadores">
                         <thead>
                             <tr>
                                 <th>Trabajador</th>
@@ -777,4 +839,4 @@ agregar y eliminar campos --}}
         });
     </script>
 
-</x-guest-layout>
+    </x-guest-layout>

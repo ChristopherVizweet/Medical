@@ -10,12 +10,14 @@ use App\Models\MovementProduct;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EntradasExport;
 use App\Exports\InvoicesExport;
 use App\Models\Factura;
 use App\Models\Project;
+use App\Models\User;
 use phpDocumentor\Reflection\Types\Nullable;
 use PhpOffice\PhpSpreadsheet\Calculation\Category;
 use function Pest\Laravel\get;
@@ -24,15 +26,22 @@ class ProductController extends Controller
 {
     public function index(Request $request)
 {
-    //$productQuery = Product::with('categories');
+    $user = Auth::user();
 
-    //if ($request->filled('id_categories')) {
-        //    $productQuery->where('id_categories', $request->id_categories);
-        //}
-
-//    $products = $productQuery->get();
-    
-    $products=Product::orderBy('id','desc')->get();
+    if ($user instanceof User && method_exists($user, 'hasRole') && $user->hasRole('laboratorio')) {
+        $laboratoryCategory = Categories::where('name_categories', 'laboratorio')->first();
+        if ($laboratoryCategory) {
+            $products = Product::where('id_categories', $laboratoryCategory->id)->orderBy('id','desc')->get();
+        } else {
+            $products = collect();
+        }
+    } else {
+        $products = Product::query();
+        if ($request->filled('id_categories')) {
+            $products->where('id_categories', $request->id_categories);
+        }
+        $products = $products->orderBy('id','desc')->get();
+    }
     $categories = Categories::all();
 
     return view('managment_product.products.index-product', compact('categories','products'));

@@ -93,10 +93,12 @@
                     <tr>
                         <th class="px-4 py-2">ID</th>
                         <th class="px-4 py-2">Nombre</th>
-                        <th class="px-4 py-2">Dirección</th>
                         <th class="px-4 py-2">Teléfono</th>
                         <th class="px-4 py-2">Email</th>
                         <th class="px-4 py-2">RFC</th>
+                        <th class="px-4 py-2">Supervisor</th>
+                        <th class="px-4 py-2">Correo supervisor</th>
+                        <th class="px-4 py-2">Teléfono supervisor</th>
                         <th class="px-4 py-2">Acciones</th>
                     </tr>
                 </thead>
@@ -105,10 +107,12 @@
                          <tr class="">
                             <td class="px-4 py-2">{{ $client->id }}</td>
                             <td class="px-4 py-2">{{ $client->name_Client }}</td>
-                            <td class="px-4 py-2">{{ $client->address_Client }}</td>
                             <td class="px-4 py-2">{{ $client->phoneNumber_Client }}</td>
                             <td class="px-4 py-2">{{ $client->email_Client }}</td>
                             <td class="px-4 py-2">{{ $client->RFC }}</td>
+                            <td class="px-4 py-2">{{ $client->supervisor ?? 'Sin supervisor' }}</td>
+                            <td class="px-4 py-2">{{ $client->email_supervisor ?? 'Sin correo' }}</td>
+                            <td class="px-4 py-2">{{ $client->telefono_supervisor ?? 'Sin teléfono' }}</td>
                             <td class="px-4 py-2 text-center space-x-2 text-sm">
                                 <a href="{{ route('edit_client', $client->id) }}" class="text-blue-600 dark:text-blue-900 hover:underline">Editar</a>
                                 <form action="{{ route('delete_client', $client->id) }}" method="POST" class="inline-block"

@@ -16,6 +16,7 @@ class EmpleadosController extends Controller
      }
      public function store(Request $request){
       // Validar y guardar datos
+      //dd($request->all());
     $request->validate([
         'curp' => 'nullable|string|max:20',
         'Nombre' => 'nullable|string|max:30',
@@ -95,11 +96,12 @@ class EmpleadosController extends Controller
 
 public function update(Request $request, $id)
 {
+    dd(app()->getLocale());
     $request->validate([
     'curp' => 'nullable|string|max:20',
         'Nombre' => 'nullable|string|max:30',
         'apellidos' => 'nullable|string|max:22',
-        'organizacion' => '|string|max:20',
+        'organizacion' => 'nullable|string|max:20',
         'cargo' => 'nullable|string|max:30',
         'correoElectronico' => 'nullable|email',
         'numeroTelefonoTrabajo' => 'nullable|string|max:15',
@@ -116,7 +118,7 @@ public function update(Request $request, $id)
         'talla_camisa' => 'nullable|string|max:10',
         'talla_calzado' => 'nullable|string|max:10',
         'observaciones_empleado' => 'nullable|string|max:255',
-        'cv_empleado' => 'nullable|file|mimes:pdf|max:5000',
+        'cv_empleado' => 'nullable|file|mimes:pdf|max:5000',['cv_empleado.mimes'=>'El archivo del CV debe ser un PDF.'],
         'fecha_nacimiento' => 'nullable|date',
         'fecha_vacaciones' => 'nullable|date',
         'certificados_empleados' => 'nullable|file|mimes:pdf|max:5000',

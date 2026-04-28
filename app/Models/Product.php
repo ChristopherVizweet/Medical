@@ -21,5 +21,6 @@ public function categories(){
 public function product(){
     return $this->hasMany(InventarioMovimiento::class, 'product_id');
 }
- 
+//Funcion para mostrar el material segun el usuario(almacen o almacen)
+
 }

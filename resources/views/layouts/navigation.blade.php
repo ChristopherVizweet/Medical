@@ -8,9 +8,10 @@
                 </div> 
                     <!-- Navigation Links -->
                 <div class="hidden sm:flex justify-center space-x-12">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    
+                   <!-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         Panel
-                    </x-nav-link>
+                    </x-nav-link>-->
                     @hasanyrole('superadmin|admin|ventas')
                     <x-nav-link :href="route('index_Supplier')" :active="request()->routeIs('index_Supplier')">
                         Proveedores
@@ -33,8 +34,8 @@
                         Facturas 
                     </x-nav-link>
                     @endhasanyrole
-
-                    @hasanyrole('superadmin|almacen')
+                                                                                                                            
+                    @hasanyrole('superadmin|almacen|laboratorio')
                     <x-nav-link :href="route('index-product')" :active="request()->routeIs('index-product')">
                         Productos
                     </x-nav-link>
@@ -51,7 +52,12 @@
                     @endrole
                     @role('superadmin')
                     <x-nav-link :href="route('index-user')" :active="request()->routeIs('index-user')">
-                        Gestión de usuarios
+                        Usuarios
+                    </x-nav-link>
+                    @endrole
+                      @role('superadmin')
+                    <x-nav-link :href="route('index-vehiculos')" :active="request()->routeIs('index-vehiculos')">
+                        Vehículos
                     </x-nav-link>
                     @endrole
                 </div>

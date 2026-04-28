@@ -57,10 +57,17 @@
             <x-input-label for="fecha_nacimiento" :value="__('Fecha de nacimiento')" />
             <x-text-input id="fecha_nacimiento" class="block mt-1 w-full" type="date" name="fecha_nacimiento"  value="{{ $empleados->fecha_nacimiento }}"  />
         </div>
-        <div class="mt-4">
-           <x-input-label for="organizacion" :value="__('Organización')" />
-            <x-text-input id="organizacion" class="block mt-1 w-full" type="text" name="organizacion"  value="{{ $empleados->organizacion }}"  />
-        </div>
+       <div>
+                        <x-input-label for="organizacion" :value="__('Organización')" />
+                        <!--<x-text-input id="organizacion" class="mt-1 block w-full" type="text" name="organizacion" :value="old('organizacion')"  />
+            <x-input-error :messages="$errors->get('organizacion')" class="mt-2" /> -->
+                        <Select name="organizacion" class="w-full">
+                            <option value="">-Seleccionar-</option>
+                            <option value="medical gas systems international">MGSI</option>
+                            <option value="Ascort">Ascort</option>
+                            <option value="Meicon">Meicon</option>
+                        </Select>
+                    </div>
         <div class="mt-4">
            <x-input-label for="cargo" :value="__('Cargo')" />
             <x-text-input id="cargo" class="block mt-1 w-full" type="text" name="cargo"  value="{{ $empleados->cargo }}"  />
@@ -176,7 +183,7 @@
 
     @if ($errors->any())
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-        <strong>¡Error!</strong> Revisa los campos marcados. <br>
+        <strong>¡Error!</strong>Se encontraron errores en el formulario. Verifica la información. Revisa los campos marcados. <br>
         <ul class="mt-2 list-disc list-inside">
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>

@@ -15,35 +15,35 @@
                     {{-- Nombre --}}
                     <div>
                         <x-input-label for="Nombre" :value="__('Nombre de empleado')" />
-                        <x-text-input autocomplete="off" id="Nombre" class="mt-1 block w-full" type="text" name="Nombre" :value="old('Nombre')" required />
+                        <x-text-input autocomplete="off" id="Nombre" class="mt-1 block w-full" type="text" name="Nombre" :value="old('Nombre')"  />
                         <x-input-error :messages="$errors->get('Nombre')" class="mt-2" />
                     </div>
 
                     {{-- Apellidos --}}
                     <div>
                         <x-input-label for="apellidos" :value="__('Apellidos')" />
-                        <x-text-input autocomplete="off" id="apellidos" class="mt-1 block w-full" type="text" name="apellidos" :value="old('apellidos')" required />
+                        <x-text-input autocomplete="off" id="apellidos" class="mt-1 block w-full" type="text" name="apellidos" :value="old('apellidos')"  />
                         <x-input-error :messages="$errors->get('apellidos')" class="mt-2" />
                     </div>
 
                     {{-- CURP --}}
                     <div>
                         <x-input-label for="curp" :value="__('CURP')" />
-                        <x-text-input autocomplete="off" id="curp" class="mt-1 block w-full" type="text" name="curp" :value="old('curp')" required />
+                        <x-text-input autocomplete="off" id="curp" class="mt-1 block w-full" type="text" name="curp" :value="old('curp')"  />
                         <x-input-error :messages="$errors->get('curp')" class="mt-2" />
                     </div>
 
                     {{-- Fecha de nacimiento --}}
                     <div>
                         <x-input-label for="fecha_nacimiento" :value="__('Fecha de nacimiento')" />
-                        <x-text-input id="fecha_nacimiento" class="mt-1 block w-full" type="date" name="fecha_nacimiento" :value="old('fecha_nacimiento')" required />
+                        <x-text-input id="fecha_nacimiento" class="mt-1 block w-full" type="date" name="fecha_nacimiento" :value="old('fecha_nacimiento')"  />
                         <x-input-error :messages="$errors->get('fecha_nacimiento')" class="mt-2" />
                     </div>
 
                     {{-- Organización --}}
                     <div>
                         <x-input-label for="organizacion" :value="__('Organización')" />
-                        <!--<x-text-input id="organizacion" class="mt-1 block w-full" type="text" name="organizacion" :value="old('organizacion')" required />
+                        <!--<x-text-input id="organizacion" class="mt-1 block w-full" type="text" name="organizacion" :value="old('organizacion')"  />
             <x-input-error :messages="$errors->get('organizacion')" class="mt-2" /> -->
                         <Select name="organizacion" class="w-full">
                             <option value="">-Seleccionar-</option>
@@ -56,7 +56,7 @@
                     {{-- Cargo --}}
                     <div>
                         <x-input-label for="cargo" :value="__('Cargo')" />
-                        <x-text-input autocomplete="off" id="cargo" class="mt-1 block w-full" type="text" name="cargo" :value="old('cargo')" required />
+                        <x-text-input autocomplete="off" id="cargo" class="mt-1 block w-full" type="text" name="cargo" :value="old('cargo')"  />
                         <x-input-error :messages="$errors->get('cargo')" class="mt-2" />
                     </div>
 
@@ -119,7 +119,7 @@
                     {{-- País --}}
                     <div>
                         <x-input-label for="pais" :value="__('País o región')" />
-                        <x-text-input autocomplete="off" id="pais" class="mt-1 block w-full" type="text" name="pais" :value="old('pais')" required />
+                        <x-text-input autocomplete="off" id="pais" class="mt-1 block w-full" type="text" name="pais" :value="old('pais')"  />
                         <x-input-error :messages="$errors->get('pais')" class="mt-2" />
                     </div>
 
@@ -170,7 +170,7 @@
                     {{-- Fecha de vacaciones --}}
                     <div>
                         <x-input-label for="fecha_vacaciones" :value="__('Fecha de vacaciones')" />
-                        <x-text-input id="fecha_vacaciones" class="mt-1 block w-full" type="date" name="fecha_vacaciones" :value="old('fecha_vacaciones')" required />
+                        <x-text-input id="fecha_vacaciones" class="mt-1 block w-full" type="date" name="fecha_vacaciones" :value="old('fecha_vacaciones')"  />
                         <x-input-error :messages="$errors->get('fecha_vacaciones')" class="mt-2" />
                     </div>
 

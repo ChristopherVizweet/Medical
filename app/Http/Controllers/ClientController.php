@@ -59,10 +59,16 @@ class ClientController extends Controller
     // Validar y guardar datos
     $request->validate([
       'name_Client' => 'required|string|max:255',
-      'address_Client' => 'required|string|max:255',
-      'email_Client' => 'required|email',
-      'phoneNumber_Client' => 'required|string|max:10',
+      'address_Client' => 'nullable|string|max:255',
+      'email_Client' => 'nullable|email',
+      'phoneNumber_Client' => 'nullable|string|max:10',
       'RFC' => 'required|string',
+      'supervisor' => 'nullable|string|max:255',
+      'encargado' => 'nullable|string|max:255',
+      'telefono_supervisor' => 'nullable|string|max:10',
+      'telefono_encargado' => 'nullable|string|max:10',
+      'email_supervisor' => 'nullable|email',
+      'email_encargado' => 'nullable|email',
     ]);
 
     Client::create([
@@ -71,6 +77,12 @@ class ClientController extends Controller
       'email_Client' => $request->email_Client,
       'phoneNumber_Client' => $request->phoneNumber_Client,
       'RFC' => $request->RFC,
+      'supervisor' => $request->supervisor,
+      'encargado' => $request->encargado,
+      'telefono_supervisor' => $request->telefono_supervisor,
+      'telefono_encargado' => $request->telefono_encargado,
+      'email_supervisor' => $request->email_supervisor,
+      'email_encargado' => $request->email_encargado,
     ]);
 
 

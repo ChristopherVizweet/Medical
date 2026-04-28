@@ -6,7 +6,7 @@
             <h1 class="text-2xl font-bold">NUEVA SALIDA</h1>
         </div><br>
         <!--Aqui comienza el formulario para registrar la salida-->
-        <div class="producto-row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
+        <div class="producto-row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-center">
             <div class="hidden">
             <x-input-label for="tipoMovimiento" :value="__('Tipo de registro')" />
             <select class="mt-1 block w-full " name="tipoMovimiento" id="tipoMovimiento" readonly=true required>
@@ -84,7 +84,7 @@
                        class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
         @endrole
-        </div>
+        
         <!-- TPE -->
         @role('superadmin')
         <div>
@@ -92,6 +92,7 @@
             <input type="number" name="productos[0][cantidad]" placeholder="Total productos aprobados" value=0
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
+</div>
         @else
             <input type="hidden" name="productos[0][cantidad]" placeholder="Total productos aprobados" value=0
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
@@ -136,7 +137,7 @@
         'grid',
         'grid-cols-1',      // 1 columna en móvil
         'md:grid-cols-3',   // 3 columnas en tablet
-        'lg:grid-cols-5',   // 5 columnas en desktop
+        'lg:grid-cols-5',   // 6 columnas en desktop
         'gap-4',
         'items-center',
         'mb-2');
@@ -154,14 +155,15 @@
          <input type="number" readonly="true" step="any" name="productos[${productoIndex}][stock]" placeholder="Existencias"
              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
         <div>
-         <label class="block text-sm font-medium text-gray-700 dark:text-white">Cant. Req.</label>
-         <input type="number" name="productos[${productoIndex}][cantidadR]" placeholder="Cantidad requerida" value=0
+         
+         <input type="number" name="productos[${productoIndex}][cantidadR]" placeholder="Cant. requerida" value=0
              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" >
         </div>
-        <div class="hidden">
+        <div class="">
          <input type="number" name="productos[${productoIndex}][cantidadA]" placeholder="Cantidad aprobada" value=0
              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-
+         </div>
+        <div>
          <input type="number" step="0.01" name="productos[${productoIndex}][cantidad]" 
              placeholder="Total productos entregados" value=0
              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
