@@ -11,7 +11,7 @@ class Project extends Model
 'company','inCharge_id_usuario','dateBegin','dateEnd',
 'budget','accountBank','id_priority','id_status','requestDate','estimateDate','authorizedDate','finishDate','totalManoObra',
 'recursosObtenidos','ejecutionDate','estado_project','lugar_project','area_project','piso_project',
-'totalProductos','horas_project','horasExtras','salarioHorasExtras'];
+'totalProductos','horas_project','horasExtras','salarioHorasExtras','nota_project'];
 
 public function client()
 {

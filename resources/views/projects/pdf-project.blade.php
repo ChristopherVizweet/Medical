@@ -73,20 +73,20 @@
     </div>
         <div class="columna1">
             <p id="folio"><strong>Folio del proyecto:</strong> MED-{{ $project->folioProject }}-2025</p>
-            <p><strong>Nombre del proyecto:</strong> {{ $project->nameProject }}</p>
-            <p><strong>Empresa encargada: </strong>{{$project->compani->nameCompany}}</p>
-            <p><strong>Estado: </strong>{{$project->estado_project}}</p>
-            <p><strong>Lugar: </strong>{{$project->lugar_project}}</p>
-            <p><strong>Área: </strong>{{$project->area_project}}</p>
-            <p><strong>Piso: </strong>{{$project->piso_project}}</p>
+            <p><strong>Nombre del proyecto:</strong> {{ $project->nameProject ?? 'Sin especificar'}}</p>
+            <p><strong>Empresa encargada: </strong>{{$project->compani->nameCompany ?? 'Sin especificar'}}</p>
+            <p><strong>Estado: </strong>{{$project->estado_project ?? 'No especificado' }}</p>
+            <p><strong>Lugar: </strong>{{$project->lugar_project ?? 'No especificado'}}</p>
+            <p><strong>Área: </strong>{{$project->area_project ?? 'No especificado'}}</p>
+            <p><strong>Piso: </strong>{{$project->piso_project ?? 'No especificado'}}</p>
         </div>
         <div class="columna2">
-            <p><strong>Cliente: </strong>{{$project->client->name_Client}}</p>
-            <p><strong>Encargado: </strong>{{$project->encargado->name}}</p>
-             <p><strong>Vendedor: </strong>{{$project->vendedor->name}}</p>
-            <p><strong>Prioridad: </strong>{{$project->priority->namePriority}}</p>
-            <p><strong>Status: </strong>{{$project->status->nameStatus}}</p>
-            <p><strong>Recursos obtenidos por: </strong>{{$project->recursos->recursosObtenidos}}</p>
+            <p><strong>Cliente: </strong>{{$project->client->name_Client ?? 'Sin especificar'}}</p>
+            <p><strong>Encargado: </strong>{{$project->encargado->name ?? 'Sin especificar'}}</p>
+             <p><strong>Vendedor: </strong>{{$project->vendedor->name ?? 'Sin especificar'}}</p>
+            <p><strong>Prioridad: </strong>{{$project->priority->namePriority ?? 'Sin especificar'}}</p>
+            <p><strong>Status: </strong>{{$project->status->nameStatus ?? 'Sin especificar'}}</p>
+            <p><strong>Recursos obtenidos por: </strong>{{$project->recursos->recursosObtenidos ?? 'Sin especificar'}}</p>
             <p><strong>Presupuesto:</strong> ${{ number_format($project->budget, 2) }}</p>
         </div>
 </div>
@@ -163,7 +163,7 @@
         <p><strong>Presupuesto:</strong> ${{ number_format($project->budget, 2) }}</p>
         <p><strong>Total mano de obra:</strong> ${{ number_format($project->totalManoObra, 2) }}</p>
         <p><strong>Total de productos:</strong> ${{ number_format($project->totalProductos, 2) }}</p>
-<p><strong>Cuenta bancaria: </strong>{{$project->cuenta->accountBank}}</p>
+<p><strong>Cuenta bancaria: </strong>{{$project->cuenta->accountBank ?? 'Sin especificar'}}</p>
 </div>
 <img id="marca-agua" src="{{ public_path('img/marca_agua.png') }}" alt="Marca de Agua">
 

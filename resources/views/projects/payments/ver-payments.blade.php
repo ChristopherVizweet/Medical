@@ -65,7 +65,7 @@
                                     <td class="px-6 py-4 text-gray-800 dark:text-gray-200">{{ $payment->metodo_pago }}</td>
                                     <td class="px-6 py-4 text-gray-800 dark:text-gray-200">
                                         <span class="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded px-3 py-1 text-xs font-semibold">
-                                            {{ optional($payment->empleado)->full_name ?? 'ID: '.$payment->empleados_id }}
+                                            {{ optional($payment->empleado)->Nombre ?? 'ID: '.$payment->empleados_id }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 text-right text-gray-800 dark:text-gray-200 font-semibold">${{ number_format($payment->subtotal, 2) }}</td>

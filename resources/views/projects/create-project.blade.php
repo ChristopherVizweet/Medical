@@ -28,31 +28,31 @@
                     <div>
                         <x-input-label for="estado_project" :value="__('Estado')" />
                         <x-text-input id="estado_project" class="mt-1 block w-full" type="text" name="estado_project"
-                            placeholder="Ingrese el estado del proyecto" :value="old('estado_project')" required />
+                            placeholder="Ingrese el estado del proyecto" :value="old('estado_project')"  />
                         <x-input-error :messages="$errors->get('estado_project')" class="mt-2" />
                     </div>
                     <div>
                         <x-input-label for="lugar_project" :value="__('Lugar')" />
                         <x-text-input id="lugar_project" class="mt-1 block w-full" type="text" name="lugar_project"
-                            placeholder="Ingrese el lugar del proyecto" :value="old('lugar_project')" required />
+                            placeholder="Ingrese el lugar del proyecto" :value="old('lugar_project')"  />
                         <x-input-error :messages="$errors->get('lugar_project')" class="mt-2" />
                     </div>
                     <div>
                         <x-input-label for="area_project" :value="__('Área')" />
                         <x-text-input id="area_project" class="mt-1 block w-full" type="text" name="area_project"
-                            placeholder="Ingrese el área del proyecto" :value="old('area_project')" required />
+                            placeholder="Ingrese el área del proyecto" :value="old('area_project')"  />
                         <x-input-error :messages="$errors->get('area_project')" class="mt-2" />
                     </div>
                     <div>
                         <x-input-label for="piso_project" :value="__('Piso')" />
                         <x-text-input id="piso_project" class="mt-1 block w-full" type="text" name="piso_project"
-                            placeholder="Ingrese el piso del proyecto" :value="old('piso_project')" required />
+                            placeholder="Ingrese el piso del proyecto" :value="old('piso_project')"  />
                         <x-input-error :messages="$errors->get('piso_project')" class="mt-2" />
                     </div>
 
                     <!--<div>
                         <x-input-label for="id_client" :value="__('Cliente')" />
-                        <select class="mt-1 block w-full" name="id_client" id="id_client_project" required>
+                        <select class="mt-1 block w-full" name="id_client" id="id_client_project" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($clients as $client)
                             <option value="{{ $client->id }}">{{ $client->name_Client }}</option><br>
@@ -62,7 +62,7 @@
 
                     <div>
                         <x-input-label for="company" :value="__('Empresa encargada')" />
-                        <select class="mt-1 block w-full" name="company" id="company" required>
+                        <select class="mt-1 block w-full" name="company" id="company" >
                             <option value="">-Seleccionar-</option>
                             @foreach ($companies as $company)
                             <option value="{{ $company->id }}">{{ $company->nameCompany }}</option><br>
@@ -224,7 +224,7 @@
                     </div>
 
                     <div>
-                        <x-input-label for="accountBank" :value="__('Cuenta bancaria')" />
+                        <x-input-label class="bg-" for="accountBank" :value="__('Cuenta bancaria')" />
                         <select class="mt-1 block w-full" name="accountBank" id="accountBank">
                             <option value="">-Seleccionar-</option>
                             @foreach ($banks as $bank)
@@ -239,6 +239,11 @@
                         <x-input-error :messages="$errors->get('budget')" class="mt-2" />
                     </div>
                 </div>
+            </div>
+            <div>
+                    <x-input-label class="bg-blue-400 text-center text-2xl font-sans font-semibold mb-4 dark:text-white" for="nota_project" :value="__('Notas del proyecto')" />
+                            <textarea id="nota_project" name="nota_project" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" rows="4" placeholder="Ingrese cualquier nota adicional sobre el proyecto">{{ old('nota_project') }}</textarea>
+                            <x-input-error :messages="$errors->get('nota_project')" class="mt-2" />
             </div>
 
             {{--</div>--}}
@@ -537,7 +542,7 @@ agregar y eliminar campos --}}
                             <tr>
                                 <td>
                                     <select name="id_product[]" class="w-full border p-1 text-black dark:text-black"
-                                        required>
+                                        >
                                         <option value="">-Seleccionar-</option>
                                         @foreach ($products as $product)
                                         <option value="{{ $product->id }}">{{ $product->name_product }}</option>
@@ -546,7 +551,7 @@ agregar y eliminar campos --}}
                                 </td>
                                 <td>
                                     <select name="id_supplier[]" id="id_supplier"
-                                        class="w-full border p-1 text-black dark:text-black" required>
+                                        class="w-full border p-1 text-black dark:text-black" >
                                         <option value="">-Seleccionar-</option>
                                         @foreach ($suppliers as $supplier)
                                         <option value="{{ $supplier->id }}">{{ $supplier->name_supplier }}
@@ -557,7 +562,7 @@ agregar y eliminar campos --}}
                                 <td>
                                     <input type="number" for="costo" id="costo" name="costo[]"
                                         class="text-black dark:text-black costo-producto w-full border p-1"
-                                        step="0.01" required oninput="actualizarSumaCostos()">
+                                        step="0.01"  oninput="actualizarSumaCostos()">
                                 </td>
                                 <td class="text-center">
                                     <button type="button" onclick="eliminarFilaProducto(this)"
@@ -669,7 +674,10 @@ agregar y eliminar campos --}}
             {{-- Botones --}}
             <div class="text-center">
 
-                <x-primary-button class="ms-4"><a href="index-cotizacion">Registrar</a></x-primary-button>
+                <!-- <x-primary-button class="ms-4"><a href="index-cotizacion">Registrar</a></x-primary-button> -->
+                <x-primary-button class="ms-4">
+                    {{ __('Registrar') }}
+                </x-primary-button>
                 <a href="{{ route('index-project') }}"
                     class="ms-4 inline-block px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500">
                     Cancelar

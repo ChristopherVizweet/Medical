@@ -8,7 +8,7 @@ class MovementProduct extends Model
 {
     protected $fillable = ['inventario_movimientos_id', 'codigo' ,'product_id', 'cantidad', 'costo_unitario',
 'obra_movimiento','empleado_id','folio_movimiento','cantidadR','cantidadA','cantidadE',
-'encargado_almacen','encargado_envio','encargado_recibe'];
+'encargado_almacen','encargado_envio','encargado_recibe','empleado_id'];
 
     public function movimiento()
     {

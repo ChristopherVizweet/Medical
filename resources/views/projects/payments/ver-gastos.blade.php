@@ -78,17 +78,17 @@
     <h1>MEDICAL GAS SYSTEMS INTERNATIONAL SA DE CV</h1>
 </div>
     <div class="columna1">
-         <p><strong>Nombre del proyecto:</strong> {{ $projects->nameProject }}</p>
+         <p><strong>Nombre del proyecto:</strong> {{ $projects->nameProject ?? 'Sin especificar'}}</p>
         <p id="folio"><strong>Folio del proyecto:</strong> MED-{{ $projects->folioProject }}-2025</p>
-        <p><strong>Cliente: </strong>{{$projects->client->name_Client}}</p>
-        <p><strong>Empresa encargada: </strong>{{$projects->compani->nameCompany}}</p>
-        <p><strong>Vendedor: </strong>{{$projects->vendedor->name}}</p>
+        <p><strong>Cliente: </strong>{{$projects->client->name_Client ?? 'Sin especificar'}}</p>
+        <p><strong>Empresa encargada: </strong>{{$projects->compani->nameCompany ?? 'Sin especificar'}}</p>
+        <p><strong>Vendedor: </strong>{{$projects->vendedor->name ?? 'Sin especificar'}}</p>
         </div>
         <div class="columna2">
-        <p><strong>Encargado: </strong>{{$projects->encargado->name}}</p>
-        <p><strong>Prioridad: </strong>{{$projects->priority->namePriority}}</p>
-        <p><strong>Status: </strong>{{$projects->status->nameStatus}}</p>
-        <p><strong>Recursos obtenidos por: </strong>{{$projects->recursos->recursosObtenidos}}</p>
+        <p><strong>Encargado: </strong>{{$projects->encargado->name ?? 'Sin especificar'}}</p>
+        <p><strong>Prioridad: </strong>{{$projects->priority->namePriority ?? 'Sin especificar'}}</p>
+        <p><strong>Status: </strong>{{$projects->status->nameStatus ?? 'Sin especificar'}}</p>
+        <p><strong>Recursos obtenidos por: </strong>{{$projects->recursos->recursosObtenidos ?? 'Sin especificar'}}</p>
         <p><strong>Presupuesto:</strong> ${{ number_format($projects->budget, 2) }}</p>
         </div>
     </div>
@@ -117,7 +117,7 @@
                 <td>{{ $payment->created_at }}</td>
                 <td>{{ $payment->folio }}</td>
                 <td>{{ $payment->metodo_pago }}</td>
-                <td>{{ optional($payment->empleado)->full_name ?? 'ID: '.$payment->empleados_id }}</td>
+                <td>{{ optional($payment->empleado)->Nombre ?? 'ID: '.$payment->empleados_id }}</td>
                 <td>${{ number_format($payment->subtotal, 2) }}</td>
                 <td>${{ number_format($payment->iva, 2) }}</td>
                 <td>${{ number_format($payment->total, 2) }}</td>

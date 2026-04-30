@@ -81,56 +81,56 @@ class ProjectController extends Controller
 
        $request->validate([
     'folioProject' => 'nullable|integer',
-    'id_client' => 'required|string|max:50',
-    'nameProject' => 'required|string|max:255',
-    'seller_id_usuario' => 'required|string|max:50',
-    'company' => 'required|string|max:20',
-    'inCharge_id_usuario' => 'required|string|max:50',
-    'dateBegin' => 'required|date',
-    'dateEnd' => 'required|date',
-    'budget' => 'required|numeric|min:0',
-    'accountBank' => 'required|string|max:100',
-    'id_priority' => 'required|string|max:100',
-    'id_status' => 'required|string|max:100',
-    'requestDate' => 'required|date',
-    'estimateDate' => 'required|date',
-    'authorizedDate' => 'required|date',
-    'finishDate' => 'required|date',
-    'recursosObtenidos' => 'required|string',
-    'ejecutionDate' => 'required|date',
+    'id_client' => 'nullable|string|max:50',
+    'nameProject' => 'nullable|string|max:255',
+    'seller_id_usuario' => 'nullable|string|max:50',
+    'company' => 'nullable|string|max:20',
+    'inCharge_id_usuario' => 'nullable|string|max:50',
+    'dateBegin' => 'nullable|date',
+    'dateEnd' => 'nullable|date',
+    'budget' => 'nullable|numeric|min:0',
+    'accountBank' => 'nullable|string|max:100',
+    'id_priority' => 'nullable|string|max:100',
+    'id_status' => 'nullable|string|max:100',
+    'requestDate' => 'nullable|date',
+    'estimateDate' => 'nullable|date',
+    'authorizedDate' => 'nullable|date',
+    'finishDate' => 'nullable|date',
+    'recursosObtenidos' => 'nullable|string',
+    'ejecutionDate' => 'nullable|date',
     'estado_project' => 'nullable|string',
     'lugar_project' => 'nullable|string',
     'area_project' => 'nullable|string',
     'piso_project' => 'nullable|string',
     // Instalación (nombre como string[] porque es checkbox)
-    //'nameInstalation' => 'required|array|min:1',
-    //'nameInstalation.*' => 'required|string',
+    //'nameInstalation' => 'nullable|array|min:1',
+    //'nameInstalation.*' => 'nullable|string',
 
     //Servicios de instalación
-    'nameInstalation' => 'required|array',
+    'nameInstalation' => 'nullable|array',
     'nameInstalation.*' => 'exists:instalation_services,id',
 
     // Mano de obra
-    'id_empleado' => 'required|array|min:1',
-    'id_empleado.*' => 'required|string|exists:empleados,id',
-    'jornadas' => 'required|array',
+    'id_empleado' => 'nullable|array|min:1',
+    'id_empleado.*' => 'nullable|string|exists:empleados,id',
+    'jornadas' => 'nullable|array',
     'jornadas.*' => 'nullable|integer|min:1',
-    'salario' => 'required|array',
-    'salario.*' => 'required|numeric|min:0',
-    'total_salario' => 'required|array',
+    'salario' => 'nullable|array',
+    'salario.*' => 'nullable|numeric|min:0',
+    'total_salario' => 'nullable|array',
     'total_salario.*' => 'nullable|numeric|min:0',
 
     // Productos
-    'id_product' => 'required|array|min:1',
-    'id_product.*' => 'required|exists:products,id',
-    'id_supplier' => 'required|array|min:1',
-    'id_supplier.*' => 'required|exists:suppliers,id',
-    'costo' => 'required|array|min:1',
-    'costo.*' => 'required|numeric|min:0',
+    'id_product' => 'nullable|array|min:1',
+    'id_product.*' => 'nullable|exists:products,id',
+    'id_supplier' => 'nullable|array|min:1',
+    'id_supplier.*' => 'nullable|exists:suppliers,id',
+    'costo' => 'nullable|array|min:1',
+    'costo.*' => 'nullable|numeric|min:0',
 
     // Totales
-    'totalManoObra' => 'required|numeric|min:0',
-    'totalProductos' => 'required|numeric|min:0',
+    'totalManoObra' => 'nullable|numeric|min:0',
+    'totalProductos' => 'nullable|numeric|min:0',
     
 ]);
 //Para generar automaticamente el folio del proyecto
@@ -167,26 +167,27 @@ $folioFormateado= 'MED-' . str_pad($nuevoFolio, 4, '0', STR_PAD_LEFT) . '-' . da
         'totalProductos' => $request->totalProductos,
         'recursosObtenidos' => $request->recursosObtenidos,
         'ejecutionDate' => $request->ejecutionDate,
+        'nota_project' => $request->nota_project,
     ]);
 
     // Guardar empleados con jornadas y salarios
-    foreach ($request->id_empleado as $index => $empleadoId) {
-        $project->empleados()->create([
-            'id_empleado' => $empleadoId,
-            'jornadas' => $request->jornadas[$index],
-            'salario' => $request->salario[$index],
-            'total_salario' => $request->total_salario[$index],
-        ]);
-    }
+   // foreach ($request->id_empleado as $index => $empleadoId) {
+      //  $project->empleados()->create([
+        //    'id_empleado' => $empleadoId,
+          //  'jornadas' => $request->jornadas[$index],
+            //'salario' => $request->salario[$index],
+            //'total_salario' => $request->total_salario[$index],
+       // ]);
+   // }
 
     // Guardar productos
-    foreach ($request->id_product as $index => $productId) {
-        $project->productos()->create([
-            'product_id' => $productId,
-            'supplier_id' => $request->id_supplier[$index],
-            'costo' => $request->costo[$index],
-        ]);
-    }
+    //foreach ($request->id_product as $index => $productId) {
+      //  $project->productos()->create([
+        //    'product_id' => $productId,
+          //  'supplier_id' => $request->id_supplier[$index],
+           // 'costo' => $request->costo[$index],
+        //]);
+   // }
 
     // Guardar servicios de instalación
     $project->services()->sync($request->nameInstalation);
@@ -239,6 +240,7 @@ public function update(Request $request,$id){
     'lugar_project' => 'nullable|string',
     'area_project' => 'nullable|string',
     'piso_project' => 'nullable|string',
+    'nota_project' => 'nullable|string',
     // Instalación (nombre como string[] porque es checkbox)
     //'nameInstalation' => 'required|array|min:1',
     //'nameInstalation.*' => 'required|string',
@@ -293,6 +295,7 @@ public function update(Request $request,$id){
         'totalProductos' => $request->totalProductos,
         'recursosObtenidos' => $request->recursosObtenidos,
         'ejecutionDate' => $request->ejecutionDate,
+        'nota_project' => $request->nota_project,
     ]);
     $projects->empleados()->delete();
     foreach ($request->id_empleado as $index => $empleadoId) {

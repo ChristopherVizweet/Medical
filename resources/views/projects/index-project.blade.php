@@ -167,14 +167,16 @@
                         <th class="px-4 py-2">{{('Nombre del proyecto')}}</th>
                         <th class="px-4 py-2">{{('Nombre del cliente')}}</th>
                         <th class="px-4 py-2">{{('Vendedor') }}</th>
+                        <th class="px-4 py-2">{{('Project Manager') }}</th>
+                        <th class="px-4 py-2">{{('Residente') }}</th>
                         <th class="px-4 py-2">{{('Empresa encargada') }}</th>
                         <th class="px-4 py-2">{{('A cargo') }}</th>
-                        <th class="px-4 py-2">{{('Fecha de inicio') }}</th>
-                        <th class="pc-4 py-2">{{('Fecha de termino')}}</th>
-                        <th class="pc-4 py-2">{{('Presupuesto')}}</th>
+                        
+                       
                         <th class="pc-4 py-2">{{('Prioridad')}}</th>
                         <th class="pc-4 py-2">{{('Estado')}}</th>
                         <th class=" px-4 py-2">{{('Imprimir') }}</th>
+                        <th class=" px-4 py-2">{{('Gastos') }}</th>
                         <th class="px-4 py-2">{{('Acciones') }}</th>
                     </tr>
                 </thead>
@@ -186,20 +188,23 @@
                             <td class="px-4 py-2">{{ $project->nameProject}}</td>
                             <td class="px-4 py-2">{{ $project->client->name_Client ?? 'Sin cliente' }}</td>
                             <td class="px-4 py-2">{{ $project->vendedor->name ?? 'Sin vendedor' }}</td>
+                            <td class="px-4 py-2">{{ $project->client->supervisor ?? 'Sin project manager' }}</td>
+                            <td class="px-4 py-2">{{ $project->client->encargado ?? 'Sin residente' }}</td>
                             <td class="px-4 py-2">{{ $project->compani->nameCompany ?? 'Sin empresa' }}</td>
-                            <td class="px-4 py-2">{{ $project->encargado->name ?? 'Sin encargado' }}</td>                            <td class="px-4 py-2">{{ $project->dateBegin}}</td>
-                            <td class="px-4 py-2">{{ $project->dateEnd }}</td>
-                            <td class="px-4 py-2">${{ $project->budget }}</td>
+                            <td class="px-4 py-2">{{ $project->encargado->name ?? 'Sin encargado' }}</td>                           
                             <td class="px-4 py-2">{{ $project->priority->namePriority ?? 'Sin prioridad' }}</td>
                             <td class="px-4 py-2">{{ $project->status->nameStatus ?? 'Sin estado' }}</td>
                             <td class="px-4 py-2"> 
                                 <a href="{{route('pdf-project', $project->id) }}" class="text-red-600 hover:underline" target=_blank>PDF proyecto </a>|
                            <a href="{{ route('ver-gastos', $project->id) }}" class="text-green-700 dark:text-green-300 hover:underline">PDF gastos </a></td>
+                           <td>
+                              <a href="{{ route('deducibles', $project->id) }}" class="text-green-700 dark:text-green-300 hover:underline">+Agregar gastos </a>|
+                               <a href="{{ route('ver-payments', $project->id) }}" class="text-green-700 dark:text-green-300 hover:underline">Ver gastos </a>
+                           </td>
                             <td class="px-4 py-2">
                                 
-                               <a href="{{ route('edit-project', $project->id) }}" class="text-blue-700 dark:text-blue-900 hover:underline">Editar </a>|
-                               <a href="{{ route('deducibles', $project->id) }}" class="text-green-700 dark:text-green-300 hover:underline">+Agregar gastos </a>|
-                               <a href="{{ route('ver-payments', $project->id) }}" class="text-green-700 dark:text-green-300 hover:underline">Ver gastos </a>|
+                               <a href="{{ route('edit-project', $project->id) }}" class="text-blue-700 dark:text-blue-900 hover:underline">Editar </a>
+                             |
                                 <form action="{{ route('delete-project', $project->id) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')

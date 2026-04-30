@@ -41,45 +41,45 @@
             </div>
             
         </div>
-         <h1 class="text-center text-black bg-blue-400">DATOS DEL SUPERVISOR</h1>
+         <h1 class="text-center text-black bg-blue-400">PROJECT MANAGER</h1>
         <div class="mb-9 grid grid-cols-3 md:grid-cols-3 gap-4 mt-6">
             <!-- SUPERVISOR -->
             <div class="mt-4">
-                <x-input-label for="supervisor" :value="__('Nombre del supervisor')" />
+                <x-input-label for="supervisor" :value="__('Nombre del project manager')" />
                 <x-text-input id="supervisor" class="block mt-1 w-full" autocomplete="off" type="text" name="supervisor" :value="old('supervisor')"  />
                 <x-input-error :messages="$errors->get('supervisor')" class="mt-2" />
             </div>
             <!-- CORREO SUPERVISOR -->
             <div class="mt-4">
-                <x-input-label for="email_supervisor" :value="__('Correo del supervisor')" />
+                <x-input-label for="email_supervisor" :value="__('Correo del project manager')" />
                 <x-text-input  id="email_supervisor" class="block mt-1 w-full" autocomplete="off" type="email" name="email_supervisor" :value="old('email_supervisor')"  />
                 <x-input-error :messages="$errors->get('email_supervisor')" class="mt-2" />
             </div>
              <!-- TELEFONO SUPERVISOR -->
             <div class="mt-4">
-                <x-input-label for="telefono_supervisor" :value="__('Teléfono del supervisor')" />
+                <x-input-label for="telefono_supervisor" :value="__('Teléfono del project manager')" />
                 <x-text-input  id="telefono_supervisor" class="block mt-1 w-full" autocomplete="off" type="tel" name="telefono_supervisor" :value="old('telefono_supervisor')"  />
                 <x-input-error :messages="$errors->get('telefono_supervisor')" class="mt-2" />
             </div>
             
         </div>
-        <h1 class="text-center text-black bg-blue-400">DATOS DEL ENCARGADO</h1>
+        <h1 class="text-center text-black bg-blue-400">RESIDENTE</h1>
         <div class="mb-9 grid grid-cols-3 md:grid-cols-3 gap-4 mt-6">
             <!-- ENCARGADO -->
             <div class="mt-4">
-                <x-input-label for="encargado" :value="__('Nombre del encargado')" />
+                <x-input-label for="encargado" :value="__('Nombre del residente')" />
                 <x-text-input id="encargado" class="block mt-1 w-full" autocomplete="off" type="text" name="encargado" :value="old('encargado')"  />
                 <x-input-error :messages="$errors->get('encargado')" class="mt-2" />
             </div>
             <!-- CORREO ENCARGADO -->
             <div class="mt-4">
-                <x-input-label for="email_encargado" :value="__('Correo del encargado')" />
+                <x-input-label for="email_encargado" :value="__('Correo del residente')" />
                 <x-text-input  id="email_encargado" class="block mt-1 w-full" autocomplete="off" type="email" name="email_encargado" :value="old('email_encargado')"  />
                 <x-input-error :messages="$errors->get('email_encargado')" class="mt-2" />
             </div>
              <!-- TELEFONO ENCARGADO-->
             <div class="mt-4">
-                <x-input-label for="telefono_encargado" :value="__('Teléfono del encargado')" />
+                <x-input-label for="telefono_encargado" :value="__('Teléfono del residente')" />
                 <x-text-input  id="telefono_encargado" class="block mt-1 w-full" autocomplete="off" type="tel" name="telefono_encargado" :value="old('telefono_encargado')"  />
                 <x-input-error :messages="$errors->get('telefono_encargado')" class="mt-2" />
             </div>
