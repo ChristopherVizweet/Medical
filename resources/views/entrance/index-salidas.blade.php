@@ -47,10 +47,10 @@
                 <select name="folio_movimiento" id="folio_movimiento" onchange="this.form.submit()"
                     class="text-black dark:text-black border border-gray-300 rounded px-3 py-1 w-full">
                     <option value="">--Todos--</option>
-                    foreach ($movimientos as $movimiento)
-                        <option value="{{ $movimiento->productos->first()->folio_movimiento}}"
-                            {{ request('folio_movimiento') == $movimiento->productos->first()->folio_movimiento ? 'selected' : '' }}>
-                            {{ $movimiento->productos->first()->folio_movimiento }}
+                    foreach (movimientos as movimiento)
+                        option value="{ movimiento->productos->first()->folio_movimiento}}"
+                            { request('folio_movimiento') == movimiento->productos->first()->folio_movimiento ? 'selected' : '' }}>
+                            { movimiento->productos->first()->folio_movimiento }}
                         </option>
                     endforeach
                 </select>
