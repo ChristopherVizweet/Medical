@@ -41,20 +41,20 @@
         {{-- Aqui comienza el filtro por nombre de obra --}}
         <form action="{{ route('index-salidas') }}" method="GET"
             class="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full md:w-auto">
-            {{-- Filtro por folio --}}
+            <!-- Filtro por folio 
             <div class="flex flex-col">
                 <label for="folio_movimiento" class="text-black dark:text-white text-base">Buscar por folio</label>
                 <select name="folio_movimiento" id="folio_movimiento" onchange="this.form.submit()"
                     class="text-black dark:text-black border border-gray-300 rounded px-3 py-1 w-full">
                     <option value="">--Todos--</option>
-                    @foreach ($movimientos as $movimiento)
+                    foreach ($movimientos as $movimiento)
                         <option value="{{ $movimiento->productos->first()->folio_movimiento}}"
                             {{ request('folio_movimiento') == $movimiento->productos->first()->folio_movimiento ? 'selected' : '' }}>
                             {{ $movimiento->productos->first()->folio_movimiento }}
                         </option>
-                    @endforeach
+                    endforeach
                 </select>
-            </div>
+            </div>-->
             <div class="flex flex-col">
                 <label for="obra_movimiento" class="text-black dark:text-white text-base">Buscar por obra</label>
                 <input type="text" name="obra_movimiento" id="obra_movimiento"
