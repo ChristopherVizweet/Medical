@@ -109,7 +109,7 @@
                             <td class="px-4 py-2">
 
                                 <!--Aqui esta la condicion si tienen cantidad fuera de almacen-->
-                                @if ($movi->productos->first()->encargado_envio)
+                                @if ($movi->productos->first()->encargado_envio != null)
                                     <a href=" {{ route('pdf-salidasObras', $movi->id) }}" target="_blank"
                                         class="text-red-600 hover:underline">PDF</a>|
                                     <a href="{{ route('edit-salidas', $movi->id) }}"
