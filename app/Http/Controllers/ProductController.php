@@ -414,11 +414,12 @@ public function createSalidas(){
     return view('entrance.create-salidas', compact('empleados','productos'));
 }
 public function storeSalidas(Request $request){
+   // dd($request->all());
  // 1. Validar
     $validated = $request->validate([
         'tipoMovimiento'            => 'required|in:entrada,salida',
         'fecha_movimiento'          => 'nullable|date',
-        'observaciones_movimiento'  => 'nullable|string',
+       
         'obra_movimiento'           => 'nullable|string',
         'empleado_id'               => 'nullable|exists:empleados,id',
         'folio_movimiento'          => 'nullable|integer',
@@ -429,9 +430,10 @@ public function storeSalidas(Request $request){
         'productos.*.cantidadR'     => 'nullable|integer',
         'productos.*.cantidadA'     => 'nullable|integer',
         'productos.*.cantidadE'     => 'nullable|integer',
+        'productos.*.observaciones_movimiento'  => 'nullable|string',
     
     ]);
-    
+    //dd($validated);
 $ultimoFolio=MovementProduct::max('folio_movimiento');
 $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
 
@@ -439,16 +441,18 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
     $movimiento = InventarioMovimiento::create([
         'tipoMovimiento'            => $validated['tipoMovimiento'],
         'fecha_movimiento'          => $validated['fecha_movimiento'] ?? now(),
-        'observaciones_movimiento'  => $validated['observaciones_movimiento'] ?? null,
+        //'observaciones_movimiento'  => $validated['observaciones_movimiento'] ?? null,
         'obra_movimiento'           => $validated['obra_movimiento'] ?? null,
         'empleado_id'               => $validated['empleado_id'] ?? null,
         'estadoMovimiento'          => $validated['estadoMovimiento'] ?? null,
-        'folio_movimiento'          => $nuevoFolio ?? null
+        'folio_movimiento'          => $nuevoFolio ?? null,
+        
     ]);
 
     // 3. Registrar productos del movimiento y actualizar stock
     foreach ($validated['productos'] as $producto) {
         // Guardar en tabla pivot
+     //dd($producto);
         MovementProduct::create([
             'inventario_movimientos_id'=> $movimiento->id,
             'product_id'               => $producto['product_id'],
@@ -459,6 +463,7 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
             'empleado_id'              => $validated['empleado_id'] ?? null,
             'folio_movimiento'         => $nuevoFolio ?? null,
             'obra_movimiento'          => $validated['obra_movimiento'] ?? null,
+            'observaciones_movimiento'  => $producto['observaciones_movimiento'] ?? null,
         ]);
  
         // Ajustar stock producto por producto
@@ -499,8 +504,8 @@ public function storeSalidasObras(Request $request){
         'folio_movimiento'          => 'nullable|integer',
         'estadoMovimiento'          => 'nullable|string',
        
-        'productos.*.product_id'    => 'required|exists:products,id',
-        'productos.*.cantidad'      => 'required|integer|min:1',
+        'productos.*.product_id'    => 'nullable|exists:products,id',
+        'productos.*.cantidad'      => 'nullable|integer|min:1',
         'productos.*.cantidadE'     => 'nullable|integer',
         'productos.*.cantidadR'     => 'nullable|integer',
         'productos.*.cantidadA'     => 'nullable|integer'
@@ -574,7 +579,7 @@ public function updateSalida(Request $request, $id)
         $validated = $request->validate([
         'tipoMovimiento'            => 'required|in:entrada,salida',
         'fecha_movimiento'          => 'nullable|date',
-        'observaciones_movimiento'  => 'nullable|string',
+        
         'obra_movimiento'           => 'nullable|string',
         'empleado_id'               => 'nullable|exists:empleados,id',
         'folio_movimiento'          => 'nullable|integer',
@@ -586,6 +591,7 @@ public function updateSalida(Request $request, $id)
         'productos.*.cantidadR'     => 'nullable|integer',
         'productos.*.cantidadA'     => 'nullable|integer',
         'productos.*.cantidadE'     => 'nullable|integer',
+        'productos.*.observaciones_movimiento'  => 'nullable|string',
         ]);
 
         $movimiento = InventarioMovimiento::findOrFail($id);
@@ -596,6 +602,8 @@ public function updateSalida(Request $request, $id)
             'estadoMovimiento' => $validated['estadoMovimiento'] ?? $movimiento->estadoMovimiento,
                 
         ]);
+        
+       
 
         if ($request->has('productos') && is_array($request->productos)) {
             foreach ($request->productos as $item) {
@@ -620,8 +628,8 @@ public function updateSalida(Request $request, $id)
             $mp->stock -= $item['cantidad'];
         $mp->save();
             }
-           
         }
+        
         
             return redirect()->route('index-salidas')->with('success', 'Salida actualizada correctamente.');
     }
@@ -719,7 +727,7 @@ public function updateSalidas(Request $request, string $id)
         $request->validate([
         'tipoMovimiento'            => 'required|in:entrada,salida',
         'fecha_movimiento'          => 'nullable|date',
-        'observaciones_movimiento'  => 'nullable|string',
+       
         'obra_movimiento'           => 'nullable|string',
         'empleado_id'               => 'nullable|exists:empleados,id',
         'encargado_almacen'        => 'nullable|exists:empleados,id',
@@ -733,7 +741,8 @@ public function updateSalidas(Request $request, string $id)
         'productos.*.cantidad'      => 'nullable|integer|min:0',
         'productos.*.cantidadE'     => 'nullable|integer',
         'productos.*.cantidadR'     => 'nullable|integer',
-        'productos.*.cantidadA'     => 'nullable|integer'
+        'productos.*.cantidadA'     => 'nullable|integer',
+        'productos.*.observaciones_movimiento'  => 'nullable|string',
         ]);
 
         // Actualizar la salida
@@ -751,6 +760,7 @@ public function updateSalidas(Request $request, string $id)
             'estadoMovimiento' => $request->estadoMovimiento,
         ]);
 
+        
         // Si vienen productos en el request, actualizamos solo las cantidades de los pivots existentes
         if ($request->has('productos') && is_array($request->productos)) {
             foreach ($request->productos as $item) {

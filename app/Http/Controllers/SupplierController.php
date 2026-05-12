@@ -54,7 +54,7 @@ public function store(Request $request) {
      $request->validate([
         'name_supplier' => 'required|string|max:255',
         'encargado_suppliers' => 'required|string|max:255',
-        'rfc_supplier' => 'required|string|max:13',
+        'rfc_supplier' => 'required|string|max:18',
         'email_supplier' => 'required|email|unique:suppliers,email_supplier',
         'phoneNumber_supplier' => 'required|string|max:10',
     ]);

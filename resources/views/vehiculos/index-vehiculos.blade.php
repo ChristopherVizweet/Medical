@@ -1,5 +1,5 @@
 <x-app-layout>
- <x-slot name="header">
+    <x-slot name="header">
         <div class="flex justify-between items-center flex-wrap gap-4">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 VEHÍCULOS
@@ -11,7 +11,7 @@
         </div>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function() {
                 const themeToggle = document.getElementById("theme-toggle");
                 const body = document.documentElement;
                 const currentTheme = localStorage.getItem("theme");
@@ -22,7 +22,7 @@
                     body.classList.remove("dark");
                 }
 
-                themeToggle.addEventListener("click", function () {
+                themeToggle.addEventListener("click", function() {
                     if (body.classList.contains("dark")) {
                         body.classList.remove("dark");
                         localStorage.setItem("theme", "light");
@@ -38,43 +38,88 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         {{-- Mensajes --}}
         @if (session('success'))
-            <div class="fade-out bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                {{ session('success') }}
-            </div>
+        <div class="fade-out bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+            {{ session('success') }}
+        </div>
         @endif
 
         <h1 class="text-2xl dark:text-white font-bold mb-6">Filtro de búsqueda</h1>
 
         {{-- Filtros y botón --}}
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-           <input placeholder="Buscar mediante modelo" type="text">
+            <input placeholder="Buscar mediante modelo" type="text">
         </div>
 
-            {{-- Botón Registrar vehiculo --}}
-            <x-primary-button>
-                <a href="{{ route('create-vehiculos') }}" class="text-dark">
-                    {{ __('Registrar vehículo') }}
-                </a>
-            </x-primary-button>
+        {{-- Botón Registrar vehiculo --}}
+        <x-primary-button>
+            <a href="{{ route('create-vehiculos') }}" class="text-dark">
+                {{ __('Registrar vehículo') }}
+            </a>
+        </x-primary-button>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
+                <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
+
+                    <tr class="">
+                        <th class="px-4 py-2">{{('ID') }}</th>
+                        <th class="px-4 py-2">{{('Fotografia') }}</th>
+                        <th class="px-4 py-2">{{('Nombre del vehículo') }}</th>
+                        <th class="px-4 py-2">{{('Número de serie') }}</th>
+                        <th class="px-4 py-2">{{('Marca') }}</th>
+                        <th class="px-4 py-2">{{('Modelo') }}</th>
+                        <th class="px-4 py-2">{{('Placas') }}</th>
+                        <th class="px-4 py-2">{{('Área') }}</th>
+                        <th class="px-4 py-2">{{('Estado') }}</th>
+                        <th class="px-4 py-2">{{('Mantenimiento') }}</th>
+                        <th class="px-4 py-2">{{('Documentación') }}</th>
+                        <th class="px-4 py-2">{{('Acciones') }}</th>
 
 
-                <!-- AQUI COMIENZA EL RECUADRO PARA REGISTRO DE VEHICULOS-->
-            <div class="border-1 rounded-lg shadow-md p-6 mt-6 bg-white dark:bg-gray-800">
-           
-        <div class="p-6 border-b border-slate-200 bg-slate-50" data-fg-d3bl90="0.8:1.26440:/src/app/App.tsx:329:13:12679:212:e:div:e" data-fgid-d3bl90=":re:">
-            <h2 class="text-2xl text-slate-800" data-fg-d3bl91="0.8:1.26440:/src/app/App.tsx:330:15:12753:119:e:h2:txt" data-fgid-d3bl91=":rf:">Vehículos Registrados</h2>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($vehiculos as $vehiculo)
+                    <tr class="border-t border-gray-200 dark:border-gray-700">
+                        <td class="px-4 py-2">{{ $vehiculo->id }}</td>
+                        <td class="px-4 py-2">
+                            @if ($vehiculo->photo_vehiculo)
+                            <img src="{{ Storage::url($vehiculo->photo_vehiculo) }}" alt="Fotografía del vehículo" class="w-24 h-24 object-cover">
+                            @else
+                            <p>No disponible</p>
+                            @endif
+                        </td>
+                        <td class="px-4 py-2">{{ $vehiculo->nombre_vehiculo }}</td>
+                        <td class="px-4 py-2">{{ $vehiculo->numeroSerie_vehiculo }}</td>
+                        <td class="px-4 py-2">{{ $vehiculo->marca_vehiculo }}</td>
+                        <td class="px-4 py-2">{{ $vehiculo->modeloAño_vehiculo }}</td>
+                        <td class="px-4 py-2">{{ $vehiculo->placas_vehiculo }}</td>
+                        <td class="px-4 py-2">{{ $vehiculo->area_vehiculo }}</td>
+                        <td class="px-4 py-2">{{ $vehiculo->estado_vehiculo }}</td>
+                        <td class="px-4 py-2">
+                             <button> <a href="{{ route('mantenimiento-vehiculos', $vehiculo->id) }}" class="text-blue-500 hover:text-blue-700">Registrar</a> </button>|
+                            @if($vehiculo->mantenimiento->count() > 0)
+                                <a href="{{ route('pdf-vehiculos', $vehiculo->id) }}" target="_blank" class="text-red-500 hover:text-red-700">PDF</a>
+                            @else
+                                <span class="text-gray-500">Sin registros de mantenimiento</span>
+                            @endif
+                        </td>
+                        <td>
+                            <button> <a href="{{ route('index-tenencias', $vehiculo->id) }}" class="text-gray-500 hover:text-green-700">Tenencia</a> </button> |
+                            <button> <a href="{{ route('index-seguroV', $vehiculo->id) }}" class="text-gray-500 hover:text-green-700">Seguro</a> </button> |
+                            <button> <a href="{{ route('index-verificacion', $vehiculo->id) }}" class="text-gray-500 hover:text-green-700">Verificación</a> </button>
+
+
+                        </td>
+                        <td class="px-4 py-2">
+                            <a href="{{ route('edit-vehiculos', $vehiculo->id) }}" class="text-blue-500 hover:text-blue-700">Editar</a>
+                        </td>
+                    </tr>
+                    @endforeach
+
+                </tbody>
+                <!---AQUI ESTA INICIANDO EL SCRIPT DE ALPINE--->
+                <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+
         </div>
-        <div class="text-center py-16" data-fg-d3bl96="0.8:1.26440:/src/app/App.tsx:336:15:12947:679:e:div:etetete" data-fgid-d3bl96=":rg:">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car w-20 h-20 text-slate-300 mx-auto mb-4" data-fg-d3bl97="0.8:1.26440:/src/app/App.tsx:337:17:12999:57:e:Car::::::EJEg" data-fgid-d3bl97=":rh:">
-                <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2">
-                    
-                </path>
-                <circle cx="7" cy="17" r="2">
-                </circle><path d="M9 17h6">
-                </path>
-                <circle cx="17" cy="17" r="2">
-                </circle>
-            </svg> <h1>NO HAY VEHÍCULOS REGISTRADOS</h1>           
-    </div>
-    </div>
 </x-app-layout>

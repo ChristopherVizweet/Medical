@@ -22,7 +22,7 @@
             <div class="justify-items-end self-end mr-10 mb-10">
                 <!--Boton para cambiar el modo oscuro/claro-->
                 <x-mode-button id="theme-toggle" class="setMode">
-                    Modo escuro/claro
+                    Modo oscuro/claro
                 </x-mode-button>
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {

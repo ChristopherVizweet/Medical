@@ -23,7 +23,7 @@
         <!-- RFC de proveedor -->
         <div class="mt-4">
             <x-input-label  for="rfc_supplier" :value="__('RFC del proveedor')" />
-            <x-text-input id="rfc_supplier" class="block mt-1 w-full is-invalid " autocomplete="off" type="text" name="rfc_supplier" :value="old('rfc_supplier')"  />
+            <x-text-input maxlength="18" id="rfc_supplier" class="block mt-1 w-full is-invalid " autocomplete="off" placeholder="Maximo 18 caracteres" type="text" name="rfc_supplier" :value="old('rfc_supplier')"  />
             <x-input-error :messages="$errors->get('Escriba el rfc del proveedor')" class="mt-2 is-invalid" />
         </div>
 

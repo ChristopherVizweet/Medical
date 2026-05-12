@@ -1,76 +1,153 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Reporte de Proyecto</title>
     <style>
-        body { margin: 0; margin-bottom: 40px; font-family: DejaVu Sans, sans-serif; font-size: 10px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #000; padding: 5px; text-align: left; }
-        #fechas { text-align: center; }
-        #cuentass { border: 2px solid blue; display: flex; padding: 5px; width: 100%; height: 20%; }
-        #general { border: 2px solid blue; display: flex; padding: 5px; width: 100%; height: 23%; justify-content: space-between;}
-        h1 { text-align: center; font-size: 11px; }
-        h3 { text-align: center; font-size: 9px; }
-        #folio { color: red; }
-        #servi { border-collapse: collapse; border: none;}
-        .columna1 { float: left;  width: 48%;}
-        .columna2 { float: right; width: 48%;}
-        .terminos { text-align: center; }
-        #tema { text-align: center; font-size: 15px; }
-        #header img {
-        width: 100px;   /*Este es el diseño de la imagen del logo1*/
+        body {
+            margin: 0;
+            margin-bottom: 40px;
+            font-family: DejaVu Sans, sans-serif;
+            font-size: 10px;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: left;
+        }
+
+        #fechas {
+            text-align: center;
+        }
+
+        #cuentass {
+            border: 2px solid blue;
+            display: flex;
+            padding: 5px;
+            width: 100%;
+            height: 20%;
+        }
+
+        #general {
+            border: 2px solid blue;
+            display: flex;
+            padding: 5px;
+            width: 100%;
+            height: 23%;
+            justify-content: space-between;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 11px;
+        }
+
+        h3 {
+            text-align: center;
+            font-size: 9px;
+        }
+
+        #folio {
+            color: red;
+        }
+
+        #servi {
+            border-collapse: collapse;
+            border: none;
+        }
+
+        .columna1 {
+            float: left;
+            width: 48%;
+        }
+
+        .columna2 {
+            float: right;
+            width: 48%;
+        }
+
+        .terminos {
+            text-align: center;
+        }
+
+        #tema {
+            text-align: center;
+            font-size: 15px;
+        }
+
+        #header img {
+            width: 100px;
+            /*Este es el diseño de la imagen del logo1*/
+        }
+
         #header #logo2 {
-        width: 40px; 
-        float: right;  /*Este es el diseño de la imagen del logo1*/
-    }
+            width: 40px;
+            float: right;
+            /*Este es el diseño de la imagen del logo1*/
+        }
+
         #header h1 {
             font-size: 14px;
             margin: 0;
         }
-        #footer_QR {
-        text-align: center; /* Centra horizontalmente el contenido */
-        margin-top: 10px;
-}
 
-#footer_QR img {
-    width: 200px;
-    display: inline-block;
-}
-.footer {
-        margin-top: 50px;
-    text-align: center;
-    font-size: 10px;
-    border-top: 1px solid #000;
-    padding-top: 10px;
-}
-.footer img{
-     width: 200px;
-}
-.texto_footer {color: blue}
-#marca-agua {
-    position: fixed;
-    top: 35%;
-    left: 20%;
-    width: 400px;
-    opacity: 0.5;
-    z-index: -1;
-}
+        #footer_QR {
+            text-align: center;
+            /* Centra horizontalmente el contenido */
+            margin-top: 10px;
+        }
+
+        #footer_QR img {
+            width: 200px;
+            display: inline-block;
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 10px;
+            border-top: 1px solid #000;
+            padding-top: 10px;
+        }
+
+        .footer img {
+            width: 200px;
+        }
+
+        .texto_footer {
+            color: blue
+        }
+
+        #marca-agua {
+            position: fixed;
+            top: 35%;
+            left: 20%;
+            width: 400px;
+            opacity: 0.5;
+            z-index: -1;
+        }
     </style>
-    
+
 </head>
 
 <body>
-    
+
     <h5>Reporte del Proyecto #{{ $project->id }}</h5>
     {{--Aqui comienza el diseño del reporte de PDF--}}
-<div id="general">
-    <div id="header">
-    <img id="logo2" src="{{ public_path('img/logo2.jpg') }}" alt="Logo Empresa2" width="30px">
-    <img src="{{ public_path('img/logo1.png') }}" alt="Logo Empresa" width="50px">
-    <h1>MEDICAL GAS SYSTEMS INTERNATIONAL SA DE CV</h1>
-    </div>
+    <div id="general">
+        <div id="header">
+            <img id="logo2" src="{{ public_path('img/logo2.jpg') }}" alt="Logo Empresa2" width="30px">
+            <img src="{{ public_path('img/logo1.png') }}" alt="Logo Empresa" width="50px">
+            <h1>MEDICAL GAS SYSTEMS INTERNATIONAL SA DE CV</h1>
+        </div>
         <div class="columna1">
             <p id="folio"><strong>Folio del proyecto:</strong> MED-{{ $project->folioProject }}-2025</p>
             <p><strong>Nombre del proyecto:</strong> {{ $project->nameProject ?? 'Sin especificar'}}</p>
@@ -83,14 +160,14 @@
         <div class="columna2">
             <p><strong>Cliente: </strong>{{$project->client->name_Client ?? 'Sin especificar'}}</p>
             <p><strong>Encargado: </strong>{{$project->encargado->name ?? 'Sin especificar'}}</p>
-             <p><strong>Vendedor: </strong>{{$project->vendedor->name ?? 'Sin especificar'}}</p>
+            <p><strong>Vendedor: </strong>{{$project->vendedor->name ?? 'Sin especificar'}}</p>
             <p><strong>Prioridad: </strong>{{$project->priority->namePriority ?? 'Sin especificar'}}</p>
             <p><strong>Status: </strong>{{$project->status->nameStatus ?? 'Sin especificar'}}</p>
             <p><strong>Recursos obtenidos por: </strong>{{$project->recursos->recursosObtenidos ?? 'Sin especificar'}}</p>
             <p><strong>Presupuesto:</strong> ${{ number_format($project->budget, 2) }}</p>
         </div>
-</div>
-<!--comienza la tabla de empleados y productos-->
+    </div>
+    <!--comienza la tabla de empleados y productos-->
     <h2>Empleados Asignados</h2>
     <table>
         <thead>
@@ -133,39 +210,39 @@
         </tbody>
     </table>
 
-<div id="servi">
+    <div id="servi">
         <h1>Servicios de instalación seleccionados</h1>
         <div id="servi">
-             <table id="servi">
+            <table id="servi">
                 <thead id="servi">
                     <tr id="servi">
-                    <th>Nombre del Servicio</th>
+                        <th>Nombre del Servicio</th>
                     </tr>
                 </thead>
-        <tbody id="servi">
-            @foreach ($project->services as $service)
-                <tr id="servi">
-                    <td>{{ $service->nameInstalation }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+                <tbody id="servi">
+                    @foreach ($project->services as $service)
+                    <tr id="servi">
+                        <td>{{ $service->nameInstalation }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-    <div id="fechas">
-       <p><strong>Fecha de inicio: </strong>{{$project->dateBegin}}</p>
-       <p><strong>Fecha de termino: </strong>{{$project->dateEnd}}</p>
- 
-    </div>
+        <div id="fechas">
+            <p><strong>Fecha de inicio: </strong>{{$project->dateBegin}}</p>
+            <p><strong>Fecha de termino: </strong>{{$project->dateEnd}}</p>
 
-</div>
-<div id="cuentass">
-    <h1>TOTAL</h1>
+        </div>
+
+    </div>
+    <div id="cuentass">
+        <h1>TOTAL</h1>
         <p><strong>Presupuesto:</strong> ${{ number_format($project->budget, 2) }}</p>
         <p><strong>Total mano de obra:</strong> ${{ number_format($project->totalManoObra, 2) }}</p>
         <p><strong>Total de productos:</strong> ${{ number_format($project->totalProductos, 2) }}</p>
-<p><strong>Cuenta bancaria: </strong>{{$project->cuenta->accountBank ?? 'Sin especificar'}}</p>
-</div>
-<img id="marca-agua" src="{{ public_path('img/marca_agua.png') }}" alt="Marca de Agua">
+        <p><strong>Cuenta bancaria: </strong>{{$project->cuenta->accountBank ?? 'Sin especificar'}}</p>
+    </div>
+    <img id="marca-agua" src="{{ public_path('img/marca_agua.png') }}" alt="Marca de Agua">
 
 </body>
 <!--<footer>
@@ -191,4 +268,5 @@
     <p class="texto_footer">Somos Fabricantes y Distribuidores</p>
     <p class="texto_footer"> www.medicalgas.com.mx , contactomedicalgas@gmail.com , ventas@medicalgas.com.mx , asesor2@medicalgas.com.mx, Tel Oficina: 55 2594 2008, 55 25942396, 55 72581417, Movil: </p>
 </div>
+
 </html>

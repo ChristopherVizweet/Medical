@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('edit-salidasL', $salidas->id) }}">
+    <form method="POST" action="{{ route('edit-salidasLL', $salidas->id) }}">
         @csrf
         @method('PUT')
 
@@ -48,9 +48,9 @@
                 <div class="producto-row grid grid-cols-5 gap-5 items-center">
                     <!-- Producto (select) -->
                     <div>
-                        <label readonly="true" for="productos[{{ $i }}][product_id]"
+                        <label for="productos[{{ $i }}][product_id]"
                             class="block text-sm font-medium text-gray-700 dark:text-white">Producto</label>
-                        <select readonly="true" name="productos[{{ $i }}][product_id]"
+                        <select disabled name="productos[{{ $i }}][product_id]"
                             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             <option readonly="true" value="">-- Seleccionar --</option>
                             @foreach ($productos as $producto)

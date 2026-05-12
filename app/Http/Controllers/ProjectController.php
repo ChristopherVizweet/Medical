@@ -88,7 +88,7 @@ class ProjectController extends Controller
     'inCharge_id_usuario' => 'nullable|string|max:50',
     'dateBegin' => 'nullable|date',
     'dateEnd' => 'nullable|date',
-    'budget' => 'nullable|numeric|min:0',
+    'budget' => 'nullable|decimal:2|min:0',
     'accountBank' => 'nullable|string|max:100',
     'id_priority' => 'nullable|string|max:100',
     'id_status' => 'nullable|string|max:100',

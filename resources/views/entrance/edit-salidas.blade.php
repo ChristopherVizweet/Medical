@@ -96,14 +96,14 @@
             <!-- Cantidad en almacén -->
             <div>
                 <x-input-label for="productos[{{ $i }}][cantidad]" :value="__('Cantidad almacén')" />
-                <x-text-input readonly="true" id="productos[{{ $i }}][cantidad]" class="mt-1 block w-full" type="number" name="productos[{{ $i }}][cantidad]" value="{{ old('productos.'.$i.'.cantidad', $prod->cantidad) }}" required />
+                <x-text-input  id="productos[{{ $i }}][cantidad]" class="mt-1 block w-full" type="number" name="productos[{{ $i }}][cantidad]" value="{{ old('productos.'.$i.'.cantidad', $prod->cantidad) }}" required />
                 <x-input-error :messages="$errors->get('productos.'.$i.'.cantidad')" class="mt-2" />
             </div>
 
             <!-- Cantidad enviada -->
             <div>
                 <x-input-label for="productos[{{ $i }}][cantidadE]" :value="__('Cantidad enviada')" />
-                <x-text-input readonly="true" id="productos[{{ $i }}][cantidadE]" class="mt-1 block w-full" type="number" name="productos[{{ $i }}][cantidadE]" value="{{ old('productos.'.$i.'.cantidadE', $prod->cantidadE) }}" required />
+                <x-text-input  id="productos[{{ $i }}][cantidadE]" class="mt-1 block w-full" type="number" name="productos[{{ $i }}][cantidadE]" value="{{ old('productos.'.$i.'.cantidadE', $prod->cantidadE) }}" required />
                 <x-input-error :messages="$errors->get('productos.'.$i.'.cantidadE')" class="mt-2" />
             </div>
 

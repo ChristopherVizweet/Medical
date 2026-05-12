@@ -6,7 +6,7 @@
             <h1 class="text-2xl font-bold">NUEVA SALIDA</h1>
         </div><br>
         <!--Aqui comienza el formulario para registrar la salida-->
-        <div class="producto-row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
+        <div class="producto-row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 items-center">
             <div class="hidden">
             <x-input-label for="tipoMovimiento" :value="__('Tipo de registro')" />
             <select class="mt-1 block w-full " name="tipoMovimiento" id="tipoMovimiento" readonly=true required>
@@ -72,10 +72,10 @@
         </div>
     <!--Aqui comienza el formulario para los productos-->
     <div id="productos-wrapper" class="space-y-4  border p-4 rounded-lg mt-3">
-    <div class="producto-row grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-center">
+    <div class="producto-row grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 items-center">
 
         <!-- Producto -->
-        <div>
+        <div class="col-span-5">
             <label for="productos[0][product_id]" class="block text-sm font-medium text-gray-700 dark:text-white">Producto</label>
             <select name="productos[0][product_id]" 
                     class=" mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
@@ -174,7 +174,7 @@
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
 
             <input type="number" name="productos[${productoIndex}][cantidad]" placeholder="Cantidad fuera de almacén"
-                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
 
              <input type="number" name="productos[${productoIndex}][cantidadE]" placeholder="Cantidad enviada"
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">

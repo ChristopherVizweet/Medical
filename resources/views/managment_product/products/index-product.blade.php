@@ -2,7 +2,7 @@
     <x-slot name="header">
         <!--Boton para cambiar el modo oscuro/claro-->
         <x-mode-button id="theme-toggle" class="float-right">
-            Modo escuro/claro
+            Modo oscuro/claro
         </x-mode-button>
         <script>
             document.addEventListener("DOMContentLoaded", function() {

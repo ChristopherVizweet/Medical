@@ -20,6 +20,11 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\RecursosController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\SeguroVehiculoController;
+use App\Http\Controllers\InstalationServiceController;
+use App\Http\Controllers\VehiculoController;
+use App\Http\Controllers\VehiculoMantenimientoController;
+use App\Http\Controllers\VehiculoTenenciaController;
 use App\Models\Empleados;
 use App\Models\Entrance;
 use App\Models\Recursos;
@@ -224,6 +229,27 @@ Route::get('/ver-payments/{project_id}', [PaymentController::class, 'verPayments
 #Parte para registro de vehiculos
 Route::get('/index-vehiculos',[App\Http\Controllers\VehiculoController::class,'index'])->name('index-vehiculos');
 Route::get('/create-vehiculos',[App\Http\Controllers\VehiculoController::class,'create'])->name('create-vehiculos');
+Route::post('/create-vehiculos',[App\Http\Controllers\VehiculoController::class,'store'])->name('store-vehiculos');
+Route::get('/edit-vehiculos/{id}',[App\Http\Controllers\VehiculoController::class, 'edit'])->name('edit-vehiculos');
+Route::put('/edit-vehiculos/{id}',[App\Http\Controllers\VehiculoController::class, 'update'])->name('edit-vehiculos');
+Route::delete('/delete-vehiculos/{id}',[App\Http\Controllers\VehiculoController::class, 'delete'])->name('delete-vehiculos');
+#Mantenimiento de vehiculos
+Route::get('/mantenimiento-vehiculos/{id}',[App\Http\Controllers\VehiculoMantenimientoController::class, 'index'])->name('mantenimiento-vehiculos');
+Route::post('/mantenimiento-vehiculos/{id}',[App\Http\Controllers\VehiculoMantenimientoController::class, 'storeMantenimiento'])->name('store-mantenimiento');
+Route::get('/pdf-vehiculos/{id}',[App\Http\Controllers\VehiculoMantenimientoController::class, 'print'])->name('pdf-vehiculos');
+#Tenencias de vehiculos
+Route::get('/index-tenencias/{id}',[App\Http\Controllers\VehiculoTenenciasController::class, 'index'])->name('index-tenencias');
+Route::get('/create-tenencias/{id}',[App\Http\Controllers\VehiculoTenenciasController::class, 'create'])->name('create-tenencias');
+Route::post('/create-tenencias/{id}',[App\Http\Controllers\VehiculoTenenciasController::class, 'store'])->name('store-tenencias');
+#Seguro de vehiculos
+Route::get('/index-seguroV/{id}',[App\Http\Controllers\SeguroVehiculoController::class, 'index'])->name('index-seguroV');
+Route::get('/create-seguroV/{id}',[App\Http\Controllers\SeguroVehiculoController::class, 'create'])->name('create-seguroV');
+Route::post('/create-seguroV/{id}',[App\Http\Controllers\SeguroVehiculoController::class, 'store'])->name('store-seguroV');
+#Verificacion de vehiculos
+Route::get('/index-verificacion/{id}',[App\Http\Controllers\VerificacionVehiculoController::class, 'index'])->name('index-verificacion');
+Route::get('/create-verificacion/{id}',[App\Http\Controllers\VerificacionVehiculoController::class, 'create'])->name('create-verificacion');
+Route::post('/create-verificacion/{id}',[App\Http\Controllers\VerificacionVehiculoController::class, 'store'])->name('store-verificacion');
+
 
 
 

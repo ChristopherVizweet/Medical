@@ -36,5 +36,11 @@ public function payments()
 public function responsable(){
         return $this->hasMany(Factura::class); //Muchos empleados tiene una factura
     }
+    public function responsableMantenimiento(){
+        return $this->hasMany(VehiculoMantenimiento::class, 'responsable_mantenimiento_vehiculo'); //Muchos empleados tiene un mantenimiento
+    }
+    public function encargadoVehiculo(){
+        return $this->hasMany(Vehiculo::class, 'id_encargado_vehiculo'); //Muchos empleados tiene un vehiculo
+    }
 }
 

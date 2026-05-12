@@ -116,7 +116,7 @@ th, td {
         <td class="cantidad">{{ $detalle->cantidadR ?? 'sin cantidad requerida' }}</td>
         <td class="cantidad">{{ $detalle->cantidadA ?? 'sin cantidad aprobada' }}</td>
         <td class="cantidad">{{ $detalle->cantidad ?? 'sin cantidad' }}</td>
-        <td class="cantidad">{{ $movimientos->observaciones_movimiento ?? 'sin observaciones' }}</td>
+        <td class="cantidad">{{ $detalle->observaciones_movimiento ?? 'sin observaciones' }}</td>
     </tr>
     @endforeach
         </tbody>
@@ -173,7 +173,7 @@ th, td {
         <td class="cantidad">{{ $detalle->cantidadR ?? 'sin cantidad requerida' }}</td>
         <td class="cantidad">{{ $detalle->cantidadA ?? 'sin cantidad aprobada' }}</td>
         <td class="cantidad">{{ $detalle->cantidad ?? 'sin cantidad' }}</td>
-        <td class="cantidad">{{ $movimientos->observaciones_movimiento ?? 'sin observaciones' }}</td>
+        <td class="cantidad">{{ $detalle->observaciones_movimiento ?? 'sin observaciones' }}</td>
     </tr>
     @endforeach
 </tbody>

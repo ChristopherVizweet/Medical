@@ -1,11 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center flex-wrap gap-4">
+       <div class="flex justify-between items-center flex-wrap gap-4">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 Proveedores
             </h2>
 
-            <x-mode-button id="theme-toggle" class="text-sm">
+           <x-mode-button id="theme-toggle" class="text-sm">
                 Modo oscuro/claro
             </x-mode-button>
         </div>

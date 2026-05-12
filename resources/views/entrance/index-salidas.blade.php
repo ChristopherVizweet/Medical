@@ -2,7 +2,7 @@
     <x-slot name="header">
         <!--Boton para cambiar el modo oscuro/claro-->
         <x-mode-button id="theme-toggle" class="float-right ">
-            Modo escuro/claro
+            Modo oscuro/claro
         </x-mode-button>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
@@ -79,7 +79,6 @@
                         <th class="px-4 py-2">{{ __('Cantidad recibida') }}</th>
                         <th class="px-4 py-2">{{ __('Fecha de salida') }}</th>
                         <th class="px-4 py-2">{{ __('Estado de registro') }}</th>
-                        <th class="px-4 py-2">{{ __('Observaciones') }}</th>
                         @role('superadmin')
                             <th class="px-4 py-2">{{ __('Acciones') }}</th>
                         @endrole
@@ -87,29 +86,30 @@
                 </thead>
                 <tbody>
                     @forelse ($movimientos as $movi)
+                        @php $producto = $movi->productos->first(); @endphp
                         <tr class="">
                             <td class="px-4 py-2">{{ $movi->id }}</td>
-                            <td class="px-4 py-2">{{ $movi->productos->first()->folio_movimiento ?? 'Sin folio' }}</td>
+                            <td class="px-4 py-2">{{ optional($producto)->folio_movimiento ?? 'Sin folio' }}</td>
                             <td class="px-4 py-2">
-                                {{ $movi->productos->first()->obra_movimiento ?? 'Sin nombre de obra' }}</td>
+                                {{ optional($producto)->obra_movimiento ?? 'Sin nombre de obra' }}</td>
                             <td class="px-4 py-2">
-                                {{ $movi->productos->first()->empleado->Nombre ?? 'Sin solicitante' }}</td>
+                                {{ optional(optional($producto)->empleado)->Nombre ?? 'Sin solicitante' }}</td>
                             <td class="px-4 py-2">
-                                {{ $movi->productos->first()->cantidadR ?? 'Sin cantidad requerida' }}</td>
-                            <td class="px-4 py-2">{{ $movi->productos->first()->cantidadA ?? 'Sin cantidad aprobada' }}
+                                {{ optional($producto)->cantidadR ?? 'Sin cantidad requerida' }}</td>
+                            <td class="px-4 py-2">{{ optional($producto)->cantidadA ?? 'Sin cantidad aprobada' }}
                             </td>
-                            <td class="px-4 py-2">{{ $movi->productos->first()->cantidadE ?? 'Sin cantidad enviada' }}
+                            <td class="px-4 py-2">{{ optional($producto)->cantidadE ?? 'Sin cantidad enviada' }}
                             </td>
-                            <td class="px-4 py-2">{{ $movi->productos->first()->cantidad ?? 'Sin T.P.E' }}</td>
+                            <td class="px-4 py-2">{{ optional($producto)->cantidad ?? 'Sin T.P.E' }}</td>
                             <td class="px-4 py-2">{{ $movi->fecha_movimiento ?? 'Sin fecha' }}</td>
                             <!--<td class="px-4 py-2">{ $movi->estadoMovimiento ?? 'Sin estado'}}</td>-->
                             <td class="px-4 py-2">{{ $movi->estadoMovimiento ?? 'Sin estado actual' }}</td>
                             </td>
-                            <td class="px-4 py-2">{{ $movi->observaciones_movimiento ?? 'Sin observaciones' }}</td>
+                            
                             <td class="px-4 py-2">
 
                                 <!--Aqui esta la condicion si tienen cantidad fuera de almacen-->
-                                @if ($movi->productos->first()->encargado_envio != null)
+                                @if (optional($producto)->encargado_envio)
                                     <a href=" {{ route('pdf-salidasObras', $movi->id) }}" target="_blank"
                                         class="text-red-600 hover:underline">PDF</a>|
                                     <a href="{{ route('edit-salidas', $movi->id) }}"
@@ -131,6 +131,7 @@
                                             class="text-blue-600 dark:text-blue-900 hover:underline">Actualizar</a>|
                                         <form action="{{ route('delete-salidas', $movi->id) }}" method="POST"
                                             style="display:inline-block;">
+                                            @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 hover:underline"
                                                 onclick="return confirm('¿En verdad deseas eliminar este registro?')">Eliminar</button>
@@ -143,10 +144,12 @@
                                             class="text-red-600 hover:underline">PDF</a>|
                                         <a href="{{ route('edit-salidasLL', $movi->id) }}"
                                             class="text-blue-600 dark:text-blue-900 hover:underline">Actualizar</a>|
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:underline"
-                                            onclick="return confirm('¿En verdad deseas eliminar este registro?')">Eliminar</button>
+                                        <form action="{{ route('delete-salidas', $movi->id) }}" method="POST"
+                                            style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:underline"
+                                                onclick="return confirm('¿En verdad deseas eliminar este registro?')">Eliminar</button>
                                         </form>
                                     @endrole
                                     <!--Condicional para especificamente superadmin o admin para descargar PDF-->
@@ -156,10 +159,12 @@
                                             class="text-red-600 hover:underline">PDF</a>|
                                         <a href="{{ route('edit-salidasLL', $movi->id) }}"
                                             class="text-blue-600 dark:text-blue-900 hover:underline">Actualizar</a>|
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:underline"
-                                            onclick="return confirm('¿En verdad deseas eliminar este registro?')">Eliminar</button>
+                                        <form action="{{ route('delete-salidas', $movi->id) }}" method="POST"
+                                            style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:underline"
+                                                onclick="return confirm('¿En verdad deseas eliminar este registro?')">Eliminar</button>
                                         </form>
                                     @endrole
                             </td>

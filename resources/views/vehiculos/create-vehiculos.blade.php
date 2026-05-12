@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form action="">
+    <form method="POST" action="{{ route('create-vehiculos') }} " enctype="multipart/form-data">
         @csrf
         <div class="bg-white rounded-2xl shadow-xl p-8 border border-slate-200" data-fg-d3bl21="0.8:1.26440:/src/app/App.tsx:145:11:4157:8332:e:div:ete" data-fgid-d3bl21=":rm:">
             <h2 class="text-2xl text-slate-800 mb-6 pb-4 border-b border-slate-200" data-fg-d3bl22="0.8:1.26440:/src/app/App.tsx:146:13:4246:135:e:h2:t" data-fgid-d3bl22=":rn:">Registro de Nuevo Vehículo</h2>
@@ -17,7 +17,10 @@
                                     </svg>
                                     <p class="text-slate-600 mb-1" data-fg-d3bl39="0.8:1.26440:/src/app/App.tsx:175:27:5882:55:e:p:t" data-fgid-d3bl39=":r10:">Subir fotografía</p>
                                     <p class="text-xs text-slate-400" data-fg-d3bl41="0.8:1.26440:/src/app/App.tsx:176:27:5964:61:e:p:t" data-fgid-d3bl41=":r11:">JPG, PNG (máx. 5MB)</p>
-                                </div><input type="file" accept="image/*" class="hidden" data-fg-d3bl43="0.8:1.26440:/src/app/App.tsx:178:25:6081:214:e:input" data-fgid-d3bl43=":r12:">
+                                </div>
+                                <input id="photo_vehiculo" type="file" name="photo_vehiculo" class="hidden">
+                                <p id="comprobante-status" class="text-red-500 text-sm mt-2">No se ha subido ninguna fotografía.</p>
+                                <p id="comprobante-added" class="text-green-500 text-sm mt-2 hidden">Se agregó una fotografía correctamente.</p>
                             </label>
                         </div>
                     </div>
@@ -30,8 +33,9 @@
                                     <path d="M10 9H8"></path>
                                     <path d="M16 13H8"></path>
                                     <path d="M16 17H8"></path>
-                                </svg>Nombre Inventario</label>
-                            <input type="text" name="nombreInventario" ="" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none" placeholder="Challenger" data-fg-d3bl50="0.8:1.26440:/src/app/App.tsx:196:21:6800:447:e:input" data-fgid-d3bl50=":r17:" value="">
+                                </svg>Nombre</label>
+                            <input type="text" name="nombre_vehiculo" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none" placeholder="Nombre del vehículo" data-fg-d3bl50="0.8:1.26440:/src/app/App.tsx:196:21:6800:447:e:input" data-fgid-d3bl50=":r17:" value="">
+
                         </div>
                         <div data-fg-d3bl51="0.8:1.26440:/src/app/App.tsx:207:19:7292:712:e:div:ete" data-fgid-d3bl51=":r18:">
                             <label class="block text-sm text-slate-700 mb-2 flex items-center gap-2" data-fg-d3bl52="0.8:1.26440:/src/app/App.tsx:208:21:7318:195:e:label:et" data-fgid-d3bl52=":r19:">
@@ -41,30 +45,76 @@
                                     <line x1="10" x2="8" y1="3" y2="21"></line>
                                     <line x1="16" x2="14" y1="3" y2="21"></line>
                                 </svg>Número de Serie</label>
-                            <input type="text" name="numeroSerie" ="" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none" placeholder="2C3CDZBB7GH7098811" data-fg-d3bl55="0.8:1.26440:/src/app/App.tsx:212:21:7534:445:e:input" data-fgid-d3bl55=":r1b:" value="">
+                            <input type="text" name="numeroSerie_vehiculo"="" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none" placeholder="2C3CDZBB7GH7098811" data-fg-d3bl55="0.8:1.26440:/src/app/App.tsx:212:21:7534:445:e:input" data-fgid-d3bl55=":r1b:" value="">
                         </div>
                         <div data-fg-d3bl56="0.8:1.26440:/src/app/App.tsx:223:19:8024:558:e:div:ete" data-fgid-d3bl56=":r1c:">
                             <label class="block text-sm text-slate-700 mb-2" data-fg-d3bl57="0.8:1.26440:/src/app/App.tsx:224:21:8050:66:e:label:t" data-fgid-d3bl57=":r1d:">Marca</label>
-                            <input type="text" name="marca" ="" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none" placeholder="DODGE" data-fg-d3bl59="0.8:1.26440:/src/app/App.tsx:225:21:8137:420:e:input" data-fgid-d3bl59=":r1e:" value="">
+                            <input type="text" name="marca_vehiculo" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none" placeholder="DODGE" data-fg-d3bl59="0.8:1.26440:/src/app/App.tsx:225:21:8137:420:e:input" data-fgid-d3bl59=":r1e:" value="">
                         </div>
                         <div data-fg-d3bl60="0.8:1.26440:/src/app/App.tsx:236:19:8602:566:e:div:ete" data-fgid-d3bl60=":r1f:">
-                            <label class="block text-sm text-slate-700 mb-2" data-fg-d3bl61="0.8:1.26440:/src/app/App.tsx:237:21:8628:67:e:label:t" data-fgid-d3bl61=":r1g:">Modelo</label>
-                            <input type="text" name="modelo" ="" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none" placeholder="Challenger" data-fg-d3bl63="0.8:1.26440:/src/app/App.tsx:238:21:8716:427:e:input" data-fgid-d3bl63=":r1h:" value="">
+                            <label class="block text-sm text-slate-700 mb-2" data-fg-d3bl61="0.8:1.26440:/src/app/App.tsx:237:21:8628:67:e:label:t" data-fgid-d3bl61=":r1g:">Modelo(año)</label>
+                            <input type="text" name=" modeloAño_vehiculo"="" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none" placeholder="" data-fg-d3bl63="0.8:1.26440:/src/app/App.tsx:238:21:8716:427:e:input" data-fgid-d3bl63=":r1h:" value="">
                         </div>
-                        <div data-fg-d3bl64="0.8:1.26440:/src/app/App.tsx:249:19:9188:551:e:div:ete" data-fgid-d3bl64=":r1i:"><label class="block text-sm text-slate-700 mb-2" data-fg-d3bl65="0.8:1.26440:/src/app/App.tsx:250:21:9214:64:e:label:t" data-fgid-d3bl65=":r1j:">Año</label><input type="text" name="año" ="" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none" placeholder="2015" data-fg-d3bl67="0.8:1.26440:/src/app/App.tsx:251:21:9299:415:e:input" data-fgid-d3bl67=":r1k:" value=""></div>
-                        <div data-fg-d3bl68="0.8:1.26440:/src/app/App.tsx:262:19:9759:563:e:div:ete" data-fgid-d3bl68=":r1l:"><label class="block text-sm text-slate-700 mb-2" data-fg-d3bl69="0.8:1.26440:/src/app/App.tsx:263:21:9785:67:e:label:t" data-fgid-d3bl69=":r1m:">Placas</label><input type="text" name="placas" ="" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none" placeholder="PYY378A" data-fg-d3bl71="0.8:1.26440:/src/app/App.tsx:264:21:9873:424:e:input" data-fgid-d3bl71=":r1n:" value=""></div>
-                        <div data-fg-d3bl72="0.8:1.26440:/src/app/App.tsx:275:19:10342:589:e:div:ete" data-fgid-d3bl72=":r1o:"><label class="block text-sm text-slate-700 mb-2" data-fg-d3bl73="0.8:1.26440:/src/app/App.tsx:276:21:10368:80:e:label:t" data-fgid-d3bl73=":r1p:">Área de Adscripción</label><input type="text" name="areaAdscripcion" ="" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none" placeholder="PH" data-fg-d3bl75="0.8:1.26440:/src/app/App.tsx:277:21:10469:437:e:input" data-fgid-d3bl75=":r1q:" value=""></div>
-                        <div data-fg-d3bl76="0.8:1.26440:/src/app/App.tsx:288:19:10951:721:e:div:ete" data-fgid-d3bl76=":r1r:"><label class="block text-sm text-slate-700 mb-2 flex items-center gap-2" data-fg-d3bl77="0.8:1.26440:/src/app/App.tsx:289:21:10977:194:e:label:et" data-fgid-d3bl77=":r1s:">Resguardatario</label><input type="text" name="resguardatario" ="" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none" placeholder="Nombre del responsable" data-fg-d3bl80="0.8:1.26440:/src/app/App.tsx:293:21:11192:455:e:input" data-fgid-d3bl80=":r1u:" value=""></div>
+                        <div data-fg-d3bl68="0.8:1.26440:/src/app/App.tsx:262:19:9759:563:e:div:ete" data-fgid-d3bl68=":r1l:"><label class="block text-sm text-slate-700 mb-2" data-fg-d3bl69="0.8:1.26440:/src/app/App.tsx:263:21:9785:67:e:label:t" data-fgid-d3bl69=":r1m:">Placas</label><input type="text" name="placas_vehiculo"="" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none" placeholder="PYY378A" data-fg-d3bl71="0.8:1.26440:/src/app/App.tsx:264:21:9873:424:e:input" data-fgid-d3bl71=":r1n:" value=""></div>
+                        <div data-fg-d3bl72="0.8:1.26440:/src/app/App.tsx:275:19:10342:589:e:div:ete" data-fgid-d3bl72=":r1o:"><label class="block text-sm text-slate-700 mb-2" data-fg-d3bl73="0.8:1.26440:/src/app/App.tsx:276:21:10368:80:e:label:t" data-fgid-d3bl73=":r1p:">Área de Adscripción</label><input type="text" name="area_vehiculo"="" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none" placeholder="PH" data-fg-d3bl75="0.8:1.26440:/src/app/App.tsx:277:21:10469:437:e:input" data-fgid-d3bl75=":r1q:" value=""></div>
+                        <div class="col-span-2" data-fg-d3bl76="0.8:1.26440:/src/app/App.tsx:288:19:10951:721:e:div:ete" data-fgid-d3bl76=":r1r:"><label class="block text-sm text-slate-700 mb-2 flex items-center gap-2" data-fg-d3bl77="0.8:1.26440:/src/app/App.tsx:289:21:10977:194:e:label:et" data-fgid-d3bl77=":r1s:">Resguardatario</label>
+                        <select name="id_encargado_vehiculo" id="id_encargado_vehiculo" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none">
+                            <option value="">--Seleccionar--</option>
+                            <!-- Opciones de encargados -->
+                            @foreach ($empleados as $empleado)
+                                <option value="{{ $empleado->id }}">{{ $empleado->Nombre }} {{ $empleado->apellidos }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     </div>
                 </div>
+                <div class="hidden">
+                    <input type="text" name="estado_vehiculo" value="Disponible">
+                </div>
+                    <div class=" mt-2 flex justify-end">
+                <x-primary-button class="mr-4">Registrar</x-primary-button>
+                <a href="{{ route('index-vehiculos') }}"
+                    class="px-4 py-2 bg-red-800 dark:bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white dark:text-white uppercase tracking-widest hover:bg-red-400 dark:hover:bg-green-400 focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
+                    Cancelar
+                </a>
+                </div>
 
-               
-                <x-primary-button class="ms-4"><a href="index-cotizacion">Registrar</a></x-primary-button>
-                <a href="{{ route('index-vehiculos') }}" 
-                class="px-4 py-2 bg-red-800 dark:bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white dark:text-white uppercase tracking-widest hover:bg-red-400 dark:hover:bg-green-400 focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
-                Cancelar
-            </a>
-                
         </div>
     </form>
+    {{-- -Aqui es para mostrar los errores del sistema- --}}
+
+    @if ($errors->any())
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <strong>¡Error!</strong> Revisa los campos marcados. <br>
+        <ul class="mt-2 list-disc list-inside">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+    <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const input = document.getElementById('photo_vehiculo');
+                    const addedMessage = document.getElementById('comprobante-added');
+                    const statusMessage = document.getElementById('comprobante-status');
+
+                    if (!input) return;
+
+                    input.addEventListener('change', function () {
+                        if (input.files && input.files.length > 0) {
+                            addedMessage.classList.remove('hidden');
+                            addedMessage.textContent = 'Se agregó una fotografía correctamente.';
+                            if (statusMessage) {
+                                statusMessage.classList.add('hidden');
+                            }
+                        } else {
+                            addedMessage.classList.add('hidden');
+                            if (statusMessage) {
+                                statusMessage.classList.remove('hidden');
+                            }
+                        }
+                    });
+                });
+            </script>
 </x-guest-layout>

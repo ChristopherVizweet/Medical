@@ -40,18 +40,20 @@
                 <x-input-error :messages="$errors->get('fecha_movimiento')" class="mt-2" />
             </div>
         </div>
-         <div>
-            <x-input-label for="observaciones_movimiento" :value="__('Observaciones')" />
-            <x-text-input autocomplete="off" id="observaciones_movimiento" class="mt-1 block w-full" type="text" name="observaciones_movimiento" :value="old('observaciones_movimiento')"  />
-            <x-input-error :messages="$errors->get('observaciones_movimiento')" class="mt-2" />
-        </div>
+         
     <!--Aqui comienza el formulario para los productos-->
-    <div id="productos-wrapper" class="space-y-4  border p-4 rounded-lg mt-3">
-    <div class="producto-row grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-center">
+    <div id="productos-wrapper"  class="space-y-4 producto-row  border border-gray-200 p-4 rounded-lg mt-3">
+        <div id="material-wrapper" class="producto-row">
+           
+        <label for="producto[0]" class="block text-center text-lg font-medium text-black dark:text-white">Material</label>
+        </div>
+        <div class="border border-gray-400 rounded-lg p-4">
+    <div class="producto-row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
 
-        <!-- Producto -->
-        <div>
-            <label for="productos[0][product_id]" class="block text-sm font-medium text-gray-700 dark:text-white">Producto</label>
+       
+<!-- Producto -->
+        <div class="col-span-5">
+            <label for="productos[0][product_id]" id="producto-row" class="block text-sm producto-row productos-wrapper font-medium text-gray-700 dark:text-white">Material</label>
             <select name="productos[0][product_id]" 
                     class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
                     required>
@@ -62,7 +64,6 @@
                 @endforeach
             </select>
         </div>
-
         <!-- Stock editable -->
         <div>
             <label for="productos[0][stock]" class="block text-sm font-medium text-gray-700 dark:text-white">Existencias</label>
@@ -88,7 +89,7 @@
         <!-- TPE -->
         @role('superadmin')
         <div>
-            <label for="productos[0][cantidad]" class="block text-sm font-medium text-gray-700 dark:text-white">T.P.E</label>
+            <label for="productos[0][cantidad]" class="block text-sm font-medium text-gray-700 dark:text-white">Total entregados</label>
             <input type="number" name="productos[0][cantidad]" placeholder="Total productos aprobados" value=0
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
@@ -103,9 +104,16 @@
             <input type="number" name="productos[0][cantidadE]" placeholder="Total productos enviados" value=0
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
+        <div class="mt-4">
+            <x-input-label for="productos[0][observaciones_movimiento]" :value="__('Comentarios')" />
+            <x-text-input name="productos[0][observaciones_movimiento]" placeholder="Comentarios del material" autocomplete="off" class="mt-1 block w-full" type="text"/>
+            <x-input-error :messages="$errors->get('observaciones_movimiento')" class="mt-2" />
+        </div>
     
-</div>
     </div>
+    </div>
+</div>
+ 
 
 <!-- Botones de acción -->
 
@@ -127,9 +135,11 @@
 
  <script>
     let productoIndex = 1; // empieza desde 1 porque ya existe el [0], el cual es el principal
+    let materialIndex=2; // para el id del material, empieza en 2 porque el primer producto tiene id 1 y el segundo id 2, así sucesivamente
 
     function agregarProducto() {
         const wrapper = document.getElementById('productos-wrapper');
+        const materialwrapper = document.getElementById('material-wrapper');
         
         // Crear un nuevo row
         const newRow = document.createElement('div');
@@ -137,48 +147,72 @@
         'grid',
         'grid-cols-1',      // 1 columna en móvil
         'md:grid-cols-3',   // 3 columnas en tablet
-        'lg:grid-cols-5',   // 6 columnas en desktop
+        'lg:grid-cols-4',   // 6 columnas en desktop
         'gap-4',
         'items-center',
-        'mb-2');
+        'mb-2',
+    'border',
+    'border-gray-400',
+    'rounded-lg',
+    'p-4'
+);
+
 
      newRow.innerHTML = `
-
+        <div class="block col-span-5 text-center text-lg font-medium text-black dark:text-white">
+         <label for="productos[${materialIndex}]" class="block text-center text-lg font-medium text-black dark:text-white">Material ${materialIndex}</label>
+        </div>
          <select name="productos[${productoIndex}][product_id]" 
-         class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
-          <option value="">-- Seleccionar producto --</option>
+         class="mt-1 col-span-5 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+          <option value="">-- Seleccionar material --</option>
           @foreach($productos as $producto)
               <option value="{{ $producto->id }}" data-stock="{{ $producto->stock }}">{{ $producto->name_product }} Diametro {{$producto->diameterMM_product}}mm</option>
           @endforeach
          </select>
-
+        
+       <div>
+       <label for="productos[${productoIndex}][stock]" class="block text-sm font-medium text-gray-700 dark:text-white">Existencias</label>
          <input type="number" readonly="true" step="any" name="productos[${productoIndex}][stock]" placeholder="Existencias"
              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+             </div>
+
         <div>
-         
+         <label for="productos[${productoIndex}][cantidadR]" class="block text-sm font-medium text-gray-700 dark:text-white">Cantidad requerida</label>
          <input type="number" name="productos[${productoIndex}][cantidadR]" placeholder="Cant. requerida" value=0
              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" >
         </div>
-        <div class="">
+         @role('superadmin')<div class="">
+          <label for="productos[${productoIndex}][cantidadA]" class="block text-sm font-medium text-gray-700 dark:text-white">Cantidad Aprobada</label>
          <input type="number" name="productos[${productoIndex}][cantidadA]" placeholder="Cantidad aprobada" value=0
              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
          </div>
-        <div>
+         @endrole
+         @role('superadmin')<div>
+         <label for="productos[${productoIndex}][cantidad]" class="block text-sm font-medium text-gray-700 dark:text-white">Total entregados</label>
          <input type="number" step="0.01" name="productos[${productoIndex}][cantidad]" 
              placeholder="Total productos entregados" value=0
              class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
         
+         @else
+            <input type="hidden" name="productos[${productoIndex}][cantidad]" placeholder="Total productos aprobados" value=0
+                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+         @endrole
+        
+            <input type="text" name="productos[${productoIndex}][observaciones_movimiento]" placeholder="Comentarios del material" 
+             class="mt-1 col-span-5 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" >
+        </div>
         
              <!-- Botón eliminar -->
         <button type="button" onclick="eliminarProducto(this)" 
-                class="px-2 py-1 bg-red-600 text-white rounded shadow hover:bg-red-700 transition">
+                class="px-2 py-1 bg-red-600 text-white col-span-5 rounded shadow hover:bg-red-700 transition">
             ✕
         </button>
         `;
 
         wrapper.appendChild(newRow);
         productoIndex++;
+        materialIndex++;
     }
 
     function eliminarProducto(boton) {

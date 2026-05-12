@@ -29,10 +29,10 @@ class EmpleadosController extends Controller
         'sueldo' => 'nullable|numeric|min:0',
         'calle' => 'nullable|string|max:255',
         'ciudad' => 'nullable|string|max:10',
-        'estadoProv' => 'nullable|string|max:20',
-        'codigoPostal' => 'nullable|integer',
+        'estadoProv' => 'nullable|string',
+        'codigoPostal' => 'nullable|string',
         'pais' => 'nullable|string|max:15',
-        'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+        'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:5000',
         'tipoSangre'=>'nullable|string|max:20',
         'talla_pantalon' => 'nullable|string|max:10',
         'talla_camisa' => 'nullable|string|max:10',
@@ -41,7 +41,7 @@ class EmpleadosController extends Controller
         'cv_empleado' => 'nullable|file|mimes:pdf|max:5000',
         'fecha_nacimiento' => 'nullable|date',
         'fecha_vacaciones' => 'nullable|date',
-        'certificados_empleados' => 'nullable|file|mimes:pdf|max:2048',
+        'certificados_empleados' => 'nullable|file|mimes:pdf|max:5000',
     ]);
 
     $imagePath = $request->hasFile('foto') 
@@ -96,7 +96,7 @@ class EmpleadosController extends Controller
 
 public function update(Request $request, $id)
 {
-    dd(app()->getLocale());
+    //dd(app()->getLocale());
     $request->validate([
     'curp' => 'nullable|string|max:20',
         'Nombre' => 'nullable|string|max:30',
@@ -110,7 +110,7 @@ public function update(Request $request, $id)
         'calle' => 'nullable|string|max:100',
         'ciudad' => 'nullable|string|max:50',
         'estadoProv' => 'nullable|string|max:30',
-        'codigoPostal' => 'nullable|integer',
+        'codigoPostal' => 'nullable|string',
         'pais' => 'nullable|string|max:15',
         'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:5000',
         'tipoSangre'=>'nullable|string|max:20',

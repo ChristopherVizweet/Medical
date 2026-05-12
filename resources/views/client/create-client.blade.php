@@ -58,7 +58,7 @@
              <!-- TELEFONO SUPERVISOR -->
             <div class="mt-4">
                 <x-input-label for="telefono_supervisor" :value="__('Teléfono del project manager')" />
-                <x-text-input  id="telefono_supervisor" class="block mt-1 w-full" autocomplete="off" type="tel" name="telefono_supervisor" :value="old('telefono_supervisor')"  />
+                <x-text-input maxlength="10" id="telefono_supervisor" class="block mt-1 w-full" autocomplete="off" type="tel" name="telefono_supervisor" :value="old('telefono_supervisor')"  />
                 <x-input-error :messages="$errors->get('telefono_supervisor')" class="mt-2" />
             </div>
             
@@ -80,7 +80,7 @@
              <!-- TELEFONO ENCARGADO-->
             <div class="mt-4">
                 <x-input-label for="telefono_encargado" :value="__('Teléfono del residente')" />
-                <x-text-input  id="telefono_encargado" class="block mt-1 w-full" autocomplete="off" type="tel" name="telefono_encargado" :value="old('telefono_encargado')"  />
+                <x-text-input maxlength="10"  id="telefono_encargado" class="block mt-1 w-full" autocomplete="off" type="tel" name="telefono_encargado" :value="old('telefono_encargado')"  />
                 <x-input-error :messages="$errors->get('telefono_encargado')" class="mt-2" />
             </div>
         </div>

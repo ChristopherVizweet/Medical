@@ -4,14 +4,13 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 Clientes
             </h2>
-
-            <x-mode-button id="theme-toggle" class="text-sm">
+    <x-mode-button id="theme-toggle" class="text-sm">
                 Modo oscuro/claro
             </x-mode-button>
         </div>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function() {
                 const themeToggle = document.getElementById("theme-toggle");
                 const body = document.documentElement;
                 const currentTheme = localStorage.getItem("theme");
@@ -22,7 +21,7 @@
                     body.classList.remove("dark");
                 }
 
-                themeToggle.addEventListener("click", function () {
+                themeToggle.addEventListener("click", function() {
                     if (body.classList.contains("dark")) {
                         body.classList.remove("dark");
                         localStorage.setItem("theme", "light");
