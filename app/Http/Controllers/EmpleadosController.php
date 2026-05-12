@@ -21,7 +21,7 @@ class EmpleadosController extends Controller
         'curp' => 'nullable|string|max:20',
         'Nombre' => 'nullable|string|max:30',
         'apellidos' => 'nullable|string|max:22',
-        'organizacion' => 'nullable|string|max:20',
+        'organizacion' => 'nullable|string',
         'cargo' => 'nullable|string|max:30',
         'correoElectronico' => 'nullable|email',
         'numeroTelefonoTrabajo' => 'nullable|string|max:10',
