@@ -37,7 +37,7 @@
                                                                                                                             
                     @hasanyrole('superadmin|almacen|laboratorio')
                     <x-nav-link :href="route('index-product')" :active="request()->routeIs('index-product')">
-                        Productos
+                        Gestión de Materiales
                     </x-nav-link>
                     @endhasanyrole
                     @hasanyrole('superadmin|admin|almacen')
@@ -143,8 +143,12 @@
                 {{ __('Proyectos') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('index-managmentp')" :active="request()->routeIs('index-managmentp')">
-                {{ __('Gestión de productos') }}
+            <x-responsive-nav-link :href="route('index-facturas')" :active="request()->routeIs('index-facturas')">
+                {{ __('Facturas') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('index-product')" :active="request()->routeIs('index-product')">
+                {{ __('Gestión de Materiales') }}
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('index-existencias')" :active="request()->routeIs('index-existencias')">
@@ -157,6 +161,10 @@
 
             <x-responsive-nav-link :href="route('index-user')" :active="request()->routeIs('index-user')">
                 {{ __('Gestión de usuarios') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('index-vehiculos')" :active="request()->routeIs('index-vehiculos')">
+                {{ __('Vehículos') }}
             </x-responsive-nav-link>
 
         </div>
