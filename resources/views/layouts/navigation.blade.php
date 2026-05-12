@@ -4,7 +4,7 @@
             <div class="flex"> 
                 <!-- Logo -->
                 <div class="flex-none flex items-center"> <a href="{{ route('dashboard') }}"> 
-                    <x-logo-navigation class="w-20 h-20 fill-current text-gray-500" /> </a> 
+                    <x-logo-navigation class="w-20 h-20 fill-current text-gray-500" /> 
                 </div> 
                     <!-- Navigation Links -->
                 <div class="hidden sm:flex justify-center space-x-12">
