@@ -83,7 +83,7 @@
                         <td class="px-4 py-2">{{ $vehiculo->id }}</td>
                         <td class="px-4 py-2">
                             @if ($vehiculo->photo_vehiculo)
-                            <img src="{{ Storage::url($vehiculo->photo_vehiculo) }}" alt="Fotografía del vehículo" class="w-24 h-24 object-cover">
+                            <img src="{{ asset('storage/' . $vehiculo->photo_vehiculo) }}" alt="Fotografía del vehículo" class="w-24 h-24 object-cover">
                             @else
                             <p>No disponible</p>
                             @endif
