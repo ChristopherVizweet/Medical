@@ -191,6 +191,85 @@ Modo Oscuro/Claro
       @endif
     </div>
   </section>
+
+<!-- FECHAS PROXIMA DE PAGOS DE TENENCIAS -->
+ <section class="bg-white dark:bg-gray-700 border rounded-lg shadow p-4 flex flex-col">
+  <header class="mb-2">
+      <h3 id="fecha-tenencia" class="text-lg font-semibold text-gray-900 dark:text-white">Próximos pagos de tenencias</h3>
+    </header>
+    <div class="text-sm text-gray-700 dark:text-gray-200 mb-4 flex-1">
+      @if($pagos_tenecias->isNotEmpty())
+        <ul class="list-disc list-inside space-y-2 max-h-40 overflow-auto pr-2">
+          @foreach($pagos_tenecias as $tenencia)
+            <li class="truncate">
+              {{ $tenencia->vehiculo->nombre_vehiculo }} —
+              {{ \Carbon\Carbon::parse($tenencia->fecha_tenencias_proxima)->format('d/m/Y') }}
+            </li>
+          @endforeach
+        </ul>
+        <div class="mt-3">
+                <a href="{{ route('index-vehiculos') ?? '#' }}"
+                    class="inline-block w-full text-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-400">
+                    Ver vehículos
+                </a>
+             </div>
+      @else
+        <p class="text-sm text-gray-600 dark:text-gray-300">No hay pagos próximos.</p>
+      @endif
+    </div>
+ </section>
+ <!-- FECHAS PROXIMA DE PAGOS DE SEGURO -->
+ <section class="bg-white dark:bg-gray-700 border rounded-lg shadow p-4 flex flex-col">
+  <header class="mb-2">
+      <h3 id="fecha-tenencia" class="text-lg font-semibold text-gray-900 dark:text-white">Próximos pagos de seguro</h3>
+    </header>
+    <div class="text-sm text-gray-700 dark:text-gray-200 mb-4 flex-1">
+      @if($pagos_seguro->isNotEmpty())
+        <ul class="list-disc list-inside space-y-2 max-h-40 overflow-auto pr-2">
+          @foreach($pagos_seguro as $tenencia)
+            <li class="truncate">
+              {{ $tenencia->vehiculo->nombre_vehiculo }} —
+              {{ \Carbon\Carbon::parse($tenencia->fecha_proxima_seguro)->format('d/m/Y') }}
+            </li>
+          @endforeach
+        </ul>
+        <div class="mt-3">
+                <a href="{{ route('index-vehiculos') ?? '#' }}"
+                    class="inline-block w-full text-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-400">
+                    Ver vehículos
+                </a>
+             </div>
+      @else
+        <p class="text-sm text-gray-600 dark:text-gray-300">No hay pagos próximos.</p>
+      @endif
+    </div>
+ </section>
+ <!-- FECHAS PROXIMA DE PAGOS DE VERIFICACION -->
+ <section class="bg-white dark:bg-gray-700 border rounded-lg shadow p-4 flex flex-col">
+  <header class="mb-2">
+      <h3 id="fecha-tenencia" class="text-lg font-semibold text-gray-900 dark:text-white">Próximos pagos de verificación</h3>
+    </header>
+    <div class="text-sm text-gray-700 dark:text-gray-200 mb-4 flex-1">
+      @if($pagos_verificacion->isNotEmpty())
+        <ul class="list-disc list-inside space-y-2 max-h-40 overflow-auto pr-2">
+          @foreach($pagos_verificacion as $tenencia)
+            <li class="truncate">
+              {{ $tenencia->vehiculo->nombre_vehiculo }} —
+              {{ \Carbon\Carbon::parse($tenencia->fecha_proxima_verificacion)->format('d/m/Y') }}
+            </li>
+          @endforeach
+        </ul>
+        <div class="mt-3">
+                <a href="{{ route('index-vehiculos') ?? '#' }}"
+                    class="inline-block w-full text-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-400">
+                    Ver vehículos
+                </a>
+             </div>
+      @else
+        <p class="text-sm text-gray-600 dark:text-gray-300">No hay pagos próximos.</p>
+      @endif
+    </div>
+ </section>
 </div>
 @endrole
         </div>

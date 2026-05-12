@@ -183,11 +183,11 @@
                 {{ __('Registrar salida') }}
             </a>
         </x-primary-button>
-        <x-primary-button class="mt-4">
-            <a href="{{ route('create-salidasObras') }}" class="text-dark">
+        <!--<x-primary-button class="mt-4">
+            <a href="{ route('create-salidasObras') }}" class="text-dark">
                 {{ __('Registrar salida a obra') }}
             </a>
-        </x-primary-button>
+        </x-primary-button>-->
         </table>
     </div>
 </x-app-layout>

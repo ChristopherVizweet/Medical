@@ -5,6 +5,9 @@ use App\Models\Empleados;
 use App\Models\Factura;
 use App\Models\InventarioMovimiento;
 use App\Models\Product;
+use App\Models\SeguroVehiculo;
+use App\Models\VehiculoTenencias;
+use App\Models\VerificacionVehiculo;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -47,6 +50,20 @@ class DashboardController extends Controller
         $bnproducto = Product::Where('stock','<','10')
         ->get();
 
-        return view('dashboard', compact('facturasStatus','proximos','cumpleanosProximos', 'rPendientes','bnproducto'));
+        //Obtener fechas de tenencias proximas a pagar
+        $pagos_tenecias = VehiculoTenencias::where('fecha_tenencias_proxima', '>=', Carbon::today())
+            ->where('fecha_tenencias_proxima', '<=', Carbon::today()->addDays(7))
+            ->get();
+
+        //Obtener fechas de seguro proximas a pagar
+        $pagos_seguro = SeguroVehiculo::where('fecha_proxima_seguro', '>=', Carbon::today())
+            ->where('fecha_proxima_seguro', '<=', Carbon::today()->addDays(7))
+            ->get();
+
+            //Obtener fechas de verificacion proximas a pagar
+        $pagos_verificacion = VerificacionVehiculo::where('fecha_proxima_verificacion', '>=', Carbon::today())
+            ->where('fecha_proxima_verificacion', '<=', Carbon::today()->addDays(7))
+            ->get();
+        return view('dashboard', compact('facturasStatus','proximos','cumpleanosProximos', 'rPendientes','bnproducto','pagos_tenecias','pagos_seguro','pagos_verificacion'));
     }
 }
