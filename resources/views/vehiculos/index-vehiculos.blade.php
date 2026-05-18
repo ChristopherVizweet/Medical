@@ -72,6 +72,7 @@
                         <th class="px-4 py-2">{{('Estado') }}</th>
                         <th class="px-4 py-2">{{('Mantenimiento') }}</th>
                         <th class="px-4 py-2">{{('Documentación') }}</th>
+                        <th class="px-4 py-2">{{('CheckList') }}</th>
                         <th class="px-4 py-2">{{('Acciones') }}</th>
 
 
@@ -109,6 +110,9 @@
                             <button> <a href="{{ route('index-verificacion', $vehiculo->id) }}" class="text-gray-500 hover:text-green-700">Verificación</a> </button>
 
 
+                        </td>
+                        <td class="px-4 py-2">
+                            <button> <a href="{{ route('index-checklist', $vehiculo->id) }}" class="text-red-500 hover:text-green-400">CheckList</a> </button>
                         </td>
                         <td class="px-4 py-2">
                             <a href="{{ route('edit-vehiculos', $vehiculo->id) }}" class="text-blue-500 hover:text-blue-700">Editar</a>

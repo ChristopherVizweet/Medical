@@ -42,5 +42,8 @@ public function responsable(){
     public function encargadoVehiculo(){
         return $this->hasMany(Vehiculo::class, 'id_encargado_vehiculo'); //Muchos empleados tiene un vehiculo
     }
+    public function conductorChecklist(){
+        return $this->hasMany(VehiculoCheckList::class, 'id_conductor_checklist'); //Muchos empleados tiene un checklist
+    }
 }
 

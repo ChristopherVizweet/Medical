@@ -249,7 +249,12 @@ Route::post('/create-seguroV/{id}',[App\Http\Controllers\SeguroVehiculoControlle
 Route::get('/index-verificacion/{id}',[App\Http\Controllers\VerificacionVehiculoController::class, 'index'])->name('index-verificacion');
 Route::get('/create-verificacion/{id}',[App\Http\Controllers\VerificacionVehiculoController::class, 'create'])->name('create-verificacion');
 Route::post('/create-verificacion/{id}',[App\Http\Controllers\VerificacionVehiculoController::class, 'store'])->name('store-verificacion');
+#Checklist de vehiculos
 
+Route::get('/index-checklist/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'index'])->name('index-checklist');
+Route::get('/create-checklist/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'create'])->name('create-checklist');
+Route::post('/create-checklist/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'store'])->name('store-checklist');
+Route::get('/show-checklist/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'print'])->name('show-checklist');
 
 
 

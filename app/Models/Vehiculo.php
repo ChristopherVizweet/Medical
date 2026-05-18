@@ -33,4 +33,10 @@ class Vehiculo extends Model
     public function verificaciones(){
         return $this->hasMany(VerificacionVehiculo::class, 'vehiculo_id');
     }
+    public function checklist(){
+        return $this->hasMany(VehiculoCheckList::class, 'id_vehiculo');
+    }
+    public function placa(){
+        return $this->hasMany(VehiculoCheckList::class, 'id_placa_vehiculo');
+    }
 }

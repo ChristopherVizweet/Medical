@@ -37,4 +37,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Factura::class, 'responsable_almacen_id_factura');
     }
+    public function responsableChecklist(){
+        return $this->hasMany(VehiculoCheckList::class, 'responsable_entrega_checklist'); //Muchos empleados tiene un checklist
+    }
 }
