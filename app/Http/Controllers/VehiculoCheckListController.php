@@ -67,7 +67,7 @@ class VehiculoCheckListController extends Controller
             }
         }
 
-        return redirect()->route('create-photos-vehiculos', $checklist->id)->with('success', 'Items guardados');
+        return redirect()->route('index-checklist', $checklist->id)->with('success', 'Items guardados');
     }
 
      public function createPhotos($id){
@@ -76,42 +76,7 @@ class VehiculoCheckListController extends Controller
         return view('vehiculos.create-photos-vehiculos', compact('id', 'vehiculos','fotosV'));
     }
 
-    public function storePhotos(Request $request, $id)
-    {
-        $request->validate([
-            'foto_frente' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000',
-            'foto_lado_izquierdo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000',
-            'foto_lado_derecho' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000',
-            'foto_trasera' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000',
-            'foto_adicional' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000',
-        ]);
-        $foto_vehiculo_frente = $request->hasFile('foto_frente')
-            ? $request->file('foto_frente')->store('photos', 'public')
-            : null;
-        $foto_vehiculo_lado_izquierdo = $request->hasFile('foto_lado_izquierdo')
-            ? $request->file('foto_lado_izquierdo')->store('photos', 'public')
-            : null;
-        $foto_vehiculo_lado_derecho = $request->hasFile('foto_lado_derecho')
-            ? $request->file('foto_lado_derecho')->store('photos', 'public')
-            : null;
-        $foto_vehiculo_trasera = $request->hasFile('foto_trasera')
-            ? $request->file('foto_trasera')->store('photos', 'public')
-            : null;
-        $foto_vehiculo_adicional = $request->hasFile('foto_adicional')
-            ? $request->file('foto_adicional')->store('photos', 'public')
-            : null;
-
-    PhotosVehiculos::create([
-        'id_checklist' => $id,
-        'foto_frente' => $foto_vehiculo_frente,
-        'foto_lado_izquierdo' => $foto_vehiculo_lado_izquierdo,
-        'foto_lado_derecho' => $foto_vehiculo_lado_derecho,
-        'foto_trasera' => $foto_vehiculo_trasera,
-        'foto_adicional' => $foto_vehiculo_adicional,
-    ]);
-
-    return redirect()->route('index-checklist', $checklist->id_vehiculo)->with('success', 'Checklist registrado exitosamente');
-    }
+    
 
     //Funcion para convertir a PDF
     public function print($id)
