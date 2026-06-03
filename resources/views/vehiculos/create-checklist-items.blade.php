@@ -1,11 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('store-checklist-items', $id) }} " enctype="multipart/form-data">
-        @csrf
-        <input type="hidden" name="id_checklist" value="{{ $id }}">
-        <div class=" text-center text-gray-800 dark:text-white">
-            <h1>REGISTRAR CHECKLIST PRE USO DEL VEHÍCULO</h1>
-        </div><br>
-
+   
         <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
