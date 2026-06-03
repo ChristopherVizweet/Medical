@@ -50,7 +50,7 @@
         }
 
         #titulo {
-            font-size: 14px;
+            font-size: 12px;
             text-align: right;
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -59,7 +59,7 @@
         }
 
         #encargado {
-            font-size: 13px;
+            font-size: 10px;
             text-align: left;
             color: #334155;
             font-weight: 600;
@@ -68,7 +68,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
+            font-size: 10px;
             color: #0f172a;
             margin-top: 14px;
         }
@@ -84,7 +84,7 @@
             background: #f8fafc;
             color: #475569;
             text-align: left;
-            font-size: 13px;
+            font-size: 9px;
             letter-spacing: 0.01em;
         }
 
@@ -102,19 +102,19 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            font-size: 13px;
+            font-size: 10px;
         }
 
         h4 {
             margin: 28px 0 12px;
-            font-size: 18px;
+            font-size: 12px;
             letter-spacing: 0.03em;
             color: #0f172a;
         }
 
         h3 {
             margin: 18px 0 8px;
-            font-size: 16px;
+            font-size: 12px;
             color: #0f172a;
         }
 
@@ -144,7 +144,7 @@
 
         .section-card-header {
             padding: 14px 16px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             letter-spacing: 0.04em;
             text-transform: uppercase;
@@ -160,7 +160,7 @@
         .section-card-table td {
             padding: 10px 12px;
             border-top: 1px solid #e2e8f0;
-            font-size: 12px;
+            font-size: 10px;
             color: #334155;
         }
 
