@@ -66,15 +66,10 @@ class VehiculoCheckListController extends Controller
                 }
             }
         }
-
-        return redirect()->route('index-checklist', $checklist->id)->with('success', 'Items guardados');
+        return redirect()->route('index-vehiculos')->with('success', 'Checklist creado exitosamente');
+       // return redirect()->route('index-checklist', $checklist->id_vehiculo)->with('success', 'Items guardados');
     }
 
-     public function createPhotos($id){
-       $fotosV= VehiculoCheckList::findOrFail($id); // Cargar datos del checklist por su id
-        $vehiculos= VehiculoCheckList::findOrFail($id); // Cargar datos del checklist por su id
-        return view('vehiculos.create-photos-vehiculos', compact('id', 'vehiculos','fotosV'));
-    }
 
     
 
