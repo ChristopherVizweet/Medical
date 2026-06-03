@@ -69,7 +69,7 @@
                     <x-input-error :messages="$errors->get('curp')" class="mt-2" />
                 </div>
 
-                {{-- KIlometraje inicial --}}
+                {{-- Kilometraje inicial --}}
                 <div>
                     <x-input-label for="curp" :value="__('Kilometraje inicial')" />
                     <x-text-input autocomplete="off" id="curp" class="mt-1 block w-full" type="text" name="kilometraje_inicial" :value="old('kilometraje_inicial')" />

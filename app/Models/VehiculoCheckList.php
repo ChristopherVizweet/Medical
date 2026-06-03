@@ -35,4 +35,8 @@ class VehiculoCheckList extends Model
     {
         return $this->belongsTo(Vehiculo::class, 'id_placa_vehiculo');
     }
+    public function respuestas()
+    {
+        return $this->hasMany(RespuestaChecklist::class, 'id_checklist');
+    }
 }

@@ -250,14 +250,17 @@ Route::get('/index-verificacion/{id}',[App\Http\Controllers\VerificacionVehiculo
 Route::get('/create-verificacion/{id}',[App\Http\Controllers\VerificacionVehiculoController::class, 'create'])->name('create-verificacion');
 Route::post('/create-verificacion/{id}',[App\Http\Controllers\VerificacionVehiculoController::class, 'store'])->name('store-verificacion');
 #Checklist de vehiculos
-
 Route::get('/index-checklist/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'index'])->name('index-checklist');
 Route::get('/create-checklist/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'create'])->name('create-checklist');
 Route::post('/create-checklist/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'store'])->name('store-checklist');
 Route::get('/show-checklist/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'print'])->name('show-checklist');
+#Checklist de items de vehiculos
+Route::get('/create-checklist-items/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'createItems'])->name('create-checklist-items');
+Route::post('/create-checklist-items/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'storeItems'])->name('store-checklist-items');
 
-
-
+#Creacion de fotos para evidencia de vehiculos
+Route::get('/create-photos-vehiculos/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'createPhotos'])->name('create-photos-vehiculos');
+Route::post('/create-photos-vehiculos/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'storePhotos'])->name('store-photos-vehiculos');
 
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
