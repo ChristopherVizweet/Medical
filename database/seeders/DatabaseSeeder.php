@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\SectionItemsChecklist;
 
 
 class DatabaseSeeder extends Seeder
@@ -70,6 +71,22 @@ class DatabaseSeeder extends Seeder
 'crear productos','editar productos','eliminar productos','gestionar ventas','gestionar existencias']);
     $almacen->givePermissionTo(['gestionar existencias']);
     $this->call(SuperadminSeeder::class);
+
+    $sections = [
+    'SISTEMA DE LUCES',
+    'PARTE EXTERNA',
+    'PARTE INTERNA',
+    'ESTADO DE LLANTAS',
+    'ACCESORIOS DE SEGURIDAD',
+    'TAPAS Y OTROS',
+];
+
+foreach ($sections as $section) {
+    SectionItemsChecklist::create([
+        'nombre_seccion_ch' => $section,
+    ]);
+    $this->call(ChecklistSeeder::class);
+}
     
     }
 
