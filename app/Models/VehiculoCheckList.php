@@ -39,4 +39,8 @@ class VehiculoCheckList extends Model
     {
         return $this->hasMany(RespuestaChecklist::class, 'id_checklist');
     }
+    public function fotos()
+    {
+        return $this->hasMany(PhotosVehiculos::class, 'id_checklist');
+    }
 }

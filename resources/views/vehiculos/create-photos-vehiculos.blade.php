@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('store-photos-vehiculos', $id) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('store-photos-vehiculos', ['id' => $id]) }}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="id_checklist" value="{{ $id }}">
 

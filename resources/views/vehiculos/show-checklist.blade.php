@@ -176,6 +176,16 @@
             text-align: right;
             color: #475569;
         }
+
+        .photo-preview {
+
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-top: 10px;
+            border: 1px solid #cbd5e1;
+        }
     </style>
 
 </head>
@@ -299,6 +309,61 @@
                 <td></td>
             @endfor
         @endif
+    </tr>
+</table>
+
+
+<table width="100%" border="1" cellspacing="0" cellpadding="10">
+    <tr>
+        <td>
+            @php $fotoFrontal = optional($fotos->first())->foto_frente; @endphp
+            @if ($fotoFrontal)
+                <strong>FOTO DELANTERA:</strong>
+                <img class="photo-preview" src="{{ public_path('storage/' . $fotoFrontal) }}" alt="Foto delantera del vehículo">
+            @else
+                FOTO DELANTERA: Sin foto
+            @endif
+        </td>
+
+        <td>
+            @php $fotoFrontal = optional($fotos->first())->foto_lado_izquierdo ; @endphp
+            @if ($fotoFrontal)
+                <strong>FOTO LADO IZQUIERDO:</strong>
+                <img class="photo-preview" src="{{ public_path('storage/' . $fotoFrontal) }}" alt="Foto lado izquierdo del vehículo">
+            @else
+                FOTO LADO IZQUIERDO: Sin foto
+            @endif
+        </td>
+
+        <td>
+            @php $fotoFrontal = optional($fotos->first())->foto_lado_derecho ; @endphp
+            @if ($fotoFrontal)
+                <strong>FOTO LADO DERECHO:</strong>
+                <img class="photo-preview" src="{{ public_path('storage/' . $fotoFrontal) }}" alt="Foto lado derecho del vehículo">
+            @else
+                FOTO LADO DERECHO: Sin foto
+            @endif
+        </td>
+
+        <td>
+            @php $fotoFrontal = optional($fotos->first())->foto_trasera ; @endphp
+            @if ($fotoFrontal)
+                <strong>FOTO TRASERA:</strong>
+                <img class="photo-preview" src="{{ public_path('storage/' . $fotoFrontal) }}" alt="Foto trasera del vehículo">
+            @else
+                FOTO TRASERA: Sin foto
+            @endif
+        </td>
+
+        <td>
+            @php $fotoFrontal = optional($fotos->first())->foto_adicional; @endphp
+            @if ($fotoFrontal)
+                <strong>FOTO ADICIONAL:</strong>
+                <img class="photo-preview" src="{{ public_path('storage/' . $fotoFrontal) }}" alt="Foto adicional del vehículo">
+            @else
+                FOTO ADICIONAL: Sin foto
+            @endif
+        </td>
     </tr>
 </table>
 </body>

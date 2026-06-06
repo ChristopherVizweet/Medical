@@ -4,7 +4,6 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 VEHÍCULOS
             </h2>
-
             <x-mode-button id="theme-toggle" class="text-sm">
                 Modo oscuro/claro
             </x-mode-button>
@@ -21,7 +20,7 @@
                 } else {
                     body.classList.remove("dark");
                 }
-2
+
                 themeToggle.addEventListener("click", function() {
                     if (body.classList.contains("dark")) {
                         body.classList.remove("dark");
@@ -69,6 +68,7 @@
                         <th class="px-4 py-2">{{('Fecha de salida') }}</th>
                         <th class="px-4 py-2">{{('Fecha de entrada') }}</th>
                         <th class="px-4 py-2">{{('Verificador') }}</th>
+                        <th class="px-4 py-2">{{('Estado') }}</th>
                         <th class="px-4 py-2">{{('Acciones') }}</th>
 
 
@@ -85,8 +85,10 @@
                         <td class="px-4 py-2">{{ $checklist->fecha_salida_checklist ?? 'SIN FECHA DE SALIDA'}}</td>
                         <td class="px-4 py-2">{{ $checklist->fecha_entrega_checklist ?? 'SIN FECHA DE ENTRADA'}}</td>
                         <td class="px-4 py-2">{{ $checklist->responsableEntrega->name ?? 'SIN VERIFICADOR'}}</td>
+                        <td class="px-4 py-2">@if($checklist->fecha_entrega_checklist == '') PENDIENTE @else COMPLETADO @endif</td>
                         <td>
-                            <a href="{{ route('show-checklist', $checklist->id) }}" class="text-blue-500 hover:underline">Ver</a>
+                            <a href="{{ route('update-checklist-vehiculo', $checklist->id) }}" class="text-blue-500 hover:underline">Actualizar</a>
+                            <a href="{{ route('show-checklist', $checklist->id) }}" class="text-yellow-500 hover:underline">Ver</a>
                             
                             <form action="{{ route('index-checklist', $checklist->id) }}" method="POST" class="inline">
                                 @csrf
@@ -108,4 +110,5 @@
 
             </table>
         </div>
+        
 </x-app-layout>

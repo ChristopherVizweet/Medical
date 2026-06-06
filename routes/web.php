@@ -258,9 +258,14 @@ Route::get('/show-checklist/{id}',[App\Http\Controllers\VehiculoCheckListControl
 Route::get('/create-checklist-items/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'createItems'])->name('create-checklist-items');
 Route::post('/create-checklist-items/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'storeItems'])->name('store-checklist-items');
 
+#Actualizacion de checklist de items de vehiculos
+Route::get('/update-checklist-vehiculo/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'edit'])->name('update-checklist-vehiculo');
+Route::put('/update-checklist-vehiculo/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'update'])->name('update-checklist-vehiculo');
+
 #Creacion de fotos para evidencia de vehiculos
 Route::get('/create-photos-vehiculos/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'createPhotos'])->name('create-photos-vehiculos');
 Route::post('/create-photos-vehiculos/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'storePhotos'])->name('store-photos-vehiculos');
+
 
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

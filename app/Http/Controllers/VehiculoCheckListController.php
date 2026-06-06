@@ -66,10 +66,64 @@ class VehiculoCheckListController extends Controller
                 }
             }
         }
-        return redirect()->route('index-vehiculos')->with('success', 'Checklist creado exitosamente');
-       // return redirect()->route('index-checklist', $checklist->id_vehiculo)->with('success', 'Items guardados');
+       // return redirect()->route('index-vehiculos')->with('success', 'Checklist creado exitosamente'); ESTA ES LA RUTA QUE SI SIRVE
+        return redirect()->route('create-photos-vehiculos', ['id' => $checklist->id]);
+    }
+//PARA SUBIR EVIDENCIA FOTOGRAFICA
+public function createPhotos($id){
+    $checklist = VehiculoCheckList::findOrFail($id);
+    return view('vehiculos.create-photos-vehiculos', compact('id','checklist'));
+}
+
+public function storePhotos(Request $request, $id){
+    $request->validate([
+        'foto_frente' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'foto_lado_izquierdo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'foto_lado_derecho' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'foto_trasera' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'foto_adicional' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
+
+    $data = ['id_checklist' => $id];
+    $imageFields = [
+        'foto_frente',
+        'foto_lado_izquierdo',
+        'foto_lado_derecho',
+        'foto_trasera',
+        'foto_adicional',
+    ];
+
+    foreach ($imageFields as $field) {
+        if ($request->hasFile($field)) {
+            $data[$field] = $request->file($field)->store('photos_vehiculos', 'public');
+        }
     }
 
+    PhotosVehiculos::updateOrCreate(
+        ['id_checklist' => $id],
+        $data
+    );
+
+    return redirect()->route('index-vehiculos')->with('success', 'Fotos guardadas correctamente.');
+}
+
+    public function edit($id){
+        $vehiculos = VehiculoCheckList::findOrFail($id);
+        return view('vehiculos.update-checklist-vehiculo', compact('vehiculos'));
+    }
+    public function update($id, Request $request){
+        $request->validate([
+     'fecha_entrega_checklist' => 'nullable|date',
+     'kilometraje_final'=> 'nullable|numeric',
+    ]);
+
+    $fechas = VehiculoCheckList::findOrFail($id);
+    $fechas->update([
+       'fecha_entrega_checklist' => $request->fecha_entrega_checklist,
+       'kilometraje_final' => $request->kilometraje_final,
+    ]);
+    return redirect()->route('index-vehiculos')->with('success', 'Checklist actualizado correctamente');
+    }
 
     
 
@@ -80,9 +134,10 @@ class VehiculoCheckListController extends Controller
         $vehiculos = $checks->vehiculo; // Cargar datos del vehículo asociado
         $conductores = $checks->conductor; // Cargar datos del conductor asociado al checklist
         $encargados = $checks->responsableEntrega; // Cargar datos del encargado de entrega asociado al checklist
+        $fotos = $checks->fotos; // Cargar las fotos asociadas al checklist
         $items = $checks->respuestas()->with('item')->get(); // Cargar las respuestas del checklist con los datos de los items relacionados
         $seccions = SectionItemsChecklist::with('items')->get(); // Cargar todas las secciones y sus items para mostrar en el PDF
-        $pdf = Pdf::loadView('vehiculos.show-checklist', compact('vehiculos', 'checks', 'conductores', 'encargados', 'items', 'seccions'));
+        $pdf = Pdf::loadView('vehiculos.show-checklist', compact('fotos', 'vehiculos', 'checks', 'conductores', 'encargados', 'items', 'seccions'));
 
         return $pdf->stream('Vale_salida_'.$id.'.pdf');
     }
