@@ -1,1 +1,1 @@
- <img src="/img/salida.png" width="100" height="200" alt="Medical Logo" >
+ <img src="{{ asset('img/salida.png') }}" width="100" height="200" alt="Medical Logo" >
