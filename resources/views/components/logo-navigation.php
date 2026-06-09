@@ -1,1 +1,1 @@
-<img src="{{ asset('img/logo_medical_logo.png') }}"   alt="Mi Logo" width="200" height="300">
+<img src="/img/logo_medical_logo.png" width="100" height="200" alt="Medical Logo" class="logo">
