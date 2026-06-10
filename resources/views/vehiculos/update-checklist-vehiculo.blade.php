@@ -40,7 +40,7 @@
                 {{-- Conductor --}}
                 <div>
                     <x-input-label for="curp" :value="__('Conductor')" />
-                   <x-text-input autocomplete="off" id="curp" class="mt-1 block w-full" type="text" name="motivo_checklist" value="{{ $vehiculos->conductor->Nombre }}" />
+                   <x-text-input autocomplete="off" id="curp" class="mt-1 block w-full" type="text" name="motivo_checklist" value="{{ $vehiculos->conductor->Nombre ?? 'Sin asignar' }}" />
 
                 </div>
 
@@ -82,7 +82,7 @@
                 {{-- Verificador --}}
                 <div>
                     <x-input-label for="curp" :value="__('Verificador')" />
-                    <x-text-input autocomplete="off" id="curp" class="mt-1 block w-full" type="text" name="motivo_checklist" value="{{ $vehiculos->responsableEntrega->name }}" />
+                    <x-text-input autocomplete="off" id="curp" class="mt-1 block w-full" type="text" name="motivo_checklist" value="{{ $vehiculos->responsableEntrega->name  ?? 'Sin asignar'}}" />
                 </div>
 
             </div>
