@@ -77,11 +77,11 @@ public function createPhotos($id){
 
 public function storePhotos(Request $request, $id){
     $request->validate([
-        'foto_frente' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'foto_lado_izquierdo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'foto_lado_derecho' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'foto_trasera' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'foto_adicional' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'foto_frente' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:102400',
+        'foto_lado_izquierdo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:102400',
+        'foto_lado_derecho' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:102400',
+        'foto_trasera' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:102400',
+        'foto_adicional' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:102400',
     ]);
 
     $data = ['id_checklist' => $id];
