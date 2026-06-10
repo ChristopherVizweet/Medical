@@ -1,1 +1,0 @@
-<img src="/img/logo_medical_logo.png" width="100" height="200" alt="Medical Logo" >
