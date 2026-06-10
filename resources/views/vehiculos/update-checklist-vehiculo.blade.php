@@ -47,14 +47,14 @@
                 {{-- fecha de salida --}}
                 <div>
                     <x-input-label for="curp" :value="__('Fecha de salida')" />
-                    <x-text-input autocomplete="off" id="curp" class="mt-1 block w-full" type="date" name="fecha_salida_checklist" value="{{ $vehiculos->fecha_salida_checklist }}" />
+                    <x-text-input autocomplete="off" id="curp" class="mt-1 block w-full" type="date" name="fecha_salida_checklist" value="{{ $vehiculos->fecha_salida_checklist ? \Carbon\Carbon::parse($vehiculos->fecha_salida_checklist)->format('Y-m-d') : '' }}" />
                     <x-input-error :messages="$errors->get('curp')" class="mt-2" />
                 </div>
 
                 {{-- fecha de entrega --}}
                 <div>
                     <x-input-label for="curp" :value="__('Fecha de entrega')" />
-                    <x-text-input autocomplete="off" id="curp" class="mt-1 block w-full" type="date" name="fecha_entrega_checklist" value="{{ $vehiculos->fecha_entrega_checklist }}" />
+                    <x-text-input autocomplete="off" id="curp" class="mt-1 block w-full" type="date" name="fecha_entrega_checklist" value="{{ $vehiculos->fecha_entrega_checklist ? \Carbon\Carbon::parse($vehiculos->fecha_entrega_checklist)->format('Y-m-d') : ($vehiculos->fecha_salida_checklist ? \Carbon\Carbon::parse($vehiculos->fecha_salida_checklist)->format('Y-m-d') : '') }}" />
                     <x-input-error :messages="$errors->get('curp')" class="mt-2" />
                 </div>
 
