@@ -1,0 +1,40 @@
+< [33mf336b02[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m Correccion en update-checklist-vehiculos muestra bien las fechas y la hora
+< [33m623bd95[m Correccion de name en update-checklist-vehiculos
+< [33mf6a727d[m Correccion de peso de imagenes del check de vehiculos
+< [33m5cb08e3[m Intento de arreglar el logo 2
+< [33m5d0d861[m Intento de arreglar el logo 1
+< [33m4eb3202[m Backup 9 de junio 2026: Fix: colocar imagen de prueba en el logo 2
+< [33meb1a488[m Backup 9 de junio 2026: Fix: colocar imagen de prueba en el logo
+< [33m07778ee[m Backup 9 de junio 2026: Fix: arreglar de nuevo direccion de logo de nuevo
+< [33m751563d[m Backup 9 de junio 2026: Fix: arreglar de nuevo direccion de logo
+< [33m384c811[m Problema con imagen de logo, no funciono con /
+< [33mfcfab78[m Backup: FIX: Arreglo de la imagne del logo, ya no es relativa la ruta, le agregue / al inicio
+< [33m42b97d8[m Backup 3 de junio 2026: FIX: arregle un poco el doc de checklist de vehiculos
+< [33m31054b0[m Backup 3 de junio 2026: FIX: agregue form y POST a la vista de items
+< [33m91be48d[m Backup 3 de junio 2026: FIX: quite temporalmente vista de evidencia del checklist
+< [33mec7c51e[m Backup 3 de junio 2026: FIX: Seeder de Itemschecklist
+< [33m4b4a504[m Backup 3 de junio 2026: FIX: Seeder de Itemschecklist
+< [33m6714ab7[m Backup 3 de junio 2026: FIX: Seeder de Sectionchecklist
+< [33m7928230[m Backup 3 de junio 2026: Feature: Seeder de Sectionchecklist
+< [33m22020f2[m Backup 3 de junio 2026: Feature: Checklist de vehiculos
+< [33m809e3dc[m Backup 18 de mayo del 2026:Feature: registro de mantenimiento en pdf, y desarrollo de checklist
+< [33mcc54bb9[m Fix: boton hamburguesa con botones actualizados
+< [33m6ce124b[m Fix: boton hamburguesa de lado derecho
+< [33mfd4f325[m Fix: Vista responsive devuelta
+< [33mb7865d9[m Fix: Vista responsive
+< [33mdce0e67[m Fix: Arreglo del logo
+< [33md5142f3[m Fix: Arreglo de la creacion de empleados con limitantes
+< [33m44943d9[m Fix: Arreglo de la creacion de empleados
+< [33m62c6457[m Feature: Los pagos proximos de vehiculos
+< [33m21f14a6[m Fix: Se arreglo vista en index de vehiculo
+< [33m3daef6a[m Backup 12 de mayo del 2026: FIX: CORRECION DE SALIDAS, FEATURE: REGISTRO DE VEHICULOS, TENENCIAS, VERIFICACION Y SEGUROS
+< [33mc3b2cb4[m Backup 30 de abril, modificaciones: le di una operaacion logica a linea 112 de indexsalida
+< [33mfd2dc01[m Backup 30 de abril, modificaciones: quite el filtro de manera correcta de folio
+< [33md1e186a[m Backup 30 de abril, modificaciones: Quite filtro por folio del movimiento
+< [33m092715a[m Backup 30 de abril, modificaciones de inge marco. Pendiente migracion para agregar columnas para vehiculos
+< [33m7481a68[m Backup parte 1: Mejoras del ingeniero Marco
+> [33mbd01473[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Cambia conexión por defecto a mysql
+>   [33med8063f[m Resuelve conflicto conservando env example
+[33m|[m[34m\[m  
+[33m|[m > [33md701698[m Actualiza package-lock.json
+> [33md9852ad[m Actualiza env example
