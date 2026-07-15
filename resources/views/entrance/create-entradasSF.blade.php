@@ -21,10 +21,10 @@
                 <select class="mt-1 block w-full" name="supplier_id" id="supplier_id" >
                     <option value="">-Seleccionar-</option>
                     @foreach($suppliers as $supplier)
-                    <option value="{{ $supplier->id }}">{{ $supplier->name_supplier }}</option>
+                    <option value="{{ $supplier->id }}">{{ $supplier->name_supplier}}</option>
                     @endforeach
                 </select>
-                <!-- <input readonly class="w-full" type="text" value="{{ $supplier->name_supplier }}"> -->
+                <!-- <input readonly class="w-full" type="text" value="{ $supplier->name_supplier }}"> -->
             </div>
             <div class="hidden">
                 <x-input-label for="numero_factura_movimiento" :value="__('Número de factura')" />
