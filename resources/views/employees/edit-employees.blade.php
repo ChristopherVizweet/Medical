@@ -62,7 +62,7 @@
                         <!--<x-text-input id="organizacion" class="mt-1 block w-full" type="text" name="organizacion" :value="old('organizacion')"  />
             <x-input-error :messages="$errors->get('organizacion')" class="mt-2" /> -->
                         <Select name="organizacion" class="w-full">
-                            <option value="">-Seleccionar-</option>
+                            <option value="{{ $empleados->organizacion}}">{{$empleados->organizacion}}</option>
                             <option value="medical gas systems international">MGSI</option>
                             <option value="Ascort">Ascort</option>
                             <option value="Meicon">Meicon</option>
