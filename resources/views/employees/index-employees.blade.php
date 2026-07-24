@@ -68,7 +68,7 @@
                         <tr class="border-t">
                             <td class="px-4 py-2">{{ $empleado->id}}</td>
                              <td class="px-4 py-2">
-                                <img class="items-center w-27 h-27" src="{{ Storage::disk('public')->url($empleado->foto) }}" alt="Imagen de empleado" width="150">
+                                <img class="items-center w-27 h-27" src="{{ asset('storage/' . $empleado->foto) }}" alt="Imagen de empleado" width="150">
                             </td>
                             <td class="text-center px-4 py-2">{{ $empleado->Nombre}}</td>
                             <td class="text-center px-4 py-2">{{ $empleado->apellidos}}</td>

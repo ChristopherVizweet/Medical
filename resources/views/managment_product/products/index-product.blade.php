@@ -107,7 +107,7 @@
                     <td class="items-center px-2 py-2 ">
 
 
-                        <img src="{{ asset('storage/productos/' . $product->image_product) }} "
+                        <img src="{{ asset('storage/' . $product->image_product) }} "
                             alt="{{ $product->image_product }}"
                             class="w-20 h-20 object-contain rounded-md mx-auto">
                     </td>
