@@ -40,4 +40,9 @@ class User extends Authenticatable
     public function responsableChecklist(){
         return $this->hasMany(VehiculoCheckList::class, 'responsable_entrega_checklist'); //Muchos empleados tiene un checklist
     }
+
+    public function unreadNotificationsQuery()
+    {
+        return $this->notifications()->whereNull('read_at');
+    }
 }

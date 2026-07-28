@@ -124,7 +124,7 @@
 
                                     <!--Condicional para especificamente superadmin y admin para aprobar-->
                                 @elseif ($movi->estadoMovimiento == 'Solicitud')
-                                    @role('superadmin')
+                                    @hasanyrole('superadmin|admin')
                                         <a href=" {{ route('pdf-salidas', $movi->id) }}" target="_blank"
                                             class="text-red-600 hover:underline">PDF</a>|
                                         <a href="{{ route('edit-salidasL', $movi->id) }}"
@@ -136,10 +136,10 @@
                                             <button type="submit" class="text-red-600 hover:underline"
                                                 onclick="return confirm('¿En verdad deseas eliminar este registro?')">Eliminar</button>
                                         </form>
-                                    @endrole
+                                    @endhasanyrole
                                     <!--Condicional para especificamente almacen y laboratorio para confirmar salida de material-->
                                 @elseif ($movi->estadoMovimiento == 'Aprobado')
-                                    @role('superadmin|almacen')
+                                    @role('superadmin|almacen|laboratorio')
                                         <a href=" {{ route('pdf-salidas', $movi->id) }}" target="_blank"
                                             class="text-red-600 hover:underline">PDF</a>|
                                         <a href="{{ route('edit-salidasLL', $movi->id) }}"

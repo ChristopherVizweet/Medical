@@ -41,6 +41,7 @@ Route::get('/', function () {
 // Rutas protegidas con autenticación
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/notifications/unread', [App\Http\Controllers\NotificationController::class, 'unread'])->name('notifications.unread');
     Route::get('/index_Supplier', [SupplierController::class, 'index'])->name('index_Supplier');
     Route::get('/create_supplier', [SupplierController::class, 'create'])->name('create_supplier');
     Route::get('/import-supplier',[SupplierController::class, 'create1'])->name('import-supplier');
