@@ -18,6 +18,8 @@ use App\Exports\InvoicesExport;
 use App\Models\Factura;
 use App\Models\Project;
 use App\Models\User;
+use App\Notifications\SolicitudSalidaCreada;
+use Illuminate\Support\Facades\Notification;
 use phpDocumentor\Reflection\Types\Nullable;
 use PhpOffice\PhpSpreadsheet\Calculation\Category;
 use function Pest\Laravel\get;
@@ -478,8 +480,42 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
             }
             $product->stock -= $producto['cantidad'];
         }
+        
         $product->save();
+       
     }
+     $esSolicitudLaboratorio =
+    $request->user()->hasRole('laboratorio')
+    && $validated['tipoMovimiento'] === 'salida'
+    && collect($validated['productos'])->contains(
+        fn ($producto) => (int) ($producto['cantidadR'] ?? 0) > 0
+    );
+    #Aqui esta el metodo para verificar si se guarda la solicitud de envio
+/*dd([
+    'usuario' => $request->user()?->name,
+    'roles' => $request->user()?->getRoleNames()->toArray(),
+    'tipoMovimiento' => $validated['tipoMovimiento'] ?? null,
+    'cantidadesR' => collect($validated['productos'])
+        ->pluck('cantidadR')
+        ->toArray(),
+    'esSolicitudLaboratorio' => $esSolicitudLaboratorio,
+]); */
+
+
+if ($esSolicitudLaboratorio) {
+    $administradores = User::role([
+        'admin',
+        'superadmin',
+    ])->get();
+
+    Notification::send(
+        $administradores,
+        new SolicitudSalidaCreada(
+            $movimiento,
+            $request->user()->name
+        )
+    );
+}
    
     return redirect()->route('index-salidas')->with('success', 'Registrado correctamente');
    
@@ -525,7 +561,7 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
         'folio_movimiento'          => $nuevoFolio ?? null,
         'estadoMovimiento'          => $validated['estadoMovimiento'] ?? null,
     ]);
-    
+
 
     // 3. Registrar productos del movimiento y actualizar stock
     foreach ($validated['productos'] as $producto) {
@@ -564,6 +600,7 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
 
     return redirect()->route('index-salidas')->with('success', 'Registrado correctamente');
   
+    
 }
 public function editSalida($id)
 {

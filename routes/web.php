@@ -20,6 +20,10 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\RecursosController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\VerificacionVehiculoController;
+use App\Http\Controllers\VehiculoCheckListController;
+use App\Http\Controllers\VehiculoTenenciasController;
 use App\Http\Controllers\SeguroVehiculoController;
 use App\Http\Controllers\InstalationServiceController;
 use App\Http\Controllers\VehiculoController;
@@ -41,7 +45,7 @@ Route::get('/', function () {
 // Rutas protegidas con autenticación
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/notifications/unread', [App\Http\Controllers\NotificationController::class, 'unread'])->name('notifications.unread');
+   // Route::get('/notifications/unread', [NotificationController::class, 'unread'])->name('notifications.unread');
     Route::get('/index_Supplier', [SupplierController::class, 'index'])->name('index_Supplier');
     Route::get('/create_supplier', [SupplierController::class, 'create'])->name('create_supplier');
     Route::get('/import-supplier',[SupplierController::class, 'create1'])->name('import-supplier');
@@ -266,6 +270,11 @@ Route::put('/update-checklist-vehiculo/{id}',[App\Http\Controllers\VehiculoCheck
 #Creacion de fotos para evidencia de vehiculos
 Route::get('/create-photos-vehiculos/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'createPhotos'])->name('create-photos-vehiculos');
 Route::post('/create-photos-vehiculos/{id}',[App\Http\Controllers\VehiculoCheckListController::class, 'storePhotos'])->name('store-photos-vehiculos');
+
+#notificaciones
+Route::get('/notifications/unread', [NotificationController::class, 'unread'])->name('notifications.unread');
+Route::patch('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+Route::patch('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
 
 
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
