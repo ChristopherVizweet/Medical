@@ -30,6 +30,8 @@
                 <option value="admin">Admin</option>
                 <option value="ventas">Ventas</option>
                 <option value="almacen">Almacén</option>
+                <option value="laboratorio">Laboratorio</option>
+                <option value="ingenieria">Ingeniería</option>
             </select>
         </div>
         <div style="text-align: center;" class="mt-4">
