@@ -485,7 +485,7 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
        
     }
      $esSolicitudLaboratorio =
-    $request->user()->hasRole('laboratorio')
+    $request->user()->hasRole('ingenieria')
     && $validated['tipoMovimiento'] === 'salida'
     && collect($validated['productos'])->contains(
         fn ($producto) => (int) ($producto['cantidadR'] ?? 0) > 0
@@ -504,7 +504,7 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
 
 if ($esSolicitudLaboratorio) {
     $administradores = User::role([
-        'admin',
+        'laboratorio',
         'superadmin',
     ])->get();
 
@@ -730,6 +730,21 @@ public function printObra($id)
     'productos.encargadoA','productos.encargadoE','productos.encargadoR'])->findOrFail($id);
     $pdf = Pdf::loadView('entrance.pdf-salidasObras', compact('movimientos'));
     return $pdf->stream('Vale_salida_Obra_'.$id.'.pdf');
+}
+
+//Funcion para generar el PDF de inventario con la tabla para registrar diferencias
+public function printInventario($id = null)
+{
+    if ($id) {
+        $movimientos = InventarioMovimiento::with(['productos','product','obra','productos.empleado'])->findOrFail($id);
+        $pdf = Pdf::loadView('managment_product.products.inventario-productos', compact('movimientos'));
+        return $pdf->stream('Inventario_'.$id.'.pdf');
+    }
+
+    $products = Product::with('categories')->orderBy('name_product')->get();
+    $pdf = Pdf::loadView('managment_product.products.inventario-productos', compact('products'));
+
+    return $pdf->stream('Inventario_materiales.pdf');
 }
 
 public function deleteMovements($id){

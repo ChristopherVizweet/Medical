@@ -75,8 +75,8 @@
                     <div>
                         <x-input-label for="productos[{{ $i }}][cantidadA]" :value="__('Cantidad aprobada')" />
                         <x-text-input readonly="true" id="productos[{{ $i }}][cantidadA]"
-                            class="mt-1 block w-full" type="number" name="productos[{{ $i }}][cantidadA]"
-                            value="{{ old('productos.' . $i . '.cantidadA', $prod->cantidadA) }}" required />
+                            class="mt-1 block w-full"  type="number" name="productos[{{ $i }}][cantidadA]"
+                            value="{{ old('productos.' . $i . '.cantidadA', $prod->cantidadA) }}" />
                         <x-input-error :messages="$errors->get('productos.' . $i . '.cantidadA')" class="mt-2" />
                     </div>
 

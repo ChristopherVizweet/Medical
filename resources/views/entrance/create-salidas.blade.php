@@ -16,12 +16,12 @@
             </select>
         </div>
             <div>
-                <x-input-label for="obra_movimiento" :value="__('Obra')" />
+                <x-input-label for="obra_movimiento" :value="__('Destino')" />
                 <x-text-input autocomplete="off" id="obra_movimiento" class="mt-1 block w-full" type="text" name="obra_movimiento" :value="old('obra_movimiento')" required />
                 <x-input-error :messages="$errors->get('obra_movimiento')" class="mt-2" />
             </div>
             <div>
-            <x-input-label for="empleado_id" :value="__('Solicitante')" />
+            <x-input-label for="empleado_id" :value="__('Solicitante (colaborador)')" />
             <select class="mt-1 block w-full" name="empleado_id" id="empleado_id" required>
                 <option value="">-Seleccionar-</option> 
                 @foreach($empleados as $empleado)
@@ -36,7 +36,7 @@
             </div>
             <div>
                 <x-input-label for="fecha_movimiento" :value="__('Fecha')" />
-                <x-text-input id="fecha_movimiento" class="mt-1 block w-full" type="date" name="fecha_movimiento" :value="old('fecha_movimiento')" required />
+                <x-text-input id="fecha_movimiento" class="mt-1 block w-full" type="date" name="fecha_movimiento" value="{{ date('Y-m-d') }}" required />
                 <x-input-error :messages="$errors->get('fecha_movimiento')" class="mt-2" />
             </div>
         </div>

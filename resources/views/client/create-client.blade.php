@@ -22,7 +22,20 @@
             <!-- Phone -->
             <div class="mt-4">
                 <x-input-label for="phoneNumber_Client" :value="__('Teléfono de la empresa')" />
-                <x-text-input maxlength="10" id="phoneNumber_Client" class="block mt-1 w-full" placeholder="Ej. 5566334455" autocomplete="off" type="tel" name="phoneNumber_Client" :value="old('phoneNumber_Client')" required />
+                <x-text-input
+                    maxlength="10"
+                    data-maxlength="10"
+                    id="phoneNumber_Client"
+                    class="block mt-1 w-full"
+                    placeholder="Ej. 5566334455"
+                    autocomplete="off"
+                    type="tel"
+                    name="phoneNumber_Client"
+                    :value="old('phoneNumber_Client')"
+                    required
+                    oninput="validateLength(this, 10, 'phoneNumber_Client_error')"
+                />
+                <p id="phoneNumber_Client_error" class="mt-2 text-sm text-red-600 hidden">No puede tener más de 10 caracteres</p>
                 <x-input-error :messages="$errors->get('phoneNumber_Client')" class="mt-2" />
             </div>
 
@@ -58,7 +71,18 @@
              <!-- TELEFONO SUPERVISOR -->
             <div class="mt-4">
                 <x-input-label for="telefono_supervisor" :value="__('Teléfono del project manager')" />
-                <x-text-input maxlength="10" id="telefono_supervisor" class="block mt-1 w-full" autocomplete="off" type="tel" name="telefono_supervisor" :value="old('telefono_supervisor')"  />
+                <x-text-input
+                    maxlength="10"
+                    data-maxlength="10"
+                    id="telefono_supervisor"
+                    class="block mt-1 w-full"
+                    autocomplete="off"
+                    type="tel"
+                    name="telefono_supervisor"
+                    :value="old('telefono_supervisor')"
+                    oninput="validateLength(this, 10, 'telefono_supervisor_error')"
+                />
+                <p id="telefono_supervisor_error" class="mt-2 text-sm text-red-600 hidden">No puede tener más de 10 caracteres</p>
                 <x-input-error :messages="$errors->get('telefono_supervisor')" class="mt-2" />
             </div>
             
@@ -80,7 +104,18 @@
              <!-- TELEFONO ENCARGADO-->
             <div class="mt-4">
                 <x-input-label for="telefono_encargado" :value="__('Teléfono del residente')" />
-                <x-text-input maxlength="10"  id="telefono_encargado" class="block mt-1 w-full" autocomplete="off" type="tel" name="telefono_encargado" :value="old('telefono_encargado')"  />
+                <x-text-input
+                    maxlength="10"
+                    data-maxlength="10"
+                    id="telefono_encargado"
+                    class="block mt-1 w-full"
+                    autocomplete="off"
+                    type="tel"
+                    name="telefono_encargado"
+                    :value="old('telefono_encargado')"
+                    oninput="validateLength(this, 10, 'telefono_encargado_error')"
+                />
+                <p id="telefono_encargado_error" class="mt-2 text-sm text-red-600 hidden">No puede tener más de 10 caracteres</p>
                 <x-input-error :messages="$errors->get('telefono_encargado')" class="mt-2" />
             </div>
         </div>
@@ -95,4 +130,19 @@
             </a>
         </div>
     </form>
+
+    <script>
+        function validateLength(input, maxLength, errorId) {
+            const error = document.getElementById(errorId);
+            if (!error) return;
+
+            if (input.value.length > maxLength) {
+                error.classList.remove('hidden');
+                input.classList.add('border-red-500');
+            } else {
+                error.classList.add('hidden');
+                input.classList.remove('border-red-500');
+            }
+        }
+    </script>
 </x-guest-layout>

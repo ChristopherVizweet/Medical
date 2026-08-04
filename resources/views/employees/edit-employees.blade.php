@@ -77,12 +77,12 @@
             <x-text-input id="correoElectronico" class="block mt-1 w-full" type="email" name="correoElectronico"  value="{{ $empleados->correoElectronico }}"  />
         </div>
         <div class="mt-4">
-           <x-input-label for="numeroTelefonoTrabajo" :value="__('Número del trabajo')" />
-            <x-text-input id="numeroTelefonoTrabajo" class="block mt-1 w-full" type="text" name="numeroTelefonoTrabajo"  value="{{ $empleados->numeroTelefonoTrabajo }}"  />
+           <x-input-label for="numeroTelefonoTrabajo" :value="__('Número del trabajo (sin espacios)')" />
+            <x-text-input id="numeroTelefonoTrabajo" class="block mt-1 w-full" maxlength="10" placeholder="Ej. 5566334455" autocomplete="off" type="tel" name="numeroTelefonoTrabajo"  value="{{ $empleados->numeroTelefonoTrabajo }}"  />
         </div>
          <div class="mt-4">
-           <x-input-label for="numeroTelParti" :value="__('Número particular')" />
-            <x-text-input id="numeroTelParti" class="block mt-1 w-full" type="text" name="numeroTelParti"  value="{{ $empleados->numeroTelParti }}"  />
+           <x-input-label for="numeroTelParti" :value="__('Número particular (sin espacios)')" />
+            <x-text-input id="numeroTelParti" class="block mt-1 w-full" maxlength="10" placeholder="Ej. 5566334455" autocomplete="off" type="tel" name="numeroTelParti"  value="{{ $empleados->numeroTelParti }}"  />
         </div>
          <div class="mt-4">
            <x-input-label for="sueldo" :value="__('Sueldo $')" />

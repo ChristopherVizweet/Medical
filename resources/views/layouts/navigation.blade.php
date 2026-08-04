@@ -40,7 +40,7 @@
                         Gestión de Materiales
                     </x-nav-link>
                     @endhasanyrole
-                    @hasanyrole('superadmin|admin|almacen|laboratorio')
+                    @hasanyrole('superadmin|admin|ingenieria')
                     <x-nav-link :href="route('index-existencias')" :active="request()->routeIs('index-existencias')">
                         Existencias
                     </x-nav-link>

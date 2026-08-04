@@ -108,7 +108,7 @@
                                 @endif
                             </td>
                             <td class="px-4 py-2">
-                                <a href="{{ route('edit-employees', $empleado->id) }}" class="text-blue-600 hover:underline">Editar</a> |
+                                <a href="{{ route('edit-employees', $empleado->id) }}" class="text-blue-600 hover:underline"> Ver empleado o Editar</a> |
                                 <form action="{{ route('delete-employees', $empleado->id) }}" method="POST" style="display:inline-block;"> 
                                     @csrf
                                     @method('DELETE')

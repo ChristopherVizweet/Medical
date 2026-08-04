@@ -86,6 +86,13 @@
                 Agregar nueva categoria
             </a>
         </x-primary-button>
+
+<!--BOTON PARA HACER INVENTARIO -->
+ <x-primary-button class="mt-4 justify-right items-right">
+            <a href="{{ route('inventario-productos') }}" class="text-dark">
+                Formato para inventario
+            </a>
+        </x-primary-button>
     </div>
     @endhasanyrole
     <div class="overflow-x-auto rounded-lg shadow">

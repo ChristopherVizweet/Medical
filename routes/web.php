@@ -89,6 +89,8 @@ Route::get('/edit-product/{id}', [ProductController::class, 'edit'])->name('edit
 Route::put('/edit-product/{id}', [ProductController::class, 'update'])->name('edit-product');
 Route::delete('/delete-product/{id}',[ProductController::class, 'delete'])->name('delete-product');
 
+Route::get('/inventario-productos/{id?}',[ProductController::class,'printInventario'])->name('inventario-productos');
+
 
 #Parte para las ventas/cotizaciones/Entrada y salida de mercancia
 Route::get('/index-existencias',[ProductController::class,'indexExistencias'])->name('index-existencias');

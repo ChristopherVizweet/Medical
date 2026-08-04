@@ -50,6 +50,7 @@
                 <option value="ventas">Ventas</option>
                 <option value="almacen">Almacén</option>
                 <option value="laboratorio">Laboratorio</option>
+                <option value="ingenieria">Ingeniería</option>
             </select>
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>

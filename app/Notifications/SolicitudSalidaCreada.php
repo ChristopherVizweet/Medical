@@ -91,7 +91,7 @@ public function toBroadcast(object $notifiable): BroadcastMessage
             'movimiento_id' => $this->movimiento->id,
             'folio' => $this->movimiento->folio_movimiento,
             'solicitante' => $this->solicitante,
-            'url' => route('edit-salidas', [
+            'url' => route('edit-salidasL', [
                 'id' => $this->movimiento->id,
             ]),
         ];

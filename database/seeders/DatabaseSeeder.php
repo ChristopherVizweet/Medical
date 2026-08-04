@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
     $ventas = Role::create(['name' => 'ventas']);
     $almacen = Role::create(['name' => 'almacen']);
     $laboratorio = Role::create(['name' => 'laboratorio']);
+    $ingenieria = Role::create(['name' => 'ingenieria']);
 
     #Estos son los permisos
     #Permisos para gestionar a los clientes
@@ -71,6 +72,9 @@ class DatabaseSeeder extends Seeder
 'ver proveedores','crear proveedores','editar proveedores','eliminar proveedores','ver productos',
 'crear productos','editar productos','eliminar productos','gestionar ventas','gestionar existencias']);
     $almacen->givePermissionTo(['gestionar existencias']);
+    $ingenieria->givePermissionTo(['ver clientes','crear clientes','editar clientes','eliminar clientes',
+    'ver proveedores','crear proveedores','editar proveedores','eliminar proveedores','ver productos',
+    'crear productos','editar productos','eliminar productos','gestionar ventas','gestionar existencias']);
     $this->call(SuperadminSeeder::class);
 
     $sections = [

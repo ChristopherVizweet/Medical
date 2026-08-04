@@ -124,7 +124,7 @@
 
                                     <!--Condicional para especificamente superadmin y admin para aprobar-->
                                 @elseif ($movi->estadoMovimiento == 'Solicitud')
-                                    @hasanyrole('superadmin|admin')
+                                    @hasanyrole('superadmin|admin|ingenieria')
                                         <a href=" {{ route('pdf-salidas', $movi->id) }}" target="_blank"
                                             class="text-red-600 hover:underline">PDF</a>|
                                         <a href="{{ route('edit-salidasL', $movi->id) }}"
