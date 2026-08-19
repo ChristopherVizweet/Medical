@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SeguroVehiculo;
 use App\Models\Vehiculo;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class SeguroVehiculoController extends Controller
@@ -11,6 +12,19 @@ class SeguroVehiculoController extends Controller
     public function index($id){
         $vehiculos = Vehiculo::findOrFail($id);
         return view('vehiculos.index-seguroV', compact('vehiculos'));
+    }
+
+    public function print($id)
+    {
+        $vehiculo = Vehiculo::with('seguros')->findOrFail($id);
+        $seguros = $vehiculo->seguros()->orderBy('fecha_pago_seguro', 'desc')->get();
+        $totalGeneral = $seguros->sum(function ($seguro) {
+            return (float) ($seguro->monto ?? 0);
+        });
+
+        $pdf = Pdf::loadView('vehiculos.pdf-seguro-gastos', compact('vehiculo', 'seguros', 'totalGeneral'));
+
+        return $pdf->stream('gastos_seguro_' . $vehiculo->id . '.pdf');
     }
     public function create($id){
         $vehiculos = Vehiculo::findOrFail($id);

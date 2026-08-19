@@ -18,6 +18,7 @@ class EmpleadosController extends Controller
       // Validar y guardar datos
       //dd($request->all());
     $request->validate([
+        'numero_checador' => 'nullable|string|max:30|unique:empleados,numero_checador',
         'curp' => 'nullable|string|max:20',
         'Nombre' => 'nullable|string',
         'apellidos' => 'nullable|string',
@@ -55,6 +56,7 @@ class EmpleadosController extends Controller
             : null;
              // Crear el empleado
         Empleados::create([
+            'numero_checador'=>$request->numero_checador,
             'curp'=>$request->curp,
             'Nombre'=>$request->Nombre,
             'apellidos'=>$request->apellidos,
@@ -98,6 +100,7 @@ public function update(Request $request, $id)
 {
     //dd(app()->getLocale());
     $request->validate([
+        'numero_checador' => 'nullable|string|max:30|unique:empleados,numero_checador,'.$id,
     'curp' => 'nullable|string|max:20',
         'Nombre' => 'nullable|string|max:30',
         'apellidos' => 'nullable|string|max:22',
@@ -138,6 +141,7 @@ public function update(Request $request, $id)
             
     $empleados = Empleados::findOrFail($id);
     $empleados->update([
+        'numero_checador'=>$request->numero_checador,
         'curp'=>$request->curp,
             'Nombre'=>$request->Nombre,
             'apellidos'=>$request->apellidos,
@@ -186,5 +190,60 @@ public function deleteCV($id){
     $empleados->save();
 
     return redirect()->route('index-employees')->with('success','Curriculum Vitae eliminado correctamente');
+}
+
+public function showVacaciones($id){
+    $empleados = Empleados::findOrFail($id);
+    $vacaciones = $empleados->vacaciones()->orderBy('fecha_inicio', 'desc')->get();
+    
+    // Calcular días ocupados y disponibles
+    $diasOcupados = $vacaciones->sum('dias_tomados');
+    $derechoVacaciones = $empleados->fecha_inicio_vacaciones && $empleados->fecha_fin_vacaciones
+        ? $empleados->fecha_inicio_vacaciones->diffInDays($empleados->fecha_fin_vacaciones) + 1
+        : 0;
+    $diasDisponibles = $derechoVacaciones - $diasOcupados;
+    
+    return view('employees.show-vacaciones-employees', compact('empleados', 'vacaciones', 'diasOcupados', 'derechoVacaciones', 'diasDisponibles'));
+}
+
+public function storeDerechoVacaciones(\Illuminate\Http\Request $request, $id){
+    $request->validate([
+        'fecha_inicio_vacaciones' => 'required|date',
+        'fecha_fin_vacaciones' => 'required|date|after_or_equal:fecha_inicio_vacaciones',
+    ]);
+
+    $empleados = Empleados::findOrFail($id);
+    $empleados->update($request->only('fecha_inicio_vacaciones', 'fecha_fin_vacaciones'));
+
+    return redirect()->route('vacaciones-employee', $id)
+        ->with('success', 'Derecho a vacaciones actualizado correctamente');
+}
+
+public function storeVacaciones(\Illuminate\Http\Request $request, $id){
+    $empleados = Empleados::findOrFail($id);
+    
+    $request->validate([
+        'fecha_inicio' => 'required|date',
+        'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+        'fecha_inicio_vacaciones' => 'nullable|date',
+        'fecha_fin_vacaciones' => 'nullable|date|after_or_equal:fecha_inicio_vacaciones',
+        'estado' => 'required|in:aprobado,pendiente,rechazado',
+        'observaciones' => 'nullable|string|max:255'
+    ]);
+
+    $fechaInicio = \Carbon\Carbon::parse($request->fecha_inicio);
+    $fechaFin = \Carbon\Carbon::parse($request->fecha_fin);
+    $diasTomados = $fechaInicio->diffInDays($fechaFin) + 1; // +1 para incluir ambos días
+
+    \App\Models\EmpleadoVacaciones::create([
+        'empleado_id' => $id,
+        'fecha_inicio' => $request->fecha_inicio,
+        'fecha_fin' => $request->fecha_fin,
+        'dias_tomados' => $diasTomados,
+        'estado' => $request->estado,
+        'observaciones' => $request->observaciones
+    ]);
+
+    return redirect()->route('vacaciones-employee', $id)->with('success', 'Período de vacaciones registrado exitosamente');
 }
 }

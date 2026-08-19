@@ -57,12 +57,18 @@
                 </div>
             </form>
         </div>
-            {{-- Botón Crear Cliente --}}
-            <x-primary-button>
-                <a href="{{ route('create-verificacion', $vehiculos->id) }}" class="text-dark">
-                    {{ __('Registrar verificación') }}
+            <div class="flex flex-wrap gap-3">
+                <x-primary-button>
+                    <a href="{{ route('create-verificacion', $vehiculos->id) }}" class="text-dark">
+                        {{ __('Registrar verificación') }}
+                    </a>
+                </x-primary-button>
+
+                <a href="{{ route('pdf-verificaciones', $vehiculos->id) }}" target="_blank"
+                   class="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    {{ __('Abrir PDF de gastos') }}
                 </a>
-            </x-primary-button>
+            </div>
 
         {{-- Tabla responsive --}}
         <div class="overflow-x-auto rounded-lg shadow">

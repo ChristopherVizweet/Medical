@@ -79,7 +79,7 @@
                         <th class="px-4 py-2">{{ __('Cantidad recibida') }}</th>
                         <th class="px-4 py-2">{{ __('Fecha de salida') }}</th>
                         <th class="px-4 py-2">{{ __('Estado de registro') }}</th>
-                        @role('superadmin')
+                        @role('superadmin|admin|ingenieria')
                             <th class="px-4 py-2">{{ __('Acciones') }}</th>
                         @endrole
                     </tr>

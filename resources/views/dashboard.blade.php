@@ -9,6 +9,8 @@
 <x-mode-button id="theme-toggle" class="float-right flex " >
 Modo Oscuro/Claro
 </x-mode-button>
+
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const themeToggle = document.getElementById("theme-toggle");

@@ -52,6 +52,10 @@
                                     <x-input-label for="apellidos" :value="__('Apellidos')" class="text-sm font-semibold text-slate-700" />
                                     <x-text-input id="apellidos" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="apellidos" value="{{ $empleados->apellidos }}" />
                                 </div>
+                                <div>
+                                    <x-input-label for="numero_checador" :value="__('Número en reloj checador (EnNo)')" class="text-sm font-semibold text-slate-700" />
+                                    <x-text-input id="numero_checador" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="numero_checador" value="{{ old('numero_checador', $empleados->numero_checador) }}" placeholder="Ej. 000000003" />
+                                </div>
                             </div>
 
                             <div class="grid gap-4 md:grid-cols-2">

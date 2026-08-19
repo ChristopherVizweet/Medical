@@ -83,9 +83,16 @@
                         required>
                         <option value="">-- Seleccionar --</option>
                         @foreach($materiales as $material)
-                        <option class="text-black dark:text-black" value="{{ $material->id }}">{{ $material->name_product }} Diametro {{ $material->diameterMM_product }} mm</option>
+                        <option class="text-black dark:text-black" value="{{ $material->id }}" data-stock="{{ $material->stock }}" data-codigo="{{ $material->codeint_product }}" data-costo="{{ $material->valueArt_product }}">{{ $material->name_product }} Diametro {{ $material->diameterMM_product }} mm</option>
                         @endforeach
                     </select>
+                </div>
+
+                <!-- Stock -->
+                <div>
+                    <label for="productos[0][stock]" class="block text-sm font-medium text-gray-700 dark:text-white">Stock</label>
+                    <input type="number" name="productos[0][stock]" placeholder="Stock" readonly
+                        class="mt-1 block w-full rounded-lg border-gray-300 bg-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <!-- Cantidad -->
@@ -142,16 +149,19 @@
                 'mb-2');
 
             newRow.innerHTML = `
-            <input type="text" name="productos[${productoIndex}][codigo]" placeholder="Código"
-                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+            <input type="text" name="productos[${productoIndex}][codigo]" placeholder="Código" readonly
+                   class="mt-1 block w-full rounded-lg border-gray-300 bg-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
 
             <select name="productos[${productoIndex}][product_id]" 
             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
                 <option value="">-- Seleccionar producto --</option>
                 @foreach($materiales as $material)
-                    <option value="{{ $material->id }}">{{ $material->name_product }}</option>
+                    <option value="{{ $material->id }}" data-stock="{{ $material->stock }}" data-codigo="{{ $material->codeint_product }}" data-costo="{{ $material->valueArt_product }}">{{ $material->name_product }}</option>
                 @endforeach
             </select>
+
+            <input type="number" name="productos[${productoIndex}][stock]" placeholder="Stock" readonly
+                   class="mt-1 block w-full rounded-lg border-gray-300 bg-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
 
             <input type="number" name="productos[${productoIndex}][cantidad]" placeholder="Cantidad"
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
@@ -177,6 +187,25 @@
             // Elimina el div padre (la fila del producto)
             boton.closest('.producto-row').remove();
         }
+
+        // Listener para actualizar el stock, código y costo cuando se selecciona un producto
+        document.addEventListener('change', function(e) {
+            const el = e.target;
+            if (!el.matches || !el.matches('select[name^="productos"][name$="[product_id]"]')) return;
+            const row = el.closest('.producto-row');
+            const opt = el.selectedOptions ? el.selectedOptions[0] : el.options[el.selectedIndex];
+            const stock = opt ? (opt.dataset.stock ?? '') : '';
+            const codigo = opt ? (opt.dataset.codigo ?? '') : '';
+            const costo = opt ? (opt.dataset.costo ?? '') : '';
+
+            const stockInput = row ? row.querySelector('input[name$="[stock]"]') : null;
+            const codigoInput = row ? row.querySelector('input[name$="[codigo]"]') : null;
+            const costoInput = row ? row.querySelector('input[name$="[costo_unitario]"]') : null;
+
+            if (stockInput) stockInput.value = stock;
+            if (codigoInput) codigoInput.value = codigo;
+            if (costoInput) costoInput.value = costo;
+        });
     </script>
 
     @if ($errors->any())

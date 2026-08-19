@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Vehiculo;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use Illuminate\Http\Request;
 
@@ -11,6 +12,19 @@ class VerificacionVehiculoController extends Controller
     {
         $vehiculos = Vehiculo::findOrFail($id);
         return view('vehiculos.index-verificacion', compact('vehiculos'));
+    }
+
+    public function print($id)
+    {
+        $vehiculo = Vehiculo::with('verificaciones')->findOrFail($id);
+        $verificaciones = $vehiculo->verificaciones()->orderBy('fecha_pago_verificacion', 'desc')->get();
+        $totalGeneral = $verificaciones->sum(function ($verificacion) {
+            return (float) ($verificacion->monto_verificacion ?? 0);
+        });
+
+        $pdf = Pdf::loadView('vehiculos.pdf-verificaciones-gastos', compact('vehiculo', 'verificaciones', 'totalGeneral'));
+
+        return $pdf->stream('gastos_verificaciones_' . $vehiculo->id . '.pdf');
     }
     public function create($id)
     {

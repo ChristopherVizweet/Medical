@@ -6,32 +6,30 @@
             <h1 class="text-2xl font-bold">NUEVA SALIDA</h1>
         </div><br>
         <!--Aqui comienza el formulario para registrar la salida-->
-        <div class="producto-row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-center">
+        <div class="producto-row grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 items-center">
             <div class="hidden">
-            <x-input-label for="tipoMovimiento" :value="__('Tipo de registro')" />
-            <select class="mt-1 block w-full " name="tipoMovimiento" id="tipoMovimiento" readonly=true required>
-                
-                <option value="salida" selected>Salida</option>
-                
-            </select>
-        </div>
+                <x-input-label for="tipoMovimiento" :value="__('Tipo de registro')" />
+                <select class="mt-1 block w-full" name="tipoMovimiento" id="tipoMovimiento" readonly=true required>
+                    <option value="salida" selected>Salida</option>
+                </select>
+            </div>
             <div>
                 <x-input-label for="obra_movimiento" :value="__('Destino')" />
                 <x-text-input autocomplete="off" id="obra_movimiento" class="mt-1 block w-full" type="text" name="obra_movimiento" :value="old('obra_movimiento')" required />
                 <x-input-error :messages="$errors->get('obra_movimiento')" class="mt-2" />
             </div>
             <div>
-            <x-input-label for="empleado_id" :value="__('Solicitante (colaborador)')" />
-            <select class="mt-1 block w-full" name="empleado_id" id="empleado_id" required>
-                <option value="">-Seleccionar-</option> 
-                @foreach($empleados as $empleado)
-                <option value="{{ $empleado->id }}">{{ $empleado->Nombre }}</option>
-            @endforeach
-            </select>
-        </div>
+                <x-input-label for="empleado_id" :value="__('Solicitante (colaborador)')" />
+                <select class="mt-1 block w-full" name="empleado_id" id="empleado_id" required>
+                    <option value="">-Seleccionar-</option>
+                    @foreach($empleados as $empleado)
+                        <option value="{{ $empleado->id }}">{{ $empleado->Nombre }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="hidden">
                 <x-input-label for="folio_movimiento" :value="__('Folio')" />
-                <x-text-input id="folio_movimiento" class="mt-1 block w-full" type="text" name="folio_movimiento" :value="old('folio_movimiento')"  />
+                <x-text-input id="folio_movimiento" class="mt-1 block w-full" type="text" name="folio_movimiento" :value="old('folio_movimiento')" />
                 <x-input-error :messages="$errors->get('folio_movimiento')" class="mt-2" />
             </div>
             <div>
@@ -52,7 +50,7 @@
 
        
 <!-- Producto -->
-        <div class="col-span-5">
+        <div class="col-span-full">
             <label for="productos[0][product_id]" id="producto-row" class="block text-sm producto-row productos-wrapper font-medium text-gray-700 dark:text-white">Material</label>
             <select name="productos[0][product_id]" 
                     class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
@@ -93,7 +91,6 @@
             <input type="number" name="productos[0][cantidad]" placeholder="Total productos aprobados" value=0
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
-</div>
         @else
             <input type="hidden" name="productos[0][cantidad]" placeholder="Total productos aprobados" value=0
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
@@ -104,11 +101,7 @@
             <input type="number" name="productos[0][cantidadE]" placeholder="Total productos enviados" value=0
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
-        <div class="mt-4">
-            <x-input-label for="productos[0][observaciones_movimiento]" :value="__('Comentarios')" />
-            <x-text-input name="productos[0][observaciones_movimiento]" placeholder="Comentarios del material" autocomplete="off" class="mt-1 block w-full" type="text"/>
-            <x-input-error :messages="$errors->get('observaciones_movimiento')" class="mt-2" />
-        </div>
+        <div class="col-span-full mt-4">
     
     </div>
     </div>
@@ -159,55 +152,59 @@
 
 
      newRow.innerHTML = `
-        <div class="block col-span-5 text-center text-lg font-medium text-black dark:text-white">
-         <label for="productos[${materialIndex}]" class="block text-center text-lg font-medium text-black dark:text-white">Material ${materialIndex}</label>
+        <div class="col-span-full text-center text-lg font-medium text-black dark:text-white">
+            <label for="productos[${materialIndex}]" class="block text-center text-lg font-medium text-black dark:text-white">Material ${materialIndex}</label>
         </div>
-         <select name="productos[${productoIndex}][product_id]" 
-         class="mt-1 col-span-5 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
-          <option value="">-- Seleccionar material --</option>
-          @foreach($productos as $producto)
-              <option value="{{ $producto->id }}" data-stock="{{ $producto->stock }}">{{ $producto->name_product }} Diametro {{$producto->diameterMM_product}}mm</option>
-          @endforeach
-         </select>
-        
-       <div>
-       <label for="productos[${productoIndex}][stock]" class="block text-sm font-medium text-gray-700 dark:text-white">Existencias</label>
-         <input type="number" readonly="true" step="any" name="productos[${productoIndex}][stock]" placeholder="Existencias"
-             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
-             </div>
+
+        <div class="col-span-full">
+            <select name="productos[${productoIndex}][product_id]" 
+                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                <option value="">-- Seleccionar material --</option>
+                @foreach($productos as $producto)
+                    <option value="{{ $producto->id }}" data-stock="{{ $producto->stock }}">{{ $producto->name_product }} Diametro {{$producto->diameterMM_product}}mm</option>
+                @endforeach
+            </select>
+        </div>
 
         <div>
-         <label for="productos[${productoIndex}][cantidadR]" class="block text-sm font-medium text-gray-700 dark:text-white">Cantidad requerida</label>
-         <input type="number" name="productos[${productoIndex}][cantidadR]" placeholder="Cant. requerida" value=0
-             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" >
+            <label for="productos[${productoIndex}][stock]" class="block text-sm font-medium text-gray-700 dark:text-white">Existencias</label>
+            <input type="number" readonly="true" step="any" name="productos[${productoIndex}][stock]" placeholder="Existencias"
+                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
         </div>
-         @role('superadmin')<div class="">
-          <label for="productos[${productoIndex}][cantidadA]" class="block text-sm font-medium text-gray-700 dark:text-white">Cantidad Aprobada</label>
-         <input type="number" name="productos[${productoIndex}][cantidadA]" placeholder="Cantidad aprobada" value=0
-             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-         </div>
-         @endrole
-         @role('superadmin')<div>
-         <label for="productos[${productoIndex}][cantidad]" class="block text-sm font-medium text-gray-700 dark:text-white">Total entregados</label>
-         <input type="number" step="0.01" name="productos[${productoIndex}][cantidad]" 
-             placeholder="Total productos entregados" value=0
-             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+
+        <div>
+            <label for="productos[${productoIndex}][cantidadR]" class="block text-sm font-medium text-gray-700 dark:text-white">Cantidad requerida</label>
+            <input type="number" name="productos[${productoIndex}][cantidadR]" placeholder="Cant. requerida" value=0
+                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
-        
-         @else
-            <input type="hidden" name="productos[${productoIndex}][cantidad]" placeholder="Total productos aprobados" value=0
-                   class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-         @endrole
-        
+
+        @role('superadmin')
+        <div>
+            <label for="productos[${productoIndex}][cantidadA]" class="block text-sm font-medium text-gray-700 dark:text-white">Cantidad Aprobada</label>
+            <input type="number" name="productos[${productoIndex}][cantidadA]" placeholder="Cantidad aprobada" value=0
+                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+        </div>
+        <div>
+            <label for="productos[${productoIndex}][cantidad]" class="block text-sm font-medium text-gray-700 dark:text-white">Total entregados</label>
+            <input type="number" step="0.01" name="productos[${productoIndex}][cantidad]" 
+                placeholder="Total productos entregados" value=0
+                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+        </div>
+        @else
+            <input type="hidden" name="productos[${productoIndex}][cantidad]" placeholder="Total productos aprobados" value=0>
+        @endrole
+
+        <div class="col-span-full">
             <input type="text" name="productos[${productoIndex}][observaciones_movimiento]" placeholder="Comentarios del material" 
-             class="mt-1 col-span-5 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" >
+                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" >
         </div>
-        
-             <!-- Botón eliminar -->
-        <button type="button" onclick="eliminarProducto(this)" 
-                class="px-2 py-1 bg-red-600 text-white col-span-5 rounded shadow hover:bg-red-700 transition">
-            ✕
-        </button>
+
+        <div class="col-span-full flex justify-end">
+            <button type="button" onclick="eliminarProducto(this)" 
+                class="px-2 py-1 bg-red-600 text-white rounded shadow hover:bg-red-700 transition">
+                ✕
+            </button>
+        </div>
         `;
 
         wrapper.appendChild(newRow);

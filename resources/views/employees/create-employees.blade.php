@@ -18,6 +18,11 @@
                         <x-text-input autocomplete="off" id="Nombre" class="mt-1 block w-full" type="text" name="Nombre" :value="old('Nombre')"  />
                         <x-input-error :messages="$errors->get('Nombre')" class="mt-2" />
                     </div>
+                    <div>
+                        <x-input-label for="numero_checador" :value="__('Número en reloj checador (EnNo)')" />
+                        <x-text-input id="numero_checador" class="mt-1 block w-full" type="text" name="numero_checador" :value="old('numero_checador')" placeholder="Ej. 000000003" />
+                        <x-input-error :messages="$errors->get('numero_checador')" class="mt-2" />
+                    </div>
 
                     {{-- Apellidos --}}
                     <div>

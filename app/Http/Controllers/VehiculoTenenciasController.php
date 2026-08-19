@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Vehiculo;
 use App\Models\VehiculoTenencias;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class VehiculoTenenciasController extends Controller
@@ -10,6 +11,19 @@ class VehiculoTenenciasController extends Controller
     public function index($id){
          $vehiculos = Vehiculo::findOrFail($id);
         return view('vehiculos.index-tenencias', compact('vehiculos'));
+    }
+
+    public function print($id)
+    {
+        $vehiculo = Vehiculo::with('tenencias')->findOrFail($id);
+        $tenencias = $vehiculo->tenencias()->orderBy('fecha_pago_tenencias', 'desc')->get();
+        $totalGeneral = $tenencias->sum(function ($tenencia) {
+            return (float) ($tenencia->monto_tenencias ?? 0);
+        });
+
+        $pdf = Pdf::loadView('vehiculos.pdf-tenencias-gastos', compact('vehiculo', 'tenencias', 'totalGeneral'));
+
+        return $pdf->stream('gastos_tenencias_' . $vehiculo->id . '.pdf');
     }
     public function create($id){
         $vehiculos = Vehiculo::findOrFail($id);

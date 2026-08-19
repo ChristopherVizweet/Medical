@@ -274,10 +274,110 @@
                 </div>
             </div>
 
-            <!-- Hamburger -->
-            <div class="-me-24 flex justify-end sm:hidden">
-                <button @click="open = ! open"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
+<!-- Campana de notificaciones -->
+            <div class="flex items-center justify-end gap-2 sm:hidden">
+                @hasanyrole('admin|superadmin|laboratorio|almacen')
+                <div
+                    x-data="notificationBell({{ Auth::id() }})"
+                    class="relative flex items-center">
+                    {{-- Botón de campana --}}
+                    <button
+                        type="button"
+                        @click="enableSound(); open = !open"
+                        class="relative inline-flex items-center justify-center p-2 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition"
+                        aria-label="Notificaciones">
+                        <svg
+                            class="h-6 w-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11 a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341 C7.67 6.165 6 8.388 6 11v3.159 c0 .538-.214 1.055-.595 1.436L4 17h5 m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+
+                        {{-- Contador --}}
+                        <span
+                            x-show="count > 0"
+                            x-cloak
+                            x-text="count > 99 ? '99+' : count"
+                            class="absolute -top-1 -right-1 min-w-5 h-5 px-1 flex items-center justify-center text-xs font-bold text-white bg-red-600 rounded-full"></span>
+                    </button>
+
+                    {{-- Menú desplegable --}}
+                    <div
+                        x-show="open"
+                        x-cloak
+                        @click.outside="open = false"
+                        x-transition
+                        class="absolute right-0 top-12 z-50 w-80 sm:w-96 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl overflow-hidden">
+                        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                            <div>
+                                <h3 class="font-semibold text-gray-800 dark:text-gray-100">
+                                    Notificaciones
+                                </h3>
+
+                                <p class="text-xs text-gray-500 dark:text-gray-400" x-text="count === 1 ? '1 notificación pendiente' : `${count} notificaciones pendientes`"></p>
+                            </div>
+
+                            <button
+                                x-show="count > 0"
+                                @click="markAllAsRead()"
+                                type="button"
+                                class="text-xs font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400">
+                                Marcar todas
+                            </button>
+                        </div>
+
+                        <div class="max-h-96 overflow-y-auto">
+                            {{-- Cargando --}}
+                            <div x-show="loading" class="px-4 py-6 text-center text-sm text-gray-500 dark:text-gray-400">
+                                Cargando notificaciones...
+                            </div>
+
+                            {{-- Sin notificaciones --}}
+                            <div x-show="!loading && notifications.length === 0" class="px-4 py-8 text-center">
+                                <svg class="mx-auto h-9 w-9 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                                    No tienes notificaciones pendientes.
+                                </p>
+                            </div>
+
+                            {{-- Lista --}}
+                            <template x-for="notification in notifications" :key="notification.id ?? notification.movimiento_id">
+                                <button
+                                    type="button"
+                                    @click="openNotification(notification)"
+                                    class="block w-full px-4 py-3 text-left border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                                    <div class="flex gap-3">
+                                        <div class="flex-none w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6 a2 2 0 00-2 2v7 m16 0v5a2 2 0 01-2 2H6 a2 2 0 01-2-2v-5 m16 0h-3.586 a1 1 0 00-.707.293l-2.414 2.414 a1 1 0 01-.707.293h-1.172 a1 1 0 01-.707-.293l-2.414-2.414 A1 1 0 007.586 13H4" />
+                                            </svg>
+                                        </div>
+
+                                        <div class="min-w-0">
+                                            <p class="text-sm font-semibold text-gray-800 dark:text-gray-100" x-text="notification.titulo"></p>
+                                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-300" x-text="notification.mensaje"></p>
+                                            <p class="mt-1 text-xs text-gray-400 dark:text-gray-500" x-text="notification.created_at"></p>
+                                        </div>
+                                    </div>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+                @endhasanyrole
+
+                <!-- Hamburger -->
+                <div class="flex justify-end sm:hidden">
+                    <button @click="open = ! open"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
 
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }"
@@ -346,6 +446,16 @@
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+
+
+
+
+
+
+
+
+
+        
             <div class="px-4">
                 <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name   }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
