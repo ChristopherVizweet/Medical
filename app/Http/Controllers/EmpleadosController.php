@@ -41,6 +41,7 @@ class EmpleadosController extends Controller
         'observaciones_empleado' => 'nullable|string|max:255',
         'cv_empleado' => 'nullable|file|mimes:pdf|max:5000',
         'fecha_nacimiento' => 'nullable|date',
+        'fecha_ingreso' => 'nullable|date|before_or_equal:today',
         'fecha_vacaciones' => 'nullable|date',
         'certificados_empleados' => 'nullable|file|mimes:pdf|max:5000',
     ]);
@@ -79,6 +80,7 @@ class EmpleadosController extends Controller
             'observaciones_empleado'=>$request->observaciones_empleado,
             'cv_empleado'=>$curriculum_vitae,
             'fecha_nacimiento'=>$request->fecha_nacimiento,
+            'fecha_ingreso'=>$request->fecha_ingreso,
             'fecha_vacaciones'=>$request->fecha_vacaciones,
             'certificados_empleados'=>$certificados_emplados,
         ]);
@@ -100,7 +102,7 @@ public function update(Request $request, $id)
 {
     //dd(app()->getLocale());
     $request->validate([
-        'numero_checador' => 'nullable|string|max:30|unique:empleados,numero_checador,'.$id,
+       // 'numero_checador' => 'nullable|string|max:30|unique:empleados,numero_checador,'.$id,
     'curp' => 'nullable|string|max:20',
         'Nombre' => 'nullable|string|max:30',
         'apellidos' => 'nullable|string|max:22',
@@ -123,6 +125,7 @@ public function update(Request $request, $id)
         'observaciones_empleado' => 'nullable|string|max:255',
         'cv_empleado' => 'nullable|file|mimes:pdf|max:5000',['cv_empleado.mimes'=>'El archivo del CV debe ser un PDF.'],
         'fecha_nacimiento' => 'nullable|date',
+        'fecha_ingreso' => 'nullable|date|before_or_equal:today',
         'fecha_vacaciones' => 'nullable|date',
         'certificados_empleados' => 'nullable|file|mimes:pdf|max:5000',
     ]);
@@ -141,7 +144,7 @@ public function update(Request $request, $id)
             
     $empleados = Empleados::findOrFail($id);
     $empleados->update([
-        'numero_checador'=>$request->numero_checador,
+        //'numero_checador'=>$request->numero_checador,
         'curp'=>$request->curp,
             'Nombre'=>$request->Nombre,
             'apellidos'=>$request->apellidos,
@@ -164,6 +167,7 @@ public function update(Request $request, $id)
             'observaciones_empleado'=>$request->observaciones_empleado,
             'cv_empleado'=>$curriculum_vitae1,
             'fecha_nacimiento'=>$request->fecha_nacimiento,
+            'fecha_ingreso'=>$request->fecha_ingreso,
             'fecha_vacaciones'=>$request->fecha_vacaciones,
             'certificados_empleados'=>$certificados_emplados1,
     ]);
@@ -198,9 +202,7 @@ public function showVacaciones($id){
     
     // Calcular días ocupados y disponibles
     $diasOcupados = $vacaciones->sum('dias_tomados');
-    $derechoVacaciones = $empleados->fecha_inicio_vacaciones && $empleados->fecha_fin_vacaciones
-        ? $empleados->fecha_inicio_vacaciones->diffInDays($empleados->fecha_fin_vacaciones) + 1
-        : 0;
+    $derechoVacaciones = $this->diasVacacionesPorAntiguedad($empleados->fecha_ingreso);
     $diasDisponibles = $derechoVacaciones - $diasOcupados;
     
     return view('employees.show-vacaciones-employees', compact('empleados', 'vacaciones', 'diasOcupados', 'derechoVacaciones', 'diasDisponibles'));
@@ -217,6 +219,25 @@ public function storeDerechoVacaciones(\Illuminate\Http\Request $request, $id){
 
     return redirect()->route('vacaciones-employee', $id)
         ->with('success', 'Derecho a vacaciones actualizado correctamente');
+}
+
+private function diasVacacionesPorAntiguedad($fechaIngreso): int
+{
+    if (!$fechaIngreso) {
+        return 0;
+    }
+
+    $aniosServicio = $fechaIngreso->diffInYears(now());
+
+    if ($aniosServicio < 1) {
+        return 0;
+    }
+
+    if ($aniosServicio <= 5) {
+        return 9 + ($aniosServicio * 2);
+    }
+
+    return 20 + ((int) ceil(($aniosServicio - 5) / 5) * 2);
 }
 
 public function storeVacaciones(\Illuminate\Http\Request $request, $id){

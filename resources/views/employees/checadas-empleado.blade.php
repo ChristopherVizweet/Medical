@@ -53,6 +53,9 @@
                             <th class="px-5 py-3">Salida a comida</th>
                             <th class="px-5 py-3">Regreso de comida</th>
                             <th class="px-5 py-3">Salida</th>
+                            <th class="px-5 py-3">Comida</th>
+                            <th class="px-5 py-3">Horas totales</th>
+                            <th class="px-5 py-3">Horas extra</th>
                             <th class="px-5 py-3">Estado</th>
                         </tr>
                     </thead>
@@ -64,6 +67,9 @@
                                 <td class="px-5 py-4">{{ $check->hora_salida_comida_verificador ?: '—' }}</td>
                                 <td class="px-5 py-4">{{ $check->hora_entrada_comida_verificador ?: '—' }}</td>
                                 <td class="px-5 py-4">{{ $check->hora_salida_verificador ?: '—' }}</td>
+                                <td class="px-5 py-4">{{ $check->jornada['comida'] }}</td>
+                                <td class="px-5 py-4 font-semibold">{{ $check->jornada['horas'] }}</td>
+                                <td class="px-5 py-4 {{ $check->jornada['tiene_horas_extra'] ? 'font-bold text-amber-700 dark:text-amber-300' : '' }}">{{ $check->jornada['tiene_horas_extra'] ? $check->jornada['horas_extra'].' extra' : 'Sin horas extra' }}</td>
                                 <td class="px-5 py-4">
                                     @php
                                         $claseEstado = match ($check->estado_verificador) {
@@ -77,7 +83,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="6" class="px-5 py-12 text-center text-slate-500">No hay checadas para este empleado en el periodo seleccionado.</td></tr>
+                            <tr><td colspan="9" class="px-5 py-12 text-center text-slate-500">No hay checadas para este empleado en el periodo seleccionado.</td></tr>
                         @endforelse
                     </tbody>
                 </table>

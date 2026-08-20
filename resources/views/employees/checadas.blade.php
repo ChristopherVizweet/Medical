@@ -33,7 +33,7 @@
         <section class="space-y-5 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-600 dark:bg-slate-800">
             <div>
                 <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Filtrar y calcular horas</h3>
-                <p class="mt-1 text-sm text-slate-500 dark:text-slate-300">Las horas trabajadas descuentan el tiempo transcurrido entre la salida y el regreso de comida.</p>
+                <p class="mt-1 text-sm text-slate-500 dark:text-slate-300">Las horas trabajadas descuentan la comida cuando ambos marcajes existen. Las horas después de 10 h diarias se muestran como extras.</p>
             </div>
 
             <form method="GET" action="{{ route('checadas.index') }}" class="grid gap-4 lg:grid-cols-[2fr_1fr_1fr_auto] lg:items-end">
@@ -68,12 +68,19 @@
                         <div class="bg-slate-100 px-4 py-3 font-semibold text-slate-800 dark:bg-slate-700 dark:text-white">Horas por día</div>
                         <div class="max-h-80 overflow-y-auto">
                             <table class="w-full text-sm text-slate-700 dark:text-slate-200">
-                                <thead class="sticky top-0 bg-white dark:bg-slate-800"><tr><th class="px-4 py-2 text-left">Fecha</th><th class="px-4 py-2 text-right">Tiempo trabajado</th></tr></thead>
+                                <thead class="sticky top-0 bg-white dark:bg-slate-800"><tr><th class="px-4 py-2 text-left">Fecha</th><th class="px-4 py-2 text-left">Comida</th><th class="px-4 py-2 text-right">Horas totales</th><th class="px-4 py-2 text-right">Horas extra</th></tr></thead>
                                 <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
                                     @forelse ($calculosDiarios as $dia)
-                                        <tr><td class="px-4 py-3">{{ $dia['fecha']?->format('d/m/Y') }}</td><td class="px-4 py-3 text-right font-semibold">{{ $dia['horas'] }}</td></tr>
+                                        <tr>
+                                            <td class="px-4 py-3">{{ $dia['fecha']?->format('d/m/Y') }}</td>
+                                            <td class="px-4 py-3">{{ $dia['comida'] }}</td>
+                                            <td class="px-4 py-3 text-right font-semibold">{{ $dia['horas'] }}</td>
+                                            <td class="px-4 py-3 text-right {{ $dia['minutos_extra'] > 0 ? 'font-bold text-amber-700 dark:text-amber-300' : '' }}">
+                                                {{ $dia['minutos_extra'] > 0 ? $dia['horas_extra'].' extra' : 'Sin horas extra' }}
+                                            </td>
+                                        </tr>
                                     @empty
-                                        <tr><td colspan="2" class="px-4 py-8 text-center text-slate-500">No hay registros en el periodo seleccionado.</td></tr>
+                                        <tr><td colspan="4" class="px-4 py-8 text-center text-slate-500">No hay registros en el periodo seleccionado.</td></tr>
                                     @endforelse
                                 </tbody>
                             </table>
@@ -84,15 +91,16 @@
                         <div class="bg-indigo-50 px-4 py-3 font-semibold text-indigo-900 dark:bg-indigo-950 dark:text-indigo-100">Horas por semana</div>
                         <div class="max-h-80 overflow-y-auto">
                             <table class="w-full text-sm text-slate-700 dark:text-slate-200">
-                                <thead class="sticky top-0 bg-white dark:bg-slate-800"><tr><th class="px-4 py-2 text-left">Semana</th><th class="px-4 py-2 text-right">Total</th></tr></thead>
+                                <thead class="sticky top-0 bg-white dark:bg-slate-800"><tr><th class="px-4 py-2 text-left">Semana</th><th class="px-4 py-2 text-right">Horas totales</th><th class="px-4 py-2 text-right">Horas extra</th></tr></thead>
                                 <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
                                     @forelse ($calculosSemanales as $semana)
                                         <tr>
                                             <td class="px-4 py-3">{{ $semana['inicio']->format('d/m/Y') }} – {{ $semana['fin']->format('d/m/Y') }}</td>
                                             <td class="px-4 py-3 text-right font-bold text-indigo-700 dark:text-indigo-300">{{ $semana['horas'] }}</td>
+                                            <td class="px-4 py-3 text-right font-bold {{ $semana['minutos_extra'] > 0 ? 'text-amber-700 dark:text-amber-300' : '' }}">{{ $semana['horas_extra'] }}</td>
                                         </tr>
                                     @empty
-                                        <tr><td colspan="2" class="px-4 py-8 text-center text-slate-500">No hay jornadas completas para calcular.</td></tr>
+                                        <tr><td colspan="3" class="px-4 py-8 text-center text-slate-500">No hay jornadas completas para calcular.</td></tr>
                                     @endforelse
                                 </tbody>
                             </table>
@@ -111,7 +119,7 @@
                         <tr>
                             <th class="px-5 py-3">No. checador</th><th class="px-5 py-3">Empleado</th><th class="px-5 py-3">Fecha</th>
                             <th class="px-5 py-3">Entrada</th><th class="px-5 py-3">Salida a comida</th><th class="px-5 py-3">Regreso</th>
-                            <th class="px-5 py-3">Salida</th><th class="px-5 py-3">Estado</th>
+                            <th class="px-5 py-3">Salida</th><th class="px-5 py-3">Comida</th><th class="px-5 py-3">Horas totales</th><th class="px-5 py-3">Horas extra</th><th class="px-5 py-3">Estado</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
@@ -124,10 +132,13 @@
                                 <td class="px-5 py-4">{{ $check->hora_salida_comida_verificador ?: '—' }}</td>
                                 <td class="px-5 py-4">{{ $check->hora_entrada_comida_verificador ?: '—' }}</td>
                                 <td class="px-5 py-4">{{ $check->hora_salida_verificador ?: '—' }}</td>
+                                <td class="px-5 py-4">{{ $check->jornada['comida'] }}</td>
+                                <td class="px-5 py-4 font-semibold">{{ $check->jornada['horas'] }}</td>
+                                <td class="px-5 py-4 {{ $check->jornada['tiene_horas_extra'] ? 'font-bold text-amber-700 dark:text-amber-300' : '' }}">{{ $check->jornada['tiene_horas_extra'] ? $check->jornada['horas_extra'].' extra' : 'Sin horas extra' }}</td>
                                 <td class="px-5 py-4 capitalize">{{ $check->estado_verificador }}</td>
                             </tr>
                         @empty
-                            <tr><td colspan="8" class="px-5 py-12 text-center text-slate-500">No hay registros de checadas.</td></tr>
+                            <tr><td colspan="11" class="px-5 py-12 text-center text-slate-500">No hay registros de checadas.</td></tr>
                         @endforelse
                     </tbody>
                 </table>

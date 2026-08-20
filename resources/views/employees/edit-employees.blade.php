@@ -67,6 +67,10 @@
                                     <x-input-label for="fecha_nacimiento" :value="__('Fecha de nacimiento')" class="text-sm font-semibold text-slate-700" />
                                     <x-text-input id="fecha_nacimiento" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="date" name="fecha_nacimiento" value="{{ $empleados->fecha_nacimiento }}" />
                                 </div>
+                                <div>
+                                    <x-input-label for="fecha_ingreso" :value="__('Fecha de ingreso')" class="text-sm font-semibold text-slate-700" />
+                                    <x-text-input id="fecha_ingreso" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="date" name="fecha_ingreso" value="{{ optional($empleados->fecha_ingreso)->format('Y-m-d') }}" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -93,10 +97,7 @@
                                 <x-input-label for="sueldo" :value="__('Sueldo $')" class="text-sm font-semibold text-slate-700" />
                                 <x-text-input id="sueldo" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="sueldo" value="{{ $empleados->sueldo }}" />
                             </div>
-                            <div>
-                                <x-input-label for="fecha_vacaciones" :value="__('Fecha de vacaciones')" class="text-sm font-semibold text-slate-700" />
-                                <x-text-input id="fecha_vacaciones" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="date" name="fecha_vacaciones" value="{{ $empleados->fecha_vacaciones }}" />
-                            </div>
+                           
                         </div>
                     </div>
 

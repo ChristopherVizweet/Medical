@@ -45,6 +45,12 @@
                         <x-input-error :messages="$errors->get('fecha_nacimiento')" class="mt-2" />
                     </div>
 
+                    <div>
+                        <x-input-label for="fecha_ingreso" :value="__('Fecha de ingreso')" />
+                        <x-text-input id="fecha_ingreso" class="mt-1 block w-full" type="date" name="fecha_ingreso" :value="old('fecha_ingreso')" />
+                        <x-input-error :messages="$errors->get('fecha_ingreso')" class="mt-2" />
+                    </div>
+
                     {{-- Organización --}}
                     <div>
                         <x-input-label for="organizacion" :value="__('Organización')" />
@@ -172,12 +178,7 @@
 
                     </div>
 
-                    {{-- Fecha de vacaciones --}}
-                    <div>
-                        <x-input-label for="fecha_vacaciones" :value="__('Fecha de vacaciones')" />
-                        <x-text-input id="fecha_vacaciones" class="mt-1 block w-full" type="date" name="fecha_vacaciones" :value="old('fecha_vacaciones')"  />
-                        <x-input-error :messages="$errors->get('fecha_vacaciones')" class="mt-2" />
-                    </div>
+                   
 
                     <!--Observaciones-->
                     <div class="">

@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 
 class ChecadaController extends Controller
 {
+    private const JORNADA_ORDINARIA_MINUTOS = 600;
+
     public function index(Request $request): View
     {
         $filtros = $request->validate([
@@ -46,12 +48,15 @@ class ChecadaController extends Controller
                 ->orderBy('fecha_verificador')
                 ->get()
                 ->map(function (Checada $check): array {
-                    $minutos = $this->calcularMinutosTrabajados($check);
+                    $jornada = $this->calcularJornada($check);
 
                     return [
                         'fecha' => $check->fecha_verificador,
-                        'minutos' => $minutos,
-                        'horas' => $this->formatearMinutos($minutos),
+                        'minutos' => $jornada['minutos'],
+                        'horas' => $jornada['horas'],
+                        'comida' => $jornada['comida'],
+                        'minutos_extra' => $jornada['minutos_extra'],
+                        'horas_extra' => $jornada['horas_extra'],
                     ];
                 });
 
@@ -66,6 +71,8 @@ class ChecadaController extends Controller
                         'fin' => Carbon::parse($inicio)->endOfWeek(),
                         'minutos' => $minutos,
                         'horas' => $this->formatearMinutos($minutos),
+                        'minutos_extra' => $dias->sum('minutos_extra'),
+                        'horas_extra' => $this->formatearMinutos($dias->sum('minutos_extra')),
                     ];
                 })
                 ->values();
@@ -75,6 +82,11 @@ class ChecadaController extends Controller
             ->orderByDesc('fecha_verificador')
             ->orderBy('nombre_verificador')
             ->paginate(25)
+            ->through(function (Checada $check): Checada {
+                $check->jornada = $this->calcularJornada($check);
+
+                return $check;
+            })
             ->withQueryString();
 
         return view('employees.checadas', compact(
@@ -85,10 +97,20 @@ class ChecadaController extends Controller
         ));
     }
 
-    private function calcularMinutosTrabajados(Checada $check): ?int
+    private function calcularJornada(Checada $check): array
     {
+        $resultado = [
+            'minutos' => null,
+            'horas' => 'Incompleto',
+            'comida' => 'Sin hora de comida',
+            'minutos_comida' => 0,
+            'minutos_extra' => 0,
+            'horas_extra' => '0 h 00 min',
+            'tiene_horas_extra' => false,
+        ];
+
         if (! $check->fecha_verificador || ! $check->hora_entrada_verificador) {
-            return null;
+            return $resultado;
         }
 
         $fecha = $check->fecha_verificador->toDateString();
@@ -110,13 +132,13 @@ class ChecadaController extends Controller
         }
 
         if (! $salidaRegistrada) {
-            return null;
+            return $resultado;
         }
 
         $salida = Carbon::parse($fecha.' '.$salidaRegistrada);
 
         if ($salida->lessThanOrEqualTo($entrada)) {
-            return null;
+            return $resultado;
         }
 
         $minutos = $entrada->diffInMinutes($salida);
@@ -130,11 +152,24 @@ class ChecadaController extends Controller
             $entradaComida = Carbon::parse($fecha.' '.$check->hora_entrada_comida_verificador);
 
             if ($entradaComida->greaterThan($salidaComida)) {
-                $minutos -= $salidaComida->diffInMinutes($entradaComida);
+                $resultado['minutos_comida'] = $salidaComida->diffInMinutes($entradaComida);
+                $resultado['comida'] = $this->formatearMinutos($resultado['minutos_comida']);
+                $minutos -= $resultado['minutos_comida'];
             }
         }
 
-        return max(0, (int) $minutos);
+        $resultado['minutos'] = max(0, (int) $minutos);
+        $resultado['horas'] = $this->formatearMinutos($resultado['minutos']);
+        $resultado['minutos_extra'] = max(0, $resultado['minutos'] - self::JORNADA_ORDINARIA_MINUTOS);
+        $resultado['horas_extra'] = $this->formatearMinutos($resultado['minutos_extra']);
+        $resultado['tiene_horas_extra'] = $resultado['minutos_extra'] > 0;
+
+        return $resultado;
+    }
+
+    private function calcularMinutosTrabajados(Checada $check): ?int
+    {
+        return $this->calcularJornada($check)['minutos'];
     }
 
     private function formatearMinutos(?int $minutos): string
@@ -172,6 +207,11 @@ class ChecadaController extends Controller
         $checks = $consulta
             ->orderByDesc('fecha_verificador')
             ->paginate(20)
+            ->through(function (Checada $check): Checada {
+                $check->jornada = $this->calcularJornada($check);
+
+                return $check;
+            })
             ->withQueryString();
 
         return view('employees.checadas-empleado', compact('empleado', 'checks', 'resumen'));

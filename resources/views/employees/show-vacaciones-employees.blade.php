@@ -47,21 +47,20 @@
                             <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">{{ __('ANTIGÜEDAD') }}</label>
                             <div class="bg-gray-100 dark:bg-gray-600 border-2 border-gray-300 dark:border-gray-500 rounded px-4 py-3">
                                 @php
-                                    if ($empleados->fecha_nacimiento) {
-                                        $hoy = \Carbon\Carbon::now();
-                                        $antigüedad = \Carbon\Carbon::parse($empleados->fecha_nacimiento);
-                                        $años = $hoy->diffInYears($antigüedad);
-                                        $meses = $hoy->copy()->subYears($años)->diffInMonths($antigüedad);
-                                        $dias = $hoy->copy()->subYears($años)->subMonths($meses)->diffInDays($antigüedad);
-                                        $textoAntigüedad = "{$años} Años, {$meses} Mes(es) y {$dias} Día(s)";
-                                    } else {
-                                        $textoAntigüedad = 'No especificada';
-                                    }
+                                if ($empleados->fecha_ingreso) {
+                                $hoy = \Carbon\Carbon::now();
+                                $antigüedad = \Carbon\Carbon::parse($empleados->fecha_ingreso);
+                                $diff = $hoy->diff($antigüedad);
+
+                                $textoAntigüedad = "{$diff->y} Años, {$diff->m} Mes(es) y {$diff->d} Día(s)";
+                                } else {
+                                $textoAntigüedad = 'No especificada';
+                                }
                                 @endphp
                                 <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $textoAntigüedad }}</p>
                             </div>
                         </div>
-                        <form action="{{ route('store-derecho-vacaciones', $empleados->id) }}" method="POST" class="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 rounded-lg border border-blue-300 bg-blue-50 p-4 dark:border-blue-700 dark:bg-blue-900/30">
+                        <!-- <form action="{{ route('store-derecho-vacaciones', $empleados->id) }}" method="POST" class="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 rounded-lg border border-blue-300 bg-blue-50 p-4 dark:border-blue-700 dark:bg-blue-900/30">
                             @csrf
                             <h2 class="col-span-2 font-bold text-gray-900 dark:text-white">{{ __('Días destinados de vacaciones') }}</h2>
                             <div>
@@ -83,7 +82,7 @@
                                     {{ __('Guardar derecho a vacaciones') }}
                                 </button>
                             </div>
-                        </form>
+                        </form> -->
                     </div>
                 </div>
 
@@ -94,13 +93,13 @@
                         <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 text-center">{{ __('IMAGEN DEL EMPLEADO') }}</label>
                         <div class="bg-gray-200 dark:bg-gray-600 rounded-lg overflow-hidden border-2 border-gray-300 dark:border-gray-500">
                             @if($empleados->foto)
-                                <img src="{{ asset('storage/' . $empleados->foto) }}" alt="Foto del empleado" class="w-full h-auto object-cover">
+                            <img src="{{ asset('storage/' . $empleados->foto) }}" alt="Foto del empleado" class="w-full h-auto object-cover">
                             @else
-                                <div class="w-full h-48 flex items-center justify-center bg-gray-300 dark:bg-gray-600">
-                                    <svg class="w-16 h-16 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
+                            <div class="w-full h-48 flex items-center justify-center bg-gray-300 dark:bg-gray-600">
+                                <svg class="w-16 h-16 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
                             @endif
                         </div>
                     </div>
@@ -157,11 +156,11 @@
                                 </td>
                                 <td class="px-4 py-3 text-center">
                                     @if($vac->estado == 'aprobado')
-                                        <span class="inline-block px-3 py-1 bg-green-200 dark:bg-green-900 text-green-800 dark:text-green-200 rounded text-xs font-bold">{{ __('APROBADO') }}</span>
+                                    <span class="inline-block px-3 py-1 bg-green-200 dark:bg-green-900 text-green-800 dark:text-green-200 rounded text-xs font-bold">{{ __('APROBADO') }}</span>
                                     @elseif($vac->estado == 'pendiente')
-                                        <span class="inline-block px-3 py-1 bg-yellow-200 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded text-xs font-bold">{{ __('PENDIENTE') }}</span>
+                                    <span class="inline-block px-3 py-1 bg-yellow-200 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded text-xs font-bold">{{ __('PENDIENTE') }}</span>
                                     @else
-                                        <span class="inline-block px-3 py-1 bg-red-200 dark:bg-red-900 text-red-800 dark:text-red-200 rounded text-xs font-bold">{{ __('RECHAZADO') }}</span>
+                                    <span class="inline-block px-3 py-1 bg-red-200 dark:bg-red-900 text-red-800 dark:text-red-200 rounded text-xs font-bold">{{ __('RECHAZADO') }}</span>
                                     @endif
                                 </td>
                             </tr>
@@ -178,18 +177,18 @@
 
             <!-- Formulario para agregar nuevas vacaciones -->
             <div class="mt-8 bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-lg border-2 border-blue-300 dark:border-blue-600 p-6">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">{{ __('Agregar Nuevo Período de Vacaciones') }}</h3>
-                
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">{{ __('Agregar a cuenta de vacaciones') }}</h3>
+
                 <form action="{{ route('store-vacaciones', $empleados->id) }}" method="POST" class="space-y-4">
                     @csrf
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <!-- Fecha Inicio -->
                         <div>
                             <label for="fecha_inicio" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('Fecha de Inicio') }}</label>
                             <input type="date" id="fecha_inicio" name="fecha_inicio" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent" value="{{ old('fecha_inicio') }}">
                             @error('fecha_inicio')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -198,7 +197,7 @@
                             <label for="fecha_fin" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('Fecha de Fin') }}</label>
                             <input type="date" id="fecha_fin" name="fecha_fin" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent" value="{{ old('fecha_fin') }}">
                             @error('fecha_fin')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -206,13 +205,12 @@
                         <div>
                             <label for="estado" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('Estado') }}</label>
                             <select id="estado" name="estado" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                <option value="">{{ __('Seleccionar estado') }}</option>
-                                <option value="aprobado" @selected(old('estado') === 'aprobado')>{{ __('Aprobado') }}</option>
-                                <option value="pendiente" @selected(old('estado') === 'pendiente')>{{ __('Pendiente') }}</option>
-                                <option value="rechazado" @selected(old('estado') === 'rechazado')>{{ __('Rechazado') }}</option>
+                               
+                                <option value="aprobado" @selected(old('estado')==='aprobado' )>{{ __('Aprobado') }}</option>
+
                             </select>
                             @error('estado')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -221,14 +219,14 @@
                             <label for="observaciones" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('Observaciones') }}</label>
                             <textarea id="observaciones" name="observaciones" rows="2" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('observaciones') }}</textarea>
                             @error('observaciones')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
 
                     <div class="flex gap-4 pt-4">
                         <button type="submit" class="inline-flex items-center px-6 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-green-700 focus:bg-green-700 active:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
-                            {{ __('Guardar Período de Vacaciones') }}
+                            {{ __('Guardar dias a toma de Vacaciones') }}
                         </button>
                     </div>
                 </form>

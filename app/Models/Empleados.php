@@ -10,10 +10,11 @@ class Empleados extends Model
         'cargo', 'correoElectronico', 'numeroTelefonoTrabajo',
         'numeroTelParti', 'sueldo', 'calle', 'ciudad', 'estadoProv', 'codigoPostal',
         'pais', 'foto', 'tipoSangre', 'talla_pantalon', 'talla_camisa', 'talla_calzado',
-        'observaciones_empleado', 'fecha_nacimiento', 'fecha_vacaciones', 'fecha_inicio_vacaciones',
+        'observaciones_empleado', 'fecha_nacimiento', 'fecha_ingreso', 'fecha_vacaciones', 'fecha_inicio_vacaciones',
         'fecha_fin_vacaciones', 'certificados_empleados', 'cv_empleado'];
 
     protected $casts = [
+        'fecha_ingreso' => 'date',
         'fecha_inicio_vacaciones' => 'date',
         'fecha_fin_vacaciones' => 'date',
     ];
