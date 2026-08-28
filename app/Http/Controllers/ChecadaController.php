@@ -7,6 +7,7 @@ use App\Models\Empleados;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 
@@ -44,14 +45,24 @@ class ChecadaController extends Controller
         $calculosSemanales = collect();
 
         if ($request->filled('empleado')) {
-            $calculosDiarios = (clone $consulta)
-                ->orderBy('fecha_verificador')
-                ->get()
+            $empleadoSeleccionado = $empleados->firstWhere(
+                'identificador_verificador',
+                $filtros['empleado']
+            );
+            $checksCalendario = $this->completarDias(
+                (clone $consulta)->orderBy('fecha_verificador')->get(),
+                $filtros,
+                $empleadoSeleccionado->identificador_verificador,
+                $empleadoSeleccionado->nombre_verificador
+            );
+
+            $calculosDiarios = $checksCalendario
                 ->map(function (Checada $check): array {
-                    $jornada = $this->calcularJornada($check);
+                    $jornada = $check->jornada ?? $this->calcularJornada($check);
 
                     return [
                         'fecha' => $check->fecha_verificador,
+                        'estado' => $check->estado_verificador,
                         'minutos' => $jornada['minutos'],
                         'horas' => $jornada['horas'],
                         'comida' => $jornada['comida'],
@@ -116,19 +127,17 @@ class ChecadaController extends Controller
         $fecha = $check->fecha_verificador->toDateString();
         $entrada = Carbon::parse($fecha.' '.$check->hora_entrada_verificador);
 
-        /*
-         * El importador guarda los marcajes en orden. En jornadas de dos
-         * marcajes, el segundo ocupa temporalmente la columna de salida a
-         * comida; para el cálculo debe considerarse como la salida del día.
-         */
         $salidaRegistrada = $check->hora_salida_verificador;
 
-        if (
-            ! $salidaRegistrada
-            && $check->hora_salida_comida_verificador
-            && ! $check->hora_entrada_comida_verificador
-        ) {
-            $salidaRegistrada = $check->hora_salida_comida_verificador;
+        if (! $salidaRegistrada) {
+            $salidaRegistrada = collect([
+                $check->hora_entrada_verificador,
+                $check->hora_salida_comida_verificador,
+                $check->hora_entrada_comida_verificador,
+            ])
+                ->filter()
+                ->sort()
+                ->last();
         }
 
         if (! $salidaRegistrada) {
@@ -144,8 +153,7 @@ class ChecadaController extends Controller
         $minutos = $entrada->diffInMinutes($salida);
 
         if (
-            $check->hora_salida_verificador
-            && $check->hora_salida_comida_verificador
+            $check->hora_salida_comida_verificador
             && $check->hora_entrada_comida_verificador
         ) {
             $salidaComida = Carbon::parse($fecha.' '.$check->hora_salida_comida_verificador);
@@ -197,24 +205,80 @@ class ChecadaController extends Controller
                 $query->whereDate('fecha_verificador', '<=', $hasta)
             );
 
-        $resumen = (clone $consulta)
-            ->selectRaw('COUNT(*) as total')
-            ->selectRaw("SUM(CASE WHEN estado_verificador = 'completo' THEN 1 ELSE 0 END) as completos")
-            ->selectRaw("SUM(CASE WHEN estado_verificador = 'incompleto' THEN 1 ELSE 0 END) as incompletos")
-            ->selectRaw("SUM(CASE WHEN estado_verificador = 'falta' THEN 1 ELSE 0 END) as faltas")
-            ->first();
-
-        $checks = $consulta
+        $checksRegistrados = $consulta
             ->orderByDesc('fecha_verificador')
-            ->paginate(20)
-            ->through(function (Checada $check): Checada {
-                $check->jornada = $this->calcularJornada($check);
+            ->get();
 
-                return $check;
-            })
-            ->withQueryString();
+        $checksCalendario = $this->completarDias(
+            $checksRegistrados,
+            $filtros,
+            $empleado->numero_checador,
+            trim($empleado->Nombre.' '.$empleado->apellidos)
+        );
+
+        $resumen = (object) [
+            'total' => $checksCalendario->count(),
+            'completos' => $checksCalendario->where('estado_verificador', 'completo')->count(),
+            'incompletos' => $checksCalendario->where('estado_verificador', 'incompleto')->count(),
+            'faltas' => $checksCalendario->where('estado_verificador', 'falta')->count(),
+        ];
+
+        $pagina = (int) $request->input('page', 1);
+        $checks = new LengthAwarePaginator(
+            $checksCalendario->forPage($pagina, 20)->values(),
+            $checksCalendario->count(),
+            20,
+            $pagina,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        $checks->through(function (Checada $check): Checada {
+            $check->jornada ??= $this->calcularJornada($check);
+
+            return $check;
+        });
 
         return view('employees.checadas-empleado', compact('empleado', 'checks', 'resumen'));
+    }
+
+    private function completarDias($checks, array $filtros, string $identificador, string $nombre)
+    {
+        if ($checks->isEmpty() && ! ($filtros['desde'] ?? null) && ! ($filtros['hasta'] ?? null)) {
+            return $checks;
+        }
+
+        $inicio = Carbon::parse($filtros['desde'] ?? $checks->min('fecha_verificador') ?? $filtros['hasta']);
+        $fin = Carbon::parse($filtros['hasta'] ?? $checks->max('fecha_verificador') ?? $filtros['desde']);
+        $porFecha = $checks->keyBy(fn (Checada $check): string => $check->fecha_verificador->toDateString());
+        $calendario = collect();
+
+        for ($fecha = $inicio->copy(); $fecha->lessThanOrEqualTo($fin); $fecha->addDay()) {
+            $fechaClave = $fecha->toDateString();
+
+            if ($porFecha->has($fechaClave)) {
+                $calendario->push($porFecha->get($fechaClave));
+                continue;
+            }
+
+            $check = new Checada([
+                'identificador_verificador' => $identificador,
+                'nombre_verificador' => $nombre,
+                'fecha_verificador' => $fechaClave,
+                'estado_verificador' => $fecha->isSunday() ? 'descanso' : 'falta',
+            ]);
+            $check->jornada = [
+                'minutos' => null,
+                'horas' => $fecha->isSunday() ? 'Descanso' : 'Sin registro',
+                'comida' => '—',
+                'minutos_comida' => 0,
+                'minutos_extra' => 0,
+                'horas_extra' => 'Sin horas extra',
+                'tiene_horas_extra' => false,
+            ];
+            $calendario->push($check);
+        }
+
+        return $calendario->sortByDesc('fecha_verificador')->values();
     }
 
     public function mostrarImportacion(): View

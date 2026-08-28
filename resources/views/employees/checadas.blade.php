@@ -68,11 +68,12 @@
                         <div class="bg-slate-100 px-4 py-3 font-semibold text-slate-800 dark:bg-slate-700 dark:text-white">Horas por día</div>
                         <div class="max-h-80 overflow-y-auto">
                             <table class="w-full text-sm text-slate-700 dark:text-slate-200">
-                                <thead class="sticky top-0 bg-white dark:bg-slate-800"><tr><th class="px-4 py-2 text-left">Fecha</th><th class="px-4 py-2 text-left">Comida</th><th class="px-4 py-2 text-right">Horas totales</th><th class="px-4 py-2 text-right">Horas extra</th></tr></thead>
+                                <thead class="sticky top-0 bg-white dark:bg-slate-800"><tr><th class="px-4 py-2 text-left">Fecha</th><th class="px-4 py-2 text-left">Estado</th><th class="px-4 py-2 text-left">Comida</th><th class="px-4 py-2 text-right">Horas totales</th><th class="px-4 py-2 text-right">Horas extra</th></tr></thead>
                                 <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
                                     @forelse ($calculosDiarios as $dia)
                                         <tr>
                                             <td class="px-4 py-3">{{ $dia['fecha']?->format('d/m/Y') }}</td>
+                                            <td class="px-4 py-3 capitalize">{{ $dia['estado'] }}</td>
                                             <td class="px-4 py-3">{{ $dia['comida'] }}</td>
                                             <td class="px-4 py-3 text-right font-semibold">{{ $dia['horas'] }}</td>
                                             <td class="px-4 py-3 text-right {{ $dia['minutos_extra'] > 0 ? 'font-bold text-amber-700 dark:text-amber-300' : '' }}">
@@ -80,7 +81,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <tr><td colspan="4" class="px-4 py-8 text-center text-slate-500">No hay registros en el periodo seleccionado.</td></tr>
+                                        <tr><td colspan="5" class="px-4 py-8 text-center text-slate-500">No hay registros en el periodo seleccionado.</td></tr>
                                     @endforelse
                                 </tbody>
                             </table>
