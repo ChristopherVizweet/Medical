@@ -33,7 +33,7 @@ class ProductController extends Controller
     if ($user instanceof User && method_exists($user, 'hasRole') && $user->hasRole('laboratorio')) {
         $laboratoryCategory = Categories::where('name_categories', 'laboratorio')->first();
         if ($laboratoryCategory) {
-            $products = Product::where('id_categories', $laboratoryCategory->id)->orderBy('id','desc')->get();
+            $products = Product::where('id_categories', $laboratoryCategory->id)->get();
         } else {
             $products = collect();
         }
@@ -42,7 +42,7 @@ class ProductController extends Controller
         if ($request->filled('id_categories')) {
             $products->where('id_categories', $request->id_categories);
         }
-        $products = $products->orderBy('id','desc')->get();
+        $products = $products->get();
     }
     $categories = Categories::all();
 
@@ -188,9 +188,9 @@ public function update(Request $request, $id)
 }
 public function delete($id){
     $products=Product::FindOrFail($id);
-     if($products->projectProduct()->exists()){
+    /* if($products->projectProduct()->exists()){
       return redirect()->back()->with('error', 'No se puede eliminar el producto porque está asociado a proveedores en proyectos.');   
-    }
+    }*/
     $products->delete();
     
     return redirect()->route('index-product')->with('success','Producto eliminado correctamente');

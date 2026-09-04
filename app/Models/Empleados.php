@@ -73,4 +73,8 @@ class Empleados extends Model
     {
         return $this->hasMany(EmpleadoVacaciones::class, 'empleado_id');
     }
+    public function lotesEmpleados()
+    {
+        return $this->hasMany(LotesEmpleados::class, 'empleado_id');
+    }
 }

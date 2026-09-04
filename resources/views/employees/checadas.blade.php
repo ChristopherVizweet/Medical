@@ -30,6 +30,19 @@
             </div>
         </section>
 
+
+        <div class="flex flex-wrap gap-2 border-b border-slate-200 pb-3 dark:border-slate-600">
+            <a href="{{ route('checadas.index') }}" class="rounded-lg px-4 py-2 text-sm font-semibold {{ request()->routeIs('checadas.index') ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700' }}">
+                RELOJ CHECADOR
+            </a>
+            <a href="{{ route('asistencia.instaladores') }}" class="rounded-lg px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700">
+                INSTALADORES
+            </a>
+        </div>
+
+
+
+
         <section class="space-y-5 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-600 dark:bg-slate-800">
             <div>
                 <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Filtrar y calcular horas</h3>

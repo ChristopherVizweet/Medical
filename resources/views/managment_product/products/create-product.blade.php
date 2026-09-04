@@ -10,7 +10,7 @@
             </div><br>
 
             <x-input-label for="id_categories" :value="__('Categoría')" />
-            <select class="mb-2" name="id_categories" id="id_categories" required>
+            <select class="mb-2" name="id_categories" id="id_categories">
                 <option value="">-- Selecciona una categoría --</option>
                 @foreach ($categories as $categorie)
                 <option value="{{ $categorie->id }}">{{ $categorie->name_categories }}</option><br>
@@ -18,30 +18,30 @@
             </select>
 
             <x-input-label for="name_product" :value="__('Nombre del producto')" />
-            <x-text-input id="name_product" class="block mt-1 w-full is-invalid " type="text" name="name_product" :value="old('name_product')" required />
+            <x-text-input id="name_product" class="block mt-1 w-full is-invalid " type="text" name="name_product" :value="old('name_product')" />
             <x-input-error :messages="$errors->get('name_product')" class="mt-2 is-invalid" /><br>
 
             <div class="mb-9 grid grid-cols-2 md:grid-cols-2 gap-4">
                 <div>
                     <x-input-label for="codeExt_product" :value="__('Código exterior')" />
-                    <x-text-input id="codeExt_product" class="block mt-1 w-full is-invalid " type="text" name="codeExt_product" :value="old('codeExt_product')" required />
+                    <x-text-input id="codeExt_product" class="block mt-1 w-full is-invalid " type="text" name="codeExt_product" :value="old('codeExt_product')" />
                     <x-input-error :messages="$errors->get('codeExt_product')" class="mt-2 is-invalid" />
                 </div>
                 <div>
                     <x-input-label for="codeint_product" :value="__('Código interior')" />
-                    <x-text-input id="codeint_product" class="block mt-1 w-full is-invalid " type="text" name="codeint_product" :value="old('codeint_product')" required />
+                    <x-text-input id="codeint_product" class="block mt-1 w-full is-invalid " type="text" name="codeint_product" :value="old('codeint_product')" />
                     <x-input-error :messages="$errors->get('codeint_product')" class="mt-2 is-invalid" />
                 </div>
             </div>
             <div class="mb-9 grid grid-cols-2 md:grid-cols-2 gap-4">
                 <div>
                     <x-input-label for="diameterMM_product" :value="__('Diametro(mm)')" />
-                    <x-text-input id="diameterMM_product" class="block mt-1 w-full is-invalid " type="text" name="diameterMM_product" :value="old('diameterMM_product')" required />
+                    <x-text-input id="diameterMM_product" class="block mt-1 w-full is-invalid " type="text" name="diameterMM_product" :value="old('diameterMM_product')" />
                     <x-input-error :messages="$errors->get('diameterMM_product')" class="mt-2 is-invalid" />
                 </div>
                 <div>
                     <x-input-label for="diameterinch_product" :value="__('Diametro(inch)')" />
-                    <x-text-input id="diameterinch_product" class="block mt-1 w-full is-invalid " type="text" name="diameterinch_product" :value="old('diameterinch_product')" required />
+                    <x-text-input id="diameterinch_product" class="block mt-1 w-full is-invalid " type="text" name="diameterinch_product" :value="old('diameterinch_product')" />
                     <x-input-error :messages="$errors->get('diameterinch_product')" class="mt-2 is-invalid" />
                 </div>
             </div>
@@ -53,7 +53,7 @@
                 </div>
                 <div>
                     <x-input-label for="valueArt_product" :value="__('Valor por articulo')" />
-                    <x-text-input id="valueArt_product" step="0.01" class="block mt-1 w-full is-invalid " type="text" name="valueArt_product" :value="old('valueArt_product')" required />
+                    <x-text-input id="valueArt_product" step="0.01" class="block mt-1 w-full is-invalid " type="text" name="valueArt_product" :value="old('valueArt_product')" />
                     <x-input-error :messages="$errors->get('valueArt_product')" class="mt-2 is-invalid" />
                 </div>
             </div>

@@ -1,12 +1,13 @@
 <x-guest-layout>
-     <form method="POST" action="{{ route('create-salidas') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('create-salidas') }}" enctype="multipart/form-data" class="flex min-h-screen flex-col">
         @csrf
 
-        <div class="text-center text-gray-800 dark:text-white">
+        <div class="mb-6 text-center text-gray-800 dark:text-white">
             <h1 class="text-2xl font-bold">NUEVA SALIDA</h1>
-        </div><br>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Registra el destino y los materiales que saldrán del almacén.</p>
+        </div>
         <!--Aqui comienza el formulario para registrar la salida-->
-        <div class="producto-row grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 items-center">
+        <div class="producto-row grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 items-start">
             <div class="hidden">
                 <x-input-label for="tipoMovimiento" :value="__('Tipo de registro')" />
                 <select class="mt-1 block w-full" name="tipoMovimiento" id="tipoMovimiento" readonly=true required>
@@ -40,7 +41,7 @@
         </div>
          
     <!--Aqui comienza el formulario para los productos-->
-    <div id="productos-wrapper"  class="space-y-4 producto-row  border border-gray-200 p-4 rounded-lg mt-3">
+    <div id="productos-wrapper"  class="producto-row mt-6 space-y-4 rounded-lg border border-gray-200 p-4 dark:border-gray-600">
         <div id="material-wrapper" class="producto-row">
            
         <label for="producto[0]" class="block text-center text-lg font-medium text-black dark:text-white">Material</label>
@@ -101,7 +102,7 @@
             <input type="number" name="productos[0][cantidadE]" placeholder="Total productos enviados" value=0
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
-        <div class="col-span-full mt-4">
+       
     
     </div>
     </div>
@@ -110,19 +111,19 @@
 
 <!-- Botones de acción -->
 
-<div class="mt-4 flex flex-col sm:flex-row gap-4 justify-center items-center">
-    <button type="button" onclick="agregarProducto()" id="add-producto"
-        class="w-full sm:w-auto px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition">
-        + Agregar otro producto
-    </button>
+<div class="mt-4 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <button type="button" onclick="agregarProducto()" id="add-producto"
+            class="w-full rounded-lg bg-indigo-600 px-4 py-2 text-white shadow transition hover:bg-indigo-700 sm:w-auto">
+            + Agregar otro producto
+        </button>
 
-    <div class="flex flex-col sm:flex-row gap-4 items-center">
-        <x-primary-button class="w-full sm:w-auto">Registrar</x-primary-button>
-        <a href="{{ route('index-salidas') }}" 
-           class="w-full sm:w-auto px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500">
-            Cancelar
-        </a>
-    </div>
+        <div class="flex flex-col items-center gap-4 sm:flex-row">
+            <x-primary-button class="w-full sm:w-auto">Registrar</x-primary-button>
+            <a href="{{ route('index-salidas') }}"
+               class="w-full rounded-md border border-transparent bg-gray-600 px-4 py-2 font-semibold text-xs uppercase tracking-widest text-white hover:bg-gray-500 sm:w-auto">
+                Cancelar
+            </a>
+        </div>
 </div>
 </form>
 

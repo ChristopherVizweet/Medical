@@ -11,10 +11,10 @@ class Product extends Model
             'manufact_product','valueArt_product','id_supplier','image_product',
             'stock','codeint_product','diameterinch_product'
         ];
-  public function projectProduct()
+  /*public function projectProduct()     QUITAR ESTA FUNCION CUANDO SE HAGA LA PARTE DE PROYECTOS
 {
     return $this->hasMany(projectProduct::class, 'product_id');
-}
+}*/ 
 public function categories(){
     return $this->belongsTo(Categories::class, 'id_categories');
 }

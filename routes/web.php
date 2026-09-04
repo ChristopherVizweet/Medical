@@ -13,6 +13,7 @@ use App\Http\Controllers\PriorityController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProyectoAsistenciaInstaladoresController;
 use App\Http\Controllers\RecursosController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\StatusController;
@@ -30,10 +31,13 @@ Route::get('/', function () {
 // Rutas protegidas con autenticación
 Route::middleware(['auth'])->group(function () {
     Route::get('/checadas', [ChecadaController::class, 'index'])->name('checadas.index');
+    Route::get('/asistencia-instaladores', [ProyectoAsistenciaInstaladoresController::class, 'index'])->name('asistencia.instaladores');
     Route::get('/empleados/{empleado}/checadas', [ChecadaController::class, 'porEmpleado'])->name('checadas.empleado');
     Route::get('/checadas/importar', [ChecadaController::class, 'mostrarImportacion'])->name('checadas.importar.form');
     Route::post('/checadas/importar', [ChecadaController::class, 'importar'])->name('checadas.importar');
     Route::post('/checadas/registrar', [ChecadaController::class, 'registrar'])->name('checadas.registrar');
+    Route::post('/asistencia-instaladores/proyectos', [ProyectoAsistenciaInstaladoresController::class, 'storeProyecto'])->name('asistencia.instaladores.proyectos.store');
+    Route::post('/asistencia-instaladores', [ProyectoAsistenciaInstaladoresController::class, 'store'])->name('asistencia.instaladores.store');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Route::get('/notifications/unread', [NotificationController::class, 'unread'])->name('notifications.unread');
     Route::get('/index_Supplier', [SupplierController::class, 'index'])->name('index_Supplier');
