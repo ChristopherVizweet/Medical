@@ -36,7 +36,7 @@
         <tbody>
             @foreach ($products ?? [] as $product)
                 <tr>
-                    <td>{{ $product->name_product ?? 'Sin nombre' }}</td>
+                    <td>{{ $product->name_product ?? 'Sin nombre' }} {{$product->diameterMM_product}} mm - {{$product->diameterinch_product}}"</td>
                     <td>{{ $product->categories->name_categories ?? 'Sin categoría' }}</td>
                     <td>{{ $product->stock ?? 0 }}</td>
                     <td class="blank"></td>
