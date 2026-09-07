@@ -741,7 +741,7 @@ public function printInventario($id = null)
         return $pdf->stream('Inventario_'.$id.'.pdf');
     }
 
-    $products = Product::with('categories')->orderBy('name_product')->get();
+    $products = Product::with('categories')->orderBy('id_categories')->get();
     $pdf = Pdf::loadView('managment_product.products.inventario-productos', compact('products'));
 
     return $pdf->stream('Inventario_materiales.pdf');
