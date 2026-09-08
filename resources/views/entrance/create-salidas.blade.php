@@ -162,7 +162,7 @@
                 class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
                 <option value="">-- Seleccionar material --</option>
                 @foreach($productos as $producto)
-                    <option value="{{ $producto->id }}" data-stock="{{ $producto->stock }}">{{ $producto->name_product }} Diametro {{$producto->diameterMM_product}}mm</option>
+                    <option value="{{ $producto->id }}" data-stock="{{ $producto->stock }}">{{ $producto->name_product }}.  MEDIDAS: {{$producto->diameterMM_product}}mm-{{$producto->diameterinch_product}}</option>
                 @endforeach
             </select>
         </div>
