@@ -58,7 +58,7 @@
                     required>
                 <option value="">-- Seleccionar --</option>
                 @foreach($productos as $producto)
-                    <option class="text-black dark:text-black" value="{{ $producto->id }}" data-stock="{{ $producto->stock }}">{{ $producto->name_product }} Diametro {{$producto->diameterMM_product}}mm</option>
+                    <option class="text-black dark:text-black" value="{{ $producto->id }}" data-stock="{{ $producto->stock }}">{{ $producto->name_product }}. MEDIDAS: {{$producto->diameterMM_product}}mm-{{$producto->diameterinch_product}}"</option>
 
                 @endforeach
             </select>
