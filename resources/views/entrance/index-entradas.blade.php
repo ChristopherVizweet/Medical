@@ -40,6 +40,7 @@
 
         <h1 class="text-2xl dark:text-white font-bold mb-4">Entrada de productos</h1>
         {{--Botones para registro de entradas--}}
+        @hasanyrole('superadmin|admin|ingenieria')
         <x-primary-button class="mt-4">
             <a href="{{ route('create-entradasSF') }}" class="text-dark">
                 {{ __('Registrar entrada') }}
@@ -50,6 +51,7 @@
                 Exportar a archivo Excel
             </a>
         </x-primary-button>
+        @endhasanyrole
         {{-- Tabla responsive --}}
         <div class="overflow-x-auto rounded-lg shadow">
             <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">

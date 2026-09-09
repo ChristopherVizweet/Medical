@@ -45,6 +45,7 @@
         @endif
         <h1 class="text-2xl dark:text-white font-bold mb-4">Lista de productos</h1>
     </div>
+    @hasanyrole('superadmin|admin')
     <!--Comienzan los filtros de busqueda-->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <form action="{{ route('index-product') }}" method="GET" class="flex flex-col gap-2">
@@ -61,6 +62,7 @@
 
         
     </div>
+    @endhasanyrole
     <div class="justify-content w-full md:w-80">
             <label for="product-search" class="text-black dark:text-white text-base font-sans">Buscar producto</label>
             <input type="text" id="product-search" placeholder="Nombre, código o categoría" autocomplete="off" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
@@ -68,14 +70,17 @@
         </div>
 
     <!--Boton para crear un nuevo producto-->
-    @hasanyrole('superadmin|admin|ventas')
+    @hasanyrole('superadmin|admin|almacen|laboratorio')
     <div class="flex items-center space-x-2">
         <x-primary-button class="mt-4">
             <a href="{{ route('create-product') }}" class="text-dark">
                 Agregar un nuevo producto
             </a>
         </x-primary-button>
+        
+        
         <!--Boton para importar datos de Excel-->
+       
         <x-primary-button class="mt-4">
             <a href="{{ route('import-product') }}" class="text-dark">
                 Importar datos de Excel
@@ -93,7 +98,7 @@
                 Formato para inventario
             </a>
         </x-primary-button>
-    </div>
+</div>
     @endhasanyrole
     <div class="overflow-x-auto rounded-lg shadow">
         <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">

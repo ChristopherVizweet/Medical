@@ -154,7 +154,7 @@
                                     @endrole
                                     <!--Condicional para especificamente superadmin o admin para descargar PDF-->
                                 @elseif ($movi->estadoMovimiento == 'Completado')
-                                    @role('superadmin|admin')
+                                    @role('superadmin|admin|laboratorio|almacen')
                                         <a href=" {{ route('pdf-salidas', $movi->id) }}" target="_blank"
                                             class="text-red-600 hover:underline">PDF</a>|
                                         <a href="{{ route('edit-salidasLL', $movi->id) }}"
@@ -178,11 +178,13 @@
                 </tbody>
 
         </div>
+        @hasanyrole('superadmin|admin|ingenieria')
         <x-primary-button class="mt-4">
             <a href="{{ route('create-salidas') }}" class="text-dark">
                 {{ __('Registrar salida') }}
             </a>
         </x-primary-button>
+        @endhasanyrole
         <!--<x-primary-button class="mt-4">
             <a href="{ route('create-salidasObras') }}" class="text-dark">
                 {{ __('Registrar salida a obra') }}

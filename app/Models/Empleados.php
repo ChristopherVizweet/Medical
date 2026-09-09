@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Empleados extends Model
 {
-    protected $fillable = ['numero_checador', 'curp', 'Nombre', 'apellidos', 'organizacion',
+    protected $fillable = ['curp', 'Nombre', 'apellidos', 'organizacion',
         'cargo', 'correoElectronico', 'numeroTelefonoTrabajo',
         'numeroTelParti', 'sueldo', 'calle', 'ciudad', 'estadoProv', 'codigoPostal',
         'pais', 'foto', 'tipoSangre', 'talla_pantalon', 'talla_camisa', 'talla_calzado',

@@ -18,7 +18,7 @@ class EmpleadosController extends Controller
       // Validar y guardar datos
       //dd($request->all());
     $request->validate([
-        'numero_checador' => 'nullable|string|max:30|unique:empleados,numero_checador',
+        //'numero_checador' => 'nullable|string|max:30|unique:empleados,numero_checador',
         'curp' => 'nullable|string|max:20',
         'Nombre' => 'nullable|string',
         'apellidos' => 'nullable|string',
@@ -57,7 +57,7 @@ class EmpleadosController extends Controller
             : null;
              // Crear el empleado
         Empleados::create([
-            'numero_checador'=>$request->numero_checador,
+           // 'numero_checador'=>$request->numero_checador,
             'curp'=>$request->curp,
             'Nombre'=>$request->Nombre,
             'apellidos'=>$request->apellidos,

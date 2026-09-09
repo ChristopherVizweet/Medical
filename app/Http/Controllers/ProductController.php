@@ -505,6 +505,7 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
 if ($esSolicitudLaboratorio) {
     $administradores = User::role([
         'laboratorio',
+        'almacen',
         'superadmin',
     ])->get();
 
