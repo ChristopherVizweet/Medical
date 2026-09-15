@@ -754,7 +754,7 @@ public function printObra($id)
 }
 
 //Funcion para generar el PDF de inventario con la tabla para registrar diferencias
-public function printInventario($id = null)
+public function printInventario(Request $request, $id = null)
 {
     if ($id) {
         $movimientos = InventarioMovimiento::with(['productos','product','obra','productos.empleado'])->findOrFail($id);
@@ -762,7 +762,34 @@ public function printInventario($id = null)
         return $pdf->stream('Inventario_'.$id.'.pdf');
     }
 
-    $products = Product::with('categories')->orderBy('id_categories')->get();
+    $productIds = $request->input('ids', []);
+
+    if ($productIds !== []) {
+        $request->validate([
+            'ids' => ['array'],
+            'ids.*' => ['integer', 'exists:products,id'],
+        ]);
+    }
+
+    $user = Auth::user();
+    $productsQuery = Product::with('categories')->orderBy('id_categories');
+
+    if ($user instanceof User && method_exists($user, 'hasRole')) {
+        $categoryName = $user->hasRole('laboratorio')
+            ? 'laboratorio'
+            : ($user->hasRole('almacen') ? 'almacen' : null);
+
+        if ($categoryName) {
+            $categoryId = Categories::where('name_categories', $categoryName)->value('id');
+            $productsQuery->where('id_categories', $categoryId ?: 0);
+        }
+    }
+
+    if ($productIds !== []) {
+        $productsQuery->whereIn('id', $productIds);
+    }
+
+    $products = $productsQuery->get();
     $pdf = Pdf::loadView('managment_product.products.inventario-productos', compact('products'));
 
     return $pdf->stream('Inventario_materiales.pdf');

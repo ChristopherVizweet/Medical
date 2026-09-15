@@ -69,6 +69,17 @@
             <div id="search-suggestions" class="hidden mt-2 max-h-48 overflow-y-auto rounded-md border border-gray-200 bg-white shadow-lg dark:border-gray-600 dark:bg-gray-700"></div>
         </div>
 
+    <div class="flex items-center gap-3 my-4">
+        <form id="print-products-form" action="{{ route('inventario-productos') }}" method="GET" target="_blank">
+            <button type="submit" id="print-products-button" disabled class="rounded-md bg-red-600 px-4 py-2 text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50">
+                Imprimir seleccionados en PDF (<span id="selected-products-count">0</span>)
+            </button>
+        </form>
+        <button type="button" id="select-visible-products" class="rounded-md bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300 dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500">
+            Seleccionar visibles
+        </button>
+    </div>
+
     <!--Boton para crear un nuevo producto-->
     @hasanyrole('superadmin|admin|almacen|laboratorio')
     <div class="flex items-center space-x-2">
@@ -104,6 +115,7 @@
         <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
             <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
                 <tr class="">
+                    <th class="px-4 py-2"><input type="checkbox" id="select-all-products" title="Seleccionar visibles"></th>
                     <th class="px-4 py-2">ID</th>
                     <th class="px-4 py-2">Categoria</th>
                     <th class="px-4 py-2">Imagen del producto</th>
@@ -121,6 +133,7 @@
                 @forelse ($products as $product)
 
                 <tr class="product-row" data-id="{{ $product->id }}" data-search="{{ strtolower(trim(($product->name_product ?? '') . ' ' . ($product->codeExt_product ?? '') . ' ' . ($product->codeint_product ?? '') . ' ' . ($product->categories->name_categories ?? ''))) }}" data-name="{{ $product->name_product ?? '' }}" data-code="{{ $product->codeExt_product ?? '' }}">
+                    <td class="px-4 py-2"><input type="checkbox" class="product-checkbox" value="{{ $product->id }}" aria-label="Seleccionar {{ $product->name_product }}"></td>
                     <td class="px-4 py-2">{{ $product->id }}</td>
                     <td class="px-4 py-2">{{ $product->categories->name_categories }}</td>
                     <td class="items-center px-2 py-2 ">
@@ -168,8 +181,54 @@
             const suggestions = document.getElementById("search-suggestions");
             const rows = Array.from(document.querySelectorAll("tr.product-row"));
             const noResultsRow = document.getElementById("no-results-row");
+            const printForm = document.getElementById("print-products-form");
+            const printButton = document.getElementById("print-products-button");
+            const selectedCount = document.getElementById("selected-products-count");
+            const selectAll = document.getElementById("select-all-products");
+            const selectVisibleButton = document.getElementById("select-visible-products");
 
-            if (!input || !suggestions) return;
+            if (!input || !suggestions || !printForm) return;
+
+            const getVisibleRows = () => rows.filter((row) => !row.classList.contains("hidden"));
+
+            const updateSelection = () => {
+                const selected = rows.filter((row) => row.querySelector(".product-checkbox")?.checked);
+                selectedCount.textContent = selected.length;
+                printButton.disabled = selected.length === 0;
+                const visibleRows = getVisibleRows();
+                selectAll.checked = visibleRows.length > 0 && visibleRows.every((row) => row.querySelector(".product-checkbox")?.checked);
+                selectAll.indeterminate = visibleRows.some((row) => row.querySelector(".product-checkbox")?.checked) && !selectAll.checked;
+            };
+
+            rows.forEach((row) => row.querySelector(".product-checkbox").addEventListener("change", updateSelection));
+
+            selectAll.addEventListener("change", () => {
+                getVisibleRows().forEach((row) => {
+                    row.querySelector(".product-checkbox").checked = selectAll.checked;
+                });
+                updateSelection();
+            });
+
+            selectVisibleButton.addEventListener("click", () => {
+                getVisibleRows().forEach((row) => {
+                    row.querySelector(".product-checkbox").checked = true;
+                });
+                updateSelection();
+            });
+
+            printForm.addEventListener("submit", () => {
+                printForm.querySelectorAll('input[name="ids[]"]').forEach((field) => field.remove());
+                rows.forEach((row) => {
+                    const checkbox = row.querySelector(".product-checkbox");
+                    if (checkbox.checked) {
+                        const field = document.createElement("input");
+                        field.type = "hidden";
+                        field.name = "ids[]";
+                        field.value = checkbox.value;
+                        printForm.appendChild(field);
+                    }
+                });
+            });
 
             const normalize = (value) =>
                 (value || "")
@@ -199,6 +258,7 @@
                     showAllRows();
                     suggestions.innerHTML = "";
                     suggestions.classList.add("hidden");
+                    updateSelection();
                     return;
                 }
 
@@ -206,6 +266,7 @@
                     if (noResultsRow) noResultsRow.classList.remove("hidden");
                     suggestions.innerHTML = '<div class="px-3 py-2 text-sm text-gray-500">No se encontraron coincidencias</div>';
                     suggestions.classList.remove("hidden");
+                    updateSelection();
                     return;
                 }
 
@@ -226,6 +287,7 @@
                 });
 
                 suggestions.classList.remove("hidden");
+                updateSelection();
             };
 
             input.addEventListener("input", () => {
@@ -239,6 +301,8 @@
                     renderSuggestions(input.value);
                 }
             });
+
+            updateSelection();
         });
     </script>
 
