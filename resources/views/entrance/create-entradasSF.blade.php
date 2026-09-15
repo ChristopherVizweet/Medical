@@ -17,13 +17,16 @@
                 </select>
             </div>
             <div>
-                <x-input-label for="supplier_id" :value="__('Proveedor')" />
+                <x-input-label for="obra_entrada" :value="__('Nombre de la obra')" />
+                <x-text-input id="obra_entrada" class="mt-1 block w-full" type="text" name="obra_entrada" :value="old('obra_entrada')" />
+            
+            <!-- <x-input-label for="supplier_id" :value="__('Proveedor')" />
                 <select class="mt-1 block w-full" name="supplier_id" id="supplier_id" >
                     <option value="">-Seleccionar-</option>
                     @foreach($suppliers as $supplier)
                     <option value="{{ $supplier->id }}">{{ $supplier->name_supplier}}</option>
                     @endforeach
-                </select>
+                </select> -->
                 <!-- <input readonly class="w-full" type="text" value="{ $supplier->name_supplier }}"> -->
             </div>
             <div class="hidden">
@@ -31,13 +34,9 @@
                 <x-text-input id="numero_factura_movimiento" class="mt-1 block w-full" type="text" name="numero_factura_movimiento" :value="old('numero_factura_movimiento')" />
                 <x-input-error :messages="$errors->get('numero_factura_movimiento')" class="mt-2" />
             </div>
+            
             <div>
-                <x-input-label for="fecha_movimiento" :value="__('Fecha')" />
-                <x-text-input id="fecha_movimiento" class="mt-1 block w-full" type="date" name="fecha_movimiento" value="{{ old('fecha_emision', now()->format('Y-m-d')) }}"  />
-                <x-input-error :messages="$errors->get('fecha_movimiento')" class="mt-2" />
-            </div>
-            <div>
-                <x-input-label for="recibe_id" :value="__('Recibe')" />
+                <x-input-label for="recibe_id" :value="__('Persona quien recibe')" />
                 <select class="mt-1 block w-full" name="recibe_id" id="recibe_id" required>
                     <option value="">-Seleccionar-</option>
                     @foreach($empleados as $empleado)
@@ -46,7 +45,7 @@
                 </select>
             </div>
             <div>
-                <x-input-label for="firma_id" :value="__('Firma')" />
+                <x-input-label for="firma_id" :value="__('Persona quien entrega')" />
                 <select class="mt-1 block w-full" name="firma_id" id="firma_id" required>
                     <option value="">-Seleccionar-</option>
                     @foreach($empleados as $empleado)
@@ -54,12 +53,28 @@
                     @endforeach
                 </select>
             </div>
+            <div>
+                <x-input-label for="fecha_movimiento" :value="__('Fecha')" />
+                <x-text-input id="fecha_movimiento" class="mt-1 block w-full" type="date" name="fecha_movimiento" value="{{ old('fecha_emision', now()->format('Y-m-d')) }}"  />
+                <x-input-error :messages="$errors->get('fecha_movimiento')" class="mt-2" />
+            </div>
 
         </div>
-        <div>
-            <x-input-label for="observaciones_movimiento" :value="__('Observaciones')" />
+        <div class="mt-4">
+            <x-input-label for="observaciones_movimiento" :value="__('Observaciones (opcional)')" />
             <x-text-input id="observaciones_movimiento" class="mt-1 block w-full" type="text" name="observaciones_movimiento" :value="old('observaciones_movimiento')" />
             <x-input-error :messages="$errors->get('observaciones_movimiento')" class="mt-2" />
+        </div>
+
+        <!-- Boton para agregar evidencia fotografica del retorno del material -->
+        <div class="mt-4">
+            <x-input-label for="evidencia_entrada" :value="__('Evidencia fotográfica (opcional)')" />
+            <input id="evidencia_entrada" class="sr-only" type="file" name="evidencia_entrada" accept="image/*" />
+            <label for="evidencia_entrada" id="evidencia-fotografica-boton"
+                class="mt-1 inline-flex cursor-pointer items-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow transition hover:bg-indigo-700 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2">
+                <span id="evidencia-fotografica-texto">Seleccionar imagen</span>
+            </label>
+            <x-input-error :messages="$errors->get('evidencia_entrada')" class="mt-2" />
         </div>
 
         <!--Aqui comienza el registro pero para los productos-->
@@ -94,11 +109,13 @@
                 </div>
 
                 <!-- Costo Unitario -->
+                 @hasanyrole('admin|superadmin')
                 <div>
                     <label for="productos[0][costo_unitario]" class="block text-sm font-medium text-gray-700 dark:text-white">Costo unitario</label>
                     <input type="number" step="0.01" name="productos[0][costo_unitario]" placeholder="Costo"
                         class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </div> 
+                @endhasanyrole
 
                 <!-- Cantidad -->
                 <div>
@@ -156,11 +173,12 @@
 
             <input type="number" name="productos[${productoIndex}][stock]" placeholder="stock" readonly
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm bg-gray-100 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-
+            @hasanyrole('admin|superadmin')
             <input type="number" step="0.01" name="productos[${productoIndex}][costo_unitario]" 
                    placeholder="Costo unitario" 
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-        
+            @endhasanyrole
+
               <input type="number" name="productos[${productoIndex}][cantidad]" placeholder="Cantidad"
                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
 
@@ -199,6 +217,22 @@
         if (stockInput) stockInput.value = stock;
         if (codigoInput) codigoInput.value = codigo;
         if (costoInput) costoInput.value = costo;
+    });
+
+    const evidenciaInput = document.getElementById('evidencia_fotografica');
+    const evidenciaBoton = document.getElementById('evidencia-fotografica-boton');
+    const evidenciaTexto = document.getElementById('evidencia-fotografica-texto');
+
+    evidenciaInput.addEventListener('change', function() {
+        const imagenSeleccionada = this.files && this.files.length > 0;
+
+        evidenciaBoton.classList.toggle('bg-indigo-600', !imagenSeleccionada);
+        evidenciaBoton.classList.toggle('hover:bg-indigo-700', !imagenSeleccionada);
+        evidenciaBoton.classList.toggle('bg-green-600', imagenSeleccionada);
+        evidenciaBoton.classList.toggle('hover:bg-green-700', imagenSeleccionada);
+        evidenciaTexto.textContent = imagenSeleccionada
+            ? `Imagen agregada: ${this.files[0].name}`
+            : 'Seleccionar imagen';
     });
     </script>
 

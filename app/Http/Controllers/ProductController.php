@@ -29,21 +29,32 @@ class ProductController extends Controller
     public function index(Request $request)
 {
     $user = Auth::user();
+        $productsQuery = Product::query();
 
-    if ($user instanceof User && method_exists($user, 'hasRole') && $user->hasRole('laboratorio')) {
-        $laboratoryCategory = Categories::where('name_categories', 'laboratorio')->first();
-        if ($laboratoryCategory) {
-            $products = Product::where('id_categories', $laboratoryCategory->id)->get();
-        } else {
-            $products = collect();
+        if ($user instanceof User && method_exists($user, 'hasRole')) {
+            if ($user->hasRole('laboratorio')) {
+                $categoryName = 'laboratorio';
+            } elseif ($user->hasRole('almacen')) {
+                $categoryName = 'almacen';
+            }
         }
+
+        if (isset($categoryName)) {
+            $categoryId = Categories::where('name_categories', $categoryName)->value('id');
+            if ($categoryId) {
+                $productsQuery->where('id_categories', $categoryId);
+            } else {
+                $productsQuery->whereRaw('1 = 0');
+            }
     } else {
-        $products = Product::query();
         if ($request->filled('id_categories')) {
-            $products->where('id_categories', $request->id_categories);
+                $productsQuery->where('id_categories', $request->id_categories);
         }
-        $products = $products->get();
     }
+
+        $products = $productsQuery->get();
+
+
     $categories = Categories::all();
 
     return view('managment_product.products.index-product', compact('categories','products'));
@@ -326,7 +337,8 @@ $nuevaFactura=$ultimaFactura ? $ultimaFactura + 1 : 1;
         'tipoMovimiento'            => 'required|in:entrada,salida',
         'codigo_movimiento'         => 'nullable|string',
         'cantidad_movimiento'       => 'nullable|integer|min:1',
-        'supplier_id'               => 'nullable|exists:suppliers,id',
+        'obra_entrada'              => 'nullable|string|max:255',
+        //'supplier_id'               => 'nullable|exists:suppliers,id',
         'numero_factura_movimiento' => 'nullable|integer',
         'costos_movimiento'         => 'nullable|numeric',
         'fecha_movimiento'          => 'nullable|date',
@@ -340,10 +352,17 @@ $nuevaFactura=$ultimaFactura ? $ultimaFactura + 1 : 1;
         'productos.*.cantidad'      => 'required|integer|min:1',
         'productos.*.costo_unitario'=> 'nullable|numeric|min:0',
         'productos.*.codigo'        => 'nullable|string',
+        'evidencia_entrada'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048'
 
     ]);
 $ultimaFactura=InventarioMovimiento::max('numero_factura_movimiento');
 $nuevaFactura=$ultimaFactura ? $ultimaFactura + 1 : 1;
+
+
+ // Guardar la imagen si existe
+        $imagePath = $request->hasFile('evidencia_entrada') 
+            ? $request->file('evidencia_entrada')->store('evidencias-entrada', 'public') 
+            : null;
 
     // 2. Crear el movimiento principal
     $movimiento = InventarioMovimiento::create([
@@ -354,6 +373,7 @@ $nuevaFactura=$ultimaFactura ? $ultimaFactura + 1 : 1;
         'recibe_id'                 => $validated['recibe_id'] ?? null,  
         'firma_id'                  => $validated['firma_id'] ?? null,  
         'observaciones_movimiento'  => $validated['observaciones_movimiento'] ?? null,
+        'evidencia_entrada'         => $imagePath,
 
     ]);
 
@@ -366,7 +386,9 @@ $nuevaFactura=$ultimaFactura ? $ultimaFactura + 1 : 1;
             'product_id'               => $producto['product_id'],
             'cantidad'                 => $producto['cantidad'],
             'costo_unitario'           => $producto['costo_unitario'] ?? null,
-            'codigo'                   => $producto['codigo'] ?? null
+            'codigo'                   => $producto['codigo'] ?? null,
+            'evidencia_entrada'         => $imagePath,
+
         ]);
 
         // Ajustar stock producto por producto
@@ -502,15 +524,13 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
 ]); */
 
 
-if ($esSolicitudLaboratorio) {
-    $administradores = User::role([
-        'laboratorio',
-        'almacen',
-        'superadmin',
-    ])->get();
+if ($esSolicitudLaboratorio && $request->user()->hasRole('ingenieria')) {
+    $destinatarios = User::whereIn('name', ['Marco Antonio', 'Juan Carlos','Ana'])
+        ->role(['ingenieria', 'superadmin','admin'])
+        ->get();
 
     Notification::send(
-        $administradores,
+        $destinatarios,
         new SolicitudSalidaCreada(
             $movimiento,
             $request->user()->name

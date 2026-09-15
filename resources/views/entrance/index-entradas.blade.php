@@ -40,12 +40,14 @@
 
         <h1 class="text-2xl dark:text-white font-bold mb-4">Entrada de productos</h1>
         {{--Botones para registro de entradas--}}
-        @hasanyrole('superadmin|admin|ingenieria')
+        @hasanyrole('superadmin|admin|almacen|laboratorio')
         <x-primary-button class="mt-4">
             <a href="{{ route('create-entradasSF') }}" class="text-dark">
                 {{ __('Registrar entrada') }}
             </a>
         </x-primary-button>
+        @endhasanyrole
+        @hasanyrole('superadmin|admin')
         <x-primary-button class="mt-4 ">
             <a href="{{ route('export-entradas') }}" class="text-dark">
                 Exportar a archivo Excel
@@ -58,6 +60,7 @@
                 <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
                     <tr class="">
                         <th class="px-4 py-2">{{ __('ID') }}</th>
+                        <th class="px-4 py-2">{{ __('Nombre de la obra') }}</th>
                         <th class="px-4 py-2">{{ __('Material') }}</th>
                         <th class="px-4 py-2">{{ __('Imagen del producto') }}</th>
                         <th class="px-4 py-2">{{ __('Cantidad') }}</th>
@@ -79,6 +82,7 @@
                     @foreach ($movimiento->productos as $producto)
                     <tr class="">
                         <td class="px-4 py-2">{{ $movimiento->id }}</td>
+                        <td class="px-4 py-2 font-bold">{{ $movimiento->obra_entrada ?? "Sin nombre de la obra" }}</td>
                         <td class="px-4 py-2">
                             {{ $producto->product->name_product }}
                             Diametro {{ $producto->product->diameterMM_product }} mm

@@ -67,7 +67,7 @@
                 <div class="hidden sm:flex sm:items-right  sm:ms-6">
 
                     <!-- Campana de notificaciones -->
-                    @hasanyrole('admin|superadmin|laboratorio|almacen')
+                    @hasanyrole('admin|superadmin|laboratorio|almacen|ingenieria')
                     <div
                         x-data="notificationBell({{ Auth::id() }})"
                         class="relative hidden sm:flex sm:items-center sm:ms-6">

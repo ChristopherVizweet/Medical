@@ -79,9 +79,9 @@
                         <th class="px-4 py-2">{{ __('Cantidad recibida') }}</th>
                         <th class="px-4 py-2">{{ __('Fecha de salida') }}</th>
                         <th class="px-4 py-2">{{ __('Estado de registro') }}</th>
-                        @role('superadmin|admin|ingenieria')
+                       
                             <th class="px-4 py-2">{{ __('Acciones') }}</th>
-                        @endrole
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -157,6 +157,7 @@
                                     @role('superadmin|admin|laboratorio|almacen')
                                         <a href=" {{ route('pdf-salidas', $movi->id) }}" target="_blank"
                                             class="text-red-600 hover:underline">PDF</a>|
+                                            @hasanyrole('superadmin|admin')
                                         <a href="{{ route('edit-salidasLL', $movi->id) }}"
                                             class="text-blue-600 dark:text-blue-900 hover:underline">Actualizar</a>|
                                         <form action="{{ route('delete-salidas', $movi->id) }}" method="POST"
@@ -166,6 +167,7 @@
                                             <button type="submit" class="text-red-600 hover:underline"
                                                 onclick="return confirm('¿En verdad deseas eliminar este registro?')">Eliminar</button>
                                         </form>
+                                    @endhasanyrole
                                     @endrole
                             </td>
                     @endif

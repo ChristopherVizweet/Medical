@@ -209,7 +209,7 @@
                     return;
                 }
 
-                matches.slice(0, 6).forEach((row) => {
+                matches.forEach((row) => {
                     const button = document.createElement("button");
                     button.type = "button";
                     button.className = "block w-full rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-600";
