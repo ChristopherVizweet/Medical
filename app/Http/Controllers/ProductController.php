@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EntradasExport;
 use App\Exports\InvoicesExport;
+use App\Exports\ProductsExport;
 use App\Models\Factura;
 use App\Models\Project;
 use App\Models\User;
@@ -793,6 +794,33 @@ public function printInventario(Request $request, $id = null)
     $pdf = Pdf::loadView('managment_product.products.inventario-productos', compact('products'));
 
     return $pdf->stream('Inventario_materiales.pdf');
+}
+
+public function exportProducts(Request $request)
+{
+    $validated = $request->validate([
+        'ids' => ['required', 'array', 'min:1'],
+        'ids.*' => ['integer', 'exists:products,id'],
+    ]);
+
+    $user = Auth::user();
+    $productsQuery = Product::with('categories')->whereIn('id', $validated['ids'])->orderBy('id_categories');
+
+    if ($user instanceof User && method_exists($user, 'hasRole')) {
+        $categoryName = $user->hasRole('laboratorio')
+            ? 'laboratorio'
+            : ($user->hasRole('almacen') ? 'almacen' : null);
+
+        if ($categoryName) {
+            $categoryId = Categories::where('name_categories', $categoryName)->value('id');
+            $productsQuery->where('id_categories', $categoryId ?: 0);
+        }
+    }
+
+    return Excel::download(
+        new ProductsExport($productsQuery->get()),
+        'productos_seleccionados.xlsx'
+    );
 }
 
 public function deleteMovements($id){

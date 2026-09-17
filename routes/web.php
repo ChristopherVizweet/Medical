@@ -84,6 +84,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/delete-product/{id}', [ProductController::class, 'delete'])->name('delete-product');
 
     Route::get('/inventario-productos/{id?}', [ProductController::class, 'printInventario'])->name('inventario-productos');
+    Route::get('/export-productos', [ProductController::class, 'exportProducts'])->name('export-productos');
 
     // Parte para las ventas/cotizaciones/Entrada y salida de mercancia
     Route::get('/index-existencias', [ProductController::class, 'indexExistencias'])->name('index-existencias');
