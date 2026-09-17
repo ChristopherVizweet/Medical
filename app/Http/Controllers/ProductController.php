@@ -53,7 +53,7 @@ class ProductController extends Controller
         }
     }
 
-        $products = $productsQuery->get();
+        $products = $productsQuery->orderBy('name_product')->get();
 
 
     $categories = Categories::all();

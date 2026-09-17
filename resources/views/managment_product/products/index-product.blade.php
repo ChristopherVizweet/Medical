@@ -123,10 +123,12 @@
                     <th class="px-4 py-2">Categoria</th>
                     <th class="px-4 py-2">Imagen del producto</th>
                     <th class="px-4 py-2">Artículo</th>
+                    @unlessrole('almacen')
                     <th class="px-4 py-2">Código exterior</th>
                     <th class="px-4 py-2">Código interior</th>
                     <th class="px-4 py-2">Diametro(mm)</th>
                     <th class="px-4 py-2">Diametro(inch)</th>
+                    @endunlessrole
                     <th class="px-4 py-2">Stock</th>
                     @hasanyrole('superadmin|admin') <th class="px-4 py-2">valor por articulo ($)</th> @endhasanyrole
                      @hasanyrole('superadmin|admin') <th class="px-4 py-2">Acciones</th> @endhasanyrole
@@ -147,10 +149,12 @@
                             class="w-20 h-20 object-contain rounded-md mx-auto">
                     </td>
                     <td class="px-4 py-2">{{ $product->name_product ?? 'Sin nombre'}}</td>
+                    @unlessrole('almacen')
                     <td class="px-4 py-2">{{ $product->codeExt_product ?? 'Sin codigo exterior'}}</td>
                     <td class="px-4 py-2">{{ $product->codeint_product  ?? 'Sin codigo interior'}}</td>
                     <td class="px-4 py-2">{{ $product->diameterMM_product ?? 'Sin diametro(mm)'}}</td>
                     <td class="px-4 py-2">{{ $product->diameterinch_product ?? 'Sin diametro(inch)'}}</td>
+                    @endunlessrole
                     <td class="px-4 py-2">{{ $product->stock ?? 'Sin stock'}}</td>
                     @hasanyrole('superadmin|admin') <td class="px-4 py-2">${{ $product->valueArt_product ?? 'Sin valor unitario'}}</td> @endhasanyrole
                     <td class="px-4 py-2">
