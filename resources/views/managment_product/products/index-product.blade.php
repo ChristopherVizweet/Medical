@@ -60,14 +60,14 @@
             </select>
         </form>
 
-        
+
     </div>
     @endhasanyrole
     <div class="justify-content w-full md:w-80">
-            <label for="product-search" class="text-black dark:text-white text-base font-sans">Buscar producto</label>
-            <input type="text" id="product-search" placeholder="Nombre, código o categoría" autocomplete="off" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-            <div id="search-suggestions" class="hidden mt-2 max-h-48 overflow-y-auto rounded-md border border-gray-200 bg-white shadow-lg dark:border-gray-600 dark:bg-gray-700"></div>
-        </div>
+        <label for="product-search" class="text-black dark:text-white text-base font-sans">Buscar producto</label>
+        <input type="text" id="product-search" placeholder="Nombre, código o categoría" autocomplete="off" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+        <div id="search-suggestions" class="hidden mt-2 max-h-48 overflow-y-auto rounded-md border border-gray-200 bg-white shadow-lg dark:border-gray-600 dark:bg-gray-700"></div>
+    </div>
 
     <div class="flex items-center gap-3 my-4">
         <form id="print-products-form" action="{{ route('inventario-productos') }}" method="GET" target="_blank">
@@ -91,10 +91,10 @@
                 Agregar un nuevo producto
             </a>
         </x-primary-button>
-        
-        
+
+
         <!--Boton para importar datos de Excel-->
-       
+
         <x-primary-button class="mt-4">
             <a href="{{ route('import-product') }}" class="text-dark">
                 Importar datos de Excel
@@ -106,13 +106,13 @@
             </a>
         </x-primary-button>
 
-<!--BOTON PARA HACER INVENTARIO -->
- <x-primary-button class="mt-4 justify-right items-right">
+        <!--BOTON PARA HACER INVENTARIO -->
+        <x-primary-button class="mt-4 justify-right items-right">
             <a href="{{ route('inventario-productos') }}" class="text-dark">
                 Formato para inventario
             </a>
         </x-primary-button>
-</div>
+    </div>
     @endhasanyrole
     <div class="overflow-x-auto rounded-lg shadow">
         <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
@@ -131,7 +131,7 @@
                     @endunlessrole
                     <th class="px-4 py-2">Stock</th>
                     @hasanyrole('superadmin|admin') <th class="px-4 py-2">valor por articulo ($)</th> @endhasanyrole
-                     @hasanyrole('superadmin|admin') <th class="px-4 py-2">Acciones</th> @endhasanyrole
+                    @hasanyrole('superadmin|admin') <th class="px-4 py-2">Acciones</th> @endhasanyrole
                 </tr>
             </thead>
             <tbody>
@@ -144,9 +144,12 @@
                     <td class="items-center px-2 py-2 ">
 
 
-                        <img src="{{ asset('storage/' . $product->image_product) }} "
+                        <img
+                            src="{{ asset('storage/' . $product->image_product) }}"
                             alt="{{ $product->image_product }}"
-                            class="w-20 h-20 object-contain rounded-md mx-auto">
+                            class="w-20 h-20 object-contain rounded-md mx-auto cursor-zoom-in transition-transform duration-200 hover:scale-105"
+                            data-image="{{ asset('storage/' . $product->image_product) }}"
+                            onclick="abrirZoom(this.dataset.image)">
                     </td>
                     <td class="px-4 py-2">{{ $product->name_product ?? 'Sin nombre'}}</td>
                     @unlessrole('almacen')
@@ -158,7 +161,7 @@
                     <td class="px-4 py-2">{{ $product->stock ?? 'Sin stock'}}</td>
                     @hasanyrole('superadmin|admin') <td class="px-4 py-2">${{ $product->valueArt_product ?? 'Sin valor unitario'}}</td> @endhasanyrole
                     <td class="px-4 py-2">
-                           @hasanyrole('superadmin|admin') <a href="{{ route('edit-product', $product->id) }}" class="text-blue-600 hover:underline">Editar</a> |
+                        @hasanyrole('superadmin|admin') <a href="{{ route('edit-product', $product->id) }}" class="text-blue-600 hover:underline">Editar</a> |
                         <form action="{{ route('delete-product', $product->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
@@ -183,7 +186,7 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const input = document.getElementById("product-search");
             const suggestions = document.getElementById("search-suggestions");
             const rows = Array.from(document.querySelectorAll("tr.product-row"));
@@ -241,10 +244,10 @@
 
             const normalize = (value) =>
                 (value || "")
-                    .toString()
-                    .toLowerCase()
-                    .normalize("NFD")
-                    .replace(/[\u0300-\u036f]/g, "");
+                .toString()
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "");
 
             const showAllRows = () => {
                 rows.forEach((row) => row.classList.remove("hidden"));
@@ -253,9 +256,9 @@
 
             const renderSuggestions = (query) => {
                 const searchText = normalize(query).trim();
-                const matches = !searchText
-                    ? rows
-                    : rows.filter((row) => {
+                const matches = !searchText ?
+                    rows :
+                    rows.filter((row) => {
                         const rowText = normalize(row.dataset.search || "");
                         return rowText.includes(searchText);
                     });
@@ -287,7 +290,10 @@
                     button.addEventListener("click", () => {
                         input.value = button.textContent;
                         suggestions.classList.add("hidden");
-                        row.scrollIntoView({ behavior: "smooth", block: "center" });
+                        row.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
                         row.classList.add("bg-yellow-100");
                         setTimeout(() => row.classList.remove("bg-yellow-100"), 1800);
                     });
@@ -314,5 +320,46 @@
             updateSelection();
         });
     </script>
+<!-- Script para la funcion de hacer zoom -->
+ <div id="zoom-modal" class="hidden fixed inset-0 z-50 bg-black/80 items-center justify-center p-4">
+    <div class="relative max-w-4xl w-full">
+        <button
+            type="button"
+            onclick="cerrarZoom()"
+            class="absolute -top-3 -right-3 bg-white text-black rounded-full w-10 h-10 text-xl font-bold shadow-lg"
+        >
+            ×
+        </button>
 
+        <img
+            id="zoomed-image"
+            src=""
+            alt="Imagen ampliada"
+            class="max-h-[90vh] w-full object-contain rounded-lg shadow-2xl mx-auto"
+        >
+    </div>
+</div>
+
+<script>
+    function abrirZoom(src) {
+        const modal = document.getElementById('zoom-modal');
+        const img = document.getElementById('zoomed-image');
+
+        img.src = src;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+
+    function cerrarZoom() {
+        const modal = document.getElementById('zoom-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+
+    document.getElementById('zoom-modal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            cerrarZoom();
+        }
+    });
+</script>
 </x-app-layout>
