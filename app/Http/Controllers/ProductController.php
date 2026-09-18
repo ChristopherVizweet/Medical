@@ -191,7 +191,7 @@ public function update(Request $request, $id)
         'codeExt_product' => $request->codeExt_product,
         'codeInt_product' => $request->codeInt_product,
         'diameterMM_product' => $request->diameterMM_product,
-        'diameterIN_product' => $request->diameterIN_product,
+        'diameterinch_product' => $request->diameterinch_product,
         'manufact_product' => $request->manufact_product,
         'valueArt_product' => $request->valueArt_product,
         'image_product' => $imagePath1, // Guardamos la ruta de la imagen
