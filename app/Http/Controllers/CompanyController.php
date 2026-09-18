@@ -18,10 +18,12 @@ class CompanyController extends Controller
         // Validar y guardar datos
         $request->validate([
             'nameCompany' => 'required|string|max:50',
+            'rfc_company' => 'required|string',
         ]);
     
         Company::create([
             'nameCompany' => $request->nameCompany,
+            'rfc_company' => $request->rfc_company,
         ]);
         return redirect()->route('index-company')->with('success', 'Empresa creada exitosamente');
 }
