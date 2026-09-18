@@ -34,6 +34,11 @@
                 </div>
             </div>
             <div class="mb-9 grid grid-cols-2 md:grid-cols-2 gap-4">
+                 <div>
+                    <x-input-label for="medida" :value="__('Largo')" />
+                    <x-text-input id="medida" class="block mt-1 w-full is-invalid " type="text" name="medida" :value="old('medida')" />
+                    <x-input-error :messages="$errors->get('medida')" class="mt-2 is-invalid" />
+                </div>
                 <div>
                     <x-input-label for="diameterMM_product" :value="__('Diametro(mm)')" />
                     <x-text-input id="diameterMM_product" class="block mt-1 w-full is-invalid " type="text" name="diameterMM_product" :value="old('diameterMM_product')" />

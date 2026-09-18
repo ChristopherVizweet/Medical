@@ -123,6 +123,7 @@
                     <th class="px-4 py-2">Categoria</th>
                     <th class="px-4 py-2">Imagen del producto</th>
                     <th class="px-4 py-2">Artículo</th>
+                    <th class="px-4 py-2">Medida</th>
                     @unlessrole('almacen')
                     <th class="px-4 py-2">Código exterior</th>
                     <th class="px-4 py-2">Código interior</th>
@@ -152,6 +153,7 @@
                             onclick="abrirZoom(this.dataset.image)">
                     </td>
                     <td class="px-4 py-2">{{ $product->name_product ?? 'Sin nombre'}}</td>
+                    <td class="px-4 py-2">{{ $product->medida ?? 'Sin medida'}}</td>
                     @unlessrole('almacen')
                     <td class="px-4 py-2">{{ $product->codeExt_product ?? 'Sin codigo exterior'}}</td>
                     <td class="px-4 py-2">{{ $product->codeint_product  ?? 'Sin codigo interior'}}</td>

@@ -130,7 +130,8 @@ public function store1(Request $request){
             'diameterinch_product' => 'nullable|string|max:255',
             'valueArt_product' => 'nullable|numeric|min:0',
             'image_product' => 'nullable|image|mimes:jpg,png,jpeg|max:5000',
-            'stock' =>'nullable|integer'
+            'stock' =>'nullable|integer',
+            'medida' => 'nullable|string|max:255', // Validación para el campo "medida"
         ]);
     
         // Guardar la imagen si existe
@@ -148,8 +149,9 @@ public function store1(Request $request){
             'diameterMM_product' => $request->diameterMM_product,
             'diameterinch_product' => $request->diameterinch_product,
             'valueArt_product' => $request->valueArt_product,
-            'image_product' => $imagePath, // Guardamos la ruta de la imagen
+            'image_product' => $imagePath, // Guarda la ruta de la imagen
             'stock' =>$request->stock,
+            'medida' => $request->medida, 
         ]);
         
 
@@ -174,7 +176,8 @@ public function update(Request $request, $id)
     'manufact_product' => 'nullable|string',
     'valueArt_product' => 'nullable|numeric|min:0',
     'image_product' => 'nullable|image|mimes:jpg,png,jpeg|max:5000',
-    'stock' =>'nullable|integer'
+    'stock' =>'nullable|integer',
+    'medida' => 'nullable|string|max:255',
     ]);
 
  // Guardar la imagen si existe
@@ -193,6 +196,7 @@ public function update(Request $request, $id)
         'valueArt_product' => $request->valueArt_product,
         'image_product' => $imagePath1, // Guardamos la ruta de la imagen
         'stock' =>$request->stock,
+        'medida' => $request->medida,
     ]);
 
     return redirect()->route('index-product')->with('success', 'Producto actualizado correctamente');

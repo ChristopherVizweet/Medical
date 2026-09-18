@@ -36,9 +36,15 @@
             </div>
             <div class="mt-4 mb-9 grid grid-cols-2 md:grid-cols-2 gap-4">
                 <div>
+                    <x-input-label for="medida" :value="__('Largo')" />
+                    <x-text-input id="medida" class="block mt-1 w-full" type="text" name="medida" value="{{ $products->medida }}" />
+                </div>
+
+                <div>
                     <x-input-label for="diameterMM_product" :value="__('Diametro(mm)')" />
                     <x-text-input id="diameterMM_product" class="block mt-1 w-full" type="text" name="diameterMM_product" value="{{ $products->diameterMM_product }}" />
                 </div>
+
                 <div>
                     <x-input-label for="diameterinch_product" :value="__('Diametro(inch)')" />
                     <x-text-input id="diameterinch_product" class="block mt-1 w-full is-invalid " type="text" name="diameterinch_product" value="{{ $products->diameterinch_product }}" />
