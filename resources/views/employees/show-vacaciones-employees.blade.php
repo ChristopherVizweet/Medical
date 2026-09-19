@@ -141,6 +141,8 @@
                                 <th class="px-4 py-3 text-center font-bold">{{ __('FECHA FIN') }}</th>
                                 <th class="px-4 py-3 text-center font-bold">{{ __('DÍAS TOMADOS') }}</th>
                                 <th class="px-4 py-3 text-center font-bold">{{ __('ESTADO') }}</th>
+                                <th class="px-4 py-3 text-center font-bold">{{ __('ACCION') }}</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -162,6 +164,16 @@
                                     @else
                                     <span class="inline-block px-3 py-1 bg-red-200 dark:bg-red-900 text-red-800 dark:text-red-200 rounded text-xs font-bold">{{ __('RECHAZADO') }}</span>
                                     @endif
+                                </td>
+                                <td>
+                               <a href="{{ route('edit-vacaciones-empleado', $vac->id) }}" class="mb-2 inline-flex items-center px-3 py-1 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">Editar</a>
+                                    <form action="{{ route('delete-vacaciones', $vac->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este registro de vacaciones?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="inline-flex items-center px-3 py-1 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
+                                            {{ __('Eliminar') }}
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

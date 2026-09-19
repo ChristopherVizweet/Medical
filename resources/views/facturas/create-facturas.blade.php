@@ -408,7 +408,7 @@
                 <!-- Comprobante -->
                 <div class="mt-6">
                     <label for="comprobante_pdf" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Comprobante
+                        Comprobante (Subir PDF)
                     </label>
                     <input type="file" id="comprobante_pdf" name="comprobante_pdf"  class="block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
                     @error('comprobante_pdf')

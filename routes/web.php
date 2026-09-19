@@ -141,6 +141,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/vacaciones-employee/{id}', [EmpleadosController::class, 'showVacaciones'])->name('vacaciones-employee');
     Route::post('/vacaciones-employee/{id}/derecho', [EmpleadosController::class, 'storeDerechoVacaciones'])->name('store-derecho-vacaciones');
     Route::post('/vacaciones-employee/{id}', [EmpleadosController::class, 'storeVacaciones'])->name('store-vacaciones');
+    Route::get('/edit-vacaciones-empleado/{id}', [EmpleadosController::class, 'editVacaciones'])->name('edit-vacaciones-empleado');
+    Route::put('/edit-vacaciones-empleado/{id}', [EmpleadosController::class, 'updateVacaciones'])->name('update-vacaciones-empleado');
+    Route::delete('/delete-vacaciones/{id}', [EmpleadosController::class, 'deleteVacaciones'])->name('delete-vacaciones');
 
     // Parte para el proyecto
     Route::get('/index-project', [ProjectController::class, 'index'])->name('index-project');

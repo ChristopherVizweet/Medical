@@ -267,4 +267,39 @@ public function storeVacaciones(\Illuminate\Http\Request $request, $id){
 
     return redirect()->route('vacaciones-employee', $id)->with('success', 'Período de vacaciones registrado exitosamente');
 }
+public function editVacaciones($id){
+    $vacacion = \App\Models\EmpleadoVacaciones::findOrFail($id);
+    return view('employees.edit-vacaciones-empleado', compact('vacacion'));
+}
+public function updateVacaciones(\Illuminate\Http\Request $request, $id){
+    $vacacion = \App\Models\EmpleadoVacaciones::findOrFail($id);
+    
+    $request->validate([
+        'fecha_inicio' => 'required|date',
+        'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+        'estado' => 'required|in:aprobado,pendiente,rechazado',
+        'observaciones' => 'nullable|string|max:255'
+    ]);
+
+    $fechaInicio = \Carbon\Carbon::parse($request->fecha_inicio);
+    $fechaFin = \Carbon\Carbon::parse($request->fecha_fin);
+    $diasTomados = $fechaInicio->diffInDays($fechaFin) + 1; // +1 para incluir ambos días
+
+    $vacacion->update([
+        'fecha_inicio' => $request->fecha_inicio,
+        'fecha_fin' => $request->fecha_fin,
+        'dias_tomados' => $diasTomados,
+        'estado' => $request->estado,
+        'observaciones' => $request->observaciones
+    ]);
+
+    return redirect()->route('vacaciones-employee', $vacacion->empleado_id)->with('success', 'Registro de vacaciones actualizado correctamente');
+}
+public function deleteVacaciones($id){
+    $vacacion = \App\Models\EmpleadoVacaciones::findOrFail($id);
+    $empleadoId = $vacacion->empleado_id;
+    $vacacion->delete();
+
+    return redirect()->route('vacaciones-employee', $empleadoId)->with('success', 'Registro de vacaciones eliminado correctamente');
+}
 }
