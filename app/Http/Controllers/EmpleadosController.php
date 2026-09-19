@@ -117,7 +117,7 @@ public function update(Request $request, $id)
         'estadoProv' => 'nullable|string|max:30',
         'codigoPostal' => 'nullable|string',
         'pais' => 'nullable|string|max:15',
-        'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:5000',
+        'foto' => 'nullable|image|mimes:jpg,png,jpeg',
         'tipoSangre'=>'nullable|string|max:20',
         'talla_pantalon' => 'nullable|string',
         'talla_camisa' => 'nullable|string',
