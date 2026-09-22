@@ -24,7 +24,7 @@
                 <select class="mt-1 block w-full" name="empleado_id" id="empleado_id" required>
                     <option value="">-Seleccionar-</option>
                     @foreach($empleados as $empleado)
-                        <option value="{{ $empleado->id }}">{{ $empleado->Nombre }}</option>
+                        <option value="{{ $empleado->id }}">{{ $empleado->Nombre }} {{ $empleado->apellidos }}</option>
                     @endforeach
                 </select>
             </div>
