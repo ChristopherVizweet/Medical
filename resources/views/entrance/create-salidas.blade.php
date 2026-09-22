@@ -86,7 +86,7 @@
         @endrole
         
         <!-- TPE -->
-        @role('superadmin')
+        @role('laboratorio')
         <div>
             <label for="productos[0][cantidad]" class="block text-sm font-medium text-gray-700 dark:text-white">Total entregados</label>
             <input type="number" name="productos[0][cantidad]" placeholder="Total productos aprobados" value=0

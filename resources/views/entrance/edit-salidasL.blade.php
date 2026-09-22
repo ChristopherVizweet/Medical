@@ -67,22 +67,33 @@
                     <x-input-error :messages="$errors->get('productos.'.$i.'.cantidadR')" class="mt-2" />
                 </div>
 
-                <!-- Cantidad aprobada -->
+                @php
+                $usuarioActual = Auth::user();
+                $esLaboratorio = $usuarioActual && $usuarioActual->hasRole('laboratorio');
+                $cantidadAprobada = (int) ($prod->cantidadA ?? 0);
+                @endphp
+
                 <div>
                     <x-input-label for="productos[{{ $i }}][cantidadA]" :value="__('Cantidad aprobada')" />
-
-                    <x-text-input id="productos[{{ $i }}][cantidadA]" class="mt-1 block w-full" type="number" name="productos[{{ $i }}][cantidadA]" value="{{ old('productos.'.$i.'.cantidadA', $prod->cantidadA) }}"  />
+                    <x-text-input id="productos[{{ $i }}][cantidadA]" class="mt-1 block w-full" type="number" name="productos[{{ $i }}][cantidadA]" value="{{ old('productos.'.$i.'.cantidadA', $prod->cantidadA) }}" />
                     <x-input-error :messages="$errors->get('productos.'.$i.'.cantidadA')" class="mt-2" />
                 </div>
 
-                <!-- Cantidad TPE -->
 
-                <div>
+                <!-- Cantidad TPE -->
+                @if($esLaboratorio && $cantidadAprobada > 0)
+                <div class="">
                     <x-input-label for="productos[{{ $i }}][cantidad]" :value="__('T.P.E')" />
                     <x-text-input id="productos[{{ $i }}][cantidad]" class="mt-1 block w-full" type="number" name="productos[{{ $i }}][cantidad]" value="{{ old('productos.'.$i.'.cantidad', $prod->cantidad) }}" required />
                     <x-input-error :messages="$errors->get('productos.'.$i.'.cantidad')" class="mt-2" />
                 </div>
-
+                @else
+                <div class="hidden">
+                    <x-input-label for="productos[{{ $i }}][cantidad]" :value="__('T.P.E')" />
+                    <x-text-input id="productos[{{ $i }}][cantidad]" class="mt-1 block w-full" type="number" name="productos[{{ $i }}][cantidad]" value="{{ old('productos.'.$i.'.cantidad', $prod->cantidad) }}" required />
+                    <x-input-error :messages="$errors->get('productos.'.$i.'.cantidad')" class="mt-2" />
+                </div>
+                @endif
 
                 <!-- Hidden: id del registro pivot (si lo usas para actualizar) -->
                 <input type="hidden" name="productos[{{ $i }}][pivot_id]" value="{{ $prod->id }}" />

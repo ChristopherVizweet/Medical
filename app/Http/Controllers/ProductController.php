@@ -20,6 +20,7 @@ use App\Models\Factura;
 use App\Models\Project;
 use App\Models\User;
 use App\Notifications\SolicitudSalidaCreada;
+use App\Notifications\SolicitudAprobada;
 use Illuminate\Support\Facades\Notification;
 use phpDocumentor\Reflection\Types\Nullable;
 use PhpOffice\PhpSpreadsheet\Calculation\Category;
@@ -511,38 +512,24 @@ $nuevoFolio=$ultimoFolio ? $ultimoFolio + 1 : 1;
         $product->save();
        
     }
-     $esSolicitudLaboratorio =
-    $request->user()->hasRole('ingenieria')
-    && $validated['tipoMovimiento'] === 'salida'
-    && collect($validated['productos'])->contains(
-        fn ($producto) => (int) ($producto['cantidadR'] ?? 0) > 0
-    );
-    #Aqui esta el metodo para verificar si se guarda la solicitud de envio
-/*dd([
-    'usuario' => $request->user()?->name,
-    'roles' => $request->user()?->getRoleNames()->toArray(),
-    'tipoMovimiento' => $validated['tipoMovimiento'] ?? null,
-    'cantidadesR' => collect($validated['productos'])
-        ->pluck('cantidadR')
-        ->toArray(),
-    'esSolicitudLaboratorio' => $esSolicitudLaboratorio,
-]); */
+    $esSolicitudLaboratorio =
+        $request->user()->hasRole('ingenieria')
+        && $validated['tipoMovimiento'] === 'salida'
+        && collect($validated['productos'])->contains(
+            fn ($producto) => (int) ($producto['cantidadR'] ?? 0) > 0
+        );
 
+    if ($esSolicitudLaboratorio) {
+        $destinatarios = User::whereIn('name', ['Marco Antonio', 'Juan Carlos', 'Ana'])
+            ->role(['ingenieria', 'superadmin', 'admin'])
+            ->get();
 
-if ($esSolicitudLaboratorio && $request->user()->hasRole('ingenieria')) {
-    $destinatarios = User::whereIn('name', ['Marco Antonio', 'Juan Carlos','Ana'])
-        ->role(['ingenieria', 'superadmin','admin'])
-        ->get();
+        Notification::send(
+            $destinatarios,
+            new SolicitudSalidaCreada($movimiento, $request->user()->name)
+        );
+    }
 
-    Notification::send(
-        $destinatarios,
-        new SolicitudSalidaCreada(
-            $movimiento,
-            $request->user()->name
-        )
-    );
-}
-   
     return redirect()->route('index-salidas')->with('success', 'Registrado correctamente');
    
 }
@@ -642,13 +629,13 @@ public function updateSalida(Request $request, $id)
         $validated = $request->validate([
         'tipoMovimiento'            => 'required|in:entrada,salida',
         'fecha_movimiento'          => 'nullable|date',
-        
+
         'obra_movimiento'           => 'nullable|string',
         'empleado_id'               => 'nullable|exists:empleados,id',
         'folio_movimiento'          => 'nullable|integer',
         'estadoMovimiento'          => 'nullable|string',
-       
-        'productos.*.pivot_id'     => 'nullable|integer|exists:movement_products,id',
+
+        'productos.*.pivot_id'      => 'nullable|integer|exists:movement_products,id',
         'productos.*.product_id'    => 'required|exists:products,id',
         'productos.*.cantidad'      => 'required|integer|min:0',
         'productos.*.cantidadR'     => 'nullable|integer',
@@ -658,43 +645,60 @@ public function updateSalida(Request $request, $id)
         ]);
 
         $movimiento = InventarioMovimiento::findOrFail($id);
+        $hayAprobacion = collect($request->input('productos', []))->contains(
+            fn ($item) => (int) ($item['cantidadA'] ?? 0) > 0
+        );
+        $yaHabiaAprobacion = MovementProduct::where('inventario_movimientos_id', $movimiento->id)
+            ->where('cantidadA', '>', 0)
+            ->exists();
+
         $movimiento->update([
             'observaciones_movimiento' => $validated['observaciones_movimiento'] ?? $movimiento->observaciones_movimiento,
             'empleado_id' => $validated['empleado_id'] ?? $movimiento->empleado_id,
-            'cantidadA' => $validated['cantidadA'] ?? $movimiento->cantidadA,
             'estadoMovimiento' => $validated['estadoMovimiento'] ?? $movimiento->estadoMovimiento,
-                
         ]);
-        
-       
 
         if ($request->has('productos') && is_array($request->productos)) {
             foreach ($request->productos as $item) {
-                // Solo procesar si nos envían pivot_id (registro existente)
                 if (!empty($item['pivot_id'])) {
                     $mp = MovementProduct::find($item['pivot_id']);
                     if ($mp) {
                         $mp->cantidad = $item['cantidad'] ?? $mp->cantidad;
-                        if (array_key_exists('cantidadE', $item)) $mp->cantidadE = $item['cantidadE'];
-                        if (array_key_exists('cantidadA', $item)) $mp->cantidadA = $item['cantidadA'];
-                        if (array_key_exists('cantidadR', $item)) $mp->cantidadR = $item['cantidadR'];
+                        $mp->cantidadR = $item['cantidadR'] ?? $mp->cantidadR;
+                        $mp->cantidadA = $item['cantidadA'] ?? $mp->cantidadA;
+                        $mp->cantidadE = $item['cantidadE'] ?? $mp->cantidadE;
+                        $mp->observaciones_movimiento = $item['observaciones_movimiento'] ?? $mp->observaciones_movimiento;
                         $mp->save();
                     }
                 }
-                 // Ajustar stock producto por producto 
-        $mp = Product::findOrFail($item['product_id']);
-            if ($mp->stock < $item['cantidad']) {
-                return back()->withErrors([
-                    'cantidad' => "No hay suficiente stock para el producto {$mp->name_product} de {$mp->diameterMM_product} mm."
-                ]);
-            }
-            $mp->stock -= $item['cantidad'];
-        $mp->save();
+
+                $product = Product::findOrFail($item['product_id']);
+                if ($product->stock < ($item['cantidad'] ?? 0)) {
+                    return back()->withErrors([
+                        'cantidad' => "No hay suficiente stock para el producto {$product->name_product} de {$product->diameterMM_product} mm."
+                    ]);
+                }
+
+                $product->stock -= $item['cantidad'] ?? 0;
+                $product->save();
             }
         }
-        
-        
-            return redirect()->route('index-salidas')->with('success', 'Salida actualizada correctamente.');
+
+        if (
+            $request->user()->hasRole(['ingenieria', 'superadmin', 'admin'])
+            && $movimiento->tipoMovimiento === 'salida'
+            && $hayAprobacion
+            && ! $yaHabiaAprobacion
+        ) {
+            $destinatarios = User::role('laboratorio')->get();
+
+            Notification::send(
+                $destinatarios,
+                new SolicitudAprobada($movimiento, $request->user()->name)
+            );
+        }
+
+        return redirect()->route('index-salidas')->with('success', 'Salida actualizada correctamente.');
     }
 
  
