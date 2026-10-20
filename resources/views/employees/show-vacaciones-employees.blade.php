@@ -119,7 +119,7 @@
                         </div>
 
                         <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900 dark:to-yellow-800 rounded-lg border-2 border-yellow-300 dark:border-yellow-600 p-4 text-center">
-                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2">{{ __('DÍAS OCUPADOS') }}</label>
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2">{{ __('DÍAS OCUPADOS (APROBADOS)') }}</label>
                             <p class="text-3xl font-bold text-yellow-600 dark:text-yellow-300">{{ $diasOcupados }}</p>
                         </div>
 
@@ -225,7 +225,7 @@
                             <label for="estado" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('Estado') }}</label>
                             <select id="estado" name="estado" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                
-                                <option value="aprobado" @selected(old('estado')==='aprobado' )>{{ __('Aprobado') }}</option>
+                                <option value="pendiente" @selected(old('estado')==='pendiente' )>{{ __('pendiente') }}</option>
 
                             </select>
                             @error('estado')

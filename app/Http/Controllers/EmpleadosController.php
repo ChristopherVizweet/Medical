@@ -201,7 +201,7 @@ public function showVacaciones($id){
     $vacaciones = $empleados->vacaciones()->orderBy('fecha_inicio', 'desc')->get();
     
     // Calcular días ocupados y disponibles
-    $diasOcupados = $vacaciones->sum('dias_tomados');
+    $diasOcupados = $vacaciones->where('estado', 'aprobado')->sum('dias_tomados');
     $derechoVacaciones = $this->diasVacacionesPorAntiguedad($empleados->fecha_ingreso);
     $diasDisponibles = $derechoVacaciones - $diasOcupados;
     
@@ -290,7 +290,7 @@ public function updateVacaciones(\Illuminate\Http\Request $request, $id){
         'fecha_fin' => $request->fecha_fin,
         'dias_tomados' => $diasTomados,
         'estado' => $request->estado,
-        'observaciones' => $request->observaciones
+        'observaciones' => $request->input('observaciones', $vacacion->observaciones)
     ]);
 
     return redirect()->route('vacaciones-employee', $vacacion->empleado_id)->with('success', 'Registro de vacaciones actualizado correctamente');

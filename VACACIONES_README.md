@@ -73,7 +73,7 @@ php artisan db:seed --class=EmpleadoVacacionesSeeder
 
 **Sección 2: Resumen de Vacaciones**
 - Derecho a vacaciones (default 16 días)
-- Días ocupados (suma de todos los períodos)
+- Días ocupados (suma de los períodos aprobados; las solicitudes pendientes o rechazadas no se descuentan)
 - Días disponibles (derecho - ocupados)
 - Foto del empleado
 
@@ -126,9 +126,11 @@ Calculado como: `fecha_fin - fecha_inicio + 1`
 Ejemplo: Del 11/02 al 15/02 = 5 días
 
 ### Días Disponibles
-Calculado como: `derecho_vacaciones - dias_ocupados`
+Calculado como: `derecho_vacaciones - dias_ocupados aprobados`
 
 Ejemplo: 16 - 14 = 2 días disponibles
+
+Las solicitudes pendientes no descuentan días. Cuando una solicitud se actualiza a aprobada, sus días se descuentan automáticamente al consultar el resumen de vacaciones.
 
 ### Antigüedad
 Se calcula automáticamente a partir de `fecha_nacimiento`:

@@ -22,7 +22,11 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Estado</label>
-                    <input type="text" name="estado" value="{{ old('estado', $vacacion->estado) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                    <select name="estado" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="pendiente" @selected(old('estado', $vacacion->estado) === 'pendiente')>Pendiente</option>
+                        <option value="aprobado" @selected(old('estado', $vacacion->estado) === 'aprobado')>Aprobado</option>
+                        <option value="rechazado" @selected(old('estado', $vacacion->estado) === 'rechazado')>Rechazado</option>
+                    </select>
                 </div>
             </div>
 
