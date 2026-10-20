@@ -33,6 +33,13 @@
                                 <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $empleados->Nombre }} {{ $empleados->apellidos }}</p>
                             </div>
                         </div>
+<!--  FECHA DE INGRESO-->
+                          <div class="lg:col-span-2">
+                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">{{ __('FECHA DE INGRESO') }}</label>
+                            <div class="bg-gray-100 dark:bg-gray-600 border-2 border-gray-300 dark:border-gray-500 rounded px-4 py-3">
+                                <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $empleados->fecha_ingreso ? \Carbon\Carbon::parse($empleados->fecha_ingreso)->format('d/m/Y') : 'No especificado' }}</p>
+                            </div>
+                        </div>
 
                         <!-- Puesto -->
                         <div class="lg:col-span-2">

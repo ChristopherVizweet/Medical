@@ -234,7 +234,7 @@ private function diasVacacionesPorAntiguedad($fechaIngreso): int
     }
 
     if ($aniosServicio <= 5) {
-        return 9 + ($aniosServicio * 2);
+        return 10 + ($aniosServicio * 2);
     }
 
     return 20 + ((int) ceil(($aniosServicio - 5) / 5) * 2);
