@@ -227,7 +227,9 @@ private function diasVacacionesPorAntiguedad($fechaIngreso): int
         return 0;
     }
 
-    $aniosServicio = $fechaIngreso->diffInYears(now());
+     $fechaIngreso = \Carbon\Carbon::parse($fechaIngreso);
+
+    $aniosServicio = (int) $fechaIngreso->diffInYears(now());
 
     if ($aniosServicio < 1) {
         return 0;
