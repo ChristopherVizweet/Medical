@@ -196,16 +196,51 @@ public function deleteCV($id){
     return redirect()->route('index-employees')->with('success','Curriculum Vitae eliminado correctamente');
 }
 
-public function showVacaciones($id){
+public function showVacaciones(Request $request, $id){
     $empleados = Empleados::findOrFail($id);
-    $vacaciones = $empleados->vacaciones()->orderBy('fecha_inicio', 'desc')->get();
-    
-    // Calcular días ocupados y disponibles
+    $request->validate([
+        'periodo' => $this->reglasPeriodo(false),
+    ]);
+
+    $periodos = $empleados->vacaciones()
+        ->whereNotNull('periodo')
+        ->distinct()
+        ->orderByDesc('periodo')
+        ->pluck('periodo');
+    $periodoActual = now()->year . '-' . (now()->year + 1);
+    $periodo = $request->query('periodo', $periodos->first() ?? $periodoActual);
+    $periodos = $periodos->prepend($periodoActual)->prepend($periodo)->unique()->values();
+
+    $vacaciones = $empleados->vacaciones()
+        ->where('periodo', $periodo)
+        ->orderBy('fecha_inicio', 'desc')
+        ->get();
+
     $diasOcupados = $vacaciones->where('estado', 'aprobado')->sum('dias_tomados');
     $derechoVacaciones = $this->diasVacacionesPorAntiguedad($empleados->fecha_ingreso);
     $diasDisponibles = $derechoVacaciones - $diasOcupados;
-    
-    return view('employees.show-vacaciones-employees', compact('empleados', 'vacaciones', 'diasOcupados', 'derechoVacaciones', 'diasDisponibles'));
+
+    return view('employees.show-vacaciones-employees', compact('empleados', 'vacaciones', 'periodos', 'periodo', 'diasOcupados', 'derechoVacaciones', 'diasDisponibles'));
+}
+
+private function reglasPeriodo(bool $required = true): array
+{
+    return [
+        $required ? 'required' : 'sometimes',
+        'string',
+        'regex:/^\d{4}-\d{4}$/',
+        function ($attribute, $value, $fail) {
+            if (!is_string($value) || !preg_match('/^\d{4}-\d{4}$/', $value)) {
+                return;
+            }
+
+            [$inicio, $fin] = array_map('intval', explode('-', $value));
+
+            if ($fin !== $inicio + 1) {
+                $fail('El periodo debe abarcar dos años consecutivos, por ejemplo 2024-2025.');
+            }
+        },
+    ];
 }
 
 public function storeDerechoVacaciones(\Illuminate\Http\Request $request, $id){
@@ -248,8 +283,7 @@ public function storeVacaciones(\Illuminate\Http\Request $request, $id){
     $request->validate([
         'fecha_inicio' => 'required|date',
         'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
-        'fecha_inicio_vacaciones' => 'nullable|date',
-        'fecha_fin_vacaciones' => 'nullable|date|after_or_equal:fecha_inicio_vacaciones',
+        'periodo' => $this->reglasPeriodo(),
         'estado' => 'required|in:aprobado,pendiente,rechazado',
         'observaciones' => 'nullable|string|max:255'
     ]);
@@ -262,12 +296,13 @@ public function storeVacaciones(\Illuminate\Http\Request $request, $id){
         'empleado_id' => $id,
         'fecha_inicio' => $request->fecha_inicio,
         'fecha_fin' => $request->fecha_fin,
+        'periodo' => $request->periodo,
         'dias_tomados' => $diasTomados,
         'estado' => $request->estado,
         'observaciones' => $request->observaciones
     ]);
 
-    return redirect()->route('vacaciones-employee', $id)->with('success', 'Período de vacaciones registrado exitosamente');
+    return redirect()->route('vacaciones-employee', ['id' => $id, 'periodo' => $request->periodo])->with('success', 'Período de vacaciones registrado exitosamente');
 }
 public function editVacaciones($id){
     $vacacion = \App\Models\EmpleadoVacaciones::findOrFail($id);
@@ -279,6 +314,7 @@ public function updateVacaciones(\Illuminate\Http\Request $request, $id){
     $request->validate([
         'fecha_inicio' => 'required|date',
         'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+        'periodo' => $this->reglasPeriodo(),
         'estado' => 'required|in:aprobado,pendiente,rechazado',
         'observaciones' => 'nullable|string|max:255'
     ]);
@@ -290,18 +326,20 @@ public function updateVacaciones(\Illuminate\Http\Request $request, $id){
     $vacacion->update([
         'fecha_inicio' => $request->fecha_inicio,
         'fecha_fin' => $request->fecha_fin,
+        'periodo' => $request->periodo,
         'dias_tomados' => $diasTomados,
         'estado' => $request->estado,
         'observaciones' => $request->input('observaciones', $vacacion->observaciones)
     ]);
 
-    return redirect()->route('vacaciones-employee', $vacacion->empleado_id)->with('success', 'Registro de vacaciones actualizado correctamente');
+    return redirect()->route('vacaciones-employee', ['id' => $vacacion->empleado_id, 'periodo' => $vacacion->periodo])->with('success', 'Registro de vacaciones actualizado correctamente');
 }
 public function deleteVacaciones($id){
     $vacacion = \App\Models\EmpleadoVacaciones::findOrFail($id);
     $empleadoId = $vacacion->empleado_id;
+    $periodo = $vacacion->periodo;
     $vacacion->delete();
 
-    return redirect()->route('vacaciones-employee', $empleadoId)->with('success', 'Registro de vacaciones eliminado correctamente');
+    return redirect()->route('vacaciones-employee', ['id' => $empleadoId, 'periodo' => $periodo])->with('success', 'Registro de vacaciones eliminado correctamente');
 }
 }

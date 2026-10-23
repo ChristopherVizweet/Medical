@@ -9,6 +9,13 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Periodo (año-año)</label>
+                    <input type="text" name="periodo" required pattern="[0-9]{4}-[0-9]{4}" maxlength="9" value="{{ old('periodo', $vacacion->periodo) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                    @error('periodo')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Fecha de inicio</label>
                     <input type="date" name="fecha_inicio" value="{{ old('fecha_inicio', optional($vacacion->fecha_inicio)->format('Y-m-d')) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
                 </div>
@@ -32,7 +39,7 @@
 
             <div class="flex justify-center mt-8">
                 <button type="submit" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200">Actualizar</button>
-                <a href="{{ route('vacaciones-employee', $vacacion->empleado_id) }}" 
+                <a href="{{ route('vacaciones-employee', ['id' => $vacacion->empleado_id, 'periodo' => $vacacion->periodo]) }}"
                    class="inline-block px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition duration-200 ml-4">
                     Cancelar
                 </a>

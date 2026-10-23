@@ -12,6 +12,7 @@ class EmpleadoVacaciones extends Model
         'empleado_id',
         'fecha_inicio',
         'fecha_fin',
+        'periodo',
         'dias_tomados',
         'estado',
         'observaciones'

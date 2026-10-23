@@ -131,11 +131,30 @@
                 </div>
             </div>
 
+            <section class="mt-8" aria-labelledby="periodos-vacaciones-heading">
+                <h2 id="periodos-vacaciones-heading" class="text-lg font-bold text-gray-900 dark:text-white mb-3">
+                    {{ __('PERIODO DE VACACIONES') }}
+                </h2>
+                <nav class="flex flex-wrap gap-2" aria-label="{{ __('Periodos de vacaciones') }}">
+                    @foreach($periodos as $periodoTab)
+                        <a href="{{ route('vacaciones-employee', ['id' => $empleados->id, 'periodo' => $periodoTab]) }}"
+                           @class([
+                               'inline-flex items-center rounded-md border px-4 py-2 text-sm font-semibold transition',
+                               'border-purple-700 bg-purple-700 text-black' => $periodoTab === $periodo,
+                               'border-gray-300 bg-white text-black hover:bg-purple-50 dark:border-gray-500 dark:bg-gray-600 dark:text-gray-100 dark:hover:bg-gray-500' => $periodoTab !== $periodo,
+                           ])
+                           @if($periodoTab === $periodo) aria-current="page" @endif>
+                            {{ $periodoTab }}
+                        </a>
+                    @endforeach
+                </nav>
+            </section>
+
             <!-- Tabla de vacaciones -->
             @if($vacaciones->count() > 0)
             <div class="mt-8">
                 <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4 pb-2 border-b-2 border-purple-600">
-                    {{ __('INFORMACIÓN DE LOS DÍAS TOMADOS COMO VACACIONES') }}
+                    {{ __('INFORMACIÓN DE LOS DÍAS TOMADOS COMO VACACIONES') }} — {{ $periodo }}
                 </h2>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
@@ -196,12 +215,20 @@
 
             <!-- Formulario para agregar nuevas vacaciones -->
             <div class="mt-8 bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-lg border-2 border-blue-300 dark:border-blue-600 p-6">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">{{ __('Agregar a cuenta de vacaciones') }}</h3>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">{{ __('Agregar a cuenta de vacaciones') }} — {{ $periodo }}</h3>
 
                 <form action="{{ route('store-vacaciones', $empleados->id) }}" method="POST" class="space-y-4">
                     @csrf
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="periodo" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('Periodo (año-año)') }}</label>
+                            <input type="text" id="periodo" name="periodo" required pattern="[0-9]{4}-[0-9]{4}" maxlength="9" placeholder="2024-2025" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent" value="{{ old('periodo', $periodo) }}">
+                            @error('periodo')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         <!-- Fecha Inicio -->
                         <div>
                             <label for="fecha_inicio" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('Fecha de Inicio') }}</label>

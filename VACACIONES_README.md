@@ -17,7 +17,11 @@ php artisan migrate
 
 Este comando creará:
 - Tabla `empleado_vacaciones`: Almacena los períodos de vacaciones
+- Campo `periodo` en `empleado_vacaciones`: identifica ciclos como `2024-2025`
 - Campo `derecho_vacaciones` en tabla `empleados`
+
+Los registros de vacaciones existentes se asignan automáticamente al ciclo que comienza
+en el año de su `fecha_inicio` (por ejemplo, una fecha de 2024 queda en `2024-2025`).
 
 ### 2. Cargar Datos de Prueba (Opcional)
 ```bash
@@ -78,12 +82,15 @@ php artisan db:seed --class=EmpleadoVacacionesSeeder
 - Foto del empleado
 
 **Sección 3: Historial de Vacaciones**
-- Tabla con todos los períodos registrados
+- Pestañas para consultar cada ciclo de vacaciones
+- Tabla con los registros del ciclo seleccionado
 - Fechas de inicio y fin
 - Cantidad de días tomados
 - Estado (aprobado/pendiente/rechazado)
+- Días ocupados y disponibles calculados para el ciclo seleccionado
 
 **Sección 4: Formulario de Nuevas Vacaciones**
+- Periodo de dos años consecutivos (por ejemplo, `2024-2025`)
 - Fecha de inicio (requerida)
 - Fecha de fin (requerida)
 - Estado (aprobado/pendiente/rechazado)
@@ -97,6 +104,7 @@ php artisan db:seed --class=EmpleadoVacacionesSeeder
 - empleado_id: int (foreign key)
 - fecha_inicio: date
 - fecha_fin: date
+- periodo: string (formato `AAAA-AAAA`, años consecutivos)
 - dias_tomados: int (calculado automáticamente)
 - estado: string ('aprobado', 'pendiente', 'rechazado')
 - observaciones: text (nullable)
@@ -112,6 +120,7 @@ php artisan db:seed --class=EmpleadoVacacionesSeeder
 ## 🔧 Validación
 
 El formulario valida:
+- ✅ Periodo requerido, con formato de dos años consecutivos (por ejemplo, `2024-2025`)
 - ✅ Fecha de inicio es requerida
 - ✅ Fecha de fin es requerida
 - ✅ Fecha de fin no puede ser anterior a fecha de inicio
@@ -173,6 +182,7 @@ Body:
 {
   "fecha_inicio": "2026-02-11",
   "fecha_fin": "2026-02-15",
+  "periodo": "2025-2026",
   "estado": "aprobado",
   "observaciones": "Vacaciones de verano"
 }
@@ -180,10 +190,10 @@ Body:
 
 ### 3. Datos de ejemplo SQL
 ```sql
-INSERT INTO empleado_vacaciones (empleado_id, fecha_inicio, fecha_fin, dias_tomados, estado, observaciones) 
+INSERT INTO empleado_vacaciones (empleado_id, fecha_inicio, fecha_fin, periodo, dias_tomados, estado, observaciones) 
 VALUES 
-  (1, '2026-02-11', '2026-02-15', 5, 'aprobado', 'Vacaciones de verano'),
-  (1, '2026-03-15', '2026-03-17', 3, 'aprobado', 'Fin de semana extendido');
+  (1, '2026-02-11', '2026-02-15', '2025-2026', 5, 'aprobado', 'Vacaciones de verano'),
+  (1, '2026-03-15', '2026-03-17', '2025-2026', 3, 'aprobado', 'Fin de semana extendido');
 ```
 
 ## 📝 Notas
