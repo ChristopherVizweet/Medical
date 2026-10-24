@@ -33,8 +33,8 @@
                                 <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $empleados->Nombre }} {{ $empleados->apellidos }}</p>
                             </div>
                         </div>
-<!--  FECHA DE INGRESO-->
-                          <div class="lg:col-span-2">
+                        <!--  FECHA DE INGRESO-->
+                        <div class="lg:col-span-2">
                             <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">{{ __('FECHA DE INGRESO') }}</label>
                             <div class="bg-gray-100 dark:bg-gray-600 border-2 border-gray-300 dark:border-gray-500 rounded px-4 py-3">
                                 <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $empleados->fecha_ingreso ? \Carbon\Carbon::parse($empleados->fecha_ingreso)->format('d/m/Y') : 'No especificado' }}</p>
@@ -137,15 +137,13 @@
                 </h2>
                 <nav class="flex flex-wrap gap-2" aria-label="{{ __('Periodos de vacaciones') }}">
                     @foreach($periodos as $periodoTab)
-                        <a href="{{ route('vacaciones-employee', ['id' => $empleados->id, 'periodo' => $periodoTab]) }}"
-                           @class([
-                               'inline-flex items-center rounded-md border px-4 py-2 text-sm font-semibold transition',
-                               'border-purple-700 bg-purple-700 text-black' => $periodoTab === $periodo,
-                               'border-gray-300 bg-white text-black hover:bg-purple-50 dark:border-gray-500 dark:bg-gray-600 dark:text-gray-100 dark:hover:bg-gray-500' => $periodoTab !== $periodo,
-                           ])
-                           @if($periodoTab === $periodo) aria-current="page" @endif>
-                            {{ $periodoTab }}
-                        </a>
+                    <a href="{{ route('vacaciones-employee', ['id' => $empleados->id, 'periodo' => $periodoTab]) }}"
+                        @class([ 'inline-flex items-center rounded-md border px-4 py-2 text-sm font-semibold transition' , 'border-purple-700 bg-purple-700 text-black'=> $periodoTab === $periodo,
+                        'border-gray-300 bg-white text-black hover:bg-purple-50 dark:border-gray-500 dark:bg-gray-600 dark:text-gray-100 dark:hover:bg-gray-500' => $periodoTab !== $periodo,
+                        ])
+                        @if($periodoTab === $periodo) aria-current="page" @endif>
+                        {{ $periodoTab }}
+                    </a>
                     @endforeach
                 </nav>
             </section>
@@ -187,12 +185,14 @@
                                     <span class="inline-block px-3 py-1 bg-green-200 dark:bg-green-900 text-green-800 dark:text-green-200 rounded text-xs font-bold">{{ __('APROBADO') }}</span>
                                     @elseif($vac->estado == 'pendiente')
                                     <span class="inline-block px-3 py-1 bg-yellow-200 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded text-xs font-bold">{{ __('PENDIENTE') }}</span>
-                                    @else
+                                    @elseif($vac->estado == 'rechazado')
                                     <span class="inline-block px-3 py-1 bg-red-200 dark:bg-red-900 text-red-800 dark:text-red-200 rounded text-xs font-bold">{{ __('RECHAZADO') }}</span>
+                                    @else
+                                    <span class="inline-block px-3 py-1 bg-gray-200 dark:bg-gray-900 text-gray-800 dark:text-gray-200 rounded text-xs font-bold">{{ __('Anteriormente Aprobado') }}</span>
                                     @endif
                                 </td>
                                 <td>
-                               <a href="{{ route('edit-vacaciones-empleado', $vac->id) }}" class="mb-2 inline-flex items-center px-3 py-1 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">Editar</a>
+                                    <a href="{{ route('edit-vacaciones-empleado', $vac->id) }}" class="mb-2 inline-flex items-center px-3 py-1 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">Editar</a>
                                     <form action="{{ route('delete-vacaciones', $vac->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este registro de vacaciones?');">
                                         @csrf
                                         @method('DELETE')
@@ -251,8 +251,9 @@
                         <div>
                             <label for="estado" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('Estado') }}</label>
                             <select id="estado" name="estado" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                               
+
                                 <option value="pendiente" @selected(old('estado')==='pendiente' )>{{ __('pendiente') }}</option>
+                                <option value="anteriormente" @selected(old('estado')==='anteriormente' )>{{ __('Anteriormente Aprobado') }}</option>
 
                             </select>
                             @error('estado')

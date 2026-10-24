@@ -73,3 +73,22 @@ it('rejects a period that does not contain consecutive years', function () {
 
     expect($empleado->vacaciones()->count())->toBe(0);
 });
+
+it('calculates vacation entitlement using the selected period', function () {
+    $this->actingAs(User::factory()->create([
+        'ap_user' => 'test',
+        'am_user' => 'test',
+    ]));
+    $empleado = crearEmpleadoParaVacaciones();
+    $empleado->update(['fecha_ingreso' => '2023-06-01']);
+
+    $this->get(route('vacaciones-employee', ['id' => $empleado->id, 'periodo' => '2024-2025']))
+        ->assertOk()
+        ->assertViewHas('derechoVacaciones', 12)
+        ->assertSee('>12</p>', false);
+
+    $this->get(route('vacaciones-employee', ['id' => $empleado->id, 'periodo' => '2025-2026']))
+        ->assertOk()
+        ->assertViewHas('derechoVacaciones', 14)
+        ->assertSee('>14</p>', false);
+});

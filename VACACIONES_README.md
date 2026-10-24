@@ -76,7 +76,7 @@ php artisan db:seed --class=EmpleadoVacacionesSeeder
 - Antigüedad calculada automáticamente
 
 **Sección 2: Resumen de Vacaciones**
-- Derecho a vacaciones (default 16 días)
+- Derecho a vacaciones calculado según la antigüedad durante el año inicial del período
 - Días ocupados (suma de los períodos aprobados; las solicitudes pendientes o rechazadas no se descuentan)
 - Días disponibles (derecho - ocupados)
 - Foto del empleado
@@ -114,7 +114,7 @@ php artisan db:seed --class=EmpleadoVacacionesSeeder
 
 ### Campo en tabla: empleados
 ```
-- derecho_vacaciones: int (default 16)
+- derecho_vacaciones: int (default 16; se conserva por compatibilidad, el resumen se calcula por período)
 ```
 
 ## 🔧 Validación
@@ -135,14 +135,14 @@ Calculado como: `fecha_fin - fecha_inicio + 1`
 Ejemplo: Del 11/02 al 15/02 = 5 días
 
 ### Días Disponibles
-Calculado como: `derecho_vacaciones - dias_ocupados aprobados`
+Calculado como: `derecho según antigüedad del período - días ocupados aprobados`
 
-Ejemplo: 16 - 14 = 2 días disponibles
+El derecho considera los años completos de servicio alcanzados al 31 de diciembre del año inicial del período. Por ejemplo, para una persona que ingresó en 2023, el período `2024-2025` corresponde a 12 días y `2025-2026` a 14 días.
 
 Las solicitudes pendientes no descuentan días. Cuando una solicitud se actualiza a aprobada, sus días se descuentan automáticamente al consultar el resumen de vacaciones.
 
 ### Antigüedad
-Se calcula automáticamente a partir de `fecha_nacimiento`:
+La antigüedad mostrada en los datos del empleado se calcula a partir de `fecha_ingreso`:
 Formato: "X Años, Y Meses y Z Días"
 
 ## 🎨 Características de Diseño
@@ -155,17 +155,9 @@ Formato: "X Años, Y Meses y Z Días"
 
 ## ⚙️ Configuración
 
-### Cambiar derecho de vacaciones por defecto
+### Regla de días de vacaciones
 
-En `EmpleadosController.php`, método `showVacaciones()`:
-```php
-$derechoVacaciones = $empleados->derecho_vacaciones ?? 16; // Cambiar 16 por otro valor
-```
-
-O en la migración (por empleado):
-```php
-UPDATE empleados SET derecho_vacaciones = 20 WHERE id = 1;
-```
+El cálculo por antigüedad y período se realiza en `EmpleadosController.php`, método `diasVacacionesPorAntiguedad()`: 12 días el primer año, dos días adicionales por año hasta el quinto y dos días adicionales por cada cinco años posteriores.
 
 ## 🧪 Ejemplos de Uso
 
@@ -210,7 +202,6 @@ VALUES
 - Ejecutar: `php artisan db:seed --class=EmpleadoVacacionesSeeder`
 
 ### El formulario no funciona
-- Verificar que `derecho_vacaciones` existe en tabla empleados
 - Verificar que el modelo `EmpleadoVacaciones` esté correctamente importado
 
 ### Errores en migraciones

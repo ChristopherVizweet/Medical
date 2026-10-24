@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Empleados;
 use App\Models\Vehiculo;
+use App\Models\VehiculoSalida;
 use Illuminate\Http\Request;
-use ResourceBundle;
 
 class VehiculoController extends Controller
 {
@@ -95,5 +95,81 @@ public function update(Request $request, $id){
     ]);
 
     return redirect()->route('index-vehiculos')->with('success', 'Vehículo actualizado exitosamente');
+}
+
+public function salidas(Request $request, $id)
+{
+    $request->validate([
+        'fecha' => 'sometimes|date',
+    ]);
+
+    $vehiculo = Vehiculo::findOrFail($id);
+    $fecha = $request->query('fecha', now()->toDateString());
+    $salidas = $vehiculo->salidas()
+        ->with('conductor')
+        ->whereDate('fecha', $fecha)
+        ->orderByDesc('created_at')
+        ->get();
+
+    $resumen = [
+        'kilometros' => $salidas->sum('kilometros_recorridos'),
+        'dinero' => $salidas->sum('dinero_entregado'),
+        'litros' => $salidas->sum('litros_cargados'),
+        'pendientes' => $salidas->whereNull('odometro_final')->count(),
+    ];
+
+    $empleados = Empleados::orderBy('Nombre')->orderBy('apellidos')->get();
+
+    return view('vehiculos.salidas-vehiculo', compact('vehiculo', 'fecha', 'salidas', 'resumen', 'empleados'));
+}
+
+public function storeSalida(Request $request, $id)
+{
+    $request->validate([
+        'fecha' => 'required|date',
+        'conductor_id' => 'nullable|integer|exists:empleados,id',
+        'obra' => 'required|string|max:150',
+        'odometro_inicial' => 'required|numeric|min:0|max:99999999.99',
+        'dinero_entregado' => 'required|numeric|min:0|max:99999999.99',
+        'litros_cargados' => 'required|numeric|min:0|max:99999999.99',
+    ]);
+
+    $vehiculo = Vehiculo::findOrFail($id);
+    $salida = $vehiculo->salidas()->create($request->only([
+        'fecha',
+        'conductor_id',
+        'obra',
+        'odometro_inicial',
+        'dinero_entregado',
+        'litros_cargados',
+    ]));
+
+    return redirect()->route('salidas-vehiculo', [
+        'id' => $vehiculo->id,
+        'fecha' => $salida->fecha->toDateString(),
+    ])->with('success', 'Salida del vehículo registrada correctamente.');
+}
+
+public function finalizarSalida(Request $request, $id, $salidaId)
+{
+    $salida = VehiculoSalida::where('vehiculo_id', $id)->findOrFail($salidaId);
+
+    if ($salida->odometro_final !== null) {
+        return redirect()->route('salidas-vehiculo', [
+            'id' => $id,
+            'fecha' => $salida->fecha->toDateString(),
+        ])->withErrors(['odometro_final' => 'Esta salida ya fue cerrada.']);
+    }
+
+    $request->validate([
+        'odometro_final' => 'required|numeric|min:' . $salida->odometro_inicial . '|max:99999999.99',
+    ]);
+
+    $salida->update(['odometro_final' => $request->odometro_final]);
+
+    return redirect()->route('salidas-vehiculo', [
+        'id' => $id,
+        'fecha' => $salida->fecha->toDateString(),
+    ])->with('success', 'Regreso registrado y salida cerrada correctamente.');
 }
 }

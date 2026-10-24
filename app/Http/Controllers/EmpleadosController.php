@@ -217,7 +217,7 @@ public function showVacaciones(Request $request, $id){
         ->get();
 
     $diasOcupados = $vacaciones->where('estado', 'aprobado')->sum('dias_tomados');
-    $derechoVacaciones = $this->diasVacacionesPorAntiguedad($empleados->fecha_ingreso);
+    $derechoVacaciones = $this->diasVacacionesPorAntiguedad($empleados->fecha_ingreso, $periodo);
     $diasDisponibles = $derechoVacaciones - $diasOcupados;
 
     return view('employees.show-vacaciones-employees', compact('empleados', 'vacaciones', 'periodos', 'periodo', 'diasOcupados', 'derechoVacaciones', 'diasDisponibles'));
@@ -256,15 +256,21 @@ public function storeDerechoVacaciones(\Illuminate\Http\Request $request, $id){
         ->with('success', 'Derecho a vacaciones actualizado correctamente');
 }
 
-private function diasVacacionesPorAntiguedad($fechaIngreso): int
+private function diasVacacionesPorAntiguedad($fechaIngreso, string $periodo): int
 {
     if (!$fechaIngreso) {
         return 0;
     }
 
-     $fechaIngreso = \Carbon\Carbon::parse($fechaIngreso);
+    $fechaIngreso = \Carbon\Carbon::parse($fechaIngreso);
+    $anioPeriodo = (int) substr($periodo, 0, 4);
+    $fechaCorte = \Carbon\Carbon::create($anioPeriodo, 12, 31);
 
-    $aniosServicio = (int) $fechaIngreso->diffInYears(now());
+    if ($fechaIngreso->greaterThan($fechaCorte)) {
+        return 0;
+    }
+
+    $aniosServicio = (int) $fechaIngreso->diffInYears($fechaCorte);
 
     if ($aniosServicio < 1) {
         return 0;
@@ -284,7 +290,7 @@ public function storeVacaciones(\Illuminate\Http\Request $request, $id){
         'fecha_inicio' => 'required|date',
         'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
         'periodo' => $this->reglasPeriodo(),
-        'estado' => 'required|in:aprobado,pendiente,rechazado',
+        'estado' => 'required|in:aprobado,pendiente,rechazado,anteriormente',
         'observaciones' => 'nullable|string|max:255'
     ]);
 
@@ -315,7 +321,7 @@ public function updateVacaciones(\Illuminate\Http\Request $request, $id){
         'fecha_inicio' => 'required|date',
         'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
         'periodo' => $this->reglasPeriodo(),
-        'estado' => 'required|in:aprobado,pendiente,rechazado',
+        'estado' => 'required|in:aprobado,pendiente,rechazado,anteriormente',
         'observaciones' => 'nullable|string|max:255'
     ]);
 

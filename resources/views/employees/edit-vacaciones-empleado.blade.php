@@ -33,6 +33,7 @@
                         <option value="pendiente" @selected(old('estado', $vacacion->estado) === 'pendiente')>Pendiente</option>
                         <option value="aprobado" @selected(old('estado', $vacacion->estado) === 'aprobado')>Aprobado</option>
                         <option value="rechazado" @selected(old('estado', $vacacion->estado) === 'rechazado')>Rechazado</option>
+                        <option value="anteriormente" @selected(old('estado', $vacacion->estado) === 'anteriormente')>Anteriormente Aprobado</option>
                     </select>
                 </div>
             </div>

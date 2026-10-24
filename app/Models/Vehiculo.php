@@ -39,4 +39,7 @@ class Vehiculo extends Model
     public function placa(){
         return $this->hasMany(VehiculoCheckList::class, 'id_placa_vehiculo');
     }
+    public function salidas(){
+        return $this->hasMany(VehiculoSalida::class);
+    }
 }

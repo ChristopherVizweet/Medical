@@ -232,6 +232,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/edit-vehiculos/{id}', [App\Http\Controllers\VehiculoController::class, 'edit'])->name('edit-vehiculos');
     Route::put('/edit-vehiculos/{id}', [App\Http\Controllers\VehiculoController::class, 'update'])->name('edit-vehiculos');
     Route::delete('/delete-vehiculos/{id}', [App\Http\Controllers\VehiculoController::class, 'delete'])->name('delete-vehiculos');
+    Route::get('/vehiculos/{id}/salidas', [App\Http\Controllers\VehiculoController::class, 'salidas'])->name('salidas-vehiculo');
+    Route::post('/vehiculos/{id}/salidas', [App\Http\Controllers\VehiculoController::class, 'storeSalida'])->name('store-salida-vehiculo');
+    Route::patch('/vehiculos/{id}/salidas/{salida}/finalizar', [App\Http\Controllers\VehiculoController::class, 'finalizarSalida'])->name('finalizar-salida-vehiculo');
     // Mantenimiento de vehiculos
     Route::get('/mantenimiento-vehiculos/{id}', [App\Http\Controllers\VehiculoMantenimientoController::class, 'index'])->name('mantenimiento-vehiculos');
     Route::post('/mantenimiento-vehiculos/{id}', [App\Http\Controllers\VehiculoMantenimientoController::class, 'storeMantenimiento'])->name('store-mantenimiento');

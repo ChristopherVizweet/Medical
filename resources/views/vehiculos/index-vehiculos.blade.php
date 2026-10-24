@@ -116,6 +116,8 @@
                         </td>
                         <td class="px-4 py-2">
                             <a href="{{ route('edit-vehiculos', $vehiculo->id) }}" class="text-blue-500 hover:text-blue-700">Editar</a>
+                            |
+                            <a href="{{ route('salidas-vehiculo', $vehiculo->id) }}" class="text-indigo-600 hover:text-indigo-800 dark:text-indigo-300">Salidas diarias</a>
                         </td>
                     </tr>
                     @endforeach
