@@ -4,18 +4,50 @@
     <meta charset="UTF-8">
     <title>Reporte de salidas del vehículo</title>
     <style>
-        body { font-family: DejaVu Sans, sans-serif; font-size: 10px; }
-        h1, p { text-align: center; }
-        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
-        th, td { border: 1px solid #777; padding: 5px; text-align: left; }
-        th { background: #e5e7eb; }
-        .summary td { text-align: center; }
+        @page { margin: 28px 30px; }
+        body { font-family: DejaVu Sans, sans-serif; font-size: 9px; color: #243447; }
+        .header { background-color: #173b57; color: #ffffff; padding: 14px 16px; margin-bottom: 14px; }
+        .header h1 { margin: 0 0 5px; font-size: 18px; }
+        .header p { margin: 0; color: #e3edf5; font-size: 10px; }
+        .section-title { margin: 0 0 7px; color: #173b57; font-size: 11px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        th, td { border: 1px solid #d5dee7; padding: 6px 5px; text-align: left; }
+        th { background-color: #eaf0f5; color: #173b57; font-size: 8px; }
+        .vehicle-info { margin-top: 0; margin-bottom: 14px; }
+        .vehicle-info td { width: 33.33%; padding: 8px 9px; vertical-align: top; }
+        .label { display: block; margin-bottom: 4px; color: #627487; font-size: 7px; font-weight: bold; text-transform: uppercase; }
+        .value { color: #243447; font-size: 9px; font-weight: bold; }
+        .summary { margin-top: 0; margin-bottom: 14px; }
+        .summary th, .summary td { text-align: center; }
+        .summary td { color: #173b57; font-size: 9px; font-weight: bold; }
+        .details thead { display: table-header-group; }
+        .details tr { page-break-inside: avoid; }
+        .details tbody tr:nth-child(even) { background-color: #f5f8fa; }
+        .details tfoot th { background-color: #dce8f1; }
+        .empty { text-align: center; color: #627487; padding: 12px; }
     </style>
 </head>
 <body>
-    <h1>Reporte de salidas del vehículo</h1>
-    <p>{{ $vehiculo->nombre_vehiculo }} — {{ $vehiculo->placas_vehiculo }}</p>
-    <p>Periodo: {{ $fechaInicio->format('d/m/Y') }} al {{ $fechaFin->format('d/m/Y') }}</p>
+    <div class="header">
+        <h1>Reporte de salidas del vehículo</h1>
+        <p>Periodo del {{ $fechaInicio->format('d/m/Y') }} al {{ $fechaFin->format('d/m/Y') }}</p>
+    </div>
+
+    <h2 class="section-title">Información del vehículo</h2>
+    <table class="vehicle-info">
+        <tbody>
+            <tr>
+                <td><span class="label">Vehículo</span><span class="value">{{ $vehiculo->nombre_vehiculo ?? 'Sin información' }}</span></td>
+                <td><span class="label">Placas</span><span class="value">{{ $vehiculo->placas_vehiculo ?? 'Sin información' }}</span></td>
+                <td><span class="label">Marca / Modelo</span><span class="value">{{ $vehiculo->marca_vehiculo ?? 'Sin información' }} / {{ $vehiculo->modeloAño_vehiculo ?? 'Sin información' }}</span></td>
+            </tr>
+            <tr>
+                <td><span class="label">Área de adscripción</span><span class="value">{{ $vehiculo->area_vehiculo ?? 'Sin información' }}</span></td>
+                <td><span class="label">Resguardatario</span><span class="value">{{ $vehiculo->encargado->Nombre ?? 'Sin información' }} {{ $vehiculo->encargado->apellidos ?? 'Sin información' }}</span></td>
+                <td><span class="label">No. de serie</span><span class="value">{{ $vehiculo->numeroSerie_vehiculo ?? 'Sin información' }}</span></td>
+            </tr>
+        </tbody>
+    </table>
 
     <table class="summary">
         <thead>
@@ -33,16 +65,16 @@
             <tr>
                 <td>{{ number_format($resumen['kilometros'], 2) }} km</td>
                 <td>${{ number_format($resumen['dinero'], 2) }}</td>
+                <td>${{ number_format($resumen['gasto_combustible'], 2) }}</td>
                 <td>{{ number_format($resumen['litros'], 2) }} L</td>
                 <td>{{ $resumen['costo_por_litro'] !== null ? '$' . number_format($resumen['costo_por_litro'], 2) . '/L' : 'N/D' }}</td>
                 <td>{{ $resumen['kilometros_por_litro'] !== null ? number_format($resumen['kilometros_por_litro'], 2) . ' km/L' : 'N/D' }}</td>
                 <td>{{ $resumen['pendientes'] }}</td>
-                <td>${{ number_format($resumen['gasto_combustible'], 2) }}</td>
             </tr>
         </tbody>
     </table>
 
-    <table>
+    <table class="details">
         <thead>
             <tr>
                 <th>Fecha</th>
@@ -75,7 +107,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="11">No hay salidas registradas en este periodo.</td>
+                    <td class="empty" colspan="11">No hay salidas registradas en este periodo.</td>
                 </tr>
             @endforelse
         </tbody>

@@ -24,8 +24,8 @@
         @enderror
 
         <section class="mb-6 rounded-lg bg-white p-6 shadow dark:bg-gray-700">
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
-                ENCARGADO DEL VEHÍCULO: {{ $vehiculo->id_encargado_vehiculo }}
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">   
+                ENCARGADO DEL VEHÍCULO: {{ $vehiculo->id_encargado_vehiculo ? $vehiculo->encargado->Nombre . ' ' . $vehiculo->encargado->apellidos : 'No especificado' }}
             </h1>
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
               NOMBRE DEL VEHICULO : {{ $vehiculo->nombre_vehiculo }} —  PLACAS : {{ $vehiculo->placas_vehiculo }}
