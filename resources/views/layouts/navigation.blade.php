@@ -55,7 +55,7 @@
                         Usuarios
                     </x-nav-link>
                     @endrole
-                    @role('superadmin')
+                    @role('superadmin|admin')
                     <x-nav-link :href="route('index-vehiculos')" :active="request()->routeIs('index-vehiculos')">
                         Vehículos
                     </x-nav-link>
