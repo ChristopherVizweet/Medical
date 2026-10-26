@@ -233,6 +233,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/edit-vehiculos/{id}', [App\Http\Controllers\VehiculoController::class, 'update'])->name('edit-vehiculos');
     Route::delete('/delete-vehiculos/{id}', [App\Http\Controllers\VehiculoController::class, 'delete'])->name('delete-vehiculos');
     Route::get('/vehiculos/{id}/salidas', [App\Http\Controllers\VehiculoController::class, 'salidas'])->name('salidas-vehiculo');
+    Route::get('/vehiculos/{id}/salidas/exportar/pdf', [App\Http\Controllers\VehiculoController::class, 'exportarSalidasPdf'])->name('exportar-salidas-vehiculo-pdf');
+    Route::get('/vehiculos/{id}/salidas/exportar/excel', [App\Http\Controllers\VehiculoController::class, 'exportarSalidasExcel'])->name('exportar-salidas-vehiculo-excel');
     Route::post('/vehiculos/{id}/salidas', [App\Http\Controllers\VehiculoController::class, 'storeSalida'])->name('store-salida-vehiculo');
     Route::patch('/vehiculos/{id}/salidas/{salida}/finalizar', [App\Http\Controllers\VehiculoController::class, 'finalizarSalida'])->name('finalizar-salida-vehiculo');
     // Mantenimiento de vehiculos

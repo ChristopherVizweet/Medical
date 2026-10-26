@@ -25,8 +25,11 @@
 
         <section class="mb-6 rounded-lg bg-white p-6 shadow dark:bg-gray-700">
             <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
-                {{ $vehiculo->nombre_vehiculo }} — {{ $vehiculo->placas_vehiculo }}
+                ENCARGADO DEL VEHÍCULO: {{ $vehiculo->id_encargado_vehiculo }}
             </h1>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+              NOMBRE DEL VEHICULO : {{ $vehiculo->nombre_vehiculo }} —  PLACAS : {{ $vehiculo->placas_vehiculo }}
+            </h2>
             <p class="mt-1 text-gray-600 dark:text-gray-300">
                 {{ $vehiculo->marca_vehiculo }} {{ $vehiculo->modeloAño_vehiculo }}
             </p>
@@ -34,10 +37,21 @@
 
         <section class="mb-8 rounded-lg bg-white p-6 shadow dark:bg-gray-700">
             <div class="mb-5 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Resumen del día</h2>
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">
+                    Resumen {{ ['dia' => 'del día', 'semana' => 'de la semana', 'mes' => 'del mes'][$periodoReporte] }}
+                </h2>
                 <form method="GET" action="{{ route('salidas-vehiculo', $vehiculo->id) }}" class="flex items-end gap-2">
                     <div>
-                        <label for="fecha_filtro" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-200">Consultar fecha</label>
+                        <label for="periodo_filtro" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-200">Desglosar por</label>
+                        <select id="periodo_filtro" name="periodo" required
+                            class="rounded-md border-gray-300 dark:border-gray-500 dark:bg-gray-600 dark:text-white">
+                            <option value="dia" @selected($periodoReporte === 'dia')>Día</option>
+                            <option value="semana" @selected($periodoReporte === 'semana')>Semana</option>
+                            <option value="mes" @selected($periodoReporte === 'mes')>Mes</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="fecha_filtro" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-200">Fecha de referencia</label>
                         <input id="fecha_filtro" type="date" name="fecha" value="{{ $fecha }}" required
                             class="rounded-md border-gray-300 dark:border-gray-500 dark:bg-gray-600 dark:text-white">
                     </div>
@@ -47,8 +61,19 @@
                 </form>
             </div>
 
+            <div class="mb-4 flex flex-wrap gap-2">
+                <a href="{{ route('exportar-salidas-vehiculo-pdf', ['id' => $vehiculo->id, 'fecha' => $fecha, 'periodo' => $periodoReporte]) }}"
+                    class="rounded-md bg-red-600 px-4 py-2 font-semibold text-white hover:bg-red-700">
+                    Exportar PDF
+                </a>
+                <a href="{{ route('exportar-salidas-vehiculo-excel', ['id' => $vehiculo->id, 'fecha' => $fecha, 'periodo' => $periodoReporte]) }}"
+                    class="rounded-md bg-green-600 px-4 py-2 font-semibold text-white hover:bg-green-700">
+                    Exportar Excel
+                </a>
+            </div>
+
             <p class="mb-4 text-sm text-gray-600 dark:text-gray-300">
-                Totales para {{ \Carbon\Carbon::parse($fecha)->format('d/m/Y') }}
+                Totales del {{ $fechaInicio->format('d/m/Y') }} al {{ $fechaFin->format('d/m/Y') }}
             </p>
 
             <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -63,6 +88,18 @@
                 <div class="rounded-lg bg-amber-50 p-4 text-center dark:bg-amber-900">
                     <p class="text-sm font-semibold text-amber-800 dark:text-amber-100">Litros cargados</p>
                     <p class="mt-1 text-2xl font-bold text-amber-900 dark:text-white">{{ number_format($resumen['litros'], 2) }} L</p>
+                </div>
+                <div class="rounded-lg bg-purple-50 p-4 text-center dark:bg-purple-900">
+                    <p class="text-sm font-semibold text-purple-800 dark:text-purple-100">Costo promedio por litro</p>
+                    <p class="mt-1 text-2xl font-bold text-purple-900 dark:text-white">
+                        {{ $resumen['costo_por_litro'] !== null ? '$' . number_format($resumen['costo_por_litro'], 2) . '/L' : 'N/D' }}
+                    </p>
+                </div>
+                <div class="rounded-lg bg-indigo-50 p-4 text-center dark:bg-indigo-900">
+                    <p class="text-sm font-semibold text-indigo-800 dark:text-indigo-100">Rendimiento promedio</p>
+                    <p class="mt-1 text-2xl font-bold text-indigo-900 dark:text-white">
+                        {{ $resumen['kilometros_por_litro'] !== null ? number_format($resumen['kilometros_por_litro'], 2) . ' km/L' : 'N/D' }}
+                    </p>
                 </div>
             </div>
             @if($resumen['pendientes'] > 0)
@@ -127,6 +164,13 @@
                     @error('litros_cargados') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
+                <div>
+                        <label for="costo_por_litro" class="mb-1 block text-sm font-semibold text-gray-700 dark:text-gray-200">Costo por litro ($/L)</label>
+                        <input id="costo_por_litro" name="costo_por_litro" type="number" min="0" step="0.01" value="{{ old('costo_por_litro', '0.00') }}" required
+                            class="w-full rounded-md border-gray-300 dark:border-gray-500 dark:bg-gray-600 dark:text-white">
+                        @error('costo_por_litro') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                </div>
+
                 <div class="md:col-span-2">
                     <button type="submit" class="rounded-md bg-green-600 px-6 py-3 font-semibold text-white hover:bg-green-700">
                         Guardar registro diario
@@ -153,7 +197,9 @@
                                 <th class="px-3 py-3">Odómetro inicial</th>
                                 <th class="px-3 py-3">Odómetro final</th>
                                 <th class="px-3 py-3">Km recorridos</th>
+                                <th class="px-3 py-3">Km/L</th>
                                 <th class="px-3 py-3">Dinero entregado</th>
+                                <th class="px-3 py-3">Costo por litro</th>
                                 <th class="px-3 py-3">Litros cargados</th>
                                 <th class="px-3 py-3">Regreso</th>
                             </tr>
@@ -166,7 +212,9 @@
                                     <td class="px-3 py-3">{{ number_format($salida->odometro_inicial, 2) }} km</td>
                                     <td class="px-3 py-3">{{ $salida->odometro_final !== null ? number_format($salida->odometro_final, 2) . ' km' : 'Pendiente' }}</td>
                                     <td class="px-3 py-3">{{ $salida->kilometros_recorridos !== null ? number_format($salida->kilometros_recorridos, 2) . ' km' : 'Pendiente' }}</td>
+                                    <td class="px-3 py-3">{{ $salida->kilometros_por_litro !== null ? number_format($salida->kilometros_por_litro, 2) . ' km/L' : 'N/D' }}</td>
                                     <td class="px-3 py-3">${{ number_format($salida->dinero_entregado, 2) }}</td>
+                                    <td class="px-3 py-3">{{ $salida->costo_por_litro !== null ? '$' . number_format($salida->costo_por_litro, 2) . '/L' : 'N/D' }}</td>
                                     <td class="px-3 py-3">{{ number_format($salida->litros_cargados, 2) }} L</td>
                                     <td class="px-3 py-3">
                                         @if($salida->odometro_final === null)
