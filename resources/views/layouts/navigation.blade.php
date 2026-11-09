@@ -28,7 +28,7 @@
                         Proyectos
                     </x-nav-link>
                     @endhasanyrole
-                    @hasanyrole('superadmin|almacen|laboratorio|ingenieria')
+                    @hasanyrole('superadmin|almacen|laboratorio|ingenieria|ventas')
                     <x-nav-link :href="route('index-product')" :active="request()->routeIs('index-product')">
                         Gestión de Materiales
                     </x-nav-link>
