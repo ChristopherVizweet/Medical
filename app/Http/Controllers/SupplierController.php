@@ -78,11 +78,11 @@ public function edit($id)
 public function update(Request $request, $id)
 {
     $request->validate([
-        'name_supplier' => 'required|string|max:255',
-        'email_supplier' => 'required|email|unique:suppliers,email_supplier,' . $id,
-        'phoneNumber_supplier' => 'required|string|regex:/^[0-9]{10,15}$/',
-        'encargado_suppliers' => 'required|string|max:255',
-        'rfc_supplier' => 'required|string|max:13',
+        'name_supplier' => 'nullable|string|max:255',
+        'email_supplier' => 'nullable|email|unique:suppliers,email_supplier,' . $id,
+        'phoneNumber_supplier' => 'nullable|string|regex:/^[0-9]{10,15}$/',
+        'encargado_suppliers' => 'nullable|string|max:255',
+        'rfc_supplier' => 'nullable|string|max:13',
     ]);
 
     $supplier = Supplier::findOrFail($id);
