@@ -52,11 +52,11 @@ public function store1(Request $request){
 public function store(Request $request) {
     // Validar y guardar datos
      $request->validate([
-        'name_supplier' => 'required|string|max:255',
-        'encargado_suppliers' => 'required|string|max:255',
-        'rfc_supplier' => 'required|string|max:18',
-        'email_supplier' => 'required|email|unique:suppliers,email_supplier',
-        'phoneNumber_supplier' => 'required|string|max:10',
+        'name_supplier' => 'nullable|string|max:255',
+        'encargado_suppliers' => 'nullable|string|max:255',
+        'rfc_supplier' => 'nullable|string|max:18',
+        'email_supplier' => 'nullable|email|unique:suppliers,email_supplier',
+        'phoneNumber_supplier' => 'nullable|string|max:10',
     ]);
     
 

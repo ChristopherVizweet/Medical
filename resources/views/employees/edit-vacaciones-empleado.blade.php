@@ -1,4 +1,19 @@
 <x-guest-layout>
+    @if($puedeAprobar && $vacacion->estado === 'pendiente')
+        <div class="max-w-4xl mx-auto mt-10 rounded-lg border border-yellow-300 bg-yellow-50 p-6 dark:border-yellow-700 dark:bg-yellow-900/30">
+            <p class="mb-4 font-semibold text-gray-800 dark:text-gray-100">
+                Esta solicitud está pendiente de aprobación.
+            </p>
+            <form method="POST" action="{{ route('approve-vacaciones', $vacacion->id) }}">
+                @csrf
+                @method('PATCH')
+                <button type="submit" class="rounded-lg bg-green-600 px-5 py-2 font-semibold text-white hover:bg-green-700">
+                    Aprobar solicitud
+                </button>
+            </form>
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('update-vacaciones-empleado', $vacacion->id) }}">
         @csrf
         @method('PUT')

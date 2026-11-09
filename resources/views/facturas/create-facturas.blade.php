@@ -1,4 +1,4 @@
-<x-guest-layout>
+ <x-guest-layout>
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <!-- Card Principal -->
@@ -111,29 +111,29 @@
                                         }
                                     });
                                 </script>
-                                <!-- Folio de factura -->
+                                <!-- Folio de factura 
                                 <div>
                                     <label for="" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         Folio de factura<span class="text-red-500">*</span>
                                     </label>
                                     <input type="text" id="folio_factura" placeholder="ej. P512458..." name="folio_factura" class="block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 @error('folio_factura') border-red-500 @enderror">
                                     @error('folio_factura')
-                                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                                    <p class="mt-1 text-sm text-red-500">{ $message }}</p>
                                     @enderror
                                 </div>
 
 
 
-                                <!-- Folio fiscal de factura -->
+                              Folio fiscal de factura 
                                 <div>
                                     <label for="folio_fiscal"" class=" block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         Folio fiscal de factura (Opcional)<span class="text-red-500">*</span>
                                     </label>
                                     <input type="text" id="folio_fiscal" placeholder="ej. 002B6996-7866-..." name="folio_fiscal" class="w-full block px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 @error('folio_fiscal') border-red-500 @enderror">
                                     @error('folio_fiscal')
-                                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                                    <p class="mt-1 text-sm text-red-500">{ $message }}</p>
                                     @enderror
-                                </div>
+                                </div>  -->
                             </div>
 
                                 <h3 class="mb-6 text-lg font-semibold text-gray-900 dark:text-white mb-4 mt-4 flex text-center items-center justify-center">
@@ -432,7 +432,7 @@
                                 Crear Factura y registrar materiales
                         </button>-->
                 
-                    <a href="{{ route('index-facturas')}}"
+                    <a href="{{ route('index-entradas')}}"
                         class="w-full bg-red-700 sm:w-auto px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500">
                         Cancelar
                     </a>

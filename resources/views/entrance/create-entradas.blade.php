@@ -44,7 +44,7 @@
                 <select class="mt-1 block w-full" name="recibe_id" id="recibe_id" required>
                     <option value="">-Seleccionar-</option>
                     @foreach($empleados as $empleado)
-                    <option value="{{ $empleado->id }}">{{ $empleado->Nombre }}</option>
+                    <option value="{{ $empleado->id }}">{{ $empleado->Nombre }} {{ $empleado->apellidos }}</option>
                     @endforeach
                 </select>
             </div>
@@ -53,7 +53,7 @@
                 <select class="mt-1 block w-full" name="firma_id" id="firma_id" required>
                     <option value="">-Seleccionar-</option>
                     @foreach($empleados as $empleado)
-                    <option value="{{ $empleado->id }}">{{ $empleado->Nombre }}</option>
+                    <option value="{{ $empleado->id }}">{{ $empleado->Nombre }} {{ $empleado->apellidos }}</option>
                     @endforeach
                 </select>
             </div>
@@ -72,11 +72,10 @@
                 <!-- codigo -->
                 <div>
                     <label for="productos[0][codigo]" class="block text-sm font-medium text-gray-700 dark:text-white">Codigo</label>
-                    <input type="number" name="productos[0][codigo]" placeholder="codigo" required
+                    <input type="number" name="productos[0][codigo]" placeholder="codigo" readonly required
                         class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
 
-                    <input type="text" name="productos[${productoIndex}][codigo]" placeholder="Código" readonly
-                        class="mt-1 block w-full rounded-lg border-gray-300 bg-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                   
                 </div>
                 <!-- Producto -->
                 <div>

@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empleados;
+use App\Models\EmpleadoVacaciones;
+use App\Models\User;
+use App\Notifications\SolicitudVacacionesPendiente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class EmpleadosController extends Controller
 {
@@ -283,8 +288,8 @@ private function diasVacacionesPorAntiguedad($fechaIngreso, string $periodo): in
     return 20 + ((int) ceil(($aniosServicio - 5) / 5) * 2);
 }
 
-public function storeVacaciones(\Illuminate\Http\Request $request, $id){
-    $empleados = Empleados::findOrFail($id);
+public function storeVacaciones(Request $request, $id){
+    Empleados::findOrFail($id);
     
     $request->validate([
         'fecha_inicio' => 'required|date',
@@ -298,24 +303,41 @@ public function storeVacaciones(\Illuminate\Http\Request $request, $id){
     $fechaFin = \Carbon\Carbon::parse($request->fecha_fin);
     $diasTomados = $fechaInicio->diffInDays($fechaFin) + 1; // +1 para incluir ambos días
 
-    \App\Models\EmpleadoVacaciones::create([
-        'empleado_id' => $id,
-        'fecha_inicio' => $request->fecha_inicio,
-        'fecha_fin' => $request->fecha_fin,
-        'periodo' => $request->periodo,
-        'dias_tomados' => $diasTomados,
-        'estado' => $request->estado,
-        'observaciones' => $request->observaciones
-    ]);
+    $revisores = $request->estado === 'pendiente'
+        ? $this->revisoresVacaciones()
+        : collect();
+
+    DB::transaction(function () use ($request, $id, $diasTomados, $revisores) {
+        $vacacion = EmpleadoVacaciones::create([
+            'empleado_id' => $id,
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin,
+            'periodo' => $request->periodo,
+            'dias_tomados' => $diasTomados,
+            'estado' => $request->estado,
+            'observaciones' => $request->observaciones,
+        ]);
+
+        if ($revisores->isNotEmpty()) {
+            Notification::send(
+                $revisores,
+                new SolicitudVacacionesPendiente($vacacion, $request->user()->name)
+            );
+        }
+
+        return $vacacion;
+    });
 
     return redirect()->route('vacaciones-employee', ['id' => $id, 'periodo' => $request->periodo])->with('success', 'Período de vacaciones registrado exitosamente');
 }
-public function editVacaciones($id){
-    $vacacion = \App\Models\EmpleadoVacaciones::findOrFail($id);
-    return view('employees.edit-vacaciones-empleado', compact('vacacion'));
+public function editVacaciones(Request $request, $id){
+    $vacacion = EmpleadoVacaciones::findOrFail($id);
+    $puedeAprobar = $this->esRevisorVacaciones($request->user());
+
+    return view('employees.edit-vacaciones-empleado', compact('vacacion', 'puedeAprobar'));
 }
-public function updateVacaciones(\Illuminate\Http\Request $request, $id){
-    $vacacion = \App\Models\EmpleadoVacaciones::findOrFail($id);
+public function updateVacaciones(Request $request, $id){
+    $vacacion = EmpleadoVacaciones::findOrFail($id);
     
     $request->validate([
         'fecha_inicio' => 'required|date',
@@ -324,6 +346,10 @@ public function updateVacaciones(\Illuminate\Http\Request $request, $id){
         'estado' => 'required|in:aprobado,pendiente,rechazado,anteriormente',
         'observaciones' => 'nullable|string|max:255'
     ]);
+
+    if ($request->estado !== $vacacion->estado) {
+        abort_unless($this->esRevisorVacaciones($request->user()), 403);
+    }
 
     $fechaInicio = \Carbon\Carbon::parse($request->fecha_inicio);
     $fechaFin = \Carbon\Carbon::parse($request->fecha_fin);
@@ -340,8 +366,53 @@ public function updateVacaciones(\Illuminate\Http\Request $request, $id){
 
     return redirect()->route('vacaciones-employee', ['id' => $vacacion->empleado_id, 'periodo' => $vacacion->periodo])->with('success', 'Registro de vacaciones actualizado correctamente');
 }
+
+public function aprobarVacaciones(Request $request, $id)
+{
+    abort_unless($this->esRevisorVacaciones($request->user()), 403);
+
+    $vacacion = DB::transaction(function () use ($id) {
+        $vacacion = EmpleadoVacaciones::query()
+            ->lockForUpdate()
+            ->findOrFail($id);
+
+        abort_unless($vacacion->estado === 'pendiente', 409, 'La solicitud ya fue atendida.');
+
+        $vacacion->update(['estado' => 'aprobado']);
+
+        return $vacacion;
+    });
+
+    return redirect()
+        ->route('vacaciones-employee', [
+            'id' => $vacacion->empleado_id,
+            'periodo' => $vacacion->periodo,
+        ])
+        ->with('success', 'Solicitud de vacaciones aprobada.');
+}
+
+private function revisoresVacaciones()
+{
+    $marco = User::role('ingenieria')->where('name', 'Marco')->get();
+    $juan = User::role('superadmin')->where('name', 'Juan')->get();
+
+    if ($marco->isEmpty() || $juan->isEmpty()) {
+        throw new \RuntimeException(
+            'No se pudo notificar la solicitud: verifica que exista Marco con el rol ingenieria y Juan con el rol superadmin.'
+        );
+    }
+
+    return $marco->merge($juan)->unique('id')->values();
+}
+
+private function esRevisorVacaciones(User $user): bool
+{
+    return ($user->name === 'Marco' && $user->hasRole('ingenieria'))
+        || ($user->name === 'Juan' && $user->hasRole('superadmin'));
+}
+
 public function deleteVacaciones($id){
-    $vacacion = \App\Models\EmpleadoVacaciones::findOrFail($id);
+    $vacacion = EmpleadoVacaciones::findOrFail($id);
     $empleadoId = $vacacion->empleado_id;
     $periodo = $vacacion->periodo;
     $vacacion->delete();

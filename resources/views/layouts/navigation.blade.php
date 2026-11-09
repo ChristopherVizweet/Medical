@@ -28,13 +28,6 @@
                         Proyectos
                     </x-nav-link>
                     @endhasanyrole
-
-                    @hasanyrole('superadmin')
-                    <x-nav-link :href="route('index-facturas')" :active="request()->routeIs('index-facturas')">
-                        Facturas
-                    </x-nav-link>
-                    @endhasanyrole
-
                     @hasanyrole('superadmin|almacen|laboratorio|ingenieria')
                     <x-nav-link :href="route('index-product')" :active="request()->routeIs('index-product')">
                         Gestión de Materiales
@@ -45,11 +38,11 @@
                         Existencias
                     </x-nav-link>
                     @endhasanyrole
-                    @role('superadmin')
+                    @hasanyrole('superadmin|ingenieria')
                     <x-nav-link :href="route('index-employees')" :active="request()->routeIs('index-employees')">
                         Gestión de empleados
                     </x-nav-link>
-                    @endrole
+                    @endhasanyrole
                     @role('superadmin')
                     <x-nav-link :href="route('index-user')" :active="request()->routeIs('index-user')">
                         Usuarios
@@ -418,9 +411,7 @@
                 {{ __('Proyectos') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('index-facturas')" :active="request()->routeIs('index-facturas')">
-                {{ __('Facturas') }}
-            </x-responsive-nav-link>
+           
 
             <x-responsive-nav-link :href="route('index-product')" :active="request()->routeIs('index-product')">
                 {{ __('Gestión de Materiales') }}

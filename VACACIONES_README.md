@@ -159,6 +159,12 @@ Formato: "X Años, Y Meses y Z Días"
 
 El cálculo por antigüedad y período se realiza en `EmpleadosController.php`, método `diasVacacionesPorAntiguedad()`: 12 días el primer año, dos días adicionales por año hasta el quinto y dos días adicionales por cada cinco años posteriores.
 
+### Notificaciones y aprobación
+
+Cuando RH registra una solicitud con estado `pendiente`, el sistema notifica a los usuarios cuyo nombre sea `Marco` y tenga el rol `ingenieria`, y cuyo nombre sea `Juan` y tenga el rol `superadmin`. Ambos reciben la notificación; cualquiera de los dos puede aprobarla desde el enlace de la notificación. Verifica que esas cuentas existan y tengan esos roles antes de registrar solicitudes pendientes.
+
+La tabla de notificaciones se crea al ejecutar `php artisan migrate`. Las solicitudes ya existentes no generan notificaciones retroactivas.
+
 ## 🧪 Ejemplos de Uso
 
 ### 1. Ver vacaciones de un empleado

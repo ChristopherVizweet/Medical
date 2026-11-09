@@ -136,7 +136,7 @@ class FacturaController extends Controller
         //dd( $request->all());
         
 
-        return redirect()->route('create-entradas',$factura->id)->with('success', 'Factura creada exitosamente');
+        return redirect()->route('index-facturas',$factura->id)->with('success', 'Factura creada exitosamente');
     }
     
     /**

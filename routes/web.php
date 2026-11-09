@@ -143,6 +143,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/vacaciones-employee/{id}', [EmpleadosController::class, 'storeVacaciones'])->name('store-vacaciones');
     Route::get('/edit-vacaciones-empleado/{id}', [EmpleadosController::class, 'editVacaciones'])->name('edit-vacaciones-empleado');
     Route::put('/edit-vacaciones-empleado/{id}', [EmpleadosController::class, 'updateVacaciones'])->name('update-vacaciones-empleado');
+    Route::patch('/vacaciones-employee/{id}/aprobar', [EmpleadosController::class, 'aprobarVacaciones'])->name('approve-vacaciones');
     Route::delete('/delete-vacaciones/{id}', [EmpleadosController::class, 'deleteVacaciones'])->name('delete-vacaciones');
 
     // Parte para el proyecto
