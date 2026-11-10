@@ -19,7 +19,8 @@ class SuppliersImport implements ToModel, WithHeadingRow
     {
         return new Supplier([
             'name_supplier' => $row['nombre'],
-            'email_supplier' => $row['email'],
+            'encargado_suppliers' => $row['contacto'],
+            'rfc_supplier' => $row['rfc'],
             'phoneNumber_supplier' => $row['numero_telefonico']
 
         ]);

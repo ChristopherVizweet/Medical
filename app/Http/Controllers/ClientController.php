@@ -63,13 +63,20 @@ class ClientController extends Controller
       'email_Client' => 'nullable|email',
       'phoneNumber_Client' => 'nullable|string|max:10',
       'RFC' => 'required|string',
+      'constancia_fiscal' => 'nullable|file|mimes:pdf|max:5000',
       'supervisor' => 'nullable|string|max:255',
       'encargado' => 'nullable|string|max:255',
       'telefono_supervisor' => 'nullable|string|max:10',
       'telefono_encargado' => 'nullable|string|max:10',
       'email_supervisor' => 'nullable|email',
       'email_encargado' => 'nullable|email',
+      'contactos' => 'nullable|array',
+      'contactos.*.nombre' => 'nullable|string|max:255',
+      'contactos.*.email' => 'nullable|email',
+      'contactos.*.telefono' => 'nullable|string|max:10',
     ]);
+
+    $contactos = $request->input('contactos', []);
 
     Client::create([
       'name_Client' => $request->name_Client,
@@ -83,8 +90,9 @@ class ClientController extends Controller
       'telefono_encargado' => $request->telefono_encargado,
       'email_supervisor' => $request->email_supervisor,
       'email_encargado' => $request->email_encargado,
+      'constancia_fiscal' => $request->constancia_fiscal,
+      'contactos' => $contactos,
     ]);
-
 
     return redirect()->route('index-client')->with('success', 'Cliente creado exitosamente');
   }
@@ -94,6 +102,14 @@ class ClientController extends Controller
     $client = Client::findOrFail($id); // Busca el proveedor por ID
     return view('client.edit_client', compact('client')); // Carga la vista correcta
   }
+
+  public function show($id)
+  {
+    $client = Client::findOrFail($id);
+
+    return view('client.show_client', compact('client'));
+  }
+
   public function update(Request $request, $id)
   {
     $request->validate([

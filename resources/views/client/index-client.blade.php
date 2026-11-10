@@ -84,20 +84,19 @@
           </a>
       </x-primary-button>
 
-
         {{-- Tabla responsive --}}
         <div class="overflow-x-auto rounded-lg shadow">
             <table class="w-full text-left bg-white dark:text-gray-200 dark:bg-gray-500">
                 <thead class="bg-gray-200 dark:text-gray-200 dark:bg-gray-600">
                     <tr>
                         <th class="px-4 py-2">ID</th>
-                        <th class="px-4 py-2">Nombre</th>
-                        <th class="px-4 py-2">Teléfono</th>
-                        <th class="px-4 py-2">Email</th>
+                        <th class="px-4 py-2">Nombre del cliente</th>
+                        <th class="px-4 py-2">Teléfono del cliente</th>
+                        <th class="px-4 py-2">Email del cliente</th>
                         <th class="px-4 py-2">RFC</th>
-                        <th class="px-4 py-2">Supervisor</th>
-                        <th class="px-4 py-2">Correo supervisor</th>
-                        <th class="px-4 py-2">Teléfono supervisor</th>
+                        <th class="px-4 py-2">Contacto principal</th>
+                        <th class="px-4 py-2">Contactos adicionales</th>
+                        <th class="px-4 py-2">Ver</th>
                         <th class="px-4 py-2">Acciones</th>
                     </tr>
                 </thead>
@@ -110,8 +109,16 @@
                             <td class="px-4 py-2">{{ $client->email_Client }}</td>
                             <td class="px-4 py-2">{{ $client->RFC }}</td>
                             <td class="px-4 py-2">{{ $client->supervisor ?? 'Sin supervisor' }}</td>
-                            <td class="px-4 py-2">{{ $client->email_supervisor ?? 'Sin correo' }}</td>
-                            <td class="px-4 py-2">{{ $client->telefono_supervisor ?? 'Sin teléfono' }}</td>
+                            <td class="px-4 py-2">
+                                @forelse ($client->contactos ?? [] as $contacto)
+                                    <div>{{ $contacto['nombre'] ?? 'Sin nombre' }}</div>
+                                @empty
+                                    <span class="text-gray-500">Sin contactos adicionales</span>
+                                @endforelse
+                            </td>
+                            <td class="px-4 py-2 text-center">
+                                <a href="{{ route('show_client', $client->id) }}" class="text-blue-600 dark:text-blue-900 hover:underline">Ver</a>
+                            </td>
                             <td class="px-4 py-2 text-center space-x-2 text-sm">
                                 <a href="{{ route('edit_client', $client->id) }}" class="text-blue-600 dark:text-blue-900 hover:underline">Editar</a>
                                 <form action="{{ route('delete_client', $client->id) }}" method="POST" class="inline-block"
@@ -124,7 +131,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-4 py-4 text-center text-gray-500">No hay clientes disponibles.</td>
+                            <td colspan="9" class="px-4 py-4 text-center text-gray-500">No hay clientes disponibles.</td>
                         </tr>
                     @endforelse
                 </tbody>
