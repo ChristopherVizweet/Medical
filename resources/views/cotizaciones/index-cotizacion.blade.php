@@ -207,6 +207,13 @@
 
                                    <select id="diametro" name="concepto_detalle_rm_id" class="px-4 py-3 border-2 border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 transition-all">
                                         <option value="">-Seleccionar-</option>
+                                        <option value="">DE 13 MM. DE DIÁMETRO.</option>
+                                        <option value="">DE 19 MM. DE DIÁMETRO.</option>
+                                        <option value="">DE 25 MM. DE DIÁMETRO.</option>
+                                        <option value="">DE 32 MM. DE DIÁMETRO.</option>
+                                        <option value="">DE 51 MM. DE DIÁMETRO.</option>
+                                        <option value="">DE 64 MM. DE DIÁMETRO.</option>
+                                        <option value="">DE 75 MM. DE DIÁMETRO.</option>
                                        
                                     </select>
                                 </div>
