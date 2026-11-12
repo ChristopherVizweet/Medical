@@ -13,12 +13,22 @@ use App\Http\Controllers\PriorityController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+
 use App\Http\Controllers\ProyectoAsistenciaInstaladoresController;
 use App\Http\Controllers\RecursosController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehiculoController;
+use App\Http\Controllers\VehiculoCheckListController;
+use App\Http\Controllers\VehiculoMantenimientoController;
+use App\Http\Controllers\VehiculoTenenciasController;
+use App\Http\Controllers\VerificacionVehiculoController;
+use App\Http\Controllers\SeguroVehiculoController;
+use App\Http\Controllers\FacturaController;
+use App\Http\Controllers\CotizacionController;
+
 use App\Models\Empleados;
 use App\Models\Recursos;
 use Illuminate\Support\Facades\Route;
@@ -154,7 +164,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/edit-project/{id}', [ProjectController::class, 'edit'])->name('edit-project');
     Route::put('/edit-project/{id}', [ProjectController::class, 'update'])->name('edit-project');
     Route::delete('/delete-project/{id}', [ProjectController::class, 'delete'])->name('delete-project');
-    Route::get('/index-cotizacion', [ProjectController::class, 'indexCotizacion'])->name('index-cotizacion');
+
+    //Cotizaciones 
+Route::get('/index-cotizacion',[CotizacionController::class, 'index'])->name('index-cotizacion');
+Route::get('/create-cotizacion',[CotizacionController::class,'create'])->name('create-cotizacion');
+Route::post('/index-cotizacion',[CotizacionController::class, 'store'])->name('index-cotizacion-store');
+
     // COtizaciones de red de gases
     Route::get('/cotizacion-redgases', [ProjectController::class, 'cotizacionRedGases'])->name('cotizacion-redgases');
     Route::post('/cotizacion-redgases', [ProjectController::class, 'storeCotizacionRedGases'])->name('store-cotizacion-redgases');

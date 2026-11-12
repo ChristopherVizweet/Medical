@@ -52,6 +52,15 @@
                 </a>
             </x-primary-button>
 
+
+             <!-- Botón Nueva Cotizacion (temporal) -->
+            <x-primary-button class="font-semibold">
+                <a href="{{ route('index-cotizacion') }}" class="text-dark">
+                    {{ __('Nueva cotización') }}
+                </a>
+            </x-primary-button>
+
+
             <!-- Botón Ver más -->
             <x-primary-button @click="open = !open" class="font-semibold">
                 {{ __('Ver más') }}
