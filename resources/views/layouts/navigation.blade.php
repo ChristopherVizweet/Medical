@@ -38,7 +38,7 @@
                         Existencias
                     </x-nav-link>
                     @endhasanyrole
-                    @hasanyrole('superadmin|ingenieria')
+                    @hasanyrole('superadmin|admin')
                     <x-nav-link :href="route('index-employees')" :active="request()->routeIs('index-employees')">
                         Gestión de empleados
                     </x-nav-link>
