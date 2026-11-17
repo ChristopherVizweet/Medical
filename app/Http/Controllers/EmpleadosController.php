@@ -343,7 +343,7 @@ public function updateVacaciones(Request $request, $id){
         'fecha_inicio' => 'required|date',
         'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
         'periodo' => $this->reglasPeriodo(),
-        'estado' => 'required|in:aprobado,pendiente,rechazado,anteriormente',
+        'estado' => 'required|in:aprobado,pendiente,rechazado',
         'observaciones' => 'nullable|string|max:255'
     ]);
 
@@ -393,12 +393,12 @@ public function aprobarVacaciones(Request $request, $id)
 
 private function revisoresVacaciones()
 {
-    $marco = User::role('ingenieria')->where('name', 'Marco')->get();
-    $juan = User::role('superadmin')->where('name', 'Juan')->get();
+    $marco = User::role('ingenieria')->where('name', 'Marco Antonio')->get();
+    $juan = User::role('superadmin')->where('name', 'Juan Carlos')->get();
 
     if ($marco->isEmpty() || $juan->isEmpty()) {
         throw new \RuntimeException(
-            'No se pudo notificar la solicitud: verifica que exista Marco con el rol ingenieria y Juan con el rol superadmin.'
+            'No se pudo notificar la solicitud: verifica que exista Marco Antonio con el rol ingenieria y Juan Carlos con el rol superadmin.'
         );
     }
 
@@ -407,8 +407,8 @@ private function revisoresVacaciones()
 
 private function esRevisorVacaciones(User $user): bool
 {
-    return ($user->name === 'Marco' && $user->hasRole('ingenieria'))
-        || ($user->name === 'Juan' && $user->hasRole('superadmin'));
+    return ($user->name === 'Marco Antonio' && $user->hasRole('ingenieria'))
+        || ($user->name === 'Juan Carlos' && $user->hasRole('superadmin'));
 }
 
 public function deleteVacaciones($id){

@@ -165,6 +165,13 @@ Cuando RH registra una solicitud con estado `pendiente`, el sistema notifica a l
 
 La tabla de notificaciones se crea al ejecutar `php artisan migrate`. Las solicitudes ya existentes no generan notificaciones retroactivas.
 
+Las notificaciones en tiempo real usan Laravel Reverb. En desarrollo, `composer run dev`
+inicia Reverb junto con Laravel y Vite. Si se ejecuta la aplicación con procesos separados,
+inicia también `php artisan reverb:start`. En producción, mantén ese comando como un
+servicio persistente y configura `REVERB_HOST`, `REVERB_PORT` y las variables `VITE_REVERB_*`
+con los valores correspondientes al servidor; `127.0.0.1` solo funciona si Reverb corre
+en la misma máquina que Laravel.
+
 ## 🧪 Ejemplos de Uso
 
 ### 1. Ver vacaciones de un empleado
