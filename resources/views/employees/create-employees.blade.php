@@ -1,235 +1,223 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('store-employees') }}" enctype="multipart/form-data">
-        @csrf
+    <div class="mx-auto max-w-6xl py-6 sm:py-8">
+        <form method="POST" action="{{ route('store-employees') }}" enctype="multipart/form-data" class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl">
+            @csrf
 
-        <!-- Name -->
-        <div class="mt-4">
-
-            <div class=" text-center text-gray-800 dark:text-white">
-                <h1>REGISTRAR EMPLEADO</h1>
-            </div><br>
-
-            <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-                    {{-- Nombre --}}
+            <div class="bg-gradient-to-r from-slate-800 to-slate-700 px-6 py-8 text-white sm:px-8">
+                <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                     <div>
-                        <x-input-label for="Nombre" :value="__('Nombre de empleado')" />
-                        <x-text-input autocomplete="off" id="Nombre" class="mt-1 block w-full" type="text" name="Nombre" :value="old('Nombre')"  />
-                        <x-input-error :messages="$errors->get('Nombre')" class="mt-2" />
+                        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-300">Gestión de personal</p>
+                        <h1 class="mt-2 text-3xl font-bold">Registrar empleado</h1>
+                        <p class="mt-2 text-sm text-slate-300">Captura los datos personales, laborales y documentos en un solo lugar.</p>
                     </div>
-                
-
-                    {{-- Apellidos --}}
-                    <div>
-                        <x-input-label for="apellidos" :value="__('Apellidos')" />
-                        <x-text-input autocomplete="off" id="apellidos" class="mt-1 block w-full" type="text" name="apellidos" :value="old('apellidos')"  />
-                        <x-input-error :messages="$errors->get('apellidos')" class="mt-2" />
-                    </div>
-
-                    {{-- CURP --}}
-                    <div>
-                        <x-input-label for="curp" :value="__('CURP (obligatorio)')" />
-                        <x-text-input autocomplete="off" id="curp" class="mt-1 block w-full" type="text" name="curp" :value="old('curp')"  />
-                        <x-input-error :messages="$errors->get('curp')" class="mt-2" />
-                    </div>
-
-                    {{-- Fecha de nacimiento --}}
-                    <div>
-                        <x-input-label for="fecha_nacimiento" :value="__('Fecha de nacimiento')" />
-                        <x-text-input id="fecha_nacimiento" class="mt-1 block w-full" type="date" name="fecha_nacimiento" :value="old('fecha_nacimiento')"  />
-                        <x-input-error :messages="$errors->get('fecha_nacimiento')" class="mt-2" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="fecha_ingreso" :value="__('Fecha de ingreso')" />
-                        <x-text-input id="fecha_ingreso" class="mt-1 block w-full" type="date" name="fecha_ingreso" :value="old('fecha_ingreso')" />
-                        <x-input-error :messages="$errors->get('fecha_ingreso')" class="mt-2" />
-                    </div>
-
-                    {{-- Organización --}}
-                    <div>
-                        <x-input-label for="organizacion" :value="__('Organización')" />
-                        <!--<x-text-input id="organizacion" class="mt-1 block w-full" type="text" name="organizacion" :value="old('organizacion')"  />
-            <x-input-error :messages="$errors->get('organizacion')" class="mt-2" /> -->
-                        <Select name="organizacion" class="w-full">
-                            <option value="">-Seleccionar-</option>
-                            <option value="medical gas systems international">MGSI</option>
-                            <option value="Ascort">Ascort</option>
-                            <option value="Meicon">Meicon</option>
-                        </Select>
-                    </div>
-
-                    {{-- Cargo --}}
-                    <div>
-                        <x-input-label for="cargo" :value="__('Cargo')" />
-                        <x-text-input autocomplete="off" id="cargo" class="mt-1 block w-full" type="text" name="cargo" :value="old('cargo')"  />
-                        <x-input-error :messages="$errors->get('cargo')" class="mt-2" />
-                    </div>
-
-                    {{-- Correo electrónico --}}
-                    <div>
-                        <x-input-label for="correoElectronico" :value="__('Correo Electrónico')" />
-                        <x-text-input autocomplete="off" id="correoElectronico" class="mt-1 block w-full" type="email" name="correoElectronico" :value="old('correoElectronico')" />
-                        <x-input-error :messages="$errors->get('correoElectronico')" class="mt-2" />
-                    </div>
-
-                    {{-- Teléfono trabajo --}}
-                    <div>
-                        <x-input-label for="numeroTelefonoTrabajo" :value="__('Número telefónico de trabajo')" />
-                        <x-text-input autocomplete="off" placeholder="Ej. 5566334455" maxlength="10" id="numeroTelefonoTrabajo" class="mt-1 block w-full" type="tel" name="numeroTelefonoTrabajo" />
-                        <x-input-error :messages="$errors->get('numeroTelefonoTrabajo')" class="mt-2" />
-                    </div>
-
-                    {{-- Teléfono particular --}}
-                    <div>
-                        <x-input-label for="numeroTelParti" :value="__('Número telefónico particular')" />
-                        <x-text-input autocomplete="off" placeholder="Ej. 5566334455" maxlength="10" id="numeroTelParti" class="mt-1 block w-full" type="tel" name="numeroTelParti" :value="old('numeroTelParti')" />
-                        <x-input-error :messages="$errors->get('numeroTelParti')" class="mt-2" />
-                    </div>
-
-                    {{-- Sueldo --}}
-                    <div>
-                        <x-input-label for="sueldo" :value="__('Sueldo $')" />
-                        <x-text-input autocomplete="off" placeholder="$" id="sueldo" class="mt-1 block w-full" type="text" name="sueldo" :value="old('sueldo')" />
-                        <x-input-error :messages="$errors->get('sueldo')" class="mt-2" />
-                    </div>
-
-                    {{-- Calle --}}
-                    <div>
-                        <x-input-label for="calle" :value="__('Calle')" />
-                        <x-text-input autocomplete="off" id="calle" class="mt-1 block w-full" type="text" name="calle" :value="old('calle')" />
-                        <x-input-error :messages="$errors->get('calle')" class="mt-2" />
-                    </div>
-
-                    {{-- Ciudad --}}
-                    <div>
-                        <x-input-label for="ciudad" :value="__('Ciudad')" />
-                        <x-text-input autocomplete="off" id="ciudad" class="mt-1 block w-full" type="text" name="ciudad" :value="old('ciudad')" />
-                        <x-input-error :messages="$errors->get('ciudad')" class="mt-2" />
-                    </div>
-
-                    {{-- Estado o Provincia --}}
-                    <div>
-                        <x-input-label for="estadoProv" :value="__('Estado o Provincia')" />
-                        <x-text-input autocomplete="off" id="estadoProv" class="mt-1 block w-full" type="text" name="estadoProv" :value="old('estadoProv')" />
-                        <x-input-error :messages="$errors->get('estadoProv')" class="mt-2" />
-                    </div>
-
-                    {{-- Código Postal --}}
-                    <div>
-                        <x-input-label for="codigoPostal" :value="__('Código Postal')" />
-                        <x-text-input autocomplete="off" id="codigoPostal" class="mt-1 block w-full" type="text" name="codigoPostal" :value="old('codigoPostal')" />
-                        <x-input-error :messages="$errors->get('codigoPostal')" class="mt-2" />
-                    </div>
-
-                    {{-- País --}}
-                    <div>
-                        <x-input-label for="pais" :value="__('País o región')" />
-                        <x-text-input autocomplete="off" id="pais" class="mt-1 block w-full" type="text" name="pais" :value="old('pais')"  />
-                        <x-input-error :messages="$errors->get('pais')" class="mt-2" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="tipoSangre" :value="__('Tipo de sangre')" />
-                        <x-text-input id="tipoSangre" class="mt-1 block w-full" type="text" name="tipoSangre" :value="old('tipoSangre')" />
-                        <x-input-error :messages="$errors->get('tipoSangre')" class="mt-2" />
-                    </div>
-                    <!--DIV PARA UNIFORMES-->
-                    <div class="sm:col-span-2">
-                        <h1 class="text-center text-gray-800 dark:text-white">TALLA PARA UNIFORMES</h1>
-                        <!--Talla para pantalones-->
-                        <x-input-label class="mt-4" for="talla_pantalon" :value="__('Talla de pantalón')" />
-                        <x-text-input id="talla_pantalon" placeholder="Ejemplo: 30" class="mt-1 block w-full" type="text" name="talla_pantalon" :value="old('talla_pantalon')" />
-                        <x-input-error :messages="$errors->get('talla_pantalon')" class="mt-2" />
-                        <!--Talla para camisa-->
-                        <x-input-label class="mt-4" for="talla_camisa" :value="__('Talla de camisa')" />
-                        <select name="talla_camisa" id="talla_camisa" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            <option value="">--Selecciona una talla de camisa--</option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
-                            <option value="XXL">XXL</option>
-                        </select>
-                        <!--Talla para calzado-->
-                        <x-input-label class="mt-4" for="talla_calzado" :value="__('Talla de calzado')" />
-                        <select name="talla_calzado" id="talla_calzado" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            <option value="">--Selecciona una talla de calzado--</option>
-                            <option value="S">22</option>
-                            <option value="M">22.5</option>
-                            <option value="L">23</option>
-                            <option value="XL">23.5</option>
-                            <option value="XXL">24</option>
-                            <option value="XXL">24.5</option>
-                            <option value="XXL">25</option>
-                            <option value="XXL">25.5</option>
-                            <option value="XXL">26</option>
-                            <option value="XXL">26.5</option>
-                            <option value="XXL">27</option>
-                            <option value="XXL">27.5</option>
-                            <option value="XXL">28</option>
-                            <option value="XXL">28.5</option>
-                        </select>
-
-                    </div>
-
-                   
-
-                    <!--Observaciones-->
-                    <div class="">
-                        <x-input-label for="observaciones_empleado" :value="__('Observaciones')" />
-                        <x-text-input id="observaciones_empleado" class="mt-1 block w-full" type="text" name="observaciones_empleado" :value="old('observaciones_empleado')" />
-                        <x-input-error :messages="$errors->get('observaciones_empleado')" class="mt-2" />
+                    <div class="rounded-full bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur">
+                        Nuevo registro
                     </div>
                 </div>
-
-                {{--Archivos adjuntos--}}
-                <h1 class="text-center mt-8 text-gray-800 dark:text-white">ARCHIVOS ADJUNTOS</h1>
-
-                {{-- certificados --}}
-                <div class="w-full mb-4"
-                    <x-input-label for="certificados_empleados" :value="__('Certificados de empleado')" />
-                <x-text-input id="certificados_empleados" class="mt-1 w-full" type="file" name="certificados_empleados" :value="old('certificados_empleados')" />
-                <x-input-error :messages="$errors->get('certificados_empleados')" class="mt-2" />
             </div>
 
-            {{-- Foto --}}
-            <div class="w-full mb-4">
-                <x-input-label for="foto" :value="__('Foto de empleado')" />
-                <x-text-input id="foto" class="mt-1 w-full" type="file" name="foto" :value="old('foto')" />
-                <x-input-error :messages="$errors->get('foto')" class="mt-2" />
+            <div class="space-y-6 p-6 sm:p-8">
+                <section class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                    <div class="flex flex-col gap-6 lg:flex-row lg:items-start">
+                        <div class="flex flex-col items-center lg:w-1/3">
+                            <div class="mb-4 flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-slate-200 shadow-md">
+                                <span class="text-lg font-semibold text-slate-500">Foto</span>
+                            </div>
+
+                            <x-input-label for="foto" value="Foto del empleado" class="text-sm font-semibold text-slate-700" />
+                            <x-text-input id="foto" class="mt-2 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="file" name="foto" />
+                            <x-input-error :messages="$errors->get('foto')" class="mt-2" />
+
+                            <div class="mt-3 w-full rounded-lg border border-dashed border-slate-300 bg-white px-4 py-3 text-center text-sm font-semibold text-amber-600">
+                                Aún no hay foto registrada
+                            </div>
+                        </div>
+
+                        <div class="flex-1 space-y-4">
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <x-input-label for="Nombre" :value="__('Nombre de empleado')" class="text-sm font-semibold text-slate-700" />
+                                    <x-text-input id="Nombre" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="Nombre" :value="old('Nombre')" autocomplete="off" />
+                                    <x-input-error :messages="$errors->get('Nombre')" class="mt-2" />
+                                </div>
+                                <div>
+                                    <x-input-label for="apellidos" :value="__('Apellidos')" class="text-sm font-semibold text-slate-700" />
+                                    <x-text-input id="apellidos" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="apellidos" :value="old('apellidos')" autocomplete="off" />
+                                    <x-input-error :messages="$errors->get('apellidos')" class="mt-2" />
+                                </div>
+                            </div>
+
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <x-input-label for="curp" :value="__('CURP (obligatorio)')" class="text-sm font-semibold text-slate-700" />
+                                    <x-text-input id="curp" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="curp" :value="old('curp')" autocomplete="off" />
+                                    <x-input-error :messages="$errors->get('curp')" class="mt-2" />
+                                </div>
+                                <div>
+                                    <x-input-label for="fecha_nacimiento" :value="__('Fecha de nacimiento')" class="text-sm font-semibold text-slate-700" />
+                                    <x-text-input id="fecha_nacimiento" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="date" name="fecha_nacimiento" :value="old('fecha_nacimiento')" />
+                                    <x-input-error :messages="$errors->get('fecha_nacimiento')" class="mt-2" />
+                                </div>
+                                <div>
+                                    <x-input-label for="fecha_ingreso" :value="__('Fecha de ingreso')" class="text-sm font-semibold text-slate-700" />
+                                    <x-text-input id="fecha_ingreso" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="date" name="fecha_ingreso" :value="old('fecha_ingreso')" />
+                                    <x-input-error :messages="$errors->get('fecha_ingreso')" class="mt-2" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="grid gap-6 lg:grid-cols-2">
+                    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <h2 class="text-lg font-semibold text-slate-800">Datos laborales</h2>
+                        <div class="mt-4 space-y-4">
+                            <div>
+                                <x-input-label for="organizacion" :value="__('Organización')" class="text-sm font-semibold text-slate-700" />
+                                <select name="organizacion" id="organizacion" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    <option value="">-- Seleccionar --</option>
+                                    <option value="medical gas systems international" {{ old('organizacion') === 'medical gas systems international' ? 'selected' : '' }}>MGSI</option>
+                                    <option value="Ascort" {{ old('organizacion') === 'Ascort' ? 'selected' : '' }}>Ascort</option>
+                                    <option value="Meicon" {{ old('organizacion') === 'Meicon' ? 'selected' : '' }}>Meicon</option>
+                                </select>
+                                <x-input-error :messages="$errors->get('organizacion')" class="mt-2" />
+                            </div>
+                            <div>
+                                <x-input-label for="cargo" :value="__('Cargo')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="cargo" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="cargo" :value="old('cargo')" autocomplete="off" />
+                                <x-input-error :messages="$errors->get('cargo')" class="mt-2" />
+                            </div>
+                            <div>
+                                <x-input-label for="sueldo" :value="__('Sueldo $')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="sueldo" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="sueldo" :value="old('sueldo')" placeholder="$" autocomplete="off" />
+                                <x-input-error :messages="$errors->get('sueldo')" class="mt-2" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <h2 class="text-lg font-semibold text-slate-800">Contacto</h2>
+                        <div class="mt-4 space-y-4">
+                            <div>
+                                <x-input-label for="correoElectronico" :value="__('Correo electrónico')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="correoElectronico" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="email" name="correoElectronico" :value="old('correoElectronico')" autocomplete="off" />
+                                <x-input-error :messages="$errors->get('correoElectronico')" class="mt-2" />
+                            </div>
+                            <div>
+                                <x-input-label for="numeroTelefonoTrabajo" :value="__('Número telefónico de trabajo')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="numeroTelefonoTrabajo" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" maxlength="10" placeholder="Ej. 5566334455" autocomplete="off" type="tel" name="numeroTelefonoTrabajo" :value="old('numeroTelefonoTrabajo')" />
+                                <x-input-error :messages="$errors->get('numeroTelefonoTrabajo')" class="mt-2" />
+                            </div>
+                            <div>
+                                <x-input-label for="numeroTelParti" :value="__('Número telefónico particular')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="numeroTelParti" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" maxlength="10" placeholder="Ej. 5566334455" autocomplete="off" type="tel" name="numeroTelParti" :value="old('numeroTelParti')" />
+                                <x-input-error :messages="$errors->get('numeroTelParti')" class="mt-2" />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="grid gap-6 lg:grid-cols-2">
+                    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <h2 class="text-lg font-semibold text-slate-800">Dirección</h2>
+                        <div class="mt-4 grid gap-4 md:grid-cols-2">
+                            <div>
+                                <x-input-label for="calle" :value="__('Calle')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="calle" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="calle" :value="old('calle')" autocomplete="off" />
+                            </div>
+                            <div>
+                                <x-input-label for="ciudad" :value="__('Ciudad')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="ciudad" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="ciudad" :value="old('ciudad')" autocomplete="off" />
+                            </div>
+                            <div>
+                                <x-input-label for="estadoProv" :value="__('Estado/Provincia')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="estadoProv" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="estadoProv" :value="old('estadoProv')" autocomplete="off" />
+                            </div>
+                            <div>
+                                <x-input-label for="codigoPostal" :value="__('Código Postal')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="codigoPostal" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="codigoPostal" :value="old('codigoPostal')" autocomplete="off" />
+                            </div>
+                            <div>
+                                <x-input-label for="pais" :value="__('País')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="pais" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="pais" :value="old('pais')" autocomplete="off" />
+                            </div>
+                            <div>
+                                <x-input-label for="tipoSangre" :value="__('Tipo de sangre')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="tipoSangre" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="tipoSangre" :value="old('tipoSangre')" autocomplete="off" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <h2 class="text-lg font-semibold text-slate-800">Tallas y observaciones</h2>
+                        <div class="mt-4 space-y-4">
+                            <div>
+                                <x-input-label for="talla_pantalon" :value="__('Talla de pantalón')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="talla_pantalon" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="talla_pantalon" :value="old('talla_pantalon')" placeholder="Ej. 30" />
+                            </div>
+                            <div>
+                                <x-input-label for="talla_camisa" :value="__('Talla de camisa')" class="text-sm font-semibold text-slate-700" />
+                                <select name="talla_camisa" id="talla_camisa" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    <option value="">-- Seleccionar --</option>
+                                    @foreach(['S', 'M', 'L', 'XL', 'XXL'] as $talla)
+                                        <option value="{{ $talla }}" {{ old('talla_camisa') === $talla ? 'selected' : '' }}>{{ $talla }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <x-input-label for="talla_calzado" :value="__('Talla de calzado')" class="text-sm font-semibold text-slate-700" />
+                                <select name="talla_calzado" id="talla_calzado" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    <option value="">-- Seleccionar --</option>
+                                    @foreach(['22', '22.5', '23', '23.5', '24', '24.5', '25', '25.5', '26', '26.5', '27', '27.5', '28', '28.5'] as $talla)
+                                        <option value="{{ $talla }}" {{ old('talla_calzado') === $talla ? 'selected' : '' }}>{{ $talla }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <x-input-label for="observaciones_empleado" :value="__('Observaciones del empleado')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="observaciones_empleado" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="observaciones_empleado" :value="old('observaciones_empleado')" />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                    <div class="rounded-xl border border-dashed border-slate-300 bg-white p-5">
+                        <h2 class="text-lg font-semibold text-slate-800">Documentos y certificados</h2>
+                        <div class="mt-4 grid gap-4 md:grid-cols-2">
+                            <div>
+                                <x-input-label for="cv_empleado" value="Currículum" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="cv_empleado" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="file" name="cv_empleado" />
+                                <x-input-error :messages="$errors->get('cv_empleado')" class="mt-2" />
+                            </div>
+                            <div>
+                                <x-input-label for="certificados_empleados" value="Certificados del empleado" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="certificados_empleados" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="file" name="certificados_empleados" />
+                                <x-input-error :messages="$errors->get('certificados_empleados')" class="mt-2" />
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
 
-            {{-- CV --}}
-            <div class="w-full">
-                <x-input-label for="cv_empleado" :value="__('Curriculum Vitae del empleado')" />
-                <x-text-input id="cv_empleado" class="mt-1 w-full" type="file" name="cv_empleado" :value="old('cv_empleado')" />
-                <x-input-error :messages="$errors->get('cv_empleado')" class="mt-2" />
+            <div class="flex flex-col gap-3 border-t border-slate-200 bg-slate-50 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+                <div class="text-sm text-slate-500">Revisa la información antes de registrar al empleado.</div>
+                <div class="flex flex-wrap gap-3">
+                    <x-primary-button class="ms-0">
+                        {{ __('Registrar') }}
+                    </x-primary-button>
+                    <a href="{{ route('index-employees') }}" class="inline-flex items-center rounded-lg bg-green-600 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition hover:bg-green-700 focus:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        {{ __('Cerrar') }}
+                    </a>
+                </div>
             </div>
+        </form>
 
-             <div style="text-align: center;" class="mt-6">
-            <x-primary-button class="ms-4 ">
-                Registrar
-            </x-primary-button>
-
-            <a href="{{ route('index-employees') }}" class="ms-4 inline-block px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 focus:bg-gray-500 active:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                Cancelar
-            </a>
-        </div>
-        </div>
-        </div>
-        </div>
         @if ($errors->any())
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-        <strong>¡Error!</strong> Revisa los campos marcados. <br>
-        <ul class="mt-2 list-disc list-inside">
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+            <div class="mt-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-4 text-sm text-red-700 shadow-sm">
+                <p class="font-semibold">¡Error!</p>
+                <p class="mt-1">Se encontraron errores en el formulario. Verifica la información y revisa los campos marcados.</p>
+            </div>
+        @endif
     </div>
-    @endif
-    </form>
-    
 </x-guest-layout>
