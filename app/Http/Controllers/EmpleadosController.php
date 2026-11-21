@@ -395,20 +395,22 @@ private function revisoresVacaciones()
 {
     $marco = User::role('ingenieria')->where('name', 'Marco Antonio')->get();
     $juan = User::role('superadmin')->where('name', 'Juan Carlos')->get();
+    $even = User::role('superadmin')->where('name', 'Evelia')->get();
 
-    if ($marco->isEmpty() || $juan->isEmpty()) {
+    if ($marco->isEmpty() || $juan->isEmpty() || $even->isEmpty()) {
         throw new \RuntimeException(
             'No se pudo notificar la solicitud: verifica que exista Marco Antonio con el rol ingenieria y Juan Carlos con el rol superadmin.'
         );
     }
 
-    return $marco->merge($juan)->unique('id')->values();
+    return $marco->merge($juan)->merge($even)->unique('id')->values();
 }
 
 private function esRevisorVacaciones(User $user): bool
 {
     return ($user->name === 'Marco Antonio' && $user->hasRole('ingenieria'))
-        || ($user->name === 'Juan Carlos' && $user->hasRole('superadmin'));
+        || ($user->name === 'Juan Carlos' && $user->hasRole('superadmin'))
+        || ($user->name === 'Evelia' && $user->hasRole('superadmin'));
 }
 
 public function deleteVacaciones($id){
