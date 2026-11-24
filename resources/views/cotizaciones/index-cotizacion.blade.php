@@ -39,7 +39,7 @@
     </div>
     @endif
                                                                                                             <!-- Menu para seleccionar la cotizacion -->
-    <div class="border border-black text-center items-center p-6 w-full h-full bg-gradient-to-r from-blue-600 to-blue-800">
+    <div class="border border-black text-center items-center p-6 w-full h-full bg-blue-800">
         
         <h2 class="text-2xl font-bold mb-6 text-white">Seleccione la cotizacion a realizar</h2>
 
@@ -161,14 +161,14 @@
                     x-on:click="$dispatch('open-modal', 'crear-proyecto1')" class="p-4 w-full rounded-lg border-2 transition-all text-left focus:border-blue-500 focus:bg-blue-100 shadow-md" data-fg-dqam5="12.9:12.1533:/src/app/components/QuotationSelector.tsx:26:11:705:784:e:button:etete">
                     <h3 class="font-semibold mb-1 text-gray-800" data-fg-dqam8="12.9:12.1533:/src/app/components/QuotationSelector.tsx:36:13:1172:191:e:h3:x">SUMINISTRO E INSTALACION DE ETIQUETADO</h3>
                     <p class="text-sm text-gray-600" data-fg-dqam10="12.9:12.1533:/src/app/components/QuotationSelector.tsx:41:13:1376:93:e:p:x">
-                        @if($detalles->isEmpty())
+                       <!-- if($detalles->isEmpty())
                             <span class="text-red-500 text-lg">Sin registro</span>
-                            @else
+                            else
                                 
                                 <span class="text-green-500 text-lg">Registrado</span>
                                 <a href="" class="text-blue-500 hover:text-blue-800 justify-left align-left ml-44">Ver detalles</a>
                                 
-                            @endif
+                            endif-->
 
                     </p>
                 </button>
@@ -398,14 +398,6 @@
             </div>
             <!-- inputs para agregar la altura y anchura DE CONSOLA HORIZONTAL -->
             <div id="panel-consolasHorizontales" class="category-contenido hidden">
-                <h2 class="text-lg mt-6">INGRESE LAS MEDIDAS DE SU CONSOLA HORIZONTAL</h2>
-                <div class="mt-8 flex grid-column-2 md:grid-cols-2 lg:grid-cols-2 gap-2 text-center justify-center items-center">
-                    <label for="altura" class="block text-sm font-medium text-gray-700 mb-1">Altura (mm)</label>
-                    <input type="number" id="altura" name="altura" class="border border-black rounded-md p-2 w-max-md mb-4" placeholder="Ingrese la altura en milimetros">
-                    <label for="anchura" class=" block text-sm font-medium text-gray-700 mb-1">Anchura (mm)</label>
-                    <input type="number" value="37000" id="anchura" name="anchura" class="border border-black rounded-md p-2 w-max-md mb-4" placeholder="Ingrese la anchura en milimetros">
-                </div>
-
                 <div class="w-full max-w-3xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
                     <h2 class="text-center text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">CONCEPTO</h2>
                     <p class="text-justify text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -417,101 +409,135 @@
                         EN CUALQUIER NIVEL.
                     </p>
                 </div>
-                <!-- Aqui estara la parte de los accesorios de la consola -->
-                <div class="mt-6 w-full border border-blue-900 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+                <!-- Equipamiento y resumen -->
+                <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-5">
+                    <div class="lg:col-span-8 space-y-4">
+                        <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                            <h2 class="mb-4 flex items-center gap-2 text-base font-semibold text-slate-800">
+                                <svg class="h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path d="M3 21V3h18v18H3Z"/><path d="m3 21 18-18"/>
+                                </svg>
+                                Dimensiones del Chasis
+                            </h2>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="horizontal-altura" class="mb-2 block text-xs font-semibold text-slate-600">Altura (mm)</label>
+                                    <div class="flex items-center rounded-lg border border-slate-200 px-3 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100">
+                                        <input type="number" id="horizontal-altura" name="altura" value="800" class="w-full border-0 bg-transparent py-3 text-sm text-slate-800 outline-none" placeholder="Ej: 800">
+                                        <span class="text-xs text-slate-400">mm</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="horizontal-anchura" class="mb-2 block text-xs font-semibold text-slate-600">Ancho (mm)</label>
+                                    <div class="flex items-center rounded-lg border border-slate-200 px-3 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100">
+                                        <input type="number" id="horizontal-anchura" name="anchura" value="1200" class="w-full border-0 bg-transparent py-3 text-sm text-slate-800 outline-none" placeholder="Ej: 1200">
+                                        <span class="text-xs text-slate-400">mm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
 
-                    <h1 class="text-xl font-semibold mb-4">EQUIPAMIENTO POR CAMA</h1>
-                    <!-- Cuadro de cantidades -->
-                    <div class="bg-blue-700 w-3/4 p-4 h-3/5 mt-6 ml-20 p-4 border border-blue-900 border-4 rounded-lg">
-                        <h1 class="text-white text-xl text-center font-bold">CANTIDADES DE COTIZACIÓN PARA CONSOLA HORIZONTAL</h1>
+                        <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                            <h2 class="mb-4 flex items-center gap-2 text-base font-semibold text-slate-800">
+                                <svg class="h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="3"/><path d="m19 12 2-1-2-4-2 1-2-1-1-3h-4l-1 3-2 1-2-1-2 4 2 1v2l-2 1 2 4 2-1 2 1 1 3h4l1-3 2-1 2 1 2-4-2-1v-2Z"/>
+                                </svg>
+                                Componentes y Accesorios
+                            </h2>
 
+                            <div id="consola-horizontal-componentes" class="max-h-[470px] space-y-3 overflow-y-auto pr-1">
+                                @php
+                                    $componentesHorizontal = [
+                                        ['TOMA-OXY', 'Toma para Oxígeno', '3500', 'Conexión enchufe rápido ARAMED'],
+                                        ['TOMA-AIR', 'Toma de Aire', '2700', 'Conexión enchufe rápido ARAMED'],
+                                        ['TOMA-VAC', 'Toma de Vacío', '2700', 'Conexión enchufe rápido ARAMED'],
+                                        ['CONTACTO-R', 'Contacto dúplex hospitalario rojo', '1800', '127 V, 20 A'],
+                                        ['CONTACTO-W', 'Contacto dúplex hospitalario blanco', '1800', '127 V, 20 A'],
+                                        ['APAGADOR', 'Apagador de falso plafón', '950', 'Incluye instalación'],
+                                        ['LAMPARA', 'Lámpara de iluminación', '4200', 'Luz de ambiente y lectura'],
+                                        ['RIEL-GSX', 'Riel tipo GSX', '2200', 'Soporte para monitor'],
+                                        ['PORTA-MON', 'Soporte porta monitor', '2600', 'Montaje incluido'],
+                                        ['PORTA-VENO', 'Soporte porta venoclisis', '1800', 'Montaje incluido'],
+                                        ['PORTA-INF', 'Soporte para bomba de infusión', '2400', 'Montaje incluido'],
+                                        ['CANASTILLA', 'Canastilla porta medicamentos', '2100', 'Montaje incluido'],
+                                        ['CABLE', 'Cable XHHW-2 calibre 12', '65', 'Por metro'],
+                                        ['RJ45', 'Troquel para contacto RJ-45', '450', 'Unidad'],
+                                        ['VOZ-DATOS', 'Troquel para voz y datos', '450', 'Unidad'],
+                                    ];
+                                @endphp
+
+                                @foreach ($componentesHorizontal as $index => $componente)
+                                    <label class="componente-horizontal flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-4 transition hover:border-blue-300 hover:bg-blue-50/40">
+                                        <input type="checkbox" name="componentes_horizontal[]" value="{{ $componente[0] }}" data-price="{{ $componente[2] }}"
+                                            class="componente-check mt-1 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+                                        <div class="min-w-0 flex-1">
+                                            <div class="flex items-start justify-between gap-3">
+                                                <div>
+                                                    <p class="text-sm font-bold text-slate-800">{{ $componente[0] }} - {{ $componente[1] }}</p>
+                                                    <p class="mt-1 text-xs italic text-slate-500">{{ $componente[3] }}</p>
+                                                </div>
+                                                <span class="shrink-0 text-sm font-bold text-blue-600">${{ number_format((float) $componente[2], 0) }}</span>
+                                            </div>
+                                            @if ($index < 3)
+                                                <div class="mt-3 border-t border-slate-100 pt-3">
+                                                    <p class="mb-2 text-xs text-slate-500">Materiales de montaje incluidos:</p>
+                                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-xs text-slate-500">
+                                                        <span>• 1x Válvula de cierre rápido</span>
+                                                        <span>• 1x Conector DSS</span>
+                                                        <span>• 4x Tornillos M5</span>
+                                                        <span>• 2x Empaquetaduras</span>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </label>
+                                @endforeach
+                            </div>
+
+                            <button type="button" onclick="agregarProducto()" class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-blue-700 hover:text-blue-900">
+                                <span class="text-lg leading-none">+</span>
+                                Agregar suministro para consola horizontal
+                            </button>
+                        </section>
                     </div>
 
-                    <div class="border border-2 border-red-800 w-3/3 p-4 overflow-scroll overflow-x-auto h-22 grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5 gap-4">
-                        <div class="text-xl semibold justify-left items-left text-left border-blue-300">
-                            <div class="mb-8">
-                                SUMINISTRO
-                            </div>
-                            <div class="border-y border-y-2 border-gray-400">
-                                <input class="m-2" type="checkbox">TOMA PARA OXIGENO,CONEXIÓN ENCHUFE RAPIDO ARAMED
-                                <p class="text-sm text-center">50 tornillos de 1/2. 30 remaches.</p>
-                            </div>
-                            <div class="border-y border-y-2 border-gray-400">
-                                <input class="m-2" type="checkbox">TOMA DE AIRE,CONEXIÓN ENCHUFE RAPIDO ARAMED
-                                <p class="text-sm text-center">50 tornillos de 1/2. 30 remaches.</p>
-                            </div>
-                            <div class="border-y border-y-2 border-gray-400">
-                                <input class="m-2" type="checkbox">TOMA DE VACIO,CONEXIÓN ENCHUFE RAPIDO ARAMED
-                                <p class="text-sm text-center">50 tornillos de 1/2. 30 remaches.</p>
-                            </div>
-                            <div class="border-y border-y-2 border-gray-400">
-                                <input class="m-2" type="checkbox">CONTACTOS DUPLEX GRADO HOSPITAL DE 127V. 20A. COLOR ROJO
-                                <p class="text-sm text-center">50 tornillos de 1/2. 30 remaches.</p>
-                            </div>
-                            <div class="border-y border-y-2 border-gray-400">
-                                <input class="m-2" type="checkbox">CONTACTOS DUPLEX GRADO HOSPITAL DE 127V. 20A. COLOR BLANCOS
-                                <p class="text-sm text-center">50 tornillos de 1/2. 30 remaches.</p>
-                            </div>
-                            <div class="border-y border-y-2 border-gray-400">
-                                <input class="m-2" type="checkbox">APAGADOR DE FALSO PLAFON.
-                                <p class="text-sm text-center">50 tornillos de 1/2. 30 remaches.</p>
-                            </div>
-                            <div class="border-y border-y-2 border-gray-400">
-                                <input class="m-2" type="checkbox">LAMPARA DE ILUMINACION CON LUZ DE AMBIENTE Y LECTURA,
-                                <p class="text-sm text-center">50 tornillos de 1/2. 30 remaches.</p>
-                            </div>
-                            <div class="border-y border-y-2 border-gray-400">
-                                <input class="m-2" type="checkbox">RIEL TIPO "GSX" PARA SOPORTE DE MONITOR
-                                <p class="text-sm text-center">50 tornillos de 1/2. 30 remaches.</p>
-                            </div>
-                            <div class="border-y border-y-2 border-gray-400">
-                                <input class="m-2" type="checkbox">SOPORTE PORTA MONITOR
-                                <p class="text-sm text-center">50 tornillos de 1/2. 30 remaches.</p>
-                            </div>
-                            <div class="border-y border-y-2 border-gray-400">
-                                <input class="m-2" type="checkbox">SOPORTE PORTA VENOCLISIS
-                                <p class="text-sm text-center">50 tornillos de 1/2. 30 remaches.</p>
-                            </div>
-                            <div class="border-y border-y-2 border-gray-400">
-                                <input class="m-2" type="checkbox">SOPORTES PARA BOMBA DE INFUSION
-                                <p class="text-sm text-center">50 tornillos de 1/2. 30 remaches.</p>
-                            </div>
-                            <div class="border-y border-y-2 border-gray-400">
-                                <input class="m-2" type="checkbox">CANASTILLA PORTA MEDICAMENTOS
-                                <p class="text-sm text-center">50 tornillos de 1/2. 30 remaches.</p>
-                            </div>
-                            <div class="border-y border-y-2 border-gray-400">
-                                <input class="m-2" type="checkbox">CABLE XHHW-2 CALIBRE NO.12 COLOR NARANJA Y CAFÉ.
-                                <p class="text-sm text-center">50 tornillos de 1/2. 30 remaches.</p>
-                            </div>
-                            <div class="border-y border-y-2 border-gray-400">
-                                <input class="m-2" type="checkbox">TROQUEL PARA CONTACTO RJ-45
-                                <p class="text-sm text-center">50 tornillos de 1/2. 30 remaches.</p>
+                    <aside class="lg:col-span-4">
+                        <div class="sticky top-6 rounded-xl bg-blue-700 p-4 text-white shadow-lg">
+                            <h2 class="mb-4 flex items-center gap-2 text-lg font-bold">
+                                <span class="grid h-7 w-7 place-items-center rounded-full bg-white/15">🎨</span>
+                                Resumen de Cotización
+                            </h2>
 
+                            <div class="rounded-lg bg-white/10 px-4 py-3">
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-blue-100">Precio base (chasis)</span>
+                                    <strong id="precio-base-horizontal">$0</strong>
+                                </div>
                             </div>
-                            <div class="border-y border-y-2 border-gray-400">
-                                <input class="m-2" type="checkbox">TROQUEL PARA VOZ Y DATOS
-                                <p class="text-sm text-center">50 tornillos de 1/2. 30 remaches.</p>
+
+                            <div class="mt-3 text-blue-100 dark:text-blue-300 rounded-xl border border-blue-400/40 bg-white/15 p-4">
+                                <div class="flex items-center justify-between text-blue-900 dark:text-blue-900">
+                                    <span class="flex items-center gap-2 text-lg font-bold text-blue-100 dark:text-blue-300">
+                                        <span class="grid h-5 w-5 place-items-center rounded-sm bg-blue-400 text-xs">✓</span>
+                                        Total
+                                    </span>
+                                    <strong id="total-horizontal" class="text-3xl text-blue-100 dark:text-blue-300">$0</strong>
+                                </div>
+                                <p class="mt-2 text-right text-xs text-red-100 dark:text-blue-300">MXN (Pesos Mexicanos)</p>
+                            </div>
+
+                            <button type="button" class="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-white py-3 text-sm font-bold text-blue-700 shadow-sm transition hover:bg-blue-50">
+                                <span>▤</span>
+                                Generar Cotización PDF
+                            </button>
+
+                            <div class="mt-3 rounded-lg bg-blue-900/35 px-3 py-3 text-center text-[11px] leading-5 text-blue-100">
+                                ✓ Precios incluyen materiales de montaje<br>
+                                ✓ Instalación opcional disponible
                             </div>
                         </div>
-                        <div>
-                            UNIDAD
-                        </div>
-                        <div>
-                            CANTIDAD
-                        </div>
-                        <div>
-                            PRECIO
-                        </div>
-                        <div>
-                            IMPORTE
-                        </div>
-                    </div>
+                    </aside>
                 </div>
-
-                <button type="button" onclick="agregarProducto()" class="text-blue-700 hover:underline mt-4">+
-                    Agregar suministro para consola horizontal
-                </button>
             </div>
 
 
@@ -610,6 +636,80 @@
     </x-modal>
 
 </x-app-layout>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const componenteChecks = document.querySelectorAll('#consola-horizontal-componentes .componente-check');
+            const totalElement = document.getElementById('total-horizontal');
+
+            function actualizarTotalHorizontal() {
+                let total = 0;
+
+                componenteChecks.forEach(function(check) {
+                    const tarjeta = check.closest('.componente-horizontal');
+                    if (check.checked) {
+                        total += Number(check.dataset.price || 0);
+                        tarjeta.classList.add('border-blue-500', 'bg-blue-50');
+                    } else {
+                        tarjeta.classList.remove('border-blue-500', 'bg-blue-50');
+                    }
+                });
+
+                if (totalElement) {
+                    totalElement.textContent = '$' + total.toLocaleString('es-MX');
+                }
+            }
+
+            componenteChecks.forEach(function(check) {
+                check.addEventListener('change', actualizarTotalHorizontal);
+            });
+
+            actualizarTotalHorizontal();
+        });
+
+        function agregarProducto() {
+            const contenedor = document.getElementById('consola-horizontal-componentes');
+            if (!contenedor) return;
+
+            const tarjeta = document.createElement('label');
+            tarjeta.className = 'componente-horizontal flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-4 transition hover:border-blue-300 hover:bg-blue-50/40';
+            tarjeta.innerHTML = `
+                <input type="checkbox" name="componentes_horizontal[]" value="personalizado" data-price="0"
+                    class="componente-check mt-1 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+                <div class="min-w-0 flex-1">
+                    <p class="text-sm font-bold text-slate-800">SUMINISTRO PERSONALIZADO</p>
+                    <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input type="text" name="suministro_personalizado[]" placeholder="Descripción del suministro"
+                            class="rounded-md border border-slate-200 px-3 py-2 text-sm outline-none focus:border-blue-500">
+                        <input type="number" min="0" step="0.01" placeholder="Precio"
+                            class="precio-personalizado rounded-md border border-slate-200 px-3 py-2 text-sm outline-none focus:border-blue-500">
+                    </div>
+                </div>`;
+            contenedor.appendChild(tarjeta);
+
+            const check = tarjeta.querySelector('.componente-check');
+            const precio = tarjeta.querySelector('.precio-personalizado');
+
+            function recalcularPersonalizado() {
+                check.dataset.price = precio.value || 0;
+                if (check.checked) {
+                    tarjeta.classList.add('border-blue-500', 'bg-blue-50');
+                } else {
+                    tarjeta.classList.remove('border-blue-500', 'bg-blue-50');
+                }
+
+                let total = 0;
+                document.querySelectorAll('#consola-horizontal-componentes .componente-check').forEach(function(item) {
+                    if (item.checked) total += Number(item.dataset.price || 0);
+                });
+                document.getElementById('total-horizontal').textContent = '$' + total.toLocaleString('es-MX');
+            }
+
+            precio.addEventListener('input', recalcularPersonalizado);
+            check.addEventListener('change', recalcularPersonalizado);
+            tarjeta.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         function showPanel(id) {

@@ -15,10 +15,10 @@ class CotizacionController extends Controller
      */
     public function index()
     {
-         $detalles = CotizacionPartidaDetalleRed::all();
+        // $detalles = CotizacionPartidaDetalleRed::all();
          //$materiales=CotizacionPartidaDetalleRed::all();
         //$detalles = CotizacionPartidaDetalleRed::with('seccion', 'catalogo', 'producto')->get();
-        return view('cotizaciones.index-cotizacion', compact('detalles'));
+        return view('cotizaciones.index-cotizacion');
     }
 
     /**
