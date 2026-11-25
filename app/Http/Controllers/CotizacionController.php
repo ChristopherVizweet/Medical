@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\CatalogoPartidaRd;
 use App\Models\Cotizacion;
-use App\Models\CotizacionPartidaDetalleRed;
+use App\Models\CotizacionPartidaDetalleRedes;
 use App\Models\CotizacionSeccion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CotizacionController extends Controller
 {
@@ -15,10 +16,10 @@ class CotizacionController extends Controller
      */
     public function index()
     {
-        // $detalles = CotizacionPartidaDetalleRed::all();
+         $detalles = CotizacionPartidaDetalleRedes::all();
          //$materiales=CotizacionPartidaDetalleRed::all();
         //$detalles = CotizacionPartidaDetalleRed::with('seccion', 'catalogo', 'producto')->get();
-        return view('cotizaciones.index-cotizacion');
+        return view('cotizaciones.index-cotizacion',compact('detalles'));
     }
 
     /**
@@ -26,10 +27,10 @@ class CotizacionController extends Controller
      */
     public function create()
     {
-        $detalles = CotizacionPartidaDetalleRed::with('seccion', 'catalogo', 'producto')->get();
+        $detalles = CotizacionPartidaDetalleRedes::with('seccion', 'catalogo', 'producto')->get();
         $secciones=CotizacionSeccion::with('productos')->get();
         $catalogos=CatalogoPartidaRd::with('productos')->get();
-         $materiales=CotizacionPartidaDetalleRed::all();
+         $materiales=CotizacionPartidaDetalleRedes::all();
         return view('index-cotizacion',compact('secciones','catalogos','detalles','materiales'));
     }
 
@@ -38,20 +39,22 @@ class CotizacionController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'concepto_detalle_rm_id' => 'nullable|integer',
-            'unidad_detalle_rm' => 'nullable|string|max:255',
-            'cantidad_detalle_rm' => 'nullable|numeric',
-            'precio_unitario_detalle_rm' => 'nullable|numeric',
-            'importe_detalle_rm' => 'nullable|numeric',
+        $validated = $request->validate([
+            'detalles' => 'required|array|min:1',
+            'detalles.*.descripcion_detalle_rm' => 'nullable|string|max:255',
+            'detalles.*.concepto_detalle_rm_id' => 'nullable|integer',
+            'detalles.*.unidad_detalle_rm' => 'nullable|string|max:255',
+            'detalles.*.cantidad_detalle_rm' => 'nullable|numeric',
+            'detalles.*.precio_detalle_rm' => 'nullable|numeric',
+            'detalles.*.importe_detalle_rm' => 'nullable|numeric',
         ]);
-        CotizacionPartidaDetalleRed::create([
-            'concepto_detalle_rm_id' => $request->input('concepto_detalle_rm_id'),
-            'unidad_detalle_rm' => $request->input('unidad_detalle_rm'),
-            'cantidad_detalle_rm' => $request->input('cantidad_detalle_rm'),
-            'precio_unitario_detalle_rm' => $request->input('precio_unitario_detalle_rm'),
-            'importe_detalle_rm' => $request->input('importe_detalle_rm'),
-        ]);
+
+        DB::transaction(function () use ($validated) {
+            foreach ($validated['detalles'] as $detalle) {
+                CotizacionPartidaDetalleRedes::create($detalle);
+            }
+        });
+
         return redirect()->route('index-cotizacion')->with('success', 'Cotización creada exitosamente');
     }
     

@@ -301,12 +301,11 @@ public function storeVacaciones(Request $request, $id){
 
     $fechaInicio = \Carbon\Carbon::parse($request->fecha_inicio);
     $fechaFin = \Carbon\Carbon::parse($request->fecha_fin);
-    $diasTomados = $fechaInicio->diffInDays($fechaFin) + 1; // +1 para incluir ambos días
+    $diasTomados = $this->contarDiasVacaciones($fechaInicio, $fechaFin);
 
     $revisores = $request->estado === 'pendiente'
         ? $this->revisoresVacaciones()
         : collect();
-
     DB::transaction(function () use ($request, $id, $diasTomados, $revisores) {
         $vacacion = EmpleadoVacaciones::create([
             'empleado_id' => $id,
@@ -329,6 +328,18 @@ public function storeVacaciones(Request $request, $id){
     });
 
     return redirect()->route('vacaciones-employee', ['id' => $id, 'periodo' => $request->periodo])->with('success', 'Período de vacaciones registrado exitosamente');
+}
+private function contarDiasVacaciones(\Carbon\Carbon $fechaInicio, \Carbon\Carbon $fechaFin): int
+{
+    $diasTomados = 0;
+
+    for ($fecha = $fechaInicio->copy(); $fecha->lte($fechaFin); $fecha->addDay()) {
+        if (!$fecha->isSunday()) {
+            $diasTomados++;
+        }
+    }
+
+    return $diasTomados;
 }
 public function editVacaciones(Request $request, $id){
     $vacacion = EmpleadoVacaciones::findOrFail($id);
@@ -353,7 +364,7 @@ public function updateVacaciones(Request $request, $id){
 
     $fechaInicio = \Carbon\Carbon::parse($request->fecha_inicio);
     $fechaFin = \Carbon\Carbon::parse($request->fecha_fin);
-    $diasTomados = $fechaInicio->diffInDays($fechaFin) + 1; // +1 para incluir ambos días
+    $diasTomados = $this->contarDiasVacaciones($fechaInicio, $fechaFin);
 
     $vacacion->update([
         'fecha_inicio' => $request->fecha_inicio,

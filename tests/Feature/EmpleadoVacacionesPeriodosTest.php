@@ -84,7 +84,20 @@ it('stores vacation records by selected period and displays only that period', f
         ->assertSee('01/03/2024')
         ->assertDontSee('01/03/2025');
 
-    expect($empleado->vacaciones()->where('periodo', '2025-2026')->value('dias_tomados'))->toBe(2);
+    expect($empleado->vacaciones()->where('periodo', '2025-2026')->value('dias_tomados'))->toBe(1);
+
+    $vacacion = $empleado->vacaciones()->where('periodo', '2025-2026')->firstOrFail();
+    $this->put(route('update-vacaciones-empleado', $vacacion->id), [
+        'fecha_inicio' => '2025-03-01',
+        'fecha_fin' => '2025-03-03',
+        'periodo' => '2025-2026',
+        'estado' => 'pendiente',
+    ])->assertRedirect(route('vacaciones-employee', [
+        'id' => $empleado->id,
+        'periodo' => '2025-2026',
+    ]));
+
+    expect($vacacion->fresh()->dias_tomados)->toBe(2);
 });
 
 it('allows Marco or Juan to approve a pending vacation request', function () {

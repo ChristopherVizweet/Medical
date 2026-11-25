@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CotizacionPartidaDetalleRed;
+use App\Models\CotizacionPartidaDetalleRedes;
 use Illuminate\Http\Request;
 
-class CotizacionPartidaDetalleRedController extends Controller
+class CotizacionPartidaDetalleRedesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class CotizacionPartidaDetalleRedController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(CotizacionPartidaDetalleRed $cotizacionPartidaDetalleRed)
+    public function show(CotizacionPartidaDetalleRedes $cotizacionPartidaDetalleRedes)
     {
         //
     }
@@ -42,7 +42,7 @@ class CotizacionPartidaDetalleRedController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(CotizacionPartidaDetalleRed $cotizacionPartidaDetalleRed)
+    public function edit(CotizacionPartidaDetalleRedes $cotizacionPartidaDetalleRedes)
     {
         //
     }
@@ -50,7 +50,7 @@ class CotizacionPartidaDetalleRedController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CotizacionPartidaDetalleRed $cotizacionPartidaDetalleRed)
+    public function update(Request $request, CotizacionPartidaDetalleRedes $cotizacionPartidaDetalleRedes)
     {
         //
     }
@@ -58,7 +58,7 @@ class CotizacionPartidaDetalleRedController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CotizacionPartidaDetalleRed $cotizacionPartidaDetalleRed)
+    public function destroy(CotizacionPartidaDetalleRedes $cotizacionPartidaDetalleRedes)
     {
         //
     }
